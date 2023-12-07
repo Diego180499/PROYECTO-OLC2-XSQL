@@ -1,0 +1,82 @@
+PALABRAS RESERVADAS:
+
+    CREATE
+    USE
+    ALTER
+    DROP
+    TRUNCATE
+    SELECT
+    FROM
+    WHERE
+    UPDATE
+    INSERT
+    INTO
+    VALUES
+    IF
+    CASE
+    DECLARE
+    FUNCTION
+    RETURNS
+    AS
+    BEGIN
+    END
+    RETURN
+    NOT
+    NULL
+    PRIMARY
+    KEY
+    DATA
+    BASE
+    TABLE
+    PROCEDURE
+    FOREIGN
+    REFERENCE
+    ADD
+    INT
+    BIT
+    DECIMAL
+    DATE
+    DATETIME
+    NCHAR
+    NVARCHAR
+    CONCATENAR
+    SUBSTRAER
+    HOY
+    CONTAR
+    SUMA
+    CAST
+    
+    
+
+EXPRESIONES REGULARES   
+
+    ID = @ [a-zA-Z][a-zA-Z0-1]*
+    entero = [0-9]+
+    decimal = [0-9]+\.[0-9]+
+    SEMICOLON = ';'
+    NOMBRE = [a-zA-Z]+
+    L_PAREN = '('
+    R_PAREN = ')'
+    COMMA = ','
+    ASSIGN = '='
+    EQUALS = '=='
+    NOT_EQ = '!='
+    LESS_THAN = '<'
+    GREATER_THAN = '>'
+    LESS_EQ = '<='
+    GREATER_EQ = '>='
+    AND = \&\&
+    OR = \|\|
+    NOT = \!
+    PLUS = '+'
+    MINUS = '-'
+    TIMES = '*'
+    DIVIDE = '/'
+    
+    
+    
+
+
+
+
+

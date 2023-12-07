@@ -1,0 +1,71 @@
+PALABRAS RESERVADAS:
+
+CREATE
+USE
+ALTER
+DROP
+TRUNCATE
+SELECT
+FROM
+WHERE
+UPDATE
+INSERT
+INTO
+VALUES
+DELETE
+TABLE
+DATA
+BASE
+ADD
+IF
+FUNCTION
+PROCEDURE
+AS
+NOT
+NULL
+PRIMARY
+FOREING
+KEY
+REFERENCE
+int
+bit
+date
+datetime
+BEGIN
+DECLARE
+SET
+RETURN
+END
+CONCATENA
+SUBSTRAER
+HOY
+CONTAR
+SUMA
+CAS
+AS
+NCHAR
+NVARCHAR
+
+- IDENTIFICADORES
+- NUMEROS ENTEROS
+- NUMEROS DECIMALES
+- OPERADORES ARITMETICOS:
++ - * /
+- OPERADORES LÓGICOS
+<  >  <=  >=  !=
+
+
+-. Para nombrar a una variable, se le antepone el @ en su nombre de variable, por ejemplo  @variable1,  @mi_edad
+sería como @<identificador>
+
+
+-. tipos de datos para las variables: 
+	int
+	bit
+	decimal
+	date
+	datetime
+	Nchar
+	Nvarchar
+
+
