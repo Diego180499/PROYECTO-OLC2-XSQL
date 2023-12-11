@@ -1,5 +1,4 @@
 import re
-import ply.lex as lex
 
 # here start grammar
 # --------------------------------------------------------------
@@ -173,11 +172,10 @@ def t_error(t):
 
 
 # Se construye el analizador lexico
-import ply.lex as lex
+import back.ply.lex as lex
 
 lexer = lex.lex(reflags=re.IGNORECASE)
 
-import os
 import sys
 
 sys.setrecursionlimit(10000000)
@@ -270,7 +268,7 @@ def p_type(t):
     # if t is not None:
         # global_arr.append(ExceptionPyType("ERROR SINTACTICO en " + str(t.value) + " SE ESPERABA ALGO MAS", t.lexer.lineno, find_column(input, t)))
 
-import ply.yacc as yacc
+import back.ply.yacc as yacc
 
 def parse(inp):
     global parser
