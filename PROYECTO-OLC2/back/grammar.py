@@ -1,5 +1,5 @@
 import re
-from error import Error
+from back.error.xsql_error import xsql_error
 
 # here start grammar
 # --------------------------------------------------------------
@@ -9,6 +9,11 @@ from error import Error
 # Definimos las palabras reservadas de nuestro lenguaje
 global_arr = []
 errores_sintacticos = []
+
+def get_errores():
+    return errores_sintacticos
+
+
 reservadas = {
     'create': 'CREATE',
     'use': 'USE',
@@ -432,10 +437,10 @@ def p_a(t):
 
 
 def p_error(t):
-    error = Error("Error sintactico",t.value,t.type,t.lineno-1)
+    error = xsql_error("Error sintactico", t.value, t.type, t.lineno - 1)
     errores_sintacticos.append(error)
-    print("Error sintáctico en '%s'" % t.value+" "+ t.type)
-    print(f'en linea {t.lineno-1}')
+    #print("Error sintáctico en '%s'" % t.value+" "+ t.type)
+    #print(f'en linea {t.lineno-1}')
     # if t is not None:
         # global_arr.append(ExceptionPyType("ERROR SINTACTICO en " + str(t.value) + " SE ESPERABA ALGO MAS", t.lexer.lineno, find_column(input, t)))
 
@@ -447,33 +452,7 @@ def parse(inp):
     lexer = lex.lex(reflags=re.IGNORECASE)
     parser = yacc.yacc()
     lexer.lineno = 1
+    result = parser.parse(inp)
+    #print(errores_sintacticos)
 
-    return parser.parse(inp)
-
-
-inst = parse("""create data base my_db;
-            use my_db use;
-            select * from my_db;
-            insert into my_db (c, d, b) values into(1, "hola");
-            if(3, "verdadero",'falso');
-            create table tabla1(
-                campo1 int null primary key,
-                campo2 nvarchar null,
-                campo3 date reference tabla2(campo3)
-            );
-            
-            create procedure procedimiento1(@variable1 as int) as begin 
-                select * from tabla1; 
-            end;
-            
-            create function funcion1 (@var2 as nvarchar) return date as begin
-                select * from tabla2;
-            end;
-            
-            exec procedimiento1 'a', 'b';
-            
-            while 1 begin
-                select * from tabla2;
-            end;
-            
-""")
+    return result

@@ -1,4 +1,4 @@
-class Error:
+class xsql_error:
 
     def __init__(self, descripcion, valor, tipo, linea):
         self.descripcion = descripcion
