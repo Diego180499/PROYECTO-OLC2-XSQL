@@ -1,0 +1,26 @@
+
+<base>
+    <nombre>usuarios</nombre>
+    <tabla>
+        <nombre>tbtipo_usuario</nombre>
+    </tabla>
+    <tabla>
+        <nombre>tbtipo_usuario2</nombre>
+        <campo>
+            <nombre>id_tipo</nombre>
+            <tipo_dato>int</tipo_dato>
+            <llave_primaria>1</llave_primaria>
+            <nulo>0</nulo>
+                <tabla_referencia>tipo_usuario</tabla_referencia>
+                <campo_referencia>id_tipo_usuario</campo_referencia>
+        </campo>
+        <campo>
+            <nombre>tipo_usuario</nombre>
+            <tipo_dato>varchar</tipo_dato>
+            <llave_primaria>0</llave_primaria>
+            <nulo>0</nulo>
+                <tabla_referencia>tipo_usuario</tabla_referencia>
+                <campo_referencia>id_tipo_usuario</campo_referencia>
+        </campo>
+    </tabla>
+</base>

@@ -1,0 +1,31 @@
+<registros>
+    <base_datos>usuarios</base_datos>
+    <tabla>usuario</tabla>
+    <registro>
+        <campo>id_usuario</campo>
+        <campo>nombre</campo>
+        <campo>apellido</campo>
+        <valor>1</valor>
+        <valor>Diego</valor>
+        <valor>Estrada</valor>        
+    </registro>
+    <registro>        
+        <campo>id_usuario</campo>
+        <campo>nombre</campo>
+        <campo>apellido</campo>
+        <valor>2</valor>
+        <valor>Alex</valor>
+        <valor>Miranda</valor>
+    </registro>
+    <registro>        
+        <campo>id_usuario</campo>
+        <campo>nombre</campo>
+        <campo>apellido</campo>
+        <valor>2</valor>
+        <valor>Alex</valor>
+        <valor>Miranda</valor>
+    </registro>    
+</registros>
+<!-- 
+    Se creará y almacenará un archivo xml de los registros de cada tabla de cierta base de datos
+-->
