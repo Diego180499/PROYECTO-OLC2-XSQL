@@ -59,7 +59,8 @@ reservadas = {
     'contar': 'CONTAR',
     'suma': 'SUMA',
     'cast': 'CAST',
-    'set': 'SET'
+    'set': 'SET',
+    'while': 'WHILE'
 }
 tokens = [
     'ID',
@@ -110,7 +111,7 @@ t_COMMA = r','
 
 # Expresiones Regulares de las cadenas con "" o ''
 def t_STRING(t):
-    r'\"(\\\'|\\"|\\\\|\\n|\\t|[^\'\\\"])*?\"'
+    r'(\"(\\\'|\\"|\\\\|\\n|\\t|[^\'\\\"])*?\")|(\'(\\\'|\\"|\\\\|\\n|\\t|[^\'\\\"])*?\')'
     t.value = t.value[1:-1]  # remuevo las comillas
 
     print(str(t.value))
@@ -210,13 +211,12 @@ def p_statement(t):
                     | create_function_statement
                     | create_procedure_statement
                     | alter_table_statement
-                    | alter_function_statement
-                    | alter_procedure_statement
                     | if_statement
                     | exec_statement
                     | drop_table_statement
                     | case_statement
-                    | update_statement'''
+                    | update_statement
+                    | while_statement'''
 
 
 ##### CREATE DATABASE #####
@@ -262,15 +262,26 @@ def p_properties_2(t):
 
 
 def p_property(t):
-    'property   : NAME type PRIMARY KEY'
+    'property   : NAME type null_prod PRIMARY KEY'
 
     
 def p_property_2(t):
-    'property   : NAME type'
+    'property   : NAME type null_prod'
 
 
 def p_property_3(t):
-    'property   : NAME type REFERENCE NAME L_PAREN NAME R_PAREN'
+    'property   : NAME type null_prod REFERENCE NAME L_PAREN NAME R_PAREN'
+
+
+def p_null_prod(t):
+    'null_prod  : NOT NULL'
+
+def p_null_prod_2(t):
+    'null_prod  : NULL'
+
+
+def p_null_prod_3(t):
+    'null_prod  : '
 
 #### SELECT ####
 
@@ -338,12 +349,12 @@ def p_alter_table_statement_2(t):
     'alter_table_statement  : ALTER TABLE NAME DROP COLUMN NAME SEMICOLON'
 
 
-def p_alter_function_statement(t):
-    'alter_function_statement   : ALTER FUNCTION '
-
-
-def p_alter_procedure_statement(t):
-    'alter_procedure_statement  : ALTER PROCEDURE '
+# def p_alter_function_statement(t):
+#     'alter_function_statement   : ALTER FUNCTION NAME AS BEGIN statements END SEMICOLON'
+#
+#
+# def p_alter_procedure_statement(t):
+    # 'alter_procedure_statement  : ALTER PROCEDURE '
 
 
 #### IF STATEMENT ####
@@ -378,6 +389,9 @@ def p_column_assignments_2(t):
 def p_case_statement(t):
     'case_statement : '
 
+#### WHILE STATEMENT ####
+def p_while_statement(t):
+    'while_statement    : WHILE a BEGIN statements END SEMICOLON'
 
 def p_type(t):
     '''type : INT
@@ -411,7 +425,29 @@ def parse(inp):
     return parser.parse(inp)
 
 
-inst = parse("""create data base my_db; 
-            use my_db; select * from my_db; 
+inst = parse("""create data base my_db;
+            use my_db;
+            select * from my_db;
             insert into my_db (c, d, b) values (1, "hola");
+            if(3, "verdadero",'falso');
+            create table tabla1(
+                campo1 int null primary key,
+                campo2 nvarchar null,
+                campo3 date reference tabla2(campo3)
+            );
+            
+            create procedure procedimiento1(@variable1 as int) as begin 
+                select * from tabla1; 
+            end;
+            
+            create function funcion1 (@var2 as nvarchar) return date as begin
+                select * from tabla2;
+            end;
+            
+            exec procedimiento1 'a', 'b';
+            
+            while 1 begin
+                select * from tabla2;
+            end;
+            
 """)
