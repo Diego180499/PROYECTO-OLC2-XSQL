@@ -1,0 +1,2552 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AND
+    CASE
+    CAST
+    CONCATENAR
+    CONTAR
+    DECIMAL_VALUE
+    DIVIDE
+    ELSE
+    EQUALS
+    FOREIGN
+    GREATER_EQ
+    GREATER_THAN
+    HOY
+    LESS_EQ
+    LESS_THAN
+    MINUS
+    NOT
+    NOT_EQ
+    NOT_SIGN
+    NULL
+    OR
+    PLUS
+    RETURNS
+    SUBSTRAER
+    SUMA
+    THEN
+    TRUNCATE
+    WHEN
+
+Grammar
+
+Rule 0     S' -> init
+Rule 1     init -> statements
+Rule 2     statements -> statements statement
+Rule 3     statements -> <empty>
+Rule 4     statement -> create_database_statement
+Rule 5     statement -> use_statement
+Rule 6     statement -> declare_statement
+Rule 7     statement -> set_statement
+Rule 8     statement -> create_table_statement
+Rule 9     statement -> select_statement
+Rule 10    statement -> insert_statement
+Rule 11    statement -> create_function_statement
+Rule 12    statement -> create_procedure_statement
+Rule 13    statement -> alter_table_statement
+Rule 14    statement -> alter_function_statement
+Rule 15    statement -> alter_procedure_statement
+Rule 16    statement -> if_statement
+Rule 17    statement -> exec_statement
+Rule 18    statement -> drop_table_statement
+Rule 19    statement -> case_statement
+Rule 20    statement -> update_statement
+Rule 21    create_database_statement -> CREATE DATA BASE NAME SEMICOLON
+Rule 22    use_statement -> USE NAME SEMICOLON
+Rule 23    declare_statement -> DECLARE ID AS type SEMICOLON
+Rule 24    set_statement -> SET assignments SEMICOLON
+Rule 25    assignments -> assignments COMMA ID ASSIGN a
+Rule 26    assignments -> ID ASSIGN a
+Rule 27    create_table_statement -> CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON
+Rule 28    properties -> properties COMMA property
+Rule 29    properties -> property
+Rule 30    property -> NAME type PRIMARY KEY
+Rule 31    property -> NAME type
+Rule 32    property -> NAME type REFERENCE NAME L_PAREN NAME R_PAREN
+Rule 33    select_statement -> SELECT columns FROM NAME SEMICOLON
+Rule 34    select_statement -> SELECT columns FROM NAME WHERE a SEMICOLON
+Rule 35    select_statement -> SELECT TIMES FROM NAME SEMICOLON
+Rule 36    select_statement -> SELECT TIMES FROM NAME WHERE a SEMICOLON
+Rule 37    insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON
+Rule 38    columns -> columns COMMA NAME
+Rule 39    columns -> NAME
+Rule 40    vals -> vals COMMA a
+Rule 41    vals -> a
+Rule 42    create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON
+Rule 43    create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON
+Rule 44    parameters -> parameters COMMA ID AS type
+Rule 45    parameters -> ID AS type
+Rule 46    alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON
+Rule 47    alter_table_statement -> ALTER TABLE NAME DROP COLUMN NAME SEMICOLON
+Rule 48    alter_function_statement -> ALTER FUNCTION
+Rule 49    alter_procedure_statement -> ALTER PROCEDURE
+Rule 50    if_statement -> IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON
+Rule 51    exec_statement -> EXEC NAME vals SEMICOLON
+Rule 52    drop_table_statement -> DROP TABLE NAME SEMICOLON
+Rule 53    update_statement -> UPDATE NAME SET column_assignments WHERE a SEMICOLON
+Rule 54    column_assignments -> column_assignments COMMA NAME ASSIGN a
+Rule 55    column_assignments -> NAME ASSIGN a
+Rule 56    case_statement -> <empty>
+Rule 57    type -> INT
+Rule 58    type -> DECIMAL
+Rule 59    type -> BIT
+Rule 60    type -> NCHAR
+Rule 61    type -> NVARCHAR
+Rule 62    type -> DATE
+Rule 63    type -> DATETIME
+Rule 64    a -> INTEGER_VALUE
+Rule 65    a -> STRING
+
+Terminals, with rules where they appear
+
+ADD                  : 46
+ALTER                : 46 47 48 49
+AND                  : 
+AS                   : 23 42 43 44 45
+ASSIGN               : 25 26 54 55
+BASE                 : 21
+BEGIN                : 42 43
+BIT                  : 59
+CASE                 : 
+CAST                 : 
+COLUMN               : 46 47
+COMMA                : 25 28 38 40 44 50 50 54
+CONCATENAR           : 
+CONTAR               : 
+CREATE               : 21 27 42 43
+DATA                 : 21
+DATE                 : 62
+DATETIME             : 63
+DECIMAL              : 58
+DECIMAL_VALUE        : 
+DECLARE              : 23
+DIVIDE               : 
+DROP                 : 47 52
+ELSE                 : 
+END                  : 42 43
+EQUALS               : 
+EXEC                 : 51
+FOREIGN              : 
+FROM                 : 33 34 35 36
+FUNCTION             : 42 48
+GREATER_EQ           : 
+GREATER_THAN         : 
+HOY                  : 
+ID                   : 23 25 26 44 45
+IF                   : 50
+INSERT               : 37
+INT                  : 57
+INTEGER_VALUE        : 64
+INTO                 : 37
+KEY                  : 30
+LESS_EQ              : 
+LESS_THAN            : 
+L_PAREN              : 27 32 37 37 42 43 50
+MINUS                : 
+NAME                 : 21 22 27 30 31 32 32 32 33 34 35 36 37 38 39 42 43 46 46 47 47 51 52 53 54 55
+NCHAR                : 60
+NOT                  : 
+NOT_EQ               : 
+NOT_SIGN             : 
+NULL                 : 
+NVARCHAR             : 61
+OR                   : 
+PLUS                 : 
+PRIMARY              : 30
+PROCEDURE            : 43 49
+REFERENCE            : 32
+RETURN               : 42
+RETURNS              : 
+R_PAREN              : 27 32 37 37 42 43 50
+SELECT               : 33 34 35 36
+SEMICOLON            : 21 22 23 24 27 33 34 35 36 37 42 43 46 47 50 51 52 53
+SET                  : 24 53
+STRING               : 65
+SUBSTRAER            : 
+SUMA                 : 
+TABLE                : 27 46 47 52
+THEN                 : 
+TIMES                : 35 36
+TRUNCATE             : 
+UPDATE               : 53
+USE                  : 22
+VALUES               : 37
+WHEN                 : 
+WHERE                : 34 36 53
+error                : 
+
+Nonterminals, with rules where they appear
+
+a                    : 25 26 34 36 40 41 50 50 50 53 54 55
+alter_function_statement : 14
+alter_procedure_statement : 15
+alter_table_statement : 13
+assignments          : 24 25
+case_statement       : 19
+column_assignments   : 53 54
+columns              : 33 34 37 38
+create_database_statement : 4
+create_function_statement : 11
+create_procedure_statement : 12
+create_table_statement : 8
+declare_statement    : 6
+drop_table_statement : 18
+exec_statement       : 17
+if_statement         : 16
+init                 : 0
+insert_statement     : 10
+parameters           : 42 43 44
+properties           : 27 28
+property             : 28 29
+select_statement     : 9
+set_statement        : 7
+statement            : 2
+statements           : 1 2 42 43
+type                 : 23 30 31 32 42 44 45 46
+update_statement     : 20
+use_statement        : 5
+vals                 : 37 40 51
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . init
+    (1) init -> . statements
+    (2) statements -> . statements statement
+    (3) statements -> .
+
+    CREATE          reduce using rule 3 (statements -> .)
+    USE             reduce using rule 3 (statements -> .)
+    DECLARE         reduce using rule 3 (statements -> .)
+    SET             reduce using rule 3 (statements -> .)
+    SELECT          reduce using rule 3 (statements -> .)
+    INSERT          reduce using rule 3 (statements -> .)
+    ALTER           reduce using rule 3 (statements -> .)
+    IF              reduce using rule 3 (statements -> .)
+    EXEC            reduce using rule 3 (statements -> .)
+    DROP            reduce using rule 3 (statements -> .)
+    UPDATE          reduce using rule 3 (statements -> .)
+    $end            reduce using rule 3 (statements -> .)
+
+    init                           shift and go to state 1
+    statements                     shift and go to state 2
+
+state 1
+
+    (0) S' -> init .
+
+
+
+state 2
+
+    (1) init -> statements .
+    (2) statements -> statements . statement
+    (4) statement -> . create_database_statement
+    (5) statement -> . use_statement
+    (6) statement -> . declare_statement
+    (7) statement -> . set_statement
+    (8) statement -> . create_table_statement
+    (9) statement -> . select_statement
+    (10) statement -> . insert_statement
+    (11) statement -> . create_function_statement
+    (12) statement -> . create_procedure_statement
+    (13) statement -> . alter_table_statement
+    (14) statement -> . alter_function_statement
+    (15) statement -> . alter_procedure_statement
+    (16) statement -> . if_statement
+    (17) statement -> . exec_statement
+    (18) statement -> . drop_table_statement
+    (19) statement -> . case_statement
+    (20) statement -> . update_statement
+    (21) create_database_statement -> . CREATE DATA BASE NAME SEMICOLON
+    (22) use_statement -> . USE NAME SEMICOLON
+    (23) declare_statement -> . DECLARE ID AS type SEMICOLON
+    (24) set_statement -> . SET assignments SEMICOLON
+    (27) create_table_statement -> . CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON
+    (33) select_statement -> . SELECT columns FROM NAME SEMICOLON
+    (34) select_statement -> . SELECT columns FROM NAME WHERE a SEMICOLON
+    (35) select_statement -> . SELECT TIMES FROM NAME SEMICOLON
+    (36) select_statement -> . SELECT TIMES FROM NAME WHERE a SEMICOLON
+    (37) insert_statement -> . INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON
+    (42) create_function_statement -> . CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON
+    (43) create_procedure_statement -> . CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON
+    (46) alter_table_statement -> . ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON
+    (47) alter_table_statement -> . ALTER TABLE NAME DROP COLUMN NAME SEMICOLON
+    (48) alter_function_statement -> . ALTER FUNCTION
+    (49) alter_procedure_statement -> . ALTER PROCEDURE
+    (50) if_statement -> . IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON
+    (51) exec_statement -> . EXEC NAME vals SEMICOLON
+    (52) drop_table_statement -> . DROP TABLE NAME SEMICOLON
+    (56) case_statement -> .
+    (53) update_statement -> . UPDATE NAME SET column_assignments WHERE a SEMICOLON
+
+  ! shift/reduce conflict for CREATE resolved as shift
+  ! shift/reduce conflict for USE resolved as shift
+  ! shift/reduce conflict for DECLARE resolved as shift
+  ! shift/reduce conflict for SET resolved as shift
+  ! shift/reduce conflict for SELECT resolved as shift
+  ! shift/reduce conflict for INSERT resolved as shift
+  ! shift/reduce conflict for ALTER resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for EXEC resolved as shift
+  ! shift/reduce conflict for DROP resolved as shift
+  ! reduce/reduce conflict for $end resolved using rule 1 (init -> statements .)
+  ! shift/reduce conflict for UPDATE resolved as shift
+    $end            reduce using rule 1 (init -> statements .)
+    CREATE          shift and go to state 21
+    USE             shift and go to state 22
+    DECLARE         shift and go to state 23
+    SET             shift and go to state 24
+    SELECT          shift and go to state 25
+    INSERT          shift and go to state 26
+    ALTER           shift and go to state 27
+    IF              shift and go to state 29
+    EXEC            shift and go to state 30
+    DROP            shift and go to state 28
+    UPDATE          shift and go to state 31
+
+  ! CREATE          [ reduce using rule 56 (case_statement -> .) ]
+  ! USE             [ reduce using rule 56 (case_statement -> .) ]
+  ! DECLARE         [ reduce using rule 56 (case_statement -> .) ]
+  ! SET             [ reduce using rule 56 (case_statement -> .) ]
+  ! SELECT          [ reduce using rule 56 (case_statement -> .) ]
+  ! INSERT          [ reduce using rule 56 (case_statement -> .) ]
+  ! ALTER           [ reduce using rule 56 (case_statement -> .) ]
+  ! IF              [ reduce using rule 56 (case_statement -> .) ]
+  ! EXEC            [ reduce using rule 56 (case_statement -> .) ]
+  ! DROP            [ reduce using rule 56 (case_statement -> .) ]
+  ! UPDATE          [ reduce using rule 56 (case_statement -> .) ]
+  ! $end            [ reduce using rule 56 (case_statement -> .) ]
+
+    statement                      shift and go to state 3
+    create_database_statement      shift and go to state 4
+    use_statement                  shift and go to state 5
+    declare_statement              shift and go to state 6
+    set_statement                  shift and go to state 7
+    create_table_statement         shift and go to state 8
+    select_statement               shift and go to state 9
+    insert_statement               shift and go to state 10
+    create_function_statement      shift and go to state 11
+    create_procedure_statement     shift and go to state 12
+    alter_table_statement          shift and go to state 13
+    alter_function_statement       shift and go to state 14
+    alter_procedure_statement      shift and go to state 15
+    if_statement                   shift and go to state 16
+    exec_statement                 shift and go to state 17
+    drop_table_statement           shift and go to state 18
+    case_statement                 shift and go to state 19
+    update_statement               shift and go to state 20
+
+state 3
+
+    (2) statements -> statements statement .
+
+    CREATE          reduce using rule 2 (statements -> statements statement .)
+    USE             reduce using rule 2 (statements -> statements statement .)
+    DECLARE         reduce using rule 2 (statements -> statements statement .)
+    SET             reduce using rule 2 (statements -> statements statement .)
+    SELECT          reduce using rule 2 (statements -> statements statement .)
+    INSERT          reduce using rule 2 (statements -> statements statement .)
+    ALTER           reduce using rule 2 (statements -> statements statement .)
+    IF              reduce using rule 2 (statements -> statements statement .)
+    EXEC            reduce using rule 2 (statements -> statements statement .)
+    DROP            reduce using rule 2 (statements -> statements statement .)
+    UPDATE          reduce using rule 2 (statements -> statements statement .)
+    $end            reduce using rule 2 (statements -> statements statement .)
+    END             reduce using rule 2 (statements -> statements statement .)
+
+
+state 4
+
+    (4) statement -> create_database_statement .
+
+    CREATE          reduce using rule 4 (statement -> create_database_statement .)
+    USE             reduce using rule 4 (statement -> create_database_statement .)
+    DECLARE         reduce using rule 4 (statement -> create_database_statement .)
+    SET             reduce using rule 4 (statement -> create_database_statement .)
+    SELECT          reduce using rule 4 (statement -> create_database_statement .)
+    INSERT          reduce using rule 4 (statement -> create_database_statement .)
+    ALTER           reduce using rule 4 (statement -> create_database_statement .)
+    IF              reduce using rule 4 (statement -> create_database_statement .)
+    EXEC            reduce using rule 4 (statement -> create_database_statement .)
+    DROP            reduce using rule 4 (statement -> create_database_statement .)
+    UPDATE          reduce using rule 4 (statement -> create_database_statement .)
+    $end            reduce using rule 4 (statement -> create_database_statement .)
+    END             reduce using rule 4 (statement -> create_database_statement .)
+
+
+state 5
+
+    (5) statement -> use_statement .
+
+    CREATE          reduce using rule 5 (statement -> use_statement .)
+    USE             reduce using rule 5 (statement -> use_statement .)
+    DECLARE         reduce using rule 5 (statement -> use_statement .)
+    SET             reduce using rule 5 (statement -> use_statement .)
+    SELECT          reduce using rule 5 (statement -> use_statement .)
+    INSERT          reduce using rule 5 (statement -> use_statement .)
+    ALTER           reduce using rule 5 (statement -> use_statement .)
+    IF              reduce using rule 5 (statement -> use_statement .)
+    EXEC            reduce using rule 5 (statement -> use_statement .)
+    DROP            reduce using rule 5 (statement -> use_statement .)
+    UPDATE          reduce using rule 5 (statement -> use_statement .)
+    $end            reduce using rule 5 (statement -> use_statement .)
+    END             reduce using rule 5 (statement -> use_statement .)
+
+
+state 6
+
+    (6) statement -> declare_statement .
+
+    CREATE          reduce using rule 6 (statement -> declare_statement .)
+    USE             reduce using rule 6 (statement -> declare_statement .)
+    DECLARE         reduce using rule 6 (statement -> declare_statement .)
+    SET             reduce using rule 6 (statement -> declare_statement .)
+    SELECT          reduce using rule 6 (statement -> declare_statement .)
+    INSERT          reduce using rule 6 (statement -> declare_statement .)
+    ALTER           reduce using rule 6 (statement -> declare_statement .)
+    IF              reduce using rule 6 (statement -> declare_statement .)
+    EXEC            reduce using rule 6 (statement -> declare_statement .)
+    DROP            reduce using rule 6 (statement -> declare_statement .)
+    UPDATE          reduce using rule 6 (statement -> declare_statement .)
+    $end            reduce using rule 6 (statement -> declare_statement .)
+    END             reduce using rule 6 (statement -> declare_statement .)
+
+
+state 7
+
+    (7) statement -> set_statement .
+
+    CREATE          reduce using rule 7 (statement -> set_statement .)
+    USE             reduce using rule 7 (statement -> set_statement .)
+    DECLARE         reduce using rule 7 (statement -> set_statement .)
+    SET             reduce using rule 7 (statement -> set_statement .)
+    SELECT          reduce using rule 7 (statement -> set_statement .)
+    INSERT          reduce using rule 7 (statement -> set_statement .)
+    ALTER           reduce using rule 7 (statement -> set_statement .)
+    IF              reduce using rule 7 (statement -> set_statement .)
+    EXEC            reduce using rule 7 (statement -> set_statement .)
+    DROP            reduce using rule 7 (statement -> set_statement .)
+    UPDATE          reduce using rule 7 (statement -> set_statement .)
+    $end            reduce using rule 7 (statement -> set_statement .)
+    END             reduce using rule 7 (statement -> set_statement .)
+
+
+state 8
+
+    (8) statement -> create_table_statement .
+
+    CREATE          reduce using rule 8 (statement -> create_table_statement .)
+    USE             reduce using rule 8 (statement -> create_table_statement .)
+    DECLARE         reduce using rule 8 (statement -> create_table_statement .)
+    SET             reduce using rule 8 (statement -> create_table_statement .)
+    SELECT          reduce using rule 8 (statement -> create_table_statement .)
+    INSERT          reduce using rule 8 (statement -> create_table_statement .)
+    ALTER           reduce using rule 8 (statement -> create_table_statement .)
+    IF              reduce using rule 8 (statement -> create_table_statement .)
+    EXEC            reduce using rule 8 (statement -> create_table_statement .)
+    DROP            reduce using rule 8 (statement -> create_table_statement .)
+    UPDATE          reduce using rule 8 (statement -> create_table_statement .)
+    $end            reduce using rule 8 (statement -> create_table_statement .)
+    END             reduce using rule 8 (statement -> create_table_statement .)
+
+
+state 9
+
+    (9) statement -> select_statement .
+
+    CREATE          reduce using rule 9 (statement -> select_statement .)
+    USE             reduce using rule 9 (statement -> select_statement .)
+    DECLARE         reduce using rule 9 (statement -> select_statement .)
+    SET             reduce using rule 9 (statement -> select_statement .)
+    SELECT          reduce using rule 9 (statement -> select_statement .)
+    INSERT          reduce using rule 9 (statement -> select_statement .)
+    ALTER           reduce using rule 9 (statement -> select_statement .)
+    IF              reduce using rule 9 (statement -> select_statement .)
+    EXEC            reduce using rule 9 (statement -> select_statement .)
+    DROP            reduce using rule 9 (statement -> select_statement .)
+    UPDATE          reduce using rule 9 (statement -> select_statement .)
+    $end            reduce using rule 9 (statement -> select_statement .)
+    END             reduce using rule 9 (statement -> select_statement .)
+
+
+state 10
+
+    (10) statement -> insert_statement .
+
+    CREATE          reduce using rule 10 (statement -> insert_statement .)
+    USE             reduce using rule 10 (statement -> insert_statement .)
+    DECLARE         reduce using rule 10 (statement -> insert_statement .)
+    SET             reduce using rule 10 (statement -> insert_statement .)
+    SELECT          reduce using rule 10 (statement -> insert_statement .)
+    INSERT          reduce using rule 10 (statement -> insert_statement .)
+    ALTER           reduce using rule 10 (statement -> insert_statement .)
+    IF              reduce using rule 10 (statement -> insert_statement .)
+    EXEC            reduce using rule 10 (statement -> insert_statement .)
+    DROP            reduce using rule 10 (statement -> insert_statement .)
+    UPDATE          reduce using rule 10 (statement -> insert_statement .)
+    $end            reduce using rule 10 (statement -> insert_statement .)
+    END             reduce using rule 10 (statement -> insert_statement .)
+
+
+state 11
+
+    (11) statement -> create_function_statement .
+
+    CREATE          reduce using rule 11 (statement -> create_function_statement .)
+    USE             reduce using rule 11 (statement -> create_function_statement .)
+    DECLARE         reduce using rule 11 (statement -> create_function_statement .)
+    SET             reduce using rule 11 (statement -> create_function_statement .)
+    SELECT          reduce using rule 11 (statement -> create_function_statement .)
+    INSERT          reduce using rule 11 (statement -> create_function_statement .)
+    ALTER           reduce using rule 11 (statement -> create_function_statement .)
+    IF              reduce using rule 11 (statement -> create_function_statement .)
+    EXEC            reduce using rule 11 (statement -> create_function_statement .)
+    DROP            reduce using rule 11 (statement -> create_function_statement .)
+    UPDATE          reduce using rule 11 (statement -> create_function_statement .)
+    $end            reduce using rule 11 (statement -> create_function_statement .)
+    END             reduce using rule 11 (statement -> create_function_statement .)
+
+
+state 12
+
+    (12) statement -> create_procedure_statement .
+
+    CREATE          reduce using rule 12 (statement -> create_procedure_statement .)
+    USE             reduce using rule 12 (statement -> create_procedure_statement .)
+    DECLARE         reduce using rule 12 (statement -> create_procedure_statement .)
+    SET             reduce using rule 12 (statement -> create_procedure_statement .)
+    SELECT          reduce using rule 12 (statement -> create_procedure_statement .)
+    INSERT          reduce using rule 12 (statement -> create_procedure_statement .)
+    ALTER           reduce using rule 12 (statement -> create_procedure_statement .)
+    IF              reduce using rule 12 (statement -> create_procedure_statement .)
+    EXEC            reduce using rule 12 (statement -> create_procedure_statement .)
+    DROP            reduce using rule 12 (statement -> create_procedure_statement .)
+    UPDATE          reduce using rule 12 (statement -> create_procedure_statement .)
+    $end            reduce using rule 12 (statement -> create_procedure_statement .)
+    END             reduce using rule 12 (statement -> create_procedure_statement .)
+
+
+state 13
+
+    (13) statement -> alter_table_statement .
+
+    CREATE          reduce using rule 13 (statement -> alter_table_statement .)
+    USE             reduce using rule 13 (statement -> alter_table_statement .)
+    DECLARE         reduce using rule 13 (statement -> alter_table_statement .)
+    SET             reduce using rule 13 (statement -> alter_table_statement .)
+    SELECT          reduce using rule 13 (statement -> alter_table_statement .)
+    INSERT          reduce using rule 13 (statement -> alter_table_statement .)
+    ALTER           reduce using rule 13 (statement -> alter_table_statement .)
+    IF              reduce using rule 13 (statement -> alter_table_statement .)
+    EXEC            reduce using rule 13 (statement -> alter_table_statement .)
+    DROP            reduce using rule 13 (statement -> alter_table_statement .)
+    UPDATE          reduce using rule 13 (statement -> alter_table_statement .)
+    $end            reduce using rule 13 (statement -> alter_table_statement .)
+    END             reduce using rule 13 (statement -> alter_table_statement .)
+
+
+state 14
+
+    (14) statement -> alter_function_statement .
+
+    CREATE          reduce using rule 14 (statement -> alter_function_statement .)
+    USE             reduce using rule 14 (statement -> alter_function_statement .)
+    DECLARE         reduce using rule 14 (statement -> alter_function_statement .)
+    SET             reduce using rule 14 (statement -> alter_function_statement .)
+    SELECT          reduce using rule 14 (statement -> alter_function_statement .)
+    INSERT          reduce using rule 14 (statement -> alter_function_statement .)
+    ALTER           reduce using rule 14 (statement -> alter_function_statement .)
+    IF              reduce using rule 14 (statement -> alter_function_statement .)
+    EXEC            reduce using rule 14 (statement -> alter_function_statement .)
+    DROP            reduce using rule 14 (statement -> alter_function_statement .)
+    UPDATE          reduce using rule 14 (statement -> alter_function_statement .)
+    $end            reduce using rule 14 (statement -> alter_function_statement .)
+    END             reduce using rule 14 (statement -> alter_function_statement .)
+
+
+state 15
+
+    (15) statement -> alter_procedure_statement .
+
+    CREATE          reduce using rule 15 (statement -> alter_procedure_statement .)
+    USE             reduce using rule 15 (statement -> alter_procedure_statement .)
+    DECLARE         reduce using rule 15 (statement -> alter_procedure_statement .)
+    SET             reduce using rule 15 (statement -> alter_procedure_statement .)
+    SELECT          reduce using rule 15 (statement -> alter_procedure_statement .)
+    INSERT          reduce using rule 15 (statement -> alter_procedure_statement .)
+    ALTER           reduce using rule 15 (statement -> alter_procedure_statement .)
+    IF              reduce using rule 15 (statement -> alter_procedure_statement .)
+    EXEC            reduce using rule 15 (statement -> alter_procedure_statement .)
+    DROP            reduce using rule 15 (statement -> alter_procedure_statement .)
+    UPDATE          reduce using rule 15 (statement -> alter_procedure_statement .)
+    $end            reduce using rule 15 (statement -> alter_procedure_statement .)
+    END             reduce using rule 15 (statement -> alter_procedure_statement .)
+
+
+state 16
+
+    (16) statement -> if_statement .
+
+    CREATE          reduce using rule 16 (statement -> if_statement .)
+    USE             reduce using rule 16 (statement -> if_statement .)
+    DECLARE         reduce using rule 16 (statement -> if_statement .)
+    SET             reduce using rule 16 (statement -> if_statement .)
+    SELECT          reduce using rule 16 (statement -> if_statement .)
+    INSERT          reduce using rule 16 (statement -> if_statement .)
+    ALTER           reduce using rule 16 (statement -> if_statement .)
+    IF              reduce using rule 16 (statement -> if_statement .)
+    EXEC            reduce using rule 16 (statement -> if_statement .)
+    DROP            reduce using rule 16 (statement -> if_statement .)
+    UPDATE          reduce using rule 16 (statement -> if_statement .)
+    $end            reduce using rule 16 (statement -> if_statement .)
+    END             reduce using rule 16 (statement -> if_statement .)
+
+
+state 17
+
+    (17) statement -> exec_statement .
+
+    CREATE          reduce using rule 17 (statement -> exec_statement .)
+    USE             reduce using rule 17 (statement -> exec_statement .)
+    DECLARE         reduce using rule 17 (statement -> exec_statement .)
+    SET             reduce using rule 17 (statement -> exec_statement .)
+    SELECT          reduce using rule 17 (statement -> exec_statement .)
+    INSERT          reduce using rule 17 (statement -> exec_statement .)
+    ALTER           reduce using rule 17 (statement -> exec_statement .)
+    IF              reduce using rule 17 (statement -> exec_statement .)
+    EXEC            reduce using rule 17 (statement -> exec_statement .)
+    DROP            reduce using rule 17 (statement -> exec_statement .)
+    UPDATE          reduce using rule 17 (statement -> exec_statement .)
+    $end            reduce using rule 17 (statement -> exec_statement .)
+    END             reduce using rule 17 (statement -> exec_statement .)
+
+
+state 18
+
+    (18) statement -> drop_table_statement .
+
+    CREATE          reduce using rule 18 (statement -> drop_table_statement .)
+    USE             reduce using rule 18 (statement -> drop_table_statement .)
+    DECLARE         reduce using rule 18 (statement -> drop_table_statement .)
+    SET             reduce using rule 18 (statement -> drop_table_statement .)
+    SELECT          reduce using rule 18 (statement -> drop_table_statement .)
+    INSERT          reduce using rule 18 (statement -> drop_table_statement .)
+    ALTER           reduce using rule 18 (statement -> drop_table_statement .)
+    IF              reduce using rule 18 (statement -> drop_table_statement .)
+    EXEC            reduce using rule 18 (statement -> drop_table_statement .)
+    DROP            reduce using rule 18 (statement -> drop_table_statement .)
+    UPDATE          reduce using rule 18 (statement -> drop_table_statement .)
+    $end            reduce using rule 18 (statement -> drop_table_statement .)
+    END             reduce using rule 18 (statement -> drop_table_statement .)
+
+
+state 19
+
+    (19) statement -> case_statement .
+
+    CREATE          reduce using rule 19 (statement -> case_statement .)
+    USE             reduce using rule 19 (statement -> case_statement .)
+    DECLARE         reduce using rule 19 (statement -> case_statement .)
+    SET             reduce using rule 19 (statement -> case_statement .)
+    SELECT          reduce using rule 19 (statement -> case_statement .)
+    INSERT          reduce using rule 19 (statement -> case_statement .)
+    ALTER           reduce using rule 19 (statement -> case_statement .)
+    IF              reduce using rule 19 (statement -> case_statement .)
+    EXEC            reduce using rule 19 (statement -> case_statement .)
+    DROP            reduce using rule 19 (statement -> case_statement .)
+    UPDATE          reduce using rule 19 (statement -> case_statement .)
+    $end            reduce using rule 19 (statement -> case_statement .)
+    END             reduce using rule 19 (statement -> case_statement .)
+
+
+state 20
+
+    (20) statement -> update_statement .
+
+    CREATE          reduce using rule 20 (statement -> update_statement .)
+    USE             reduce using rule 20 (statement -> update_statement .)
+    DECLARE         reduce using rule 20 (statement -> update_statement .)
+    SET             reduce using rule 20 (statement -> update_statement .)
+    SELECT          reduce using rule 20 (statement -> update_statement .)
+    INSERT          reduce using rule 20 (statement -> update_statement .)
+    ALTER           reduce using rule 20 (statement -> update_statement .)
+    IF              reduce using rule 20 (statement -> update_statement .)
+    EXEC            reduce using rule 20 (statement -> update_statement .)
+    DROP            reduce using rule 20 (statement -> update_statement .)
+    UPDATE          reduce using rule 20 (statement -> update_statement .)
+    $end            reduce using rule 20 (statement -> update_statement .)
+    END             reduce using rule 20 (statement -> update_statement .)
+
+
+state 21
+
+    (21) create_database_statement -> CREATE . DATA BASE NAME SEMICOLON
+    (27) create_table_statement -> CREATE . TABLE NAME L_PAREN properties R_PAREN SEMICOLON
+    (42) create_function_statement -> CREATE . FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON
+    (43) create_procedure_statement -> CREATE . PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON
+
+    DATA            shift and go to state 32
+    TABLE           shift and go to state 33
+    FUNCTION        shift and go to state 34
+    PROCEDURE       shift and go to state 35
+
+
+state 22
+
+    (22) use_statement -> USE . NAME SEMICOLON
+
+    NAME            shift and go to state 36
+
+
+state 23
+
+    (23) declare_statement -> DECLARE . ID AS type SEMICOLON
+
+    ID              shift and go to state 37
+
+
+state 24
+
+    (24) set_statement -> SET . assignments SEMICOLON
+    (25) assignments -> . assignments COMMA ID ASSIGN a
+    (26) assignments -> . ID ASSIGN a
+
+    ID              shift and go to state 39
+
+    assignments                    shift and go to state 38
+
+state 25
+
+    (33) select_statement -> SELECT . columns FROM NAME SEMICOLON
+    (34) select_statement -> SELECT . columns FROM NAME WHERE a SEMICOLON
+    (35) select_statement -> SELECT . TIMES FROM NAME SEMICOLON
+    (36) select_statement -> SELECT . TIMES FROM NAME WHERE a SEMICOLON
+    (38) columns -> . columns COMMA NAME
+    (39) columns -> . NAME
+
+    TIMES           shift and go to state 42
+    NAME            shift and go to state 41
+
+    columns                        shift and go to state 40
+
+state 26
+
+    (37) insert_statement -> INSERT . INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON
+
+    INTO            shift and go to state 43
+
+
+state 27
+
+    (46) alter_table_statement -> ALTER . TABLE NAME ADD COLUMN NAME type SEMICOLON
+    (47) alter_table_statement -> ALTER . TABLE NAME DROP COLUMN NAME SEMICOLON
+    (48) alter_function_statement -> ALTER . FUNCTION
+    (49) alter_procedure_statement -> ALTER . PROCEDURE
+
+    TABLE           shift and go to state 44
+    FUNCTION        shift and go to state 45
+    PROCEDURE       shift and go to state 46
+
+
+state 28
+
+    (52) drop_table_statement -> DROP . TABLE NAME SEMICOLON
+
+    TABLE           shift and go to state 47
+
+
+state 29
+
+    (50) if_statement -> IF . L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON
+
+    L_PAREN         shift and go to state 48
+
+
+state 30
+
+    (51) exec_statement -> EXEC . NAME vals SEMICOLON
+
+    NAME            shift and go to state 49
+
+
+state 31
+
+    (53) update_statement -> UPDATE . NAME SET column_assignments WHERE a SEMICOLON
+
+    NAME            shift and go to state 50
+
+
+state 32
+
+    (21) create_database_statement -> CREATE DATA . BASE NAME SEMICOLON
+
+    BASE            shift and go to state 51
+
+
+state 33
+
+    (27) create_table_statement -> CREATE TABLE . NAME L_PAREN properties R_PAREN SEMICOLON
+
+    NAME            shift and go to state 52
+
+
+state 34
+
+    (42) create_function_statement -> CREATE FUNCTION . NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON
+
+    NAME            shift and go to state 53
+
+
+state 35
+
+    (43) create_procedure_statement -> CREATE PROCEDURE . NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON
+
+    NAME            shift and go to state 54
+
+
+state 36
+
+    (22) use_statement -> USE NAME . SEMICOLON
+
+    SEMICOLON       shift and go to state 55
+
+
+state 37
+
+    (23) declare_statement -> DECLARE ID . AS type SEMICOLON
+
+    AS              shift and go to state 56
+
+
+state 38
+
+    (24) set_statement -> SET assignments . SEMICOLON
+    (25) assignments -> assignments . COMMA ID ASSIGN a
+
+    SEMICOLON       shift and go to state 57
+    COMMA           shift and go to state 58
+
+
+state 39
+
+    (26) assignments -> ID . ASSIGN a
+
+    ASSIGN          shift and go to state 59
+
+
+state 40
+
+    (33) select_statement -> SELECT columns . FROM NAME SEMICOLON
+    (34) select_statement -> SELECT columns . FROM NAME WHERE a SEMICOLON
+    (38) columns -> columns . COMMA NAME
+
+    FROM            shift and go to state 60
+    COMMA           shift and go to state 61
+
+
+state 41
+
+    (39) columns -> NAME .
+
+    FROM            reduce using rule 39 (columns -> NAME .)
+    COMMA           reduce using rule 39 (columns -> NAME .)
+    R_PAREN         reduce using rule 39 (columns -> NAME .)
+
+
+state 42
+
+    (35) select_statement -> SELECT TIMES . FROM NAME SEMICOLON
+    (36) select_statement -> SELECT TIMES . FROM NAME WHERE a SEMICOLON
+
+    FROM            shift and go to state 62
+
+
+state 43
+
+    (37) insert_statement -> INSERT INTO . NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON
+
+    NAME            shift and go to state 63
+
+
+state 44
+
+    (46) alter_table_statement -> ALTER TABLE . NAME ADD COLUMN NAME type SEMICOLON
+    (47) alter_table_statement -> ALTER TABLE . NAME DROP COLUMN NAME SEMICOLON
+
+    NAME            shift and go to state 64
+
+
+state 45
+
+    (48) alter_function_statement -> ALTER FUNCTION .
+
+    CREATE          reduce using rule 48 (alter_function_statement -> ALTER FUNCTION .)
+    USE             reduce using rule 48 (alter_function_statement -> ALTER FUNCTION .)
+    DECLARE         reduce using rule 48 (alter_function_statement -> ALTER FUNCTION .)
+    SET             reduce using rule 48 (alter_function_statement -> ALTER FUNCTION .)
+    SELECT          reduce using rule 48 (alter_function_statement -> ALTER FUNCTION .)
+    INSERT          reduce using rule 48 (alter_function_statement -> ALTER FUNCTION .)
+    ALTER           reduce using rule 48 (alter_function_statement -> ALTER FUNCTION .)
+    IF              reduce using rule 48 (alter_function_statement -> ALTER FUNCTION .)
+    EXEC            reduce using rule 48 (alter_function_statement -> ALTER FUNCTION .)
+    DROP            reduce using rule 48 (alter_function_statement -> ALTER FUNCTION .)
+    UPDATE          reduce using rule 48 (alter_function_statement -> ALTER FUNCTION .)
+    $end            reduce using rule 48 (alter_function_statement -> ALTER FUNCTION .)
+    END             reduce using rule 48 (alter_function_statement -> ALTER FUNCTION .)
+
+
+state 46
+
+    (49) alter_procedure_statement -> ALTER PROCEDURE .
+
+    CREATE          reduce using rule 49 (alter_procedure_statement -> ALTER PROCEDURE .)
+    USE             reduce using rule 49 (alter_procedure_statement -> ALTER PROCEDURE .)
+    DECLARE         reduce using rule 49 (alter_procedure_statement -> ALTER PROCEDURE .)
+    SET             reduce using rule 49 (alter_procedure_statement -> ALTER PROCEDURE .)
+    SELECT          reduce using rule 49 (alter_procedure_statement -> ALTER PROCEDURE .)
+    INSERT          reduce using rule 49 (alter_procedure_statement -> ALTER PROCEDURE .)
+    ALTER           reduce using rule 49 (alter_procedure_statement -> ALTER PROCEDURE .)
+    IF              reduce using rule 49 (alter_procedure_statement -> ALTER PROCEDURE .)
+    EXEC            reduce using rule 49 (alter_procedure_statement -> ALTER PROCEDURE .)
+    DROP            reduce using rule 49 (alter_procedure_statement -> ALTER PROCEDURE .)
+    UPDATE          reduce using rule 49 (alter_procedure_statement -> ALTER PROCEDURE .)
+    $end            reduce using rule 49 (alter_procedure_statement -> ALTER PROCEDURE .)
+    END             reduce using rule 49 (alter_procedure_statement -> ALTER PROCEDURE .)
+
+
+state 47
+
+    (52) drop_table_statement -> DROP TABLE . NAME SEMICOLON
+
+    NAME            shift and go to state 65
+
+
+state 48
+
+    (50) if_statement -> IF L_PAREN . a COMMA a COMMA a R_PAREN SEMICOLON
+    (64) a -> . INTEGER_VALUE
+    (65) a -> . STRING
+
+    INTEGER_VALUE   shift and go to state 67
+    STRING          shift and go to state 68
+
+    a                              shift and go to state 66
+
+state 49
+
+    (51) exec_statement -> EXEC NAME . vals SEMICOLON
+    (40) vals -> . vals COMMA a
+    (41) vals -> . a
+    (64) a -> . INTEGER_VALUE
+    (65) a -> . STRING
+
+    INTEGER_VALUE   shift and go to state 67
+    STRING          shift and go to state 68
+
+    vals                           shift and go to state 69
+    a                              shift and go to state 70
+
+state 50
+
+    (53) update_statement -> UPDATE NAME . SET column_assignments WHERE a SEMICOLON
+
+    SET             shift and go to state 71
+
+
+state 51
+
+    (21) create_database_statement -> CREATE DATA BASE . NAME SEMICOLON
+
+    NAME            shift and go to state 72
+
+
+state 52
+
+    (27) create_table_statement -> CREATE TABLE NAME . L_PAREN properties R_PAREN SEMICOLON
+
+    L_PAREN         shift and go to state 73
+
+
+state 53
+
+    (42) create_function_statement -> CREATE FUNCTION NAME . L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON
+
+    L_PAREN         shift and go to state 74
+
+
+state 54
+
+    (43) create_procedure_statement -> CREATE PROCEDURE NAME . L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON
+
+    L_PAREN         shift and go to state 75
+
+
+state 55
+
+    (22) use_statement -> USE NAME SEMICOLON .
+
+    CREATE          reduce using rule 22 (use_statement -> USE NAME SEMICOLON .)
+    USE             reduce using rule 22 (use_statement -> USE NAME SEMICOLON .)
+    DECLARE         reduce using rule 22 (use_statement -> USE NAME SEMICOLON .)
+    SET             reduce using rule 22 (use_statement -> USE NAME SEMICOLON .)
+    SELECT          reduce using rule 22 (use_statement -> USE NAME SEMICOLON .)
+    INSERT          reduce using rule 22 (use_statement -> USE NAME SEMICOLON .)
+    ALTER           reduce using rule 22 (use_statement -> USE NAME SEMICOLON .)
+    IF              reduce using rule 22 (use_statement -> USE NAME SEMICOLON .)
+    EXEC            reduce using rule 22 (use_statement -> USE NAME SEMICOLON .)
+    DROP            reduce using rule 22 (use_statement -> USE NAME SEMICOLON .)
+    UPDATE          reduce using rule 22 (use_statement -> USE NAME SEMICOLON .)
+    $end            reduce using rule 22 (use_statement -> USE NAME SEMICOLON .)
+    END             reduce using rule 22 (use_statement -> USE NAME SEMICOLON .)
+
+
+state 56
+
+    (23) declare_statement -> DECLARE ID AS . type SEMICOLON
+    (57) type -> . INT
+    (58) type -> . DECIMAL
+    (59) type -> . BIT
+    (60) type -> . NCHAR
+    (61) type -> . NVARCHAR
+    (62) type -> . DATE
+    (63) type -> . DATETIME
+
+    INT             shift and go to state 77
+    DECIMAL         shift and go to state 78
+    BIT             shift and go to state 79
+    NCHAR           shift and go to state 80
+    NVARCHAR        shift and go to state 81
+    DATE            shift and go to state 82
+    DATETIME        shift and go to state 83
+
+    type                           shift and go to state 76
+
+state 57
+
+    (24) set_statement -> SET assignments SEMICOLON .
+
+    CREATE          reduce using rule 24 (set_statement -> SET assignments SEMICOLON .)
+    USE             reduce using rule 24 (set_statement -> SET assignments SEMICOLON .)
+    DECLARE         reduce using rule 24 (set_statement -> SET assignments SEMICOLON .)
+    SET             reduce using rule 24 (set_statement -> SET assignments SEMICOLON .)
+    SELECT          reduce using rule 24 (set_statement -> SET assignments SEMICOLON .)
+    INSERT          reduce using rule 24 (set_statement -> SET assignments SEMICOLON .)
+    ALTER           reduce using rule 24 (set_statement -> SET assignments SEMICOLON .)
+    IF              reduce using rule 24 (set_statement -> SET assignments SEMICOLON .)
+    EXEC            reduce using rule 24 (set_statement -> SET assignments SEMICOLON .)
+    DROP            reduce using rule 24 (set_statement -> SET assignments SEMICOLON .)
+    UPDATE          reduce using rule 24 (set_statement -> SET assignments SEMICOLON .)
+    $end            reduce using rule 24 (set_statement -> SET assignments SEMICOLON .)
+    END             reduce using rule 24 (set_statement -> SET assignments SEMICOLON .)
+
+
+state 58
+
+    (25) assignments -> assignments COMMA . ID ASSIGN a
+
+    ID              shift and go to state 84
+
+
+state 59
+
+    (26) assignments -> ID ASSIGN . a
+    (64) a -> . INTEGER_VALUE
+    (65) a -> . STRING
+
+    INTEGER_VALUE   shift and go to state 67
+    STRING          shift and go to state 68
+
+    a                              shift and go to state 85
+
+state 60
+
+    (33) select_statement -> SELECT columns FROM . NAME SEMICOLON
+    (34) select_statement -> SELECT columns FROM . NAME WHERE a SEMICOLON
+
+    NAME            shift and go to state 86
+
+
+state 61
+
+    (38) columns -> columns COMMA . NAME
+
+    NAME            shift and go to state 87
+
+
+state 62
+
+    (35) select_statement -> SELECT TIMES FROM . NAME SEMICOLON
+    (36) select_statement -> SELECT TIMES FROM . NAME WHERE a SEMICOLON
+
+    NAME            shift and go to state 88
+
+
+state 63
+
+    (37) insert_statement -> INSERT INTO NAME . L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON
+
+    L_PAREN         shift and go to state 89
+
+
+state 64
+
+    (46) alter_table_statement -> ALTER TABLE NAME . ADD COLUMN NAME type SEMICOLON
+    (47) alter_table_statement -> ALTER TABLE NAME . DROP COLUMN NAME SEMICOLON
+
+    ADD             shift and go to state 90
+    DROP            shift and go to state 91
+
+
+state 65
+
+    (52) drop_table_statement -> DROP TABLE NAME . SEMICOLON
+
+    SEMICOLON       shift and go to state 92
+
+
+state 66
+
+    (50) if_statement -> IF L_PAREN a . COMMA a COMMA a R_PAREN SEMICOLON
+
+    COMMA           shift and go to state 93
+
+
+state 67
+
+    (64) a -> INTEGER_VALUE .
+
+    COMMA           reduce using rule 64 (a -> INTEGER_VALUE .)
+    SEMICOLON       reduce using rule 64 (a -> INTEGER_VALUE .)
+    R_PAREN         reduce using rule 64 (a -> INTEGER_VALUE .)
+    WHERE           reduce using rule 64 (a -> INTEGER_VALUE .)
+
+
+state 68
+
+    (65) a -> STRING .
+
+    COMMA           reduce using rule 65 (a -> STRING .)
+    SEMICOLON       reduce using rule 65 (a -> STRING .)
+    R_PAREN         reduce using rule 65 (a -> STRING .)
+    WHERE           reduce using rule 65 (a -> STRING .)
+
+
+state 69
+
+    (51) exec_statement -> EXEC NAME vals . SEMICOLON
+    (40) vals -> vals . COMMA a
+
+    SEMICOLON       shift and go to state 94
+    COMMA           shift and go to state 95
+
+
+state 70
+
+    (41) vals -> a .
+
+    SEMICOLON       reduce using rule 41 (vals -> a .)
+    COMMA           reduce using rule 41 (vals -> a .)
+    R_PAREN         reduce using rule 41 (vals -> a .)
+
+
+state 71
+
+    (53) update_statement -> UPDATE NAME SET . column_assignments WHERE a SEMICOLON
+    (54) column_assignments -> . column_assignments COMMA NAME ASSIGN a
+    (55) column_assignments -> . NAME ASSIGN a
+
+    NAME            shift and go to state 96
+
+    column_assignments             shift and go to state 97
+
+state 72
+
+    (21) create_database_statement -> CREATE DATA BASE NAME . SEMICOLON
+
+    SEMICOLON       shift and go to state 98
+
+
+state 73
+
+    (27) create_table_statement -> CREATE TABLE NAME L_PAREN . properties R_PAREN SEMICOLON
+    (28) properties -> . properties COMMA property
+    (29) properties -> . property
+    (30) property -> . NAME type PRIMARY KEY
+    (31) property -> . NAME type
+    (32) property -> . NAME type REFERENCE NAME L_PAREN NAME R_PAREN
+
+    NAME            shift and go to state 99
+
+    properties                     shift and go to state 100
+    property                       shift and go to state 101
+
+state 74
+
+    (42) create_function_statement -> CREATE FUNCTION NAME L_PAREN . parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON
+    (44) parameters -> . parameters COMMA ID AS type
+    (45) parameters -> . ID AS type
+
+    ID              shift and go to state 103
+
+    parameters                     shift and go to state 102
+
+state 75
+
+    (43) create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN . parameters R_PAREN AS BEGIN statements END SEMICOLON
+    (44) parameters -> . parameters COMMA ID AS type
+    (45) parameters -> . ID AS type
+
+    ID              shift and go to state 103
+
+    parameters                     shift and go to state 104
+
+state 76
+
+    (23) declare_statement -> DECLARE ID AS type . SEMICOLON
+
+    SEMICOLON       shift and go to state 105
+
+
+state 77
+
+    (57) type -> INT .
+
+    SEMICOLON       reduce using rule 57 (type -> INT .)
+    PRIMARY         reduce using rule 57 (type -> INT .)
+    REFERENCE       reduce using rule 57 (type -> INT .)
+    R_PAREN         reduce using rule 57 (type -> INT .)
+    COMMA           reduce using rule 57 (type -> INT .)
+    AS              reduce using rule 57 (type -> INT .)
+
+
+state 78
+
+    (58) type -> DECIMAL .
+
+    SEMICOLON       reduce using rule 58 (type -> DECIMAL .)
+    PRIMARY         reduce using rule 58 (type -> DECIMAL .)
+    REFERENCE       reduce using rule 58 (type -> DECIMAL .)
+    R_PAREN         reduce using rule 58 (type -> DECIMAL .)
+    COMMA           reduce using rule 58 (type -> DECIMAL .)
+    AS              reduce using rule 58 (type -> DECIMAL .)
+
+
+state 79
+
+    (59) type -> BIT .
+
+    SEMICOLON       reduce using rule 59 (type -> BIT .)
+    PRIMARY         reduce using rule 59 (type -> BIT .)
+    REFERENCE       reduce using rule 59 (type -> BIT .)
+    R_PAREN         reduce using rule 59 (type -> BIT .)
+    COMMA           reduce using rule 59 (type -> BIT .)
+    AS              reduce using rule 59 (type -> BIT .)
+
+
+state 80
+
+    (60) type -> NCHAR .
+
+    SEMICOLON       reduce using rule 60 (type -> NCHAR .)
+    PRIMARY         reduce using rule 60 (type -> NCHAR .)
+    REFERENCE       reduce using rule 60 (type -> NCHAR .)
+    R_PAREN         reduce using rule 60 (type -> NCHAR .)
+    COMMA           reduce using rule 60 (type -> NCHAR .)
+    AS              reduce using rule 60 (type -> NCHAR .)
+
+
+state 81
+
+    (61) type -> NVARCHAR .
+
+    SEMICOLON       reduce using rule 61 (type -> NVARCHAR .)
+    PRIMARY         reduce using rule 61 (type -> NVARCHAR .)
+    REFERENCE       reduce using rule 61 (type -> NVARCHAR .)
+    R_PAREN         reduce using rule 61 (type -> NVARCHAR .)
+    COMMA           reduce using rule 61 (type -> NVARCHAR .)
+    AS              reduce using rule 61 (type -> NVARCHAR .)
+
+
+state 82
+
+    (62) type -> DATE .
+
+    SEMICOLON       reduce using rule 62 (type -> DATE .)
+    PRIMARY         reduce using rule 62 (type -> DATE .)
+    REFERENCE       reduce using rule 62 (type -> DATE .)
+    R_PAREN         reduce using rule 62 (type -> DATE .)
+    COMMA           reduce using rule 62 (type -> DATE .)
+    AS              reduce using rule 62 (type -> DATE .)
+
+
+state 83
+
+    (63) type -> DATETIME .
+
+    SEMICOLON       reduce using rule 63 (type -> DATETIME .)
+    PRIMARY         reduce using rule 63 (type -> DATETIME .)
+    REFERENCE       reduce using rule 63 (type -> DATETIME .)
+    R_PAREN         reduce using rule 63 (type -> DATETIME .)
+    COMMA           reduce using rule 63 (type -> DATETIME .)
+    AS              reduce using rule 63 (type -> DATETIME .)
+
+
+state 84
+
+    (25) assignments -> assignments COMMA ID . ASSIGN a
+
+    ASSIGN          shift and go to state 106
+
+
+state 85
+
+    (26) assignments -> ID ASSIGN a .
+
+    SEMICOLON       reduce using rule 26 (assignments -> ID ASSIGN a .)
+    COMMA           reduce using rule 26 (assignments -> ID ASSIGN a .)
+
+
+state 86
+
+    (33) select_statement -> SELECT columns FROM NAME . SEMICOLON
+    (34) select_statement -> SELECT columns FROM NAME . WHERE a SEMICOLON
+
+    SEMICOLON       shift and go to state 107
+    WHERE           shift and go to state 108
+
+
+state 87
+
+    (38) columns -> columns COMMA NAME .
+
+    FROM            reduce using rule 38 (columns -> columns COMMA NAME .)
+    COMMA           reduce using rule 38 (columns -> columns COMMA NAME .)
+    R_PAREN         reduce using rule 38 (columns -> columns COMMA NAME .)
+
+
+state 88
+
+    (35) select_statement -> SELECT TIMES FROM NAME . SEMICOLON
+    (36) select_statement -> SELECT TIMES FROM NAME . WHERE a SEMICOLON
+
+    SEMICOLON       shift and go to state 109
+    WHERE           shift and go to state 110
+
+
+state 89
+
+    (37) insert_statement -> INSERT INTO NAME L_PAREN . columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON
+    (38) columns -> . columns COMMA NAME
+    (39) columns -> . NAME
+
+    NAME            shift and go to state 41
+
+    columns                        shift and go to state 111
+
+state 90
+
+    (46) alter_table_statement -> ALTER TABLE NAME ADD . COLUMN NAME type SEMICOLON
+
+    COLUMN          shift and go to state 112
+
+
+state 91
+
+    (47) alter_table_statement -> ALTER TABLE NAME DROP . COLUMN NAME SEMICOLON
+
+    COLUMN          shift and go to state 113
+
+
+state 92
+
+    (52) drop_table_statement -> DROP TABLE NAME SEMICOLON .
+
+    CREATE          reduce using rule 52 (drop_table_statement -> DROP TABLE NAME SEMICOLON .)
+    USE             reduce using rule 52 (drop_table_statement -> DROP TABLE NAME SEMICOLON .)
+    DECLARE         reduce using rule 52 (drop_table_statement -> DROP TABLE NAME SEMICOLON .)
+    SET             reduce using rule 52 (drop_table_statement -> DROP TABLE NAME SEMICOLON .)
+    SELECT          reduce using rule 52 (drop_table_statement -> DROP TABLE NAME SEMICOLON .)
+    INSERT          reduce using rule 52 (drop_table_statement -> DROP TABLE NAME SEMICOLON .)
+    ALTER           reduce using rule 52 (drop_table_statement -> DROP TABLE NAME SEMICOLON .)
+    IF              reduce using rule 52 (drop_table_statement -> DROP TABLE NAME SEMICOLON .)
+    EXEC            reduce using rule 52 (drop_table_statement -> DROP TABLE NAME SEMICOLON .)
+    DROP            reduce using rule 52 (drop_table_statement -> DROP TABLE NAME SEMICOLON .)
+    UPDATE          reduce using rule 52 (drop_table_statement -> DROP TABLE NAME SEMICOLON .)
+    $end            reduce using rule 52 (drop_table_statement -> DROP TABLE NAME SEMICOLON .)
+    END             reduce using rule 52 (drop_table_statement -> DROP TABLE NAME SEMICOLON .)
+
+
+state 93
+
+    (50) if_statement -> IF L_PAREN a COMMA . a COMMA a R_PAREN SEMICOLON
+    (64) a -> . INTEGER_VALUE
+    (65) a -> . STRING
+
+    INTEGER_VALUE   shift and go to state 67
+    STRING          shift and go to state 68
+
+    a                              shift and go to state 114
+
+state 94
+
+    (51) exec_statement -> EXEC NAME vals SEMICOLON .
+
+    CREATE          reduce using rule 51 (exec_statement -> EXEC NAME vals SEMICOLON .)
+    USE             reduce using rule 51 (exec_statement -> EXEC NAME vals SEMICOLON .)
+    DECLARE         reduce using rule 51 (exec_statement -> EXEC NAME vals SEMICOLON .)
+    SET             reduce using rule 51 (exec_statement -> EXEC NAME vals SEMICOLON .)
+    SELECT          reduce using rule 51 (exec_statement -> EXEC NAME vals SEMICOLON .)
+    INSERT          reduce using rule 51 (exec_statement -> EXEC NAME vals SEMICOLON .)
+    ALTER           reduce using rule 51 (exec_statement -> EXEC NAME vals SEMICOLON .)
+    IF              reduce using rule 51 (exec_statement -> EXEC NAME vals SEMICOLON .)
+    EXEC            reduce using rule 51 (exec_statement -> EXEC NAME vals SEMICOLON .)
+    DROP            reduce using rule 51 (exec_statement -> EXEC NAME vals SEMICOLON .)
+    UPDATE          reduce using rule 51 (exec_statement -> EXEC NAME vals SEMICOLON .)
+    $end            reduce using rule 51 (exec_statement -> EXEC NAME vals SEMICOLON .)
+    END             reduce using rule 51 (exec_statement -> EXEC NAME vals SEMICOLON .)
+
+
+state 95
+
+    (40) vals -> vals COMMA . a
+    (64) a -> . INTEGER_VALUE
+    (65) a -> . STRING
+
+    INTEGER_VALUE   shift and go to state 67
+    STRING          shift and go to state 68
+
+    a                              shift and go to state 115
+
+state 96
+
+    (55) column_assignments -> NAME . ASSIGN a
+
+    ASSIGN          shift and go to state 116
+
+
+state 97
+
+    (53) update_statement -> UPDATE NAME SET column_assignments . WHERE a SEMICOLON
+    (54) column_assignments -> column_assignments . COMMA NAME ASSIGN a
+
+    WHERE           shift and go to state 117
+    COMMA           shift and go to state 118
+
+
+state 98
+
+    (21) create_database_statement -> CREATE DATA BASE NAME SEMICOLON .
+
+    CREATE          reduce using rule 21 (create_database_statement -> CREATE DATA BASE NAME SEMICOLON .)
+    USE             reduce using rule 21 (create_database_statement -> CREATE DATA BASE NAME SEMICOLON .)
+    DECLARE         reduce using rule 21 (create_database_statement -> CREATE DATA BASE NAME SEMICOLON .)
+    SET             reduce using rule 21 (create_database_statement -> CREATE DATA BASE NAME SEMICOLON .)
+    SELECT          reduce using rule 21 (create_database_statement -> CREATE DATA BASE NAME SEMICOLON .)
+    INSERT          reduce using rule 21 (create_database_statement -> CREATE DATA BASE NAME SEMICOLON .)
+    ALTER           reduce using rule 21 (create_database_statement -> CREATE DATA BASE NAME SEMICOLON .)
+    IF              reduce using rule 21 (create_database_statement -> CREATE DATA BASE NAME SEMICOLON .)
+    EXEC            reduce using rule 21 (create_database_statement -> CREATE DATA BASE NAME SEMICOLON .)
+    DROP            reduce using rule 21 (create_database_statement -> CREATE DATA BASE NAME SEMICOLON .)
+    UPDATE          reduce using rule 21 (create_database_statement -> CREATE DATA BASE NAME SEMICOLON .)
+    $end            reduce using rule 21 (create_database_statement -> CREATE DATA BASE NAME SEMICOLON .)
+    END             reduce using rule 21 (create_database_statement -> CREATE DATA BASE NAME SEMICOLON .)
+
+
+state 99
+
+    (30) property -> NAME . type PRIMARY KEY
+    (31) property -> NAME . type
+    (32) property -> NAME . type REFERENCE NAME L_PAREN NAME R_PAREN
+    (57) type -> . INT
+    (58) type -> . DECIMAL
+    (59) type -> . BIT
+    (60) type -> . NCHAR
+    (61) type -> . NVARCHAR
+    (62) type -> . DATE
+    (63) type -> . DATETIME
+
+    INT             shift and go to state 77
+    DECIMAL         shift and go to state 78
+    BIT             shift and go to state 79
+    NCHAR           shift and go to state 80
+    NVARCHAR        shift and go to state 81
+    DATE            shift and go to state 82
+    DATETIME        shift and go to state 83
+
+    type                           shift and go to state 119
+
+state 100
+
+    (27) create_table_statement -> CREATE TABLE NAME L_PAREN properties . R_PAREN SEMICOLON
+    (28) properties -> properties . COMMA property
+
+    R_PAREN         shift and go to state 120
+    COMMA           shift and go to state 121
+
+
+state 101
+
+    (29) properties -> property .
+
+    R_PAREN         reduce using rule 29 (properties -> property .)
+    COMMA           reduce using rule 29 (properties -> property .)
+
+
+state 102
+
+    (42) create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters . R_PAREN RETURN type AS BEGIN statements END SEMICOLON
+    (44) parameters -> parameters . COMMA ID AS type
+
+    R_PAREN         shift and go to state 122
+    COMMA           shift and go to state 123
+
+
+state 103
+
+    (45) parameters -> ID . AS type
+
+    AS              shift and go to state 124
+
+
+state 104
+
+    (43) create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters . R_PAREN AS BEGIN statements END SEMICOLON
+    (44) parameters -> parameters . COMMA ID AS type
+
+    R_PAREN         shift and go to state 125
+    COMMA           shift and go to state 123
+
+
+state 105
+
+    (23) declare_statement -> DECLARE ID AS type SEMICOLON .
+
+    CREATE          reduce using rule 23 (declare_statement -> DECLARE ID AS type SEMICOLON .)
+    USE             reduce using rule 23 (declare_statement -> DECLARE ID AS type SEMICOLON .)
+    DECLARE         reduce using rule 23 (declare_statement -> DECLARE ID AS type SEMICOLON .)
+    SET             reduce using rule 23 (declare_statement -> DECLARE ID AS type SEMICOLON .)
+    SELECT          reduce using rule 23 (declare_statement -> DECLARE ID AS type SEMICOLON .)
+    INSERT          reduce using rule 23 (declare_statement -> DECLARE ID AS type SEMICOLON .)
+    ALTER           reduce using rule 23 (declare_statement -> DECLARE ID AS type SEMICOLON .)
+    IF              reduce using rule 23 (declare_statement -> DECLARE ID AS type SEMICOLON .)
+    EXEC            reduce using rule 23 (declare_statement -> DECLARE ID AS type SEMICOLON .)
+    DROP            reduce using rule 23 (declare_statement -> DECLARE ID AS type SEMICOLON .)
+    UPDATE          reduce using rule 23 (declare_statement -> DECLARE ID AS type SEMICOLON .)
+    $end            reduce using rule 23 (declare_statement -> DECLARE ID AS type SEMICOLON .)
+    END             reduce using rule 23 (declare_statement -> DECLARE ID AS type SEMICOLON .)
+
+
+state 106
+
+    (25) assignments -> assignments COMMA ID ASSIGN . a
+    (64) a -> . INTEGER_VALUE
+    (65) a -> . STRING
+
+    INTEGER_VALUE   shift and go to state 67
+    STRING          shift and go to state 68
+
+    a                              shift and go to state 126
+
+state 107
+
+    (33) select_statement -> SELECT columns FROM NAME SEMICOLON .
+
+    CREATE          reduce using rule 33 (select_statement -> SELECT columns FROM NAME SEMICOLON .)
+    USE             reduce using rule 33 (select_statement -> SELECT columns FROM NAME SEMICOLON .)
+    DECLARE         reduce using rule 33 (select_statement -> SELECT columns FROM NAME SEMICOLON .)
+    SET             reduce using rule 33 (select_statement -> SELECT columns FROM NAME SEMICOLON .)
+    SELECT          reduce using rule 33 (select_statement -> SELECT columns FROM NAME SEMICOLON .)
+    INSERT          reduce using rule 33 (select_statement -> SELECT columns FROM NAME SEMICOLON .)
+    ALTER           reduce using rule 33 (select_statement -> SELECT columns FROM NAME SEMICOLON .)
+    IF              reduce using rule 33 (select_statement -> SELECT columns FROM NAME SEMICOLON .)
+    EXEC            reduce using rule 33 (select_statement -> SELECT columns FROM NAME SEMICOLON .)
+    DROP            reduce using rule 33 (select_statement -> SELECT columns FROM NAME SEMICOLON .)
+    UPDATE          reduce using rule 33 (select_statement -> SELECT columns FROM NAME SEMICOLON .)
+    $end            reduce using rule 33 (select_statement -> SELECT columns FROM NAME SEMICOLON .)
+    END             reduce using rule 33 (select_statement -> SELECT columns FROM NAME SEMICOLON .)
+
+
+state 108
+
+    (34) select_statement -> SELECT columns FROM NAME WHERE . a SEMICOLON
+    (64) a -> . INTEGER_VALUE
+    (65) a -> . STRING
+
+    INTEGER_VALUE   shift and go to state 67
+    STRING          shift and go to state 68
+
+    a                              shift and go to state 127
+
+state 109
+
+    (35) select_statement -> SELECT TIMES FROM NAME SEMICOLON .
+
+    CREATE          reduce using rule 35 (select_statement -> SELECT TIMES FROM NAME SEMICOLON .)
+    USE             reduce using rule 35 (select_statement -> SELECT TIMES FROM NAME SEMICOLON .)
+    DECLARE         reduce using rule 35 (select_statement -> SELECT TIMES FROM NAME SEMICOLON .)
+    SET             reduce using rule 35 (select_statement -> SELECT TIMES FROM NAME SEMICOLON .)
+    SELECT          reduce using rule 35 (select_statement -> SELECT TIMES FROM NAME SEMICOLON .)
+    INSERT          reduce using rule 35 (select_statement -> SELECT TIMES FROM NAME SEMICOLON .)
+    ALTER           reduce using rule 35 (select_statement -> SELECT TIMES FROM NAME SEMICOLON .)
+    IF              reduce using rule 35 (select_statement -> SELECT TIMES FROM NAME SEMICOLON .)
+    EXEC            reduce using rule 35 (select_statement -> SELECT TIMES FROM NAME SEMICOLON .)
+    DROP            reduce using rule 35 (select_statement -> SELECT TIMES FROM NAME SEMICOLON .)
+    UPDATE          reduce using rule 35 (select_statement -> SELECT TIMES FROM NAME SEMICOLON .)
+    $end            reduce using rule 35 (select_statement -> SELECT TIMES FROM NAME SEMICOLON .)
+    END             reduce using rule 35 (select_statement -> SELECT TIMES FROM NAME SEMICOLON .)
+
+
+state 110
+
+    (36) select_statement -> SELECT TIMES FROM NAME WHERE . a SEMICOLON
+    (64) a -> . INTEGER_VALUE
+    (65) a -> . STRING
+
+    INTEGER_VALUE   shift and go to state 67
+    STRING          shift and go to state 68
+
+    a                              shift and go to state 128
+
+state 111
+
+    (37) insert_statement -> INSERT INTO NAME L_PAREN columns . R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON
+    (38) columns -> columns . COMMA NAME
+
+    R_PAREN         shift and go to state 129
+    COMMA           shift and go to state 61
+
+
+state 112
+
+    (46) alter_table_statement -> ALTER TABLE NAME ADD COLUMN . NAME type SEMICOLON
+
+    NAME            shift and go to state 130
+
+
+state 113
+
+    (47) alter_table_statement -> ALTER TABLE NAME DROP COLUMN . NAME SEMICOLON
+
+    NAME            shift and go to state 131
+
+
+state 114
+
+    (50) if_statement -> IF L_PAREN a COMMA a . COMMA a R_PAREN SEMICOLON
+
+    COMMA           shift and go to state 132
+
+
+state 115
+
+    (40) vals -> vals COMMA a .
+
+    SEMICOLON       reduce using rule 40 (vals -> vals COMMA a .)
+    COMMA           reduce using rule 40 (vals -> vals COMMA a .)
+    R_PAREN         reduce using rule 40 (vals -> vals COMMA a .)
+
+
+state 116
+
+    (55) column_assignments -> NAME ASSIGN . a
+    (64) a -> . INTEGER_VALUE
+    (65) a -> . STRING
+
+    INTEGER_VALUE   shift and go to state 67
+    STRING          shift and go to state 68
+
+    a                              shift and go to state 133
+
+state 117
+
+    (53) update_statement -> UPDATE NAME SET column_assignments WHERE . a SEMICOLON
+    (64) a -> . INTEGER_VALUE
+    (65) a -> . STRING
+
+    INTEGER_VALUE   shift and go to state 67
+    STRING          shift and go to state 68
+
+    a                              shift and go to state 134
+
+state 118
+
+    (54) column_assignments -> column_assignments COMMA . NAME ASSIGN a
+
+    NAME            shift and go to state 135
+
+
+state 119
+
+    (30) property -> NAME type . PRIMARY KEY
+    (31) property -> NAME type .
+    (32) property -> NAME type . REFERENCE NAME L_PAREN NAME R_PAREN
+
+    PRIMARY         shift and go to state 136
+    R_PAREN         reduce using rule 31 (property -> NAME type .)
+    COMMA           reduce using rule 31 (property -> NAME type .)
+    REFERENCE       shift and go to state 137
+
+
+state 120
+
+    (27) create_table_statement -> CREATE TABLE NAME L_PAREN properties R_PAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 138
+
+
+state 121
+
+    (28) properties -> properties COMMA . property
+    (30) property -> . NAME type PRIMARY KEY
+    (31) property -> . NAME type
+    (32) property -> . NAME type REFERENCE NAME L_PAREN NAME R_PAREN
+
+    NAME            shift and go to state 99
+
+    property                       shift and go to state 139
+
+state 122
+
+    (42) create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN . RETURN type AS BEGIN statements END SEMICOLON
+
+    RETURN          shift and go to state 140
+
+
+state 123
+
+    (44) parameters -> parameters COMMA . ID AS type
+
+    ID              shift and go to state 141
+
+
+state 124
+
+    (45) parameters -> ID AS . type
+    (57) type -> . INT
+    (58) type -> . DECIMAL
+    (59) type -> . BIT
+    (60) type -> . NCHAR
+    (61) type -> . NVARCHAR
+    (62) type -> . DATE
+    (63) type -> . DATETIME
+
+    INT             shift and go to state 77
+    DECIMAL         shift and go to state 78
+    BIT             shift and go to state 79
+    NCHAR           shift and go to state 80
+    NVARCHAR        shift and go to state 81
+    DATE            shift and go to state 82
+    DATETIME        shift and go to state 83
+
+    type                           shift and go to state 142
+
+state 125
+
+    (43) create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN . AS BEGIN statements END SEMICOLON
+
+    AS              shift and go to state 143
+
+
+state 126
+
+    (25) assignments -> assignments COMMA ID ASSIGN a .
+
+    SEMICOLON       reduce using rule 25 (assignments -> assignments COMMA ID ASSIGN a .)
+    COMMA           reduce using rule 25 (assignments -> assignments COMMA ID ASSIGN a .)
+
+
+state 127
+
+    (34) select_statement -> SELECT columns FROM NAME WHERE a . SEMICOLON
+
+    SEMICOLON       shift and go to state 144
+
+
+state 128
+
+    (36) select_statement -> SELECT TIMES FROM NAME WHERE a . SEMICOLON
+
+    SEMICOLON       shift and go to state 145
+
+
+state 129
+
+    (37) insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN . VALUES L_PAREN vals R_PAREN SEMICOLON
+
+    VALUES          shift and go to state 146
+
+
+state 130
+
+    (46) alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME . type SEMICOLON
+    (57) type -> . INT
+    (58) type -> . DECIMAL
+    (59) type -> . BIT
+    (60) type -> . NCHAR
+    (61) type -> . NVARCHAR
+    (62) type -> . DATE
+    (63) type -> . DATETIME
+
+    INT             shift and go to state 77
+    DECIMAL         shift and go to state 78
+    BIT             shift and go to state 79
+    NCHAR           shift and go to state 80
+    NVARCHAR        shift and go to state 81
+    DATE            shift and go to state 82
+    DATETIME        shift and go to state 83
+
+    type                           shift and go to state 147
+
+state 131
+
+    (47) alter_table_statement -> ALTER TABLE NAME DROP COLUMN NAME . SEMICOLON
+
+    SEMICOLON       shift and go to state 148
+
+
+state 132
+
+    (50) if_statement -> IF L_PAREN a COMMA a COMMA . a R_PAREN SEMICOLON
+    (64) a -> . INTEGER_VALUE
+    (65) a -> . STRING
+
+    INTEGER_VALUE   shift and go to state 67
+    STRING          shift and go to state 68
+
+    a                              shift and go to state 149
+
+state 133
+
+    (55) column_assignments -> NAME ASSIGN a .
+
+    WHERE           reduce using rule 55 (column_assignments -> NAME ASSIGN a .)
+    COMMA           reduce using rule 55 (column_assignments -> NAME ASSIGN a .)
+
+
+state 134
+
+    (53) update_statement -> UPDATE NAME SET column_assignments WHERE a . SEMICOLON
+
+    SEMICOLON       shift and go to state 150
+
+
+state 135
+
+    (54) column_assignments -> column_assignments COMMA NAME . ASSIGN a
+
+    ASSIGN          shift and go to state 151
+
+
+state 136
+
+    (30) property -> NAME type PRIMARY . KEY
+
+    KEY             shift and go to state 152
+
+
+state 137
+
+    (32) property -> NAME type REFERENCE . NAME L_PAREN NAME R_PAREN
+
+    NAME            shift and go to state 153
+
+
+state 138
+
+    (27) create_table_statement -> CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON .
+
+    CREATE          reduce using rule 27 (create_table_statement -> CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON .)
+    USE             reduce using rule 27 (create_table_statement -> CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON .)
+    DECLARE         reduce using rule 27 (create_table_statement -> CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON .)
+    SET             reduce using rule 27 (create_table_statement -> CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON .)
+    SELECT          reduce using rule 27 (create_table_statement -> CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON .)
+    INSERT          reduce using rule 27 (create_table_statement -> CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON .)
+    ALTER           reduce using rule 27 (create_table_statement -> CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON .)
+    IF              reduce using rule 27 (create_table_statement -> CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON .)
+    EXEC            reduce using rule 27 (create_table_statement -> CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON .)
+    DROP            reduce using rule 27 (create_table_statement -> CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON .)
+    UPDATE          reduce using rule 27 (create_table_statement -> CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON .)
+    $end            reduce using rule 27 (create_table_statement -> CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON .)
+    END             reduce using rule 27 (create_table_statement -> CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON .)
+
+
+state 139
+
+    (28) properties -> properties COMMA property .
+
+    R_PAREN         reduce using rule 28 (properties -> properties COMMA property .)
+    COMMA           reduce using rule 28 (properties -> properties COMMA property .)
+
+
+state 140
+
+    (42) create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN . type AS BEGIN statements END SEMICOLON
+    (57) type -> . INT
+    (58) type -> . DECIMAL
+    (59) type -> . BIT
+    (60) type -> . NCHAR
+    (61) type -> . NVARCHAR
+    (62) type -> . DATE
+    (63) type -> . DATETIME
+
+    INT             shift and go to state 77
+    DECIMAL         shift and go to state 78
+    BIT             shift and go to state 79
+    NCHAR           shift and go to state 80
+    NVARCHAR        shift and go to state 81
+    DATE            shift and go to state 82
+    DATETIME        shift and go to state 83
+
+    type                           shift and go to state 154
+
+state 141
+
+    (44) parameters -> parameters COMMA ID . AS type
+
+    AS              shift and go to state 155
+
+
+state 142
+
+    (45) parameters -> ID AS type .
+
+    R_PAREN         reduce using rule 45 (parameters -> ID AS type .)
+    COMMA           reduce using rule 45 (parameters -> ID AS type .)
+
+
+state 143
+
+    (43) create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS . BEGIN statements END SEMICOLON
+
+    BEGIN           shift and go to state 156
+
+
+state 144
+
+    (34) select_statement -> SELECT columns FROM NAME WHERE a SEMICOLON .
+
+    CREATE          reduce using rule 34 (select_statement -> SELECT columns FROM NAME WHERE a SEMICOLON .)
+    USE             reduce using rule 34 (select_statement -> SELECT columns FROM NAME WHERE a SEMICOLON .)
+    DECLARE         reduce using rule 34 (select_statement -> SELECT columns FROM NAME WHERE a SEMICOLON .)
+    SET             reduce using rule 34 (select_statement -> SELECT columns FROM NAME WHERE a SEMICOLON .)
+    SELECT          reduce using rule 34 (select_statement -> SELECT columns FROM NAME WHERE a SEMICOLON .)
+    INSERT          reduce using rule 34 (select_statement -> SELECT columns FROM NAME WHERE a SEMICOLON .)
+    ALTER           reduce using rule 34 (select_statement -> SELECT columns FROM NAME WHERE a SEMICOLON .)
+    IF              reduce using rule 34 (select_statement -> SELECT columns FROM NAME WHERE a SEMICOLON .)
+    EXEC            reduce using rule 34 (select_statement -> SELECT columns FROM NAME WHERE a SEMICOLON .)
+    DROP            reduce using rule 34 (select_statement -> SELECT columns FROM NAME WHERE a SEMICOLON .)
+    UPDATE          reduce using rule 34 (select_statement -> SELECT columns FROM NAME WHERE a SEMICOLON .)
+    $end            reduce using rule 34 (select_statement -> SELECT columns FROM NAME WHERE a SEMICOLON .)
+    END             reduce using rule 34 (select_statement -> SELECT columns FROM NAME WHERE a SEMICOLON .)
+
+
+state 145
+
+    (36) select_statement -> SELECT TIMES FROM NAME WHERE a SEMICOLON .
+
+    CREATE          reduce using rule 36 (select_statement -> SELECT TIMES FROM NAME WHERE a SEMICOLON .)
+    USE             reduce using rule 36 (select_statement -> SELECT TIMES FROM NAME WHERE a SEMICOLON .)
+    DECLARE         reduce using rule 36 (select_statement -> SELECT TIMES FROM NAME WHERE a SEMICOLON .)
+    SET             reduce using rule 36 (select_statement -> SELECT TIMES FROM NAME WHERE a SEMICOLON .)
+    SELECT          reduce using rule 36 (select_statement -> SELECT TIMES FROM NAME WHERE a SEMICOLON .)
+    INSERT          reduce using rule 36 (select_statement -> SELECT TIMES FROM NAME WHERE a SEMICOLON .)
+    ALTER           reduce using rule 36 (select_statement -> SELECT TIMES FROM NAME WHERE a SEMICOLON .)
+    IF              reduce using rule 36 (select_statement -> SELECT TIMES FROM NAME WHERE a SEMICOLON .)
+    EXEC            reduce using rule 36 (select_statement -> SELECT TIMES FROM NAME WHERE a SEMICOLON .)
+    DROP            reduce using rule 36 (select_statement -> SELECT TIMES FROM NAME WHERE a SEMICOLON .)
+    UPDATE          reduce using rule 36 (select_statement -> SELECT TIMES FROM NAME WHERE a SEMICOLON .)
+    $end            reduce using rule 36 (select_statement -> SELECT TIMES FROM NAME WHERE a SEMICOLON .)
+    END             reduce using rule 36 (select_statement -> SELECT TIMES FROM NAME WHERE a SEMICOLON .)
+
+
+state 146
+
+    (37) insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES . L_PAREN vals R_PAREN SEMICOLON
+
+    L_PAREN         shift and go to state 157
+
+
+state 147
+
+    (46) alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME type . SEMICOLON
+
+    SEMICOLON       shift and go to state 158
+
+
+state 148
+
+    (47) alter_table_statement -> ALTER TABLE NAME DROP COLUMN NAME SEMICOLON .
+
+    CREATE          reduce using rule 47 (alter_table_statement -> ALTER TABLE NAME DROP COLUMN NAME SEMICOLON .)
+    USE             reduce using rule 47 (alter_table_statement -> ALTER TABLE NAME DROP COLUMN NAME SEMICOLON .)
+    DECLARE         reduce using rule 47 (alter_table_statement -> ALTER TABLE NAME DROP COLUMN NAME SEMICOLON .)
+    SET             reduce using rule 47 (alter_table_statement -> ALTER TABLE NAME DROP COLUMN NAME SEMICOLON .)
+    SELECT          reduce using rule 47 (alter_table_statement -> ALTER TABLE NAME DROP COLUMN NAME SEMICOLON .)
+    INSERT          reduce using rule 47 (alter_table_statement -> ALTER TABLE NAME DROP COLUMN NAME SEMICOLON .)
+    ALTER           reduce using rule 47 (alter_table_statement -> ALTER TABLE NAME DROP COLUMN NAME SEMICOLON .)
+    IF              reduce using rule 47 (alter_table_statement -> ALTER TABLE NAME DROP COLUMN NAME SEMICOLON .)
+    EXEC            reduce using rule 47 (alter_table_statement -> ALTER TABLE NAME DROP COLUMN NAME SEMICOLON .)
+    DROP            reduce using rule 47 (alter_table_statement -> ALTER TABLE NAME DROP COLUMN NAME SEMICOLON .)
+    UPDATE          reduce using rule 47 (alter_table_statement -> ALTER TABLE NAME DROP COLUMN NAME SEMICOLON .)
+    $end            reduce using rule 47 (alter_table_statement -> ALTER TABLE NAME DROP COLUMN NAME SEMICOLON .)
+    END             reduce using rule 47 (alter_table_statement -> ALTER TABLE NAME DROP COLUMN NAME SEMICOLON .)
+
+
+state 149
+
+    (50) if_statement -> IF L_PAREN a COMMA a COMMA a . R_PAREN SEMICOLON
+
+    R_PAREN         shift and go to state 159
+
+
+state 150
+
+    (53) update_statement -> UPDATE NAME SET column_assignments WHERE a SEMICOLON .
+
+    CREATE          reduce using rule 53 (update_statement -> UPDATE NAME SET column_assignments WHERE a SEMICOLON .)
+    USE             reduce using rule 53 (update_statement -> UPDATE NAME SET column_assignments WHERE a SEMICOLON .)
+    DECLARE         reduce using rule 53 (update_statement -> UPDATE NAME SET column_assignments WHERE a SEMICOLON .)
+    SET             reduce using rule 53 (update_statement -> UPDATE NAME SET column_assignments WHERE a SEMICOLON .)
+    SELECT          reduce using rule 53 (update_statement -> UPDATE NAME SET column_assignments WHERE a SEMICOLON .)
+    INSERT          reduce using rule 53 (update_statement -> UPDATE NAME SET column_assignments WHERE a SEMICOLON .)
+    ALTER           reduce using rule 53 (update_statement -> UPDATE NAME SET column_assignments WHERE a SEMICOLON .)
+    IF              reduce using rule 53 (update_statement -> UPDATE NAME SET column_assignments WHERE a SEMICOLON .)
+    EXEC            reduce using rule 53 (update_statement -> UPDATE NAME SET column_assignments WHERE a SEMICOLON .)
+    DROP            reduce using rule 53 (update_statement -> UPDATE NAME SET column_assignments WHERE a SEMICOLON .)
+    UPDATE          reduce using rule 53 (update_statement -> UPDATE NAME SET column_assignments WHERE a SEMICOLON .)
+    $end            reduce using rule 53 (update_statement -> UPDATE NAME SET column_assignments WHERE a SEMICOLON .)
+    END             reduce using rule 53 (update_statement -> UPDATE NAME SET column_assignments WHERE a SEMICOLON .)
+
+
+state 151
+
+    (54) column_assignments -> column_assignments COMMA NAME ASSIGN . a
+    (64) a -> . INTEGER_VALUE
+    (65) a -> . STRING
+
+    INTEGER_VALUE   shift and go to state 67
+    STRING          shift and go to state 68
+
+    a                              shift and go to state 160
+
+state 152
+
+    (30) property -> NAME type PRIMARY KEY .
+
+    R_PAREN         reduce using rule 30 (property -> NAME type PRIMARY KEY .)
+    COMMA           reduce using rule 30 (property -> NAME type PRIMARY KEY .)
+
+
+state 153
+
+    (32) property -> NAME type REFERENCE NAME . L_PAREN NAME R_PAREN
+
+    L_PAREN         shift and go to state 161
+
+
+state 154
+
+    (42) create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type . AS BEGIN statements END SEMICOLON
+
+    AS              shift and go to state 162
+
+
+state 155
+
+    (44) parameters -> parameters COMMA ID AS . type
+    (57) type -> . INT
+    (58) type -> . DECIMAL
+    (59) type -> . BIT
+    (60) type -> . NCHAR
+    (61) type -> . NVARCHAR
+    (62) type -> . DATE
+    (63) type -> . DATETIME
+
+    INT             shift and go to state 77
+    DECIMAL         shift and go to state 78
+    BIT             shift and go to state 79
+    NCHAR           shift and go to state 80
+    NVARCHAR        shift and go to state 81
+    DATE            shift and go to state 82
+    DATETIME        shift and go to state 83
+
+    type                           shift and go to state 163
+
+state 156
+
+    (43) create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN . statements END SEMICOLON
+    (2) statements -> . statements statement
+    (3) statements -> .
+
+    END             reduce using rule 3 (statements -> .)
+    CREATE          reduce using rule 3 (statements -> .)
+    USE             reduce using rule 3 (statements -> .)
+    DECLARE         reduce using rule 3 (statements -> .)
+    SET             reduce using rule 3 (statements -> .)
+    SELECT          reduce using rule 3 (statements -> .)
+    INSERT          reduce using rule 3 (statements -> .)
+    ALTER           reduce using rule 3 (statements -> .)
+    IF              reduce using rule 3 (statements -> .)
+    EXEC            reduce using rule 3 (statements -> .)
+    DROP            reduce using rule 3 (statements -> .)
+    UPDATE          reduce using rule 3 (statements -> .)
+
+    statements                     shift and go to state 164
+
+state 157
+
+    (37) insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN . vals R_PAREN SEMICOLON
+    (40) vals -> . vals COMMA a
+    (41) vals -> . a
+    (64) a -> . INTEGER_VALUE
+    (65) a -> . STRING
+
+    INTEGER_VALUE   shift and go to state 67
+    STRING          shift and go to state 68
+
+    vals                           shift and go to state 165
+    a                              shift and go to state 70
+
+state 158
+
+    (46) alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON .
+
+    CREATE          reduce using rule 46 (alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON .)
+    USE             reduce using rule 46 (alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON .)
+    DECLARE         reduce using rule 46 (alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON .)
+    SET             reduce using rule 46 (alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON .)
+    SELECT          reduce using rule 46 (alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON .)
+    INSERT          reduce using rule 46 (alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON .)
+    ALTER           reduce using rule 46 (alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON .)
+    IF              reduce using rule 46 (alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON .)
+    EXEC            reduce using rule 46 (alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON .)
+    DROP            reduce using rule 46 (alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON .)
+    UPDATE          reduce using rule 46 (alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON .)
+    $end            reduce using rule 46 (alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON .)
+    END             reduce using rule 46 (alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON .)
+
+
+state 159
+
+    (50) if_statement -> IF L_PAREN a COMMA a COMMA a R_PAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 166
+
+
+state 160
+
+    (54) column_assignments -> column_assignments COMMA NAME ASSIGN a .
+
+    WHERE           reduce using rule 54 (column_assignments -> column_assignments COMMA NAME ASSIGN a .)
+    COMMA           reduce using rule 54 (column_assignments -> column_assignments COMMA NAME ASSIGN a .)
+
+
+state 161
+
+    (32) property -> NAME type REFERENCE NAME L_PAREN . NAME R_PAREN
+
+    NAME            shift and go to state 167
+
+
+state 162
+
+    (42) create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS . BEGIN statements END SEMICOLON
+
+    BEGIN           shift and go to state 168
+
+
+state 163
+
+    (44) parameters -> parameters COMMA ID AS type .
+
+    R_PAREN         reduce using rule 44 (parameters -> parameters COMMA ID AS type .)
+    COMMA           reduce using rule 44 (parameters -> parameters COMMA ID AS type .)
+
+
+state 164
+
+    (43) create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements . END SEMICOLON
+    (2) statements -> statements . statement
+    (4) statement -> . create_database_statement
+    (5) statement -> . use_statement
+    (6) statement -> . declare_statement
+    (7) statement -> . set_statement
+    (8) statement -> . create_table_statement
+    (9) statement -> . select_statement
+    (10) statement -> . insert_statement
+    (11) statement -> . create_function_statement
+    (12) statement -> . create_procedure_statement
+    (13) statement -> . alter_table_statement
+    (14) statement -> . alter_function_statement
+    (15) statement -> . alter_procedure_statement
+    (16) statement -> . if_statement
+    (17) statement -> . exec_statement
+    (18) statement -> . drop_table_statement
+    (19) statement -> . case_statement
+    (20) statement -> . update_statement
+    (21) create_database_statement -> . CREATE DATA BASE NAME SEMICOLON
+    (22) use_statement -> . USE NAME SEMICOLON
+    (23) declare_statement -> . DECLARE ID AS type SEMICOLON
+    (24) set_statement -> . SET assignments SEMICOLON
+    (27) create_table_statement -> . CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON
+    (33) select_statement -> . SELECT columns FROM NAME SEMICOLON
+    (34) select_statement -> . SELECT columns FROM NAME WHERE a SEMICOLON
+    (35) select_statement -> . SELECT TIMES FROM NAME SEMICOLON
+    (36) select_statement -> . SELECT TIMES FROM NAME WHERE a SEMICOLON
+    (37) insert_statement -> . INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON
+    (42) create_function_statement -> . CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON
+    (43) create_procedure_statement -> . CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON
+    (46) alter_table_statement -> . ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON
+    (47) alter_table_statement -> . ALTER TABLE NAME DROP COLUMN NAME SEMICOLON
+    (48) alter_function_statement -> . ALTER FUNCTION
+    (49) alter_procedure_statement -> . ALTER PROCEDURE
+    (50) if_statement -> . IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON
+    (51) exec_statement -> . EXEC NAME vals SEMICOLON
+    (52) drop_table_statement -> . DROP TABLE NAME SEMICOLON
+    (56) case_statement -> .
+    (53) update_statement -> . UPDATE NAME SET column_assignments WHERE a SEMICOLON
+
+  ! shift/reduce conflict for END resolved as shift
+  ! shift/reduce conflict for CREATE resolved as shift
+  ! shift/reduce conflict for USE resolved as shift
+  ! shift/reduce conflict for DECLARE resolved as shift
+  ! shift/reduce conflict for SET resolved as shift
+  ! shift/reduce conflict for SELECT resolved as shift
+  ! shift/reduce conflict for INSERT resolved as shift
+  ! shift/reduce conflict for ALTER resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for EXEC resolved as shift
+  ! shift/reduce conflict for DROP resolved as shift
+  ! shift/reduce conflict for UPDATE resolved as shift
+    END             shift and go to state 169
+    CREATE          shift and go to state 21
+    USE             shift and go to state 22
+    DECLARE         shift and go to state 23
+    SET             shift and go to state 24
+    SELECT          shift and go to state 25
+    INSERT          shift and go to state 26
+    ALTER           shift and go to state 27
+    IF              shift and go to state 29
+    EXEC            shift and go to state 30
+    DROP            shift and go to state 28
+    UPDATE          shift and go to state 31
+
+  ! END             [ reduce using rule 56 (case_statement -> .) ]
+  ! CREATE          [ reduce using rule 56 (case_statement -> .) ]
+  ! USE             [ reduce using rule 56 (case_statement -> .) ]
+  ! DECLARE         [ reduce using rule 56 (case_statement -> .) ]
+  ! SET             [ reduce using rule 56 (case_statement -> .) ]
+  ! SELECT          [ reduce using rule 56 (case_statement -> .) ]
+  ! INSERT          [ reduce using rule 56 (case_statement -> .) ]
+  ! ALTER           [ reduce using rule 56 (case_statement -> .) ]
+  ! IF              [ reduce using rule 56 (case_statement -> .) ]
+  ! EXEC            [ reduce using rule 56 (case_statement -> .) ]
+  ! DROP            [ reduce using rule 56 (case_statement -> .) ]
+  ! UPDATE          [ reduce using rule 56 (case_statement -> .) ]
+
+    statement                      shift and go to state 3
+    create_database_statement      shift and go to state 4
+    use_statement                  shift and go to state 5
+    declare_statement              shift and go to state 6
+    set_statement                  shift and go to state 7
+    create_table_statement         shift and go to state 8
+    select_statement               shift and go to state 9
+    insert_statement               shift and go to state 10
+    create_function_statement      shift and go to state 11
+    create_procedure_statement     shift and go to state 12
+    alter_table_statement          shift and go to state 13
+    alter_function_statement       shift and go to state 14
+    alter_procedure_statement      shift and go to state 15
+    if_statement                   shift and go to state 16
+    exec_statement                 shift and go to state 17
+    drop_table_statement           shift and go to state 18
+    case_statement                 shift and go to state 19
+    update_statement               shift and go to state 20
+
+state 165
+
+    (37) insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals . R_PAREN SEMICOLON
+    (40) vals -> vals . COMMA a
+
+    R_PAREN         shift and go to state 170
+    COMMA           shift and go to state 95
+
+
+state 166
+
+    (50) if_statement -> IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON .
+
+    CREATE          reduce using rule 50 (if_statement -> IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON .)
+    USE             reduce using rule 50 (if_statement -> IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON .)
+    DECLARE         reduce using rule 50 (if_statement -> IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON .)
+    SET             reduce using rule 50 (if_statement -> IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON .)
+    SELECT          reduce using rule 50 (if_statement -> IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON .)
+    INSERT          reduce using rule 50 (if_statement -> IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON .)
+    ALTER           reduce using rule 50 (if_statement -> IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON .)
+    IF              reduce using rule 50 (if_statement -> IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON .)
+    EXEC            reduce using rule 50 (if_statement -> IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON .)
+    DROP            reduce using rule 50 (if_statement -> IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON .)
+    UPDATE          reduce using rule 50 (if_statement -> IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON .)
+    $end            reduce using rule 50 (if_statement -> IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON .)
+    END             reduce using rule 50 (if_statement -> IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON .)
+
+
+state 167
+
+    (32) property -> NAME type REFERENCE NAME L_PAREN NAME . R_PAREN
+
+    R_PAREN         shift and go to state 171
+
+
+state 168
+
+    (42) create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN . statements END SEMICOLON
+    (2) statements -> . statements statement
+    (3) statements -> .
+
+    END             reduce using rule 3 (statements -> .)
+    CREATE          reduce using rule 3 (statements -> .)
+    USE             reduce using rule 3 (statements -> .)
+    DECLARE         reduce using rule 3 (statements -> .)
+    SET             reduce using rule 3 (statements -> .)
+    SELECT          reduce using rule 3 (statements -> .)
+    INSERT          reduce using rule 3 (statements -> .)
+    ALTER           reduce using rule 3 (statements -> .)
+    IF              reduce using rule 3 (statements -> .)
+    EXEC            reduce using rule 3 (statements -> .)
+    DROP            reduce using rule 3 (statements -> .)
+    UPDATE          reduce using rule 3 (statements -> .)
+
+    statements                     shift and go to state 172
+
+state 169
+
+    (43) create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END . SEMICOLON
+
+    SEMICOLON       shift and go to state 173
+
+
+state 170
+
+    (37) insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 174
+
+
+state 171
+
+    (32) property -> NAME type REFERENCE NAME L_PAREN NAME R_PAREN .
+
+    R_PAREN         reduce using rule 32 (property -> NAME type REFERENCE NAME L_PAREN NAME R_PAREN .)
+    COMMA           reduce using rule 32 (property -> NAME type REFERENCE NAME L_PAREN NAME R_PAREN .)
+
+
+state 172
+
+    (42) create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements . END SEMICOLON
+    (2) statements -> statements . statement
+    (4) statement -> . create_database_statement
+    (5) statement -> . use_statement
+    (6) statement -> . declare_statement
+    (7) statement -> . set_statement
+    (8) statement -> . create_table_statement
+    (9) statement -> . select_statement
+    (10) statement -> . insert_statement
+    (11) statement -> . create_function_statement
+    (12) statement -> . create_procedure_statement
+    (13) statement -> . alter_table_statement
+    (14) statement -> . alter_function_statement
+    (15) statement -> . alter_procedure_statement
+    (16) statement -> . if_statement
+    (17) statement -> . exec_statement
+    (18) statement -> . drop_table_statement
+    (19) statement -> . case_statement
+    (20) statement -> . update_statement
+    (21) create_database_statement -> . CREATE DATA BASE NAME SEMICOLON
+    (22) use_statement -> . USE NAME SEMICOLON
+    (23) declare_statement -> . DECLARE ID AS type SEMICOLON
+    (24) set_statement -> . SET assignments SEMICOLON
+    (27) create_table_statement -> . CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON
+    (33) select_statement -> . SELECT columns FROM NAME SEMICOLON
+    (34) select_statement -> . SELECT columns FROM NAME WHERE a SEMICOLON
+    (35) select_statement -> . SELECT TIMES FROM NAME SEMICOLON
+    (36) select_statement -> . SELECT TIMES FROM NAME WHERE a SEMICOLON
+    (37) insert_statement -> . INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON
+    (42) create_function_statement -> . CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON
+    (43) create_procedure_statement -> . CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON
+    (46) alter_table_statement -> . ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON
+    (47) alter_table_statement -> . ALTER TABLE NAME DROP COLUMN NAME SEMICOLON
+    (48) alter_function_statement -> . ALTER FUNCTION
+    (49) alter_procedure_statement -> . ALTER PROCEDURE
+    (50) if_statement -> . IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON
+    (51) exec_statement -> . EXEC NAME vals SEMICOLON
+    (52) drop_table_statement -> . DROP TABLE NAME SEMICOLON
+    (56) case_statement -> .
+    (53) update_statement -> . UPDATE NAME SET column_assignments WHERE a SEMICOLON
+
+  ! shift/reduce conflict for END resolved as shift
+  ! shift/reduce conflict for CREATE resolved as shift
+  ! shift/reduce conflict for USE resolved as shift
+  ! shift/reduce conflict for DECLARE resolved as shift
+  ! shift/reduce conflict for SET resolved as shift
+  ! shift/reduce conflict for SELECT resolved as shift
+  ! shift/reduce conflict for INSERT resolved as shift
+  ! shift/reduce conflict for ALTER resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for EXEC resolved as shift
+  ! shift/reduce conflict for DROP resolved as shift
+  ! shift/reduce conflict for UPDATE resolved as shift
+    END             shift and go to state 175
+    CREATE          shift and go to state 21
+    USE             shift and go to state 22
+    DECLARE         shift and go to state 23
+    SET             shift and go to state 24
+    SELECT          shift and go to state 25
+    INSERT          shift and go to state 26
+    ALTER           shift and go to state 27
+    IF              shift and go to state 29
+    EXEC            shift and go to state 30
+    DROP            shift and go to state 28
+    UPDATE          shift and go to state 31
+
+  ! END             [ reduce using rule 56 (case_statement -> .) ]
+  ! CREATE          [ reduce using rule 56 (case_statement -> .) ]
+  ! USE             [ reduce using rule 56 (case_statement -> .) ]
+  ! DECLARE         [ reduce using rule 56 (case_statement -> .) ]
+  ! SET             [ reduce using rule 56 (case_statement -> .) ]
+  ! SELECT          [ reduce using rule 56 (case_statement -> .) ]
+  ! INSERT          [ reduce using rule 56 (case_statement -> .) ]
+  ! ALTER           [ reduce using rule 56 (case_statement -> .) ]
+  ! IF              [ reduce using rule 56 (case_statement -> .) ]
+  ! EXEC            [ reduce using rule 56 (case_statement -> .) ]
+  ! DROP            [ reduce using rule 56 (case_statement -> .) ]
+  ! UPDATE          [ reduce using rule 56 (case_statement -> .) ]
+
+    statement                      shift and go to state 3
+    create_database_statement      shift and go to state 4
+    use_statement                  shift and go to state 5
+    declare_statement              shift and go to state 6
+    set_statement                  shift and go to state 7
+    create_table_statement         shift and go to state 8
+    select_statement               shift and go to state 9
+    insert_statement               shift and go to state 10
+    create_function_statement      shift and go to state 11
+    create_procedure_statement     shift and go to state 12
+    alter_table_statement          shift and go to state 13
+    alter_function_statement       shift and go to state 14
+    alter_procedure_statement      shift and go to state 15
+    if_statement                   shift and go to state 16
+    exec_statement                 shift and go to state 17
+    drop_table_statement           shift and go to state 18
+    case_statement                 shift and go to state 19
+    update_statement               shift and go to state 20
+
+state 173
+
+    (43) create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON .
+
+    CREATE          reduce using rule 43 (create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON .)
+    USE             reduce using rule 43 (create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON .)
+    DECLARE         reduce using rule 43 (create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON .)
+    SET             reduce using rule 43 (create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON .)
+    SELECT          reduce using rule 43 (create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON .)
+    INSERT          reduce using rule 43 (create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON .)
+    ALTER           reduce using rule 43 (create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON .)
+    IF              reduce using rule 43 (create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON .)
+    EXEC            reduce using rule 43 (create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON .)
+    DROP            reduce using rule 43 (create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON .)
+    UPDATE          reduce using rule 43 (create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON .)
+    $end            reduce using rule 43 (create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON .)
+    END             reduce using rule 43 (create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON .)
+
+
+state 174
+
+    (37) insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON .
+
+    CREATE          reduce using rule 37 (insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON .)
+    USE             reduce using rule 37 (insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON .)
+    DECLARE         reduce using rule 37 (insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON .)
+    SET             reduce using rule 37 (insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON .)
+    SELECT          reduce using rule 37 (insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON .)
+    INSERT          reduce using rule 37 (insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON .)
+    ALTER           reduce using rule 37 (insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON .)
+    IF              reduce using rule 37 (insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON .)
+    EXEC            reduce using rule 37 (insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON .)
+    DROP            reduce using rule 37 (insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON .)
+    UPDATE          reduce using rule 37 (insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON .)
+    $end            reduce using rule 37 (insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON .)
+    END             reduce using rule 37 (insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON .)
+
+
+state 175
+
+    (42) create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END . SEMICOLON
+
+    SEMICOLON       shift and go to state 176
+
+
+state 176
+
+    (42) create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON .
+
+    CREATE          reduce using rule 42 (create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON .)
+    USE             reduce using rule 42 (create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON .)
+    DECLARE         reduce using rule 42 (create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON .)
+    SET             reduce using rule 42 (create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON .)
+    SELECT          reduce using rule 42 (create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON .)
+    INSERT          reduce using rule 42 (create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON .)
+    ALTER           reduce using rule 42 (create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON .)
+    IF              reduce using rule 42 (create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON .)
+    EXEC            reduce using rule 42 (create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON .)
+    DROP            reduce using rule 42 (create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON .)
+    UPDATE          reduce using rule 42 (create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON .)
+    $end            reduce using rule 42 (create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON .)
+    END             reduce using rule 42 (create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for CREATE in state 2 resolved as shift
+WARNING: shift/reduce conflict for USE in state 2 resolved as shift
+WARNING: shift/reduce conflict for DECLARE in state 2 resolved as shift
+WARNING: shift/reduce conflict for SET in state 2 resolved as shift
+WARNING: shift/reduce conflict for SELECT in state 2 resolved as shift
+WARNING: shift/reduce conflict for INSERT in state 2 resolved as shift
+WARNING: shift/reduce conflict for ALTER in state 2 resolved as shift
+WARNING: shift/reduce conflict for IF in state 2 resolved as shift
+WARNING: shift/reduce conflict for EXEC in state 2 resolved as shift
+WARNING: shift/reduce conflict for DROP in state 2 resolved as shift
+WARNING: shift/reduce conflict for UPDATE in state 2 resolved as shift
+WARNING: shift/reduce conflict for END in state 164 resolved as shift
+WARNING: shift/reduce conflict for CREATE in state 164 resolved as shift
+WARNING: shift/reduce conflict for USE in state 164 resolved as shift
+WARNING: shift/reduce conflict for DECLARE in state 164 resolved as shift
+WARNING: shift/reduce conflict for SET in state 164 resolved as shift
+WARNING: shift/reduce conflict for SELECT in state 164 resolved as shift
+WARNING: shift/reduce conflict for INSERT in state 164 resolved as shift
+WARNING: shift/reduce conflict for ALTER in state 164 resolved as shift
+WARNING: shift/reduce conflict for IF in state 164 resolved as shift
+WARNING: shift/reduce conflict for EXEC in state 164 resolved as shift
+WARNING: shift/reduce conflict for DROP in state 164 resolved as shift
+WARNING: shift/reduce conflict for UPDATE in state 164 resolved as shift
+WARNING: shift/reduce conflict for END in state 172 resolved as shift
+WARNING: shift/reduce conflict for CREATE in state 172 resolved as shift
+WARNING: shift/reduce conflict for USE in state 172 resolved as shift
+WARNING: shift/reduce conflict for DECLARE in state 172 resolved as shift
+WARNING: shift/reduce conflict for SET in state 172 resolved as shift
+WARNING: shift/reduce conflict for SELECT in state 172 resolved as shift
+WARNING: shift/reduce conflict for INSERT in state 172 resolved as shift
+WARNING: shift/reduce conflict for ALTER in state 172 resolved as shift
+WARNING: shift/reduce conflict for IF in state 172 resolved as shift
+WARNING: shift/reduce conflict for EXEC in state 172 resolved as shift
+WARNING: shift/reduce conflict for DROP in state 172 resolved as shift
+WARNING: shift/reduce conflict for UPDATE in state 172 resolved as shift
+WARNING: reduce/reduce conflict in state 2 resolved using rule (init -> statements)
+WARNING: rejected rule (case_statement -> <empty>) in state 2
+WARNING: Rule (case_statement -> <empty>) is never reduced

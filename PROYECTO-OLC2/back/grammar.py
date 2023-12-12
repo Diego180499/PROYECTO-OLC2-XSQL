@@ -16,7 +16,8 @@ reservadas = {
     'case': 'CASE',
     'column': 'COLUMN',
     'truncate': 'TRUNCATE',
-    'select': 'TRUNCATE',
+    'exec': 'EXEC',
+    'select': 'SELECT',
     'from': 'FROM',
     'where': 'WHERE',
     'update': 'UPDATE',
@@ -24,7 +25,6 @@ reservadas = {
     'into': 'INTO',
     'values': 'VALUES',
     'if': 'IF',
-    'case': 'CASE',
     'when': 'WHEN',
     'then': 'THEN',
     'else': 'ELSE',
@@ -63,8 +63,8 @@ reservadas = {
 }
 tokens = [
     'ID',
-    'INTEGER',
-    'DECIMAL',
+    'INTEGER_VALUE',
+    'DECIMAL_VALUE',
     'SEMICOLON',
     'NAME',
     'STRING',
@@ -80,7 +80,7 @@ tokens = [
     'GREATER_EQ',
     'AND',  
     'OR',
-    'NOT',
+    'NOT_SIGN',
     'PLUS',
     'MINUS',
     'TIMES',
@@ -94,7 +94,7 @@ t_GREATER_EQ = r'>='
 t_LESS_THAN = r'<'
 t_GREATER_THAN = r'>'
 t_NOT_EQ = r'!=='
-t_NOT = r'!'
+t_NOT_SIGN = r'!'
 t_AND = r'&&'
 t_OR = r'\|\|'
 t_L_PAREN = r'\('
@@ -124,7 +124,7 @@ def t_STRING(t):
 
 
 # Expersion Regular para decimal
-def t_DECIMAL(t):
+def t_DECIMAL_VALUE(t):
     r'\d+\.\d+'
     try:
         t.value = float(t.value)
@@ -135,7 +135,7 @@ def t_DECIMAL(t):
 
 
 # Expresion Regular para Entero
-def t_INTEGER(t):
+def t_INTEGER_VALUE(t):
     r'\d+'
     try:
         t.value = int(t.value)
@@ -153,6 +153,12 @@ def t_ID(t):
 # ignorar espacios
 t_ignore = " \t"
 
+
+#Expresion regular para los nombre de las tablas, bases de datos, columnas
+def t_NAME(t):
+    r'[a-zA-Z][a-zA-Z0-9_]*'
+    t.type = reservadas.get(t.value, 'NAME')
+    return t
 
 # Manejo de Linea
 def t_newline(t):
@@ -172,7 +178,7 @@ def t_error(t):
 
 
 # Se construye el analizador lexico
-import back.ply.lex as lex
+import ply.lex as lex
 
 lexer = lex.lex(reflags=re.IGNORECASE)
 
@@ -180,51 +186,73 @@ import sys
 
 sys.setrecursionlimit(10000000)
 
-def p_init(t):
-    'init   : init statement'
 
-def p_init_2(t):
-    'init   : '
+def p_init(t):
+    'init   : statements'
+
+
+def p_statements(t):
+    'statements : statements statement'
+
+
+def p_statements_2(t):
+    'statements : '
+
 
 def p_statement(t):
-    '''statement    : createDatabaseStatement
-                    | useStatement
-                    | declareStatement
-                    | setStatement
-                    | createTableStatement
-                    | selectStatement
-                    | insertStatement
-                    | createFunctionStatement
-                    | createProcedureStatement
-                    | alterTableStatement
-                    | alterFunctionStatement
-                    | alterProcedureStatement
-                    | ifStatement
-                    | execStatement
-                    | dropTableStatement
-                    | caseStatement
-                    | updateStatement'''
+    '''statement    : create_database_statement
+                    | use_statement
+                    | declare_statement
+                    | set_statement
+                    | create_table_statement
+                    | select_statement
+                    | insert_statement
+                    | create_function_statement
+                    | create_procedure_statement
+                    | alter_table_statement
+                    | alter_function_statement
+                    | alter_procedure_statement
+                    | if_statement
+                    | exec_statement
+                    | drop_table_statement
+                    | case_statement
+                    | update_statement'''
+
+
+##### CREATE DATABASE #####
 
 def p_create_database_statement(t):
-    'createDatabaseStatement    :   CREATE DATA BASE NAME SEMICOLON'
+    'create_database_statement    : CREATE DATA BASE NAME SEMICOLON'
+
+#### USE ####
 
 def p_use_statement(t):
-    'useStatement   : USE NAME SEMICOLON'
+    'use_statement   : USE NAME SEMICOLON'
+
+#### DECLARE ####
 
 def p_declare_statement(t):
-    'declareStatement   : DECLARE ID type SEMICOLON'
+    'declare_statement   : DECLARE ID AS type SEMICOLON'
+
+#### SET ####
 
 def p_set_statement(t):
-    'setStatement   : SET assignments SEMICOLON'
+    'set_statement   : SET assignments SEMICOLON'
+
+
 
 def p_assignments(t):
     'assignments    : assignments COMMA ID ASSIGN a'
 
+
 def p_assignments_2(t):
     'assignments    : ID ASSIGN a'
 
+#### CREATE TABLE ####
+
 def p_create_table_statement(t):
-    'createTableStatement   : CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON'
+    'create_table_statement : CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON'
+
 
 def p_properties(t):
     'properties : properties COMMA property'
@@ -232,43 +260,146 @@ def p_properties(t):
 def p_properties_2(t):
     'properties : property'
 
+
 def p_property(t):
     'property   : NAME type PRIMARY KEY'
+
     
 def p_property_2(t):
     'property   : NAME type'
 
+
 def p_property_3(t):
-    'property   : NAME type REFERENCES NAME L_PAREN NAME R_PAREN'
+    'property   : NAME type REFERENCE NAME L_PAREN NAME R_PAREN'
+
+#### SELECT ####
 
 def p_select_statement(t):
-    'selectStatement    : SELECT columns FROM NAME SEMICOLON'
+    'select_statement   : SELECT columns FROM NAME SEMICOLON'
+
 
 def p_select_statement_2(t):
-    'selectStatement    : SELECT columns FROM NAME WHERE a SEMICOLON'
+    'select_statement   : SELECT columns FROM NAME WHERE a SEMICOLON'
+
 
 def p_select_statement_3(t):
-    'selectStatement    : SELECT TIMES FROM NAME SEMICOLON'
+    'select_statement   : SELECT TIMES FROM NAME SEMICOLON'
+
 
 def p_select_statement_4(t):
-    'selectStatement    : SELECT TIMES FROM NAME WHERE a SEMICOLON'
+    'select_statement    : SELECT TIMES FROM NAME WHERE a SEMICOLON'
+
+
+#### INSERT ####
+
+def p_insert_statement(t):
+    'insert_statement   : INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON'
+
+
+#### COLUMNS AND VALS PRODS ####
+
+def p_columns(t):
+    'columns    : columns COMMA NAME'
+
+
+def p_columns_2(t):
+    'columns    : NAME'
+
+
+def p_vals(t):
+    'vals   : vals COMMA a'
+
+
+def p_vals_2(t):
+    'vals   : a'
+
+#### CREATE FUNCTION AND PROCEDURE ####
+
+def p_create_function_statement(t):
+    'create_function_statement  : CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON'
+
+
+def p_create_procedure_statement(t):
+    'create_procedure_statement : CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON'
+
+def p_parameters(t):
+    'parameters : parameters COMMA ID AS type'
+
+
+def p_parameters_2(t):
+    'parameters : ID AS type'
+
+#### ALTER TABLE, FUNCTION AND PROCEDURE ####
+def p_alter_table_statement(t):
+    'alter_table_statement  : ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON'
+
+
+def p_alter_table_statement_2(t):
+    'alter_table_statement  : ALTER TABLE NAME DROP COLUMN NAME SEMICOLON'
+
+
+def p_alter_function_statement(t):
+    'alter_function_statement   : ALTER FUNCTION '
+
+
+def p_alter_procedure_statement(t):
+    'alter_procedure_statement  : ALTER PROCEDURE '
+
+
+#### IF STATEMENT ####
+def p_if_statement(t):
+    'if_statement   : IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON'
+
+
+#### EXEC ####
+def p_exec_statement(t):
+    'exec_statement : EXEC NAME vals SEMICOLON'
+
+
+#### DROP TABLE ####
+def p_drop_table_statement(t):
+    'drop_table_statement   : DROP TABLE NAME SEMICOLON'
+
+
+#### UPDATE STATEMENT ####
+def p_update_statement(t):
+    'update_statement   : UPDATE NAME SET column_assignments WHERE a SEMICOLON'
+
+#### COLUMN aSSIGNMENTS ####
+def p_column_assignments(t):
+    'column_assignments  : column_assignments COMMA NAME ASSIGN a'
+
+
+def p_column_assignments_2(t):
+    'column_assignments : NAME ASSIGN a'
+
+
+#### CASE STATEMENT ####
+def p_case_statement(t):
+    'case_statement : '
+
 
 def p_type(t):
     '''type : INT
             | DECIMAL
-            | BYTE
+            | BIT
             | NCHAR
             | NVARCHAR
             | DATE
             | DATETIME'''
 
+def p_a(t):
+    '''a    : INTEGER_VALUE
+            | STRING
+    '''
 
-#def p_error(t):
-    # print("Error sintáctico en '%s'" % t.value+" "+ t.type)
+
+def p_error(t):
+    print("Error sintáctico en '%s'" % t.value+" "+ t.type)
     # if t is not None:
         # global_arr.append(ExceptionPyType("ERROR SINTACTICO en " + str(t.value) + " SE ESPERABA ALGO MAS", t.lexer.lineno, find_column(input, t)))
 
-import back.ply.yacc as yacc
+import ply.yacc as yacc
 
 def parse(inp):
     global parser
@@ -280,3 +411,7 @@ def parse(inp):
     return parser.parse(inp)
 
 
+inst = parse("""create data base my_db; 
+            use my_db; select * from my_db; 
+            insert into my_db (c, d, b) values (1, "hola");
+""")
