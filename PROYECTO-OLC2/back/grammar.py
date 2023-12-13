@@ -1,5 +1,5 @@
 import re
-from back.error.xsql_error import xsql_error
+from error.xsql_error import xsql_error
 
 # here start grammar
 # --------------------------------------------------------------
@@ -36,7 +36,6 @@ reservadas = {
     'else': 'ELSE',
     'declare': 'DECLARE',
     'function': 'FUNCTION',
-    'returns': 'RETURNS',
     'as': 'AS',
     'begin': 'BEGIN',
     'end': 'END',
@@ -49,7 +48,6 @@ reservadas = {
     'base': 'BASE',
     'table': 'TABLE',
     'procedure': 'PROCEDURE',
-    'foregin': 'FOREIGN',
     'reference': 'REFERENCE',
     'add': 'ADD',
     'int': 'INT',
@@ -150,6 +148,7 @@ def t_INTEGER_VALUE(t):
     except ValueError:
         # global_arr.append(ExceptionPyType(str(t.value) + " DEMASIADO GRANDE", t.lexer.lineno, -1))
         t.value = 0
+    print('find an integer:',t.value)
     return t
 
 # Expresion Regular para IDS
@@ -302,14 +301,6 @@ def p_select_statement_2(t):
     'select_statement   : SELECT columns FROM NAME WHERE a SEMICOLON'
 
 
-def p_select_statement_3(t):
-    'select_statement   : SELECT TIMES FROM NAME SEMICOLON'
-
-
-def p_select_statement_4(t):
-    'select_statement    : SELECT TIMES FROM NAME WHERE a SEMICOLON'
-
-
 #### INSERT ####
 
 def p_insert_statement(t):
@@ -319,11 +310,17 @@ def p_insert_statement(t):
 #### COLUMNS AND VALS PRODS ####
 
 def p_columns(t):
-    'columns    : columns COMMA NAME'
+    'columns    : columns COMMA column'
 
 
 def p_columns_2(t):
-    'columns    : NAME'
+    'columns    : column'
+
+
+def p_column(t):
+    """column   : TIMES
+                | NAME
+                | call_function_prod"""
 
 
 def p_vals(t):
@@ -431,9 +428,82 @@ def p_type(t):
             | DATETIME'''
 
 def p_a(t):
-    '''a    : INTEGER_VALUE
+    '''a    : a OR b'''
+
+def p_a_2(t):
+    'a  : b'
+
+def p_b(t):
+    'b  : b AND c'
+
+
+def p_b_2(t):
+    'b  : c'
+
+
+def p_c(t):
+    'c  : NOT_SIGN d'
+
+
+def p_c_2(t):
+    'c  : d'
+
+
+def p_d(t):
+    """d    : d EQUALS e
+            | d NOT_EQ e
+            | d LESS_THAN e
+            | d GREATER_THAN e
+            | d LESS_EQ e
+            | d GREATER_EQ e
+    """
+
+
+def p_d_2(t):
+    'd  : e'
+
+
+def p_e(t):
+    """e    : e PLUS f
+            | e MINUS f"""
+
+
+def p_e_2(t):
+    'e  : f'
+
+
+def p_f(t):
+    """f    : f TIMES g
+            | f DIVIDE g"""
+
+
+def p_f_2(t):
+    'f  : g'
+
+
+def p_g(t):
+    'g  : MINUS h'
+
+
+def p_g_2(t):
+    'g  : h'
+
+
+def p_h(t):
+    """h    : INTEGER_VALUE
+            | DECIMAL_VALUE
             | STRING
-    '''
+            | ID"""
+
+
+def p_call_function_prod(t):
+    """call_function_prod   : HOY L_PAREN R_PAREN
+                            | CONCATENAR L_PAREN a COMMA a R_PAREN
+                            | SUBSTRAER L_PAREN a R_PAREN
+                            | CONTAR L_PAREN a R_PAREN
+                            | SUMA L_PAREN a R_PAREN
+                            | CAST L_PAREN a AS type R_PAREN
+    """
 
 
 def p_error(t):

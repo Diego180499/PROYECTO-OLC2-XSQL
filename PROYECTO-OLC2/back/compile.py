@@ -1,11 +1,12 @@
-from back.utilities.utilities import errors_to_matrix
+from utilities.utilities import errors_to_matrix
 from grammar import *
 
+
 def parsear():
-    inst = parse("""create data data base use my_db;
+    inst = parse("""create data base my_db;
                 use my_db use;
-                select * from my_db;
-                insert into my_db (c, d, b) values into(1, "hola");
+                select *, hoy(), concatenar('cadena1', cast(100 as nvarchar)) from my_db;
+                insert into my_db (c, d, b) values into(130 * 2 + -4, 1, "hola");
                 if(3, "verdadero",'falso');
                 create table tabla1(
                     campo1 int null primary key,
@@ -23,12 +24,13 @@ def parsear():
 
                 exec procedimiento1 'a', 'b';
 
-                while 1 begin
+                while 100 begin
                     select * from tabla2;
                 end;
 
     """)
-    if len(errores_sintacticos) > 0 :
+    if len(errores_sintacticos) > 0:
         return errors_to_matrix(errores_sintacticos)
+
 
 parsear()
