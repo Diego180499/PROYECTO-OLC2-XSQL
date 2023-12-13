@@ -3,11 +3,11 @@ from Instruction import Instruction
 
 class IfStatement(Instruction):
 
-    def __init__(self, line, column, condition, trueBlock, falseBlock):
+    def __init__(self, line, column, condition, true_block: [Instruction], false_block: [Instruction]):
         super().__init__(line, column)
         self.condition = condition
-        self.trueBlock = trueBlock
-        self.falseBlock = falseBlock
+        self.true_block = true_block
+        self.false_block = false_block
 
     def execute(self):
         print('Execute ifStatement')

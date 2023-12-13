@@ -8,14 +8,20 @@ def parsear():
                 select *, hoy(), concatenar('cadena1', 'TEXTO') from my_db;
                 insert into my_db (c, d, b) values (130 * 2 + -4, 1, "hola");
                 
+                declare @variable1 as nvarchar(10);
+                declare @variable3 as nchar(5);
+                declare @variable10 as int;
+                set @variable10 = 40;
+                declare @variable3 as nchar(@variable10);
+                
                 create table tabla1(
                     campo1 int null primary key,
-                    campo2 nvarchar null,
+                    campo2 nvarchar(30) null,
                     campo3 date reference tabla2(campo3)
                 );
 
                 create procedure procedimiento1(@variable1 as int) as begin 
-                    select * from tabla1; 
+                    select * from tabla1 where column1 == 'hello world'; 
                     
                     while @contador < @i 
                         begin 
@@ -44,7 +50,7 @@ def parsear():
                     
                 end;
 
-                create function funcion1 (@var2 as nvarchar) return date as begin
+                create function funcion1 (@var2 as nvarchar(10)) return date as begin
                     select idfactura,nombre,edad from tabla2;
                 end;
 

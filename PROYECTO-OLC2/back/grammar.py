@@ -430,8 +430,8 @@ def p_type(t):
     '''type : INT
             | DECIMAL
             | BIT
-            | NCHAR
-            | NVARCHAR
+            | NCHAR L_PAREN a R_PAREN
+            | NVARCHAR L_PAREN a R_PAREN
             | DATE
             | DATETIME'''
 
@@ -501,7 +501,8 @@ def p_h(t):
     """h    : INTEGER_VALUE
             | DECIMAL_VALUE
             | STRING
-            | ID"""
+            | ID
+            | NAME"""
 
 
 def p_call_function_prod(t):

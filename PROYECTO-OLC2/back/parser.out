@@ -72,8 +72,8 @@ Rule 66    when_statement -> <empty>
 Rule 67    type -> INT
 Rule 68    type -> DECIMAL
 Rule 69    type -> BIT
-Rule 70    type -> NCHAR
-Rule 71    type -> NVARCHAR
+Rule 70    type -> NCHAR L_PAREN a R_PAREN
+Rule 71    type -> NVARCHAR L_PAREN a R_PAREN
 Rule 72    type -> DATE
 Rule 73    type -> DATETIME
 Rule 74    a -> a OR b
@@ -101,29 +101,30 @@ Rule 95    h -> INTEGER_VALUE
 Rule 96    h -> DECIMAL_VALUE
 Rule 97    h -> STRING
 Rule 98    h -> ID
-Rule 99    call_function_prod -> HOY L_PAREN R_PAREN
-Rule 100   call_function_prod -> CONCATENAR L_PAREN a COMMA a R_PAREN
-Rule 101   call_function_prod -> SUBSTRAER L_PAREN a R_PAREN
-Rule 102   call_function_prod -> CONTAR L_PAREN a R_PAREN
-Rule 103   call_function_prod -> SUMA L_PAREN a R_PAREN
-Rule 104   call_function_prod -> CAS L_PAREN a AS type R_PAREN
+Rule 99    h -> NAME
+Rule 100   call_function_prod -> HOY L_PAREN R_PAREN
+Rule 101   call_function_prod -> CONCATENAR L_PAREN a COMMA a R_PAREN
+Rule 102   call_function_prod -> SUBSTRAER L_PAREN a R_PAREN
+Rule 103   call_function_prod -> CONTAR L_PAREN a R_PAREN
+Rule 104   call_function_prod -> SUMA L_PAREN a R_PAREN
+Rule 105   call_function_prod -> CAS L_PAREN a AS type R_PAREN
 
 Terminals, with rules where they appear
 
 ADD                  : 51
 ALTER                : 51 52
 AND                  : 76
-AS                   : 24 47 48 49 50 104
+AS                   : 24 47 48 49 50 105
 ASSIGN               : 26 27 59 60
 BASE                 : 22
 BEGIN                : 47 48 61
 BIT                  : 69
-CAS                  : 104
+CAS                  : 105
 CASE                 : 64
 COLUMN               : 51 52
-COMMA                : 26 29 40 45 49 55 55 59 100
-CONCATENAR           : 100
-CONTAR               : 102
+COMMA                : 26 29 40 45 49 55 55 59 101
+CONCATENAR           : 101
+CONTAR               : 103
 CREATE               : 22 28 47 48
 DATA                 : 22
 DATE                 : 72
@@ -142,7 +143,7 @@ FROM                 : 37 38 63
 FUNCTION             : 47
 GREATER_EQ           : 85
 GREATER_THAN         : 83
-HOY                  : 99
+HOY                  : 100
 ID                   : 24 26 27 49 50 98
 IF                   : 53 53 54 54 55
 INSERT               : 39
@@ -152,9 +153,9 @@ INTO                 : 39
 KEY                  : 31
 LESS_EQ              : 84
 LESS_THAN            : 82
-L_PAREN              : 28 33 39 39 47 48 55 99 100 101 102 103 104
+L_PAREN              : 28 33 39 39 47 48 55 70 71 100 101 102 103 104 105
 MINUS                : 88 93
-NAME                 : 22 23 28 31 32 33 33 33 37 38 39 43 47 48 51 51 52 52 56 57 58 59 60 62 63
+NAME                 : 22 23 28 31 32 33 33 33 37 38 39 43 47 48 51 51 52 52 56 57 58 59 60 62 63 99
 NCHAR                : 70
 NOT                  : 34
 NOT_EQ               : 81
@@ -167,13 +168,13 @@ PRIMARY              : 31
 PROCEDURE            : 48
 REFERENCE            : 33
 RETURN               : 47
-R_PAREN              : 28 33 39 39 47 48 55 99 100 101 102 103 104
+R_PAREN              : 28 33 39 39 47 48 55 70 71 100 101 102 103 104 105
 SELECT               : 37 38
 SEMICOLON            : 22 23 24 25 28 37 38 39 47 48 51 52 53 54 55 56 57 58 61 62 63
 SET                  : 25 58
 STRING               : 97
-SUBSTRAER            : 101
-SUMA                 : 103
+SUBSTRAER            : 102
+SUMA                 : 104
 TABLE                : 28 51 52 57 62
 THEN                 : 53 54 64 64 65
 TIMES                : 42 90
@@ -188,7 +189,7 @@ error                :
 
 Nonterminals, with rules where they appear
 
-a                    : 26 27 38 45 46 53 54 55 55 55 58 59 60 61 63 64 64 64 65 65 74 100 100 101 102 103 104
+a                    : 26 27 38 45 46 53 54 55 55 55 58 59 60 61 63 64 64 64 65 65 70 71 74 101 101 102 103 104 105
 alter_table_statement : 13
 assignments          : 25 26
 b                    : 74 75 76
@@ -223,7 +224,7 @@ set_statement        : 7
 statement            : 2 53 54 54
 statements           : 1 2 47 48 61
 truncate_statement   : 20
-type                 : 24 31 32 33 47 49 50 51 104
+type                 : 24 31 32 33 47 49 50 51 105
 update_statement     : 18
 use_statement        : 5
 vals                 : 39 45 56
@@ -848,12 +849,12 @@ state 26
     (42) column -> . TIMES
     (43) column -> . NAME
     (44) column -> . call_function_prod
-    (99) call_function_prod -> . HOY L_PAREN R_PAREN
-    (100) call_function_prod -> . CONCATENAR L_PAREN a COMMA a R_PAREN
-    (101) call_function_prod -> . SUBSTRAER L_PAREN a R_PAREN
-    (102) call_function_prod -> . CONTAR L_PAREN a R_PAREN
-    (103) call_function_prod -> . SUMA L_PAREN a R_PAREN
-    (104) call_function_prod -> . CAS L_PAREN a AS type R_PAREN
+    (100) call_function_prod -> . HOY L_PAREN R_PAREN
+    (101) call_function_prod -> . CONCATENAR L_PAREN a COMMA a R_PAREN
+    (102) call_function_prod -> . SUBSTRAER L_PAREN a R_PAREN
+    (103) call_function_prod -> . CONTAR L_PAREN a R_PAREN
+    (104) call_function_prod -> . SUMA L_PAREN a R_PAREN
+    (105) call_function_prod -> . CAS L_PAREN a AS type R_PAREN
 
     TIMES           shift and go to state 48
     NAME            shift and go to state 46
@@ -920,6 +921,7 @@ state 30
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     L_PAREN         shift and go to state 60
     NOT_SIGN        shift and go to state 63
@@ -928,6 +930,7 @@ state 30
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
     a                              shift and go to state 59
     b                              shift and go to state 61
@@ -942,21 +945,21 @@ state 31
 
     (56) exec_statement -> EXEC . NAME vals SEMICOLON
 
-    NAME            shift and go to state 74
+    NAME            shift and go to state 75
 
 
 state 32
 
     (64) case_statement -> CASE . WHEN a THEN a when_statement ELSE THEN a END
 
-    WHEN            shift and go to state 75
+    WHEN            shift and go to state 76
 
 
 state 33
 
     (58) update_statement -> UPDATE . NAME SET column_assignments WHERE a SEMICOLON
 
-    NAME            shift and go to state 76
+    NAME            shift and go to state 77
 
 
 state 34
@@ -987,6 +990,7 @@ state 34
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -994,8 +998,9 @@ state 34
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    a                              shift and go to state 77
+    a                              shift and go to state 78
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -1008,56 +1013,56 @@ state 35
 
     (62) truncate_statement -> TRUNCATE . TABLE NAME SEMICOLON
 
-    TABLE           shift and go to state 78
+    TABLE           shift and go to state 79
 
 
 state 36
 
     (63) delete_statement -> DELETE . FROM NAME WHERE a SEMICOLON
 
-    FROM            shift and go to state 79
+    FROM            shift and go to state 80
 
 
 state 37
 
     (22) create_database_statement -> CREATE DATA . BASE NAME SEMICOLON
 
-    BASE            shift and go to state 80
+    BASE            shift and go to state 81
 
 
 state 38
 
     (28) create_table_statement -> CREATE TABLE . NAME L_PAREN properties R_PAREN SEMICOLON
 
-    NAME            shift and go to state 81
+    NAME            shift and go to state 82
 
 
 state 39
 
     (47) create_function_statement -> CREATE FUNCTION . NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON
 
-    NAME            shift and go to state 82
+    NAME            shift and go to state 83
 
 
 state 40
 
     (48) create_procedure_statement -> CREATE PROCEDURE . NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON
 
-    NAME            shift and go to state 83
+    NAME            shift and go to state 84
 
 
 state 41
 
     (23) use_statement -> USE NAME . SEMICOLON
 
-    SEMICOLON       shift and go to state 84
+    SEMICOLON       shift and go to state 85
 
 
 state 42
 
     (24) declare_statement -> DECLARE ID . AS type SEMICOLON
 
-    AS              shift and go to state 85
+    AS              shift and go to state 86
 
 
 state 43
@@ -1065,15 +1070,15 @@ state 43
     (25) set_statement -> SET assignments . SEMICOLON
     (26) assignments -> assignments . COMMA ID ASSIGN a
 
-    SEMICOLON       shift and go to state 86
-    COMMA           shift and go to state 87
+    SEMICOLON       shift and go to state 87
+    COMMA           shift and go to state 88
 
 
 state 44
 
     (27) assignments -> ID . ASSIGN a
 
-    ASSIGN          shift and go to state 88
+    ASSIGN          shift and go to state 89
 
 
 state 45
@@ -1082,8 +1087,8 @@ state 45
     (38) select_statement -> SELECT columns . FROM NAME WHERE a SEMICOLON
     (40) columns -> columns . COMMA column
 
-    FROM            shift and go to state 89
-    COMMA           shift and go to state 90
+    FROM            shift and go to state 90
+    COMMA           shift and go to state 91
 
 
 state 46
@@ -1124,51 +1129,51 @@ state 49
 
 state 50
 
-    (99) call_function_prod -> HOY . L_PAREN R_PAREN
-
-    L_PAREN         shift and go to state 91
-
-
-state 51
-
-    (100) call_function_prod -> CONCATENAR . L_PAREN a COMMA a R_PAREN
+    (100) call_function_prod -> HOY . L_PAREN R_PAREN
 
     L_PAREN         shift and go to state 92
 
 
-state 52
+state 51
 
-    (101) call_function_prod -> SUBSTRAER . L_PAREN a R_PAREN
+    (101) call_function_prod -> CONCATENAR . L_PAREN a COMMA a R_PAREN
 
     L_PAREN         shift and go to state 93
 
 
-state 53
+state 52
 
-    (102) call_function_prod -> CONTAR . L_PAREN a R_PAREN
+    (102) call_function_prod -> SUBSTRAER . L_PAREN a R_PAREN
 
     L_PAREN         shift and go to state 94
 
 
-state 54
+state 53
 
-    (103) call_function_prod -> SUMA . L_PAREN a R_PAREN
+    (103) call_function_prod -> CONTAR . L_PAREN a R_PAREN
 
     L_PAREN         shift and go to state 95
 
 
-state 55
+state 54
 
-    (104) call_function_prod -> CAS . L_PAREN a AS type R_PAREN
+    (104) call_function_prod -> SUMA . L_PAREN a R_PAREN
 
     L_PAREN         shift and go to state 96
+
+
+state 55
+
+    (105) call_function_prod -> CAS . L_PAREN a AS type R_PAREN
+
+    L_PAREN         shift and go to state 97
 
 
 state 56
 
     (39) insert_statement -> INSERT INTO . NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON
 
-    NAME            shift and go to state 97
+    NAME            shift and go to state 98
 
 
 state 57
@@ -1176,14 +1181,14 @@ state 57
     (51) alter_table_statement -> ALTER TABLE . NAME ADD COLUMN NAME type SEMICOLON
     (52) alter_table_statement -> ALTER TABLE . NAME DROP COLUMN NAME SEMICOLON
 
-    NAME            shift and go to state 98
+    NAME            shift and go to state 99
 
 
 state 58
 
     (57) drop_table_statement -> DROP TABLE . NAME SEMICOLON
 
-    NAME            shift and go to state 99
+    NAME            shift and go to state 100
 
 
 state 59
@@ -1192,8 +1197,8 @@ state 59
     (54) if_statement -> IF a . THEN statement ELSE statement END IF SEMICOLON
     (74) a -> a . OR b
 
-    THEN            shift and go to state 100
-    OR              shift and go to state 101
+    THEN            shift and go to state 101
+    OR              shift and go to state 102
 
 
 state 60
@@ -1224,6 +1229,7 @@ state 60
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -1231,8 +1237,9 @@ state 60
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    a                              shift and go to state 102
+    a                              shift and go to state 103
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -1257,7 +1264,7 @@ state 61
     ELSE            reduce using rule 75 (a -> b .)
     WHERE           reduce using rule 75 (a -> b .)
     END             reduce using rule 75 (a -> b .)
-    AND             shift and go to state 103
+    AND             shift and go to state 104
 
 
 state 62
@@ -1300,14 +1307,16 @@ state 63
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     MINUS           shift and go to state 67
     INTEGER_VALUE   shift and go to state 70
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    d                              shift and go to state 104
+    d                              shift and go to state 105
     e                              shift and go to state 65
     f                              shift and go to state 66
     g                              shift and go to state 68
@@ -1335,12 +1344,12 @@ state 64
     ELSE            reduce using rule 79 (c -> d .)
     WHERE           reduce using rule 79 (c -> d .)
     END             reduce using rule 79 (c -> d .)
-    EQUALS          shift and go to state 105
-    NOT_EQ          shift and go to state 106
-    LESS_THAN       shift and go to state 107
-    GREATER_THAN    shift and go to state 108
-    LESS_EQ         shift and go to state 109
-    GREATER_EQ      shift and go to state 110
+    EQUALS          shift and go to state 106
+    NOT_EQ          shift and go to state 107
+    LESS_THAN       shift and go to state 108
+    GREATER_THAN    shift and go to state 109
+    LESS_EQ         shift and go to state 110
+    GREATER_EQ      shift and go to state 111
 
 
 state 65
@@ -1367,8 +1376,8 @@ state 65
     ELSE            reduce using rule 86 (d -> e .)
     WHERE           reduce using rule 86 (d -> e .)
     END             reduce using rule 86 (d -> e .)
-    PLUS            shift and go to state 111
-    MINUS           shift and go to state 112
+    PLUS            shift and go to state 112
+    MINUS           shift and go to state 113
 
 
 state 66
@@ -1397,8 +1406,8 @@ state 66
     ELSE            reduce using rule 89 (e -> f .)
     WHERE           reduce using rule 89 (e -> f .)
     END             reduce using rule 89 (e -> f .)
-    TIMES           shift and go to state 113
-    DIVIDE          shift and go to state 114
+    TIMES           shift and go to state 114
+    DIVIDE          shift and go to state 115
 
 
 state 67
@@ -1408,13 +1417,15 @@ state 67
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     INTEGER_VALUE   shift and go to state 70
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    h                              shift and go to state 115
+    h                              shift and go to state 116
 
 state 68
 
@@ -1586,6 +1597,34 @@ state 73
 
 state 74
 
+    (99) h -> NAME .
+
+    TIMES           reduce using rule 99 (h -> NAME .)
+    DIVIDE          reduce using rule 99 (h -> NAME .)
+    PLUS            reduce using rule 99 (h -> NAME .)
+    MINUS           reduce using rule 99 (h -> NAME .)
+    EQUALS          reduce using rule 99 (h -> NAME .)
+    NOT_EQ          reduce using rule 99 (h -> NAME .)
+    LESS_THAN       reduce using rule 99 (h -> NAME .)
+    GREATER_THAN    reduce using rule 99 (h -> NAME .)
+    LESS_EQ         reduce using rule 99 (h -> NAME .)
+    GREATER_EQ      reduce using rule 99 (h -> NAME .)
+    AND             reduce using rule 99 (h -> NAME .)
+    THEN            reduce using rule 99 (h -> NAME .)
+    OR              reduce using rule 99 (h -> NAME .)
+    BEGIN           reduce using rule 99 (h -> NAME .)
+    COMMA           reduce using rule 99 (h -> NAME .)
+    SEMICOLON       reduce using rule 99 (h -> NAME .)
+    R_PAREN         reduce using rule 99 (h -> NAME .)
+    AS              reduce using rule 99 (h -> NAME .)
+    WHEN            reduce using rule 99 (h -> NAME .)
+    ELSE            reduce using rule 99 (h -> NAME .)
+    WHERE           reduce using rule 99 (h -> NAME .)
+    END             reduce using rule 99 (h -> NAME .)
+
+
+state 75
+
     (56) exec_statement -> EXEC NAME . vals SEMICOLON
     (45) vals -> . vals COMMA a
     (46) vals -> . a
@@ -1614,6 +1653,7 @@ state 74
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -1621,9 +1661,10 @@ state 74
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    vals                           shift and go to state 116
-    a                              shift and go to state 117
+    vals                           shift and go to state 117
+    a                              shift and go to state 118
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -1632,7 +1673,7 @@ state 74
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 75
+state 76
 
     (64) case_statement -> CASE WHEN . a THEN a when_statement ELSE THEN a END
     (74) a -> . a OR b
@@ -1660,6 +1701,7 @@ state 75
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -1667,8 +1709,9 @@ state 75
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    a                              shift and go to state 118
+    a                              shift and go to state 119
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -1677,65 +1720,65 @@ state 75
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 76
+state 77
 
     (58) update_statement -> UPDATE NAME . SET column_assignments WHERE a SEMICOLON
 
-    SET             shift and go to state 119
-
-
-state 77
-
-    (61) while_statement -> WHILE a . BEGIN statements END SEMICOLON
-    (74) a -> a . OR b
-
-    BEGIN           shift and go to state 120
-    OR              shift and go to state 101
+    SET             shift and go to state 120
 
 
 state 78
 
-    (62) truncate_statement -> TRUNCATE TABLE . NAME SEMICOLON
+    (61) while_statement -> WHILE a . BEGIN statements END SEMICOLON
+    (74) a -> a . OR b
 
-    NAME            shift and go to state 121
+    BEGIN           shift and go to state 121
+    OR              shift and go to state 102
 
 
 state 79
 
-    (63) delete_statement -> DELETE FROM . NAME WHERE a SEMICOLON
+    (62) truncate_statement -> TRUNCATE TABLE . NAME SEMICOLON
 
     NAME            shift and go to state 122
 
 
 state 80
 
-    (22) create_database_statement -> CREATE DATA BASE . NAME SEMICOLON
+    (63) delete_statement -> DELETE FROM . NAME WHERE a SEMICOLON
 
     NAME            shift and go to state 123
 
 
 state 81
 
-    (28) create_table_statement -> CREATE TABLE NAME . L_PAREN properties R_PAREN SEMICOLON
+    (22) create_database_statement -> CREATE DATA BASE . NAME SEMICOLON
 
-    L_PAREN         shift and go to state 124
+    NAME            shift and go to state 124
 
 
 state 82
 
-    (47) create_function_statement -> CREATE FUNCTION NAME . L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON
+    (28) create_table_statement -> CREATE TABLE NAME . L_PAREN properties R_PAREN SEMICOLON
 
     L_PAREN         shift and go to state 125
 
 
 state 83
 
-    (48) create_procedure_statement -> CREATE PROCEDURE NAME . L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON
+    (47) create_function_statement -> CREATE FUNCTION NAME . L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON
 
     L_PAREN         shift and go to state 126
 
 
 state 84
+
+    (48) create_procedure_statement -> CREATE PROCEDURE NAME . L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON
+
+    L_PAREN         shift and go to state 127
+
+
+state 85
 
     (23) use_statement -> USE NAME SEMICOLON .
 
@@ -1759,28 +1802,28 @@ state 84
     ELSE            reduce using rule 23 (use_statement -> USE NAME SEMICOLON .)
 
 
-state 85
+state 86
 
     (24) declare_statement -> DECLARE ID AS . type SEMICOLON
     (67) type -> . INT
     (68) type -> . DECIMAL
     (69) type -> . BIT
-    (70) type -> . NCHAR
-    (71) type -> . NVARCHAR
+    (70) type -> . NCHAR L_PAREN a R_PAREN
+    (71) type -> . NVARCHAR L_PAREN a R_PAREN
     (72) type -> . DATE
     (73) type -> . DATETIME
 
-    INT             shift and go to state 128
-    DECIMAL         shift and go to state 129
-    BIT             shift and go to state 130
-    NCHAR           shift and go to state 131
-    NVARCHAR        shift and go to state 132
-    DATE            shift and go to state 133
-    DATETIME        shift and go to state 134
+    INT             shift and go to state 129
+    DECIMAL         shift and go to state 130
+    BIT             shift and go to state 131
+    NCHAR           shift and go to state 132
+    NVARCHAR        shift and go to state 133
+    DATE            shift and go to state 134
+    DATETIME        shift and go to state 135
 
-    type                           shift and go to state 127
+    type                           shift and go to state 128
 
-state 86
+state 87
 
     (25) set_statement -> SET assignments SEMICOLON .
 
@@ -1804,14 +1847,14 @@ state 86
     ELSE            reduce using rule 25 (set_statement -> SET assignments SEMICOLON .)
 
 
-state 87
+state 88
 
     (26) assignments -> assignments COMMA . ID ASSIGN a
 
-    ID              shift and go to state 135
+    ID              shift and go to state 136
 
 
-state 88
+state 89
 
     (27) assignments -> ID ASSIGN . a
     (74) a -> . a OR b
@@ -1839,6 +1882,7 @@ state 88
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -1846,8 +1890,9 @@ state 88
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    a                              shift and go to state 136
+    a                              shift and go to state 137
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -1856,26 +1901,26 @@ state 88
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 89
+state 90
 
     (37) select_statement -> SELECT columns FROM . NAME SEMICOLON
     (38) select_statement -> SELECT columns FROM . NAME WHERE a SEMICOLON
 
-    NAME            shift and go to state 137
+    NAME            shift and go to state 138
 
 
-state 90
+state 91
 
     (40) columns -> columns COMMA . column
     (42) column -> . TIMES
     (43) column -> . NAME
     (44) column -> . call_function_prod
-    (99) call_function_prod -> . HOY L_PAREN R_PAREN
-    (100) call_function_prod -> . CONCATENAR L_PAREN a COMMA a R_PAREN
-    (101) call_function_prod -> . SUBSTRAER L_PAREN a R_PAREN
-    (102) call_function_prod -> . CONTAR L_PAREN a R_PAREN
-    (103) call_function_prod -> . SUMA L_PAREN a R_PAREN
-    (104) call_function_prod -> . CAS L_PAREN a AS type R_PAREN
+    (100) call_function_prod -> . HOY L_PAREN R_PAREN
+    (101) call_function_prod -> . CONCATENAR L_PAREN a COMMA a R_PAREN
+    (102) call_function_prod -> . SUBSTRAER L_PAREN a R_PAREN
+    (103) call_function_prod -> . CONTAR L_PAREN a R_PAREN
+    (104) call_function_prod -> . SUMA L_PAREN a R_PAREN
+    (105) call_function_prod -> . CAS L_PAREN a AS type R_PAREN
 
     TIMES           shift and go to state 48
     NAME            shift and go to state 46
@@ -1886,64 +1931,19 @@ state 90
     SUMA            shift and go to state 54
     CAS             shift and go to state 55
 
-    column                         shift and go to state 138
+    column                         shift and go to state 139
     call_function_prod             shift and go to state 49
-
-state 91
-
-    (99) call_function_prod -> HOY L_PAREN . R_PAREN
-
-    R_PAREN         shift and go to state 139
-
 
 state 92
 
-    (100) call_function_prod -> CONCATENAR L_PAREN . a COMMA a R_PAREN
-    (74) a -> . a OR b
-    (75) a -> . b
-    (76) b -> . b AND c
-    (77) b -> . c
-    (78) c -> . NOT_SIGN d
-    (79) c -> . d
-    (80) d -> . d EQUALS e
-    (81) d -> . d NOT_EQ e
-    (82) d -> . d LESS_THAN e
-    (83) d -> . d GREATER_THAN e
-    (84) d -> . d LESS_EQ e
-    (85) d -> . d GREATER_EQ e
-    (86) d -> . e
-    (87) e -> . e PLUS f
-    (88) e -> . e MINUS f
-    (89) e -> . f
-    (90) f -> . f TIMES g
-    (91) f -> . f DIVIDE g
-    (92) f -> . g
-    (93) g -> . MINUS h
-    (94) g -> . h
-    (95) h -> . INTEGER_VALUE
-    (96) h -> . DECIMAL_VALUE
-    (97) h -> . STRING
-    (98) h -> . ID
+    (100) call_function_prod -> HOY L_PAREN . R_PAREN
 
-    NOT_SIGN        shift and go to state 63
-    MINUS           shift and go to state 67
-    INTEGER_VALUE   shift and go to state 70
-    DECIMAL_VALUE   shift and go to state 71
-    STRING          shift and go to state 72
-    ID              shift and go to state 73
+    R_PAREN         shift and go to state 140
 
-    a                              shift and go to state 140
-    b                              shift and go to state 61
-    c                              shift and go to state 62
-    d                              shift and go to state 64
-    e                              shift and go to state 65
-    f                              shift and go to state 66
-    g                              shift and go to state 68
-    h                              shift and go to state 69
 
 state 93
 
-    (101) call_function_prod -> SUBSTRAER L_PAREN . a R_PAREN
+    (101) call_function_prod -> CONCATENAR L_PAREN . a COMMA a R_PAREN
     (74) a -> . a OR b
     (75) a -> . b
     (76) b -> . b AND c
@@ -1969,6 +1969,7 @@ state 93
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -1976,6 +1977,7 @@ state 93
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
     a                              shift and go to state 141
     b                              shift and go to state 61
@@ -1988,7 +1990,7 @@ state 93
 
 state 94
 
-    (102) call_function_prod -> CONTAR L_PAREN . a R_PAREN
+    (102) call_function_prod -> SUBSTRAER L_PAREN . a R_PAREN
     (74) a -> . a OR b
     (75) a -> . b
     (76) b -> . b AND c
@@ -2014,6 +2016,7 @@ state 94
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -2021,6 +2024,7 @@ state 94
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
     a                              shift and go to state 142
     b                              shift and go to state 61
@@ -2033,7 +2037,7 @@ state 94
 
 state 95
 
-    (103) call_function_prod -> SUMA L_PAREN . a R_PAREN
+    (103) call_function_prod -> CONTAR L_PAREN . a R_PAREN
     (74) a -> . a OR b
     (75) a -> . b
     (76) b -> . b AND c
@@ -2059,6 +2063,7 @@ state 95
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -2066,6 +2071,7 @@ state 95
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
     a                              shift and go to state 143
     b                              shift and go to state 61
@@ -2078,7 +2084,7 @@ state 95
 
 state 96
 
-    (104) call_function_prod -> CAS L_PAREN . a AS type R_PAREN
+    (104) call_function_prod -> SUMA L_PAREN . a R_PAREN
     (74) a -> . a OR b
     (75) a -> . b
     (76) b -> . b AND c
@@ -2104,6 +2110,7 @@ state 96
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -2111,6 +2118,7 @@ state 96
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
     a                              shift and go to state 144
     b                              shift and go to state 61
@@ -2123,28 +2131,75 @@ state 96
 
 state 97
 
-    (39) insert_statement -> INSERT INTO NAME . L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON
+    (105) call_function_prod -> CAS L_PAREN . a AS type R_PAREN
+    (74) a -> . a OR b
+    (75) a -> . b
+    (76) b -> . b AND c
+    (77) b -> . c
+    (78) c -> . NOT_SIGN d
+    (79) c -> . d
+    (80) d -> . d EQUALS e
+    (81) d -> . d NOT_EQ e
+    (82) d -> . d LESS_THAN e
+    (83) d -> . d GREATER_THAN e
+    (84) d -> . d LESS_EQ e
+    (85) d -> . d GREATER_EQ e
+    (86) d -> . e
+    (87) e -> . e PLUS f
+    (88) e -> . e MINUS f
+    (89) e -> . f
+    (90) f -> . f TIMES g
+    (91) f -> . f DIVIDE g
+    (92) f -> . g
+    (93) g -> . MINUS h
+    (94) g -> . h
+    (95) h -> . INTEGER_VALUE
+    (96) h -> . DECIMAL_VALUE
+    (97) h -> . STRING
+    (98) h -> . ID
+    (99) h -> . NAME
 
-    L_PAREN         shift and go to state 145
+    NOT_SIGN        shift and go to state 63
+    MINUS           shift and go to state 67
+    INTEGER_VALUE   shift and go to state 70
+    DECIMAL_VALUE   shift and go to state 71
+    STRING          shift and go to state 72
+    ID              shift and go to state 73
+    NAME            shift and go to state 74
 
+    a                              shift and go to state 145
+    b                              shift and go to state 61
+    c                              shift and go to state 62
+    d                              shift and go to state 64
+    e                              shift and go to state 65
+    f                              shift and go to state 66
+    g                              shift and go to state 68
+    h                              shift and go to state 69
 
 state 98
 
-    (51) alter_table_statement -> ALTER TABLE NAME . ADD COLUMN NAME type SEMICOLON
-    (52) alter_table_statement -> ALTER TABLE NAME . DROP COLUMN NAME SEMICOLON
+    (39) insert_statement -> INSERT INTO NAME . L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON
 
-    ADD             shift and go to state 146
-    DROP            shift and go to state 147
+    L_PAREN         shift and go to state 146
 
 
 state 99
 
-    (57) drop_table_statement -> DROP TABLE NAME . SEMICOLON
+    (51) alter_table_statement -> ALTER TABLE NAME . ADD COLUMN NAME type SEMICOLON
+    (52) alter_table_statement -> ALTER TABLE NAME . DROP COLUMN NAME SEMICOLON
 
-    SEMICOLON       shift and go to state 148
+    ADD             shift and go to state 147
+    DROP            shift and go to state 148
 
 
 state 100
+
+    (57) drop_table_statement -> DROP TABLE NAME . SEMICOLON
+
+    SEMICOLON       shift and go to state 149
+
+
+state 101
 
     (53) if_statement -> IF a THEN . statement END IF SEMICOLON
     (54) if_statement -> IF a THEN . statement ELSE statement END IF SEMICOLON
@@ -2205,7 +2260,7 @@ state 100
     TRUNCATE        shift and go to state 35
     DELETE          shift and go to state 36
 
-    statement                      shift and go to state 149
+    statement                      shift and go to state 150
     create_database_statement      shift and go to state 4
     use_statement                  shift and go to state 5
     declare_statement              shift and go to state 6
@@ -2225,7 +2280,7 @@ state 100
     truncate_statement             shift and go to state 20
     delete_statement               shift and go to state 21
 
-state 101
+state 102
 
     (74) a -> a OR . b
     (76) b -> . b AND c
@@ -2251,6 +2306,7 @@ state 101
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -2258,8 +2314,9 @@ state 101
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    b                              shift and go to state 150
+    b                              shift and go to state 151
     c                              shift and go to state 62
     d                              shift and go to state 64
     e                              shift and go to state 65
@@ -2267,16 +2324,16 @@ state 101
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 102
+state 103
 
     (55) if_statement -> IF L_PAREN a . COMMA a COMMA a R_PAREN SEMICOLON
     (74) a -> a . OR b
 
-    COMMA           shift and go to state 151
-    OR              shift and go to state 101
+    COMMA           shift and go to state 152
+    OR              shift and go to state 102
 
 
-state 103
+state 104
 
     (76) b -> b AND . c
     (78) c -> . NOT_SIGN d
@@ -2300,6 +2357,7 @@ state 103
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -2307,15 +2365,16 @@ state 103
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    c                              shift and go to state 152
+    c                              shift and go to state 153
     d                              shift and go to state 64
     e                              shift and go to state 65
     f                              shift and go to state 66
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 104
+state 105
 
     (78) c -> NOT_SIGN d .
     (80) d -> d . EQUALS e
@@ -2337,15 +2396,15 @@ state 104
     ELSE            reduce using rule 78 (c -> NOT_SIGN d .)
     WHERE           reduce using rule 78 (c -> NOT_SIGN d .)
     END             reduce using rule 78 (c -> NOT_SIGN d .)
-    EQUALS          shift and go to state 105
-    NOT_EQ          shift and go to state 106
-    LESS_THAN       shift and go to state 107
-    GREATER_THAN    shift and go to state 108
-    LESS_EQ         shift and go to state 109
-    GREATER_EQ      shift and go to state 110
+    EQUALS          shift and go to state 106
+    NOT_EQ          shift and go to state 107
+    LESS_THAN       shift and go to state 108
+    GREATER_THAN    shift and go to state 109
+    LESS_EQ         shift and go to state 110
+    GREATER_EQ      shift and go to state 111
 
 
-state 105
+state 106
 
     (80) d -> d EQUALS . e
     (87) e -> . e PLUS f
@@ -2360,19 +2419,21 @@ state 105
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     MINUS           shift and go to state 67
     INTEGER_VALUE   shift and go to state 70
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    e                              shift and go to state 153
+    e                              shift and go to state 154
     f                              shift and go to state 66
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 106
+state 107
 
     (81) d -> d NOT_EQ . e
     (87) e -> . e PLUS f
@@ -2387,19 +2448,21 @@ state 106
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     MINUS           shift and go to state 67
     INTEGER_VALUE   shift and go to state 70
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    e                              shift and go to state 154
+    e                              shift and go to state 155
     f                              shift and go to state 66
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 107
+state 108
 
     (82) d -> d LESS_THAN . e
     (87) e -> . e PLUS f
@@ -2414,19 +2477,21 @@ state 107
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     MINUS           shift and go to state 67
     INTEGER_VALUE   shift and go to state 70
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    e                              shift and go to state 155
+    e                              shift and go to state 156
     f                              shift and go to state 66
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 108
+state 109
 
     (83) d -> d GREATER_THAN . e
     (87) e -> . e PLUS f
@@ -2441,19 +2506,21 @@ state 108
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     MINUS           shift and go to state 67
     INTEGER_VALUE   shift and go to state 70
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    e                              shift and go to state 156
+    e                              shift and go to state 157
     f                              shift and go to state 66
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 109
+state 110
 
     (84) d -> d LESS_EQ . e
     (87) e -> . e PLUS f
@@ -2468,19 +2535,21 @@ state 109
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     MINUS           shift and go to state 67
     INTEGER_VALUE   shift and go to state 70
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    e                              shift and go to state 157
+    e                              shift and go to state 158
     f                              shift and go to state 66
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 110
+state 111
 
     (85) d -> d GREATER_EQ . e
     (87) e -> . e PLUS f
@@ -2495,19 +2564,21 @@ state 110
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     MINUS           shift and go to state 67
     INTEGER_VALUE   shift and go to state 70
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    e                              shift and go to state 158
+    e                              shift and go to state 159
     f                              shift and go to state 66
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 111
+state 112
 
     (87) e -> e PLUS . f
     (90) f -> . f TIMES g
@@ -2519,18 +2590,20 @@ state 111
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     MINUS           shift and go to state 67
     INTEGER_VALUE   shift and go to state 70
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    f                              shift and go to state 159
+    f                              shift and go to state 160
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 112
+state 113
 
     (88) e -> e MINUS . f
     (90) f -> . f TIMES g
@@ -2542,18 +2615,20 @@ state 112
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     MINUS           shift and go to state 67
     INTEGER_VALUE   shift and go to state 70
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    f                              shift and go to state 160
+    f                              shift and go to state 161
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 113
+state 114
 
     (90) f -> f TIMES . g
     (93) g -> . MINUS h
@@ -2562,17 +2637,19 @@ state 113
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     MINUS           shift and go to state 67
     INTEGER_VALUE   shift and go to state 70
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    g                              shift and go to state 161
+    g                              shift and go to state 162
     h                              shift and go to state 69
 
-state 114
+state 115
 
     (91) f -> f DIVIDE . g
     (93) g -> . MINUS h
@@ -2581,17 +2658,19 @@ state 114
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     MINUS           shift and go to state 67
     INTEGER_VALUE   shift and go to state 70
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    g                              shift and go to state 162
+    g                              shift and go to state 163
     h                              shift and go to state 69
 
-state 115
+state 116
 
     (93) g -> MINUS h .
 
@@ -2619,16 +2698,16 @@ state 115
     END             reduce using rule 93 (g -> MINUS h .)
 
 
-state 116
+state 117
 
     (56) exec_statement -> EXEC NAME vals . SEMICOLON
     (45) vals -> vals . COMMA a
 
-    SEMICOLON       shift and go to state 163
-    COMMA           shift and go to state 164
+    SEMICOLON       shift and go to state 164
+    COMMA           shift and go to state 165
 
 
-state 117
+state 118
 
     (46) vals -> a .
     (74) a -> a . OR b
@@ -2636,29 +2715,29 @@ state 117
     SEMICOLON       reduce using rule 46 (vals -> a .)
     COMMA           reduce using rule 46 (vals -> a .)
     R_PAREN         reduce using rule 46 (vals -> a .)
-    OR              shift and go to state 101
+    OR              shift and go to state 102
 
 
-state 118
+state 119
 
     (64) case_statement -> CASE WHEN a . THEN a when_statement ELSE THEN a END
     (74) a -> a . OR b
 
-    THEN            shift and go to state 165
-    OR              shift and go to state 101
+    THEN            shift and go to state 166
+    OR              shift and go to state 102
 
 
-state 119
+state 120
 
     (58) update_statement -> UPDATE NAME SET . column_assignments WHERE a SEMICOLON
     (59) column_assignments -> . column_assignments COMMA NAME ASSIGN a
     (60) column_assignments -> . NAME ASSIGN a
 
-    NAME            shift and go to state 166
+    NAME            shift and go to state 167
 
-    column_assignments             shift and go to state 167
+    column_assignments             shift and go to state 168
 
-state 120
+state 121
 
     (61) while_statement -> WHILE a BEGIN . statements END SEMICOLON
     (2) statements -> . statements statement
@@ -2681,30 +2760,30 @@ state 120
     TRUNCATE        reduce using rule 3 (statements -> .)
     DELETE          reduce using rule 3 (statements -> .)
 
-    statements                     shift and go to state 168
-
-state 121
-
-    (62) truncate_statement -> TRUNCATE TABLE NAME . SEMICOLON
-
-    SEMICOLON       shift and go to state 169
-
+    statements                     shift and go to state 169
 
 state 122
 
-    (63) delete_statement -> DELETE FROM NAME . WHERE a SEMICOLON
+    (62) truncate_statement -> TRUNCATE TABLE NAME . SEMICOLON
 
-    WHERE           shift and go to state 170
+    SEMICOLON       shift and go to state 170
 
 
 state 123
 
-    (22) create_database_statement -> CREATE DATA BASE NAME . SEMICOLON
+    (63) delete_statement -> DELETE FROM NAME . WHERE a SEMICOLON
 
-    SEMICOLON       shift and go to state 171
+    WHERE           shift and go to state 171
 
 
 state 124
+
+    (22) create_database_statement -> CREATE DATA BASE NAME . SEMICOLON
+
+    SEMICOLON       shift and go to state 172
+
+
+state 125
 
     (28) create_table_statement -> CREATE TABLE NAME L_PAREN . properties R_PAREN SEMICOLON
     (29) properties -> . properties COMMA property
@@ -2713,39 +2792,39 @@ state 124
     (32) property -> . NAME type null_prod
     (33) property -> . NAME type null_prod REFERENCE NAME L_PAREN NAME R_PAREN
 
-    NAME            shift and go to state 172
+    NAME            shift and go to state 173
 
-    properties                     shift and go to state 173
-    property                       shift and go to state 174
+    properties                     shift and go to state 174
+    property                       shift and go to state 175
 
-state 125
+state 126
 
     (47) create_function_statement -> CREATE FUNCTION NAME L_PAREN . parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON
     (49) parameters -> . parameters COMMA ID AS type
     (50) parameters -> . ID AS type
 
-    ID              shift and go to state 176
+    ID              shift and go to state 177
 
-    parameters                     shift and go to state 175
+    parameters                     shift and go to state 176
 
-state 126
+state 127
 
     (48) create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN . parameters R_PAREN AS BEGIN statements END SEMICOLON
     (49) parameters -> . parameters COMMA ID AS type
     (50) parameters -> . ID AS type
 
-    ID              shift and go to state 176
+    ID              shift and go to state 177
 
-    parameters                     shift and go to state 177
+    parameters                     shift and go to state 178
 
-state 127
+state 128
 
     (24) declare_statement -> DECLARE ID AS type . SEMICOLON
 
-    SEMICOLON       shift and go to state 178
+    SEMICOLON       shift and go to state 179
 
 
-state 128
+state 129
 
     (67) type -> INT .
 
@@ -2759,7 +2838,7 @@ state 128
     AS              reduce using rule 67 (type -> INT .)
 
 
-state 129
+state 130
 
     (68) type -> DECIMAL .
 
@@ -2773,7 +2852,7 @@ state 129
     AS              reduce using rule 68 (type -> DECIMAL .)
 
 
-state 130
+state 131
 
     (69) type -> BIT .
 
@@ -2787,35 +2866,21 @@ state 130
     AS              reduce using rule 69 (type -> BIT .)
 
 
-state 131
-
-    (70) type -> NCHAR .
-
-    SEMICOLON       reduce using rule 70 (type -> NCHAR .)
-    NOT             reduce using rule 70 (type -> NCHAR .)
-    NULL            reduce using rule 70 (type -> NCHAR .)
-    PRIMARY         reduce using rule 70 (type -> NCHAR .)
-    REFERENCE       reduce using rule 70 (type -> NCHAR .)
-    R_PAREN         reduce using rule 70 (type -> NCHAR .)
-    COMMA           reduce using rule 70 (type -> NCHAR .)
-    AS              reduce using rule 70 (type -> NCHAR .)
-
-
 state 132
 
-    (71) type -> NVARCHAR .
+    (70) type -> NCHAR . L_PAREN a R_PAREN
 
-    SEMICOLON       reduce using rule 71 (type -> NVARCHAR .)
-    NOT             reduce using rule 71 (type -> NVARCHAR .)
-    NULL            reduce using rule 71 (type -> NVARCHAR .)
-    PRIMARY         reduce using rule 71 (type -> NVARCHAR .)
-    REFERENCE       reduce using rule 71 (type -> NVARCHAR .)
-    R_PAREN         reduce using rule 71 (type -> NVARCHAR .)
-    COMMA           reduce using rule 71 (type -> NVARCHAR .)
-    AS              reduce using rule 71 (type -> NVARCHAR .)
+    L_PAREN         shift and go to state 180
 
 
 state 133
+
+    (71) type -> NVARCHAR . L_PAREN a R_PAREN
+
+    L_PAREN         shift and go to state 181
+
+
+state 134
 
     (72) type -> DATE .
 
@@ -2829,7 +2894,7 @@ state 133
     AS              reduce using rule 72 (type -> DATE .)
 
 
-state 134
+state 135
 
     (73) type -> DATETIME .
 
@@ -2843,33 +2908,33 @@ state 134
     AS              reduce using rule 73 (type -> DATETIME .)
 
 
-state 135
+state 136
 
     (26) assignments -> assignments COMMA ID . ASSIGN a
 
-    ASSIGN          shift and go to state 179
+    ASSIGN          shift and go to state 182
 
 
-state 136
+state 137
 
     (27) assignments -> ID ASSIGN a .
     (74) a -> a . OR b
 
     SEMICOLON       reduce using rule 27 (assignments -> ID ASSIGN a .)
     COMMA           reduce using rule 27 (assignments -> ID ASSIGN a .)
-    OR              shift and go to state 101
+    OR              shift and go to state 102
 
 
-state 137
+state 138
 
     (37) select_statement -> SELECT columns FROM NAME . SEMICOLON
     (38) select_statement -> SELECT columns FROM NAME . WHERE a SEMICOLON
 
-    SEMICOLON       shift and go to state 180
-    WHERE           shift and go to state 181
+    SEMICOLON       shift and go to state 183
+    WHERE           shift and go to state 184
 
 
-state 138
+state 139
 
     (40) columns -> columns COMMA column .
 
@@ -2878,61 +2943,61 @@ state 138
     R_PAREN         reduce using rule 40 (columns -> columns COMMA column .)
 
 
-state 139
-
-    (99) call_function_prod -> HOY L_PAREN R_PAREN .
-
-    FROM            reduce using rule 99 (call_function_prod -> HOY L_PAREN R_PAREN .)
-    COMMA           reduce using rule 99 (call_function_prod -> HOY L_PAREN R_PAREN .)
-    R_PAREN         reduce using rule 99 (call_function_prod -> HOY L_PAREN R_PAREN .)
-
-
 state 140
 
-    (100) call_function_prod -> CONCATENAR L_PAREN a . COMMA a R_PAREN
-    (74) a -> a . OR b
+    (100) call_function_prod -> HOY L_PAREN R_PAREN .
 
-    COMMA           shift and go to state 182
-    OR              shift and go to state 101
+    FROM            reduce using rule 100 (call_function_prod -> HOY L_PAREN R_PAREN .)
+    COMMA           reduce using rule 100 (call_function_prod -> HOY L_PAREN R_PAREN .)
+    R_PAREN         reduce using rule 100 (call_function_prod -> HOY L_PAREN R_PAREN .)
 
 
 state 141
 
-    (101) call_function_prod -> SUBSTRAER L_PAREN a . R_PAREN
+    (101) call_function_prod -> CONCATENAR L_PAREN a . COMMA a R_PAREN
     (74) a -> a . OR b
 
-    R_PAREN         shift and go to state 183
-    OR              shift and go to state 101
+    COMMA           shift and go to state 185
+    OR              shift and go to state 102
 
 
 state 142
 
-    (102) call_function_prod -> CONTAR L_PAREN a . R_PAREN
+    (102) call_function_prod -> SUBSTRAER L_PAREN a . R_PAREN
     (74) a -> a . OR b
 
-    R_PAREN         shift and go to state 184
-    OR              shift and go to state 101
+    R_PAREN         shift and go to state 186
+    OR              shift and go to state 102
 
 
 state 143
 
-    (103) call_function_prod -> SUMA L_PAREN a . R_PAREN
+    (103) call_function_prod -> CONTAR L_PAREN a . R_PAREN
     (74) a -> a . OR b
 
-    R_PAREN         shift and go to state 185
-    OR              shift and go to state 101
+    R_PAREN         shift and go to state 187
+    OR              shift and go to state 102
 
 
 state 144
 
-    (104) call_function_prod -> CAS L_PAREN a . AS type R_PAREN
+    (104) call_function_prod -> SUMA L_PAREN a . R_PAREN
     (74) a -> a . OR b
 
-    AS              shift and go to state 186
-    OR              shift and go to state 101
+    R_PAREN         shift and go to state 188
+    OR              shift and go to state 102
 
 
 state 145
+
+    (105) call_function_prod -> CAS L_PAREN a . AS type R_PAREN
+    (74) a -> a . OR b
+
+    AS              shift and go to state 189
+    OR              shift and go to state 102
+
+
+state 146
 
     (39) insert_statement -> INSERT INTO NAME L_PAREN . columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON
     (40) columns -> . columns COMMA column
@@ -2940,12 +3005,12 @@ state 145
     (42) column -> . TIMES
     (43) column -> . NAME
     (44) column -> . call_function_prod
-    (99) call_function_prod -> . HOY L_PAREN R_PAREN
-    (100) call_function_prod -> . CONCATENAR L_PAREN a COMMA a R_PAREN
-    (101) call_function_prod -> . SUBSTRAER L_PAREN a R_PAREN
-    (102) call_function_prod -> . CONTAR L_PAREN a R_PAREN
-    (103) call_function_prod -> . SUMA L_PAREN a R_PAREN
-    (104) call_function_prod -> . CAS L_PAREN a AS type R_PAREN
+    (100) call_function_prod -> . HOY L_PAREN R_PAREN
+    (101) call_function_prod -> . CONCATENAR L_PAREN a COMMA a R_PAREN
+    (102) call_function_prod -> . SUBSTRAER L_PAREN a R_PAREN
+    (103) call_function_prod -> . CONTAR L_PAREN a R_PAREN
+    (104) call_function_prod -> . SUMA L_PAREN a R_PAREN
+    (105) call_function_prod -> . CAS L_PAREN a AS type R_PAREN
 
     TIMES           shift and go to state 48
     NAME            shift and go to state 46
@@ -2956,25 +3021,25 @@ state 145
     SUMA            shift and go to state 54
     CAS             shift and go to state 55
 
-    columns                        shift and go to state 187
+    columns                        shift and go to state 190
     column                         shift and go to state 47
     call_function_prod             shift and go to state 49
 
-state 146
+state 147
 
     (51) alter_table_statement -> ALTER TABLE NAME ADD . COLUMN NAME type SEMICOLON
 
-    COLUMN          shift and go to state 188
-
-
-state 147
-
-    (52) alter_table_statement -> ALTER TABLE NAME DROP . COLUMN NAME SEMICOLON
-
-    COLUMN          shift and go to state 189
+    COLUMN          shift and go to state 191
 
 
 state 148
+
+    (52) alter_table_statement -> ALTER TABLE NAME DROP . COLUMN NAME SEMICOLON
+
+    COLUMN          shift and go to state 192
+
+
+state 149
 
     (57) drop_table_statement -> DROP TABLE NAME SEMICOLON .
 
@@ -2998,16 +3063,16 @@ state 148
     ELSE            reduce using rule 57 (drop_table_statement -> DROP TABLE NAME SEMICOLON .)
 
 
-state 149
+state 150
 
     (53) if_statement -> IF a THEN statement . END IF SEMICOLON
     (54) if_statement -> IF a THEN statement . ELSE statement END IF SEMICOLON
 
-    END             shift and go to state 190
-    ELSE            shift and go to state 191
+    END             shift and go to state 193
+    ELSE            shift and go to state 194
 
 
-state 150
+state 151
 
     (74) a -> a OR b .
     (76) b -> b . AND c
@@ -3023,10 +3088,10 @@ state 150
     ELSE            reduce using rule 74 (a -> a OR b .)
     WHERE           reduce using rule 74 (a -> a OR b .)
     END             reduce using rule 74 (a -> a OR b .)
-    AND             shift and go to state 103
+    AND             shift and go to state 104
 
 
-state 151
+state 152
 
     (55) if_statement -> IF L_PAREN a COMMA . a COMMA a R_PAREN SEMICOLON
     (74) a -> . a OR b
@@ -3054,6 +3119,7 @@ state 151
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -3061,8 +3127,9 @@ state 151
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    a                              shift and go to state 192
+    a                              shift and go to state 195
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -3071,7 +3138,7 @@ state 151
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 152
+state 153
 
     (76) b -> b AND c .
 
@@ -3089,7 +3156,7 @@ state 152
     END             reduce using rule 76 (b -> b AND c .)
 
 
-state 153
+state 154
 
     (80) d -> d EQUALS e .
     (87) e -> e . PLUS f
@@ -3113,11 +3180,11 @@ state 153
     ELSE            reduce using rule 80 (d -> d EQUALS e .)
     WHERE           reduce using rule 80 (d -> d EQUALS e .)
     END             reduce using rule 80 (d -> d EQUALS e .)
-    PLUS            shift and go to state 111
-    MINUS           shift and go to state 112
+    PLUS            shift and go to state 112
+    MINUS           shift and go to state 113
 
 
-state 154
+state 155
 
     (81) d -> d NOT_EQ e .
     (87) e -> e . PLUS f
@@ -3141,11 +3208,11 @@ state 154
     ELSE            reduce using rule 81 (d -> d NOT_EQ e .)
     WHERE           reduce using rule 81 (d -> d NOT_EQ e .)
     END             reduce using rule 81 (d -> d NOT_EQ e .)
-    PLUS            shift and go to state 111
-    MINUS           shift and go to state 112
+    PLUS            shift and go to state 112
+    MINUS           shift and go to state 113
 
 
-state 155
+state 156
 
     (82) d -> d LESS_THAN e .
     (87) e -> e . PLUS f
@@ -3169,11 +3236,11 @@ state 155
     ELSE            reduce using rule 82 (d -> d LESS_THAN e .)
     WHERE           reduce using rule 82 (d -> d LESS_THAN e .)
     END             reduce using rule 82 (d -> d LESS_THAN e .)
-    PLUS            shift and go to state 111
-    MINUS           shift and go to state 112
+    PLUS            shift and go to state 112
+    MINUS           shift and go to state 113
 
 
-state 156
+state 157
 
     (83) d -> d GREATER_THAN e .
     (87) e -> e . PLUS f
@@ -3197,11 +3264,11 @@ state 156
     ELSE            reduce using rule 83 (d -> d GREATER_THAN e .)
     WHERE           reduce using rule 83 (d -> d GREATER_THAN e .)
     END             reduce using rule 83 (d -> d GREATER_THAN e .)
-    PLUS            shift and go to state 111
-    MINUS           shift and go to state 112
+    PLUS            shift and go to state 112
+    MINUS           shift and go to state 113
 
 
-state 157
+state 158
 
     (84) d -> d LESS_EQ e .
     (87) e -> e . PLUS f
@@ -3225,11 +3292,11 @@ state 157
     ELSE            reduce using rule 84 (d -> d LESS_EQ e .)
     WHERE           reduce using rule 84 (d -> d LESS_EQ e .)
     END             reduce using rule 84 (d -> d LESS_EQ e .)
-    PLUS            shift and go to state 111
-    MINUS           shift and go to state 112
+    PLUS            shift and go to state 112
+    MINUS           shift and go to state 113
 
 
-state 158
+state 159
 
     (85) d -> d GREATER_EQ e .
     (87) e -> e . PLUS f
@@ -3253,11 +3320,11 @@ state 158
     ELSE            reduce using rule 85 (d -> d GREATER_EQ e .)
     WHERE           reduce using rule 85 (d -> d GREATER_EQ e .)
     END             reduce using rule 85 (d -> d GREATER_EQ e .)
-    PLUS            shift and go to state 111
-    MINUS           shift and go to state 112
+    PLUS            shift and go to state 112
+    MINUS           shift and go to state 113
 
 
-state 159
+state 160
 
     (87) e -> e PLUS f .
     (90) f -> f . TIMES g
@@ -3283,11 +3350,11 @@ state 159
     ELSE            reduce using rule 87 (e -> e PLUS f .)
     WHERE           reduce using rule 87 (e -> e PLUS f .)
     END             reduce using rule 87 (e -> e PLUS f .)
-    TIMES           shift and go to state 113
-    DIVIDE          shift and go to state 114
+    TIMES           shift and go to state 114
+    DIVIDE          shift and go to state 115
 
 
-state 160
+state 161
 
     (88) e -> e MINUS f .
     (90) f -> f . TIMES g
@@ -3313,11 +3380,11 @@ state 160
     ELSE            reduce using rule 88 (e -> e MINUS f .)
     WHERE           reduce using rule 88 (e -> e MINUS f .)
     END             reduce using rule 88 (e -> e MINUS f .)
-    TIMES           shift and go to state 113
-    DIVIDE          shift and go to state 114
+    TIMES           shift and go to state 114
+    DIVIDE          shift and go to state 115
 
 
-state 161
+state 162
 
     (90) f -> f TIMES g .
 
@@ -3345,7 +3412,7 @@ state 161
     END             reduce using rule 90 (f -> f TIMES g .)
 
 
-state 162
+state 163
 
     (91) f -> f DIVIDE g .
 
@@ -3373,7 +3440,7 @@ state 162
     END             reduce using rule 91 (f -> f DIVIDE g .)
 
 
-state 163
+state 164
 
     (56) exec_statement -> EXEC NAME vals SEMICOLON .
 
@@ -3397,7 +3464,7 @@ state 163
     ELSE            reduce using rule 56 (exec_statement -> EXEC NAME vals SEMICOLON .)
 
 
-state 164
+state 165
 
     (45) vals -> vals COMMA . a
     (74) a -> . a OR b
@@ -3425,6 +3492,7 @@ state 164
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -3432,8 +3500,9 @@ state 164
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    a                              shift and go to state 193
+    a                              shift and go to state 196
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -3442,7 +3511,7 @@ state 164
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 165
+state 166
 
     (64) case_statement -> CASE WHEN a THEN . a when_statement ELSE THEN a END
     (74) a -> . a OR b
@@ -3470,6 +3539,7 @@ state 165
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -3477,8 +3547,9 @@ state 165
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    a                              shift and go to state 194
+    a                              shift and go to state 197
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -3487,23 +3558,23 @@ state 165
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 166
+state 167
 
     (60) column_assignments -> NAME . ASSIGN a
 
-    ASSIGN          shift and go to state 195
+    ASSIGN          shift and go to state 198
 
 
-state 167
+state 168
 
     (58) update_statement -> UPDATE NAME SET column_assignments . WHERE a SEMICOLON
     (59) column_assignments -> column_assignments . COMMA NAME ASSIGN a
 
-    WHERE           shift and go to state 196
-    COMMA           shift and go to state 197
+    WHERE           shift and go to state 199
+    COMMA           shift and go to state 200
 
 
-state 168
+state 169
 
     (61) while_statement -> WHILE a BEGIN statements . END SEMICOLON
     (2) statements -> statements . statement
@@ -3548,7 +3619,7 @@ state 168
     (62) truncate_statement -> . TRUNCATE TABLE NAME SEMICOLON
     (63) delete_statement -> . DELETE FROM NAME WHERE a SEMICOLON
 
-    END             shift and go to state 198
+    END             shift and go to state 201
     CREATE          shift and go to state 22
     USE             shift and go to state 23
     DECLARE         shift and go to state 24
@@ -3585,7 +3656,7 @@ state 168
     truncate_statement             shift and go to state 20
     delete_statement               shift and go to state 21
 
-state 169
+state 170
 
     (62) truncate_statement -> TRUNCATE TABLE NAME SEMICOLON .
 
@@ -3609,7 +3680,7 @@ state 169
     ELSE            reduce using rule 62 (truncate_statement -> TRUNCATE TABLE NAME SEMICOLON .)
 
 
-state 170
+state 171
 
     (63) delete_statement -> DELETE FROM NAME WHERE . a SEMICOLON
     (74) a -> . a OR b
@@ -3637,6 +3708,7 @@ state 170
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -3644,8 +3716,9 @@ state 170
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    a                              shift and go to state 199
+    a                              shift and go to state 202
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -3654,7 +3727,7 @@ state 170
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 171
+state 172
 
     (22) create_database_statement -> CREATE DATA BASE NAME SEMICOLON .
 
@@ -3678,7 +3751,7 @@ state 171
     ELSE            reduce using rule 22 (create_database_statement -> CREATE DATA BASE NAME SEMICOLON .)
 
 
-state 172
+state 173
 
     (31) property -> NAME . type null_prod PRIMARY KEY
     (32) property -> NAME . type null_prod
@@ -3686,31 +3759,31 @@ state 172
     (67) type -> . INT
     (68) type -> . DECIMAL
     (69) type -> . BIT
-    (70) type -> . NCHAR
-    (71) type -> . NVARCHAR
+    (70) type -> . NCHAR L_PAREN a R_PAREN
+    (71) type -> . NVARCHAR L_PAREN a R_PAREN
     (72) type -> . DATE
     (73) type -> . DATETIME
 
-    INT             shift and go to state 128
-    DECIMAL         shift and go to state 129
-    BIT             shift and go to state 130
-    NCHAR           shift and go to state 131
-    NVARCHAR        shift and go to state 132
-    DATE            shift and go to state 133
-    DATETIME        shift and go to state 134
+    INT             shift and go to state 129
+    DECIMAL         shift and go to state 130
+    BIT             shift and go to state 131
+    NCHAR           shift and go to state 132
+    NVARCHAR        shift and go to state 133
+    DATE            shift and go to state 134
+    DATETIME        shift and go to state 135
 
-    type                           shift and go to state 200
+    type                           shift and go to state 203
 
-state 173
+state 174
 
     (28) create_table_statement -> CREATE TABLE NAME L_PAREN properties . R_PAREN SEMICOLON
     (29) properties -> properties . COMMA property
 
-    R_PAREN         shift and go to state 201
-    COMMA           shift and go to state 202
+    R_PAREN         shift and go to state 204
+    COMMA           shift and go to state 205
 
 
-state 174
+state 175
 
     (30) properties -> property .
 
@@ -3718,32 +3791,32 @@ state 174
     COMMA           reduce using rule 30 (properties -> property .)
 
 
-state 175
+state 176
 
     (47) create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters . R_PAREN RETURN type AS BEGIN statements END SEMICOLON
     (49) parameters -> parameters . COMMA ID AS type
 
-    R_PAREN         shift and go to state 203
-    COMMA           shift and go to state 204
-
-
-state 176
-
-    (50) parameters -> ID . AS type
-
-    AS              shift and go to state 205
+    R_PAREN         shift and go to state 206
+    COMMA           shift and go to state 207
 
 
 state 177
 
-    (48) create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters . R_PAREN AS BEGIN statements END SEMICOLON
-    (49) parameters -> parameters . COMMA ID AS type
+    (50) parameters -> ID . AS type
 
-    R_PAREN         shift and go to state 206
-    COMMA           shift and go to state 204
+    AS              shift and go to state 208
 
 
 state 178
+
+    (48) create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters . R_PAREN AS BEGIN statements END SEMICOLON
+    (49) parameters -> parameters . COMMA ID AS type
+
+    R_PAREN         shift and go to state 209
+    COMMA           shift and go to state 207
+
+
+state 179
 
     (24) declare_statement -> DECLARE ID AS type SEMICOLON .
 
@@ -3767,7 +3840,101 @@ state 178
     ELSE            reduce using rule 24 (declare_statement -> DECLARE ID AS type SEMICOLON .)
 
 
-state 179
+state 180
+
+    (70) type -> NCHAR L_PAREN . a R_PAREN
+    (74) a -> . a OR b
+    (75) a -> . b
+    (76) b -> . b AND c
+    (77) b -> . c
+    (78) c -> . NOT_SIGN d
+    (79) c -> . d
+    (80) d -> . d EQUALS e
+    (81) d -> . d NOT_EQ e
+    (82) d -> . d LESS_THAN e
+    (83) d -> . d GREATER_THAN e
+    (84) d -> . d LESS_EQ e
+    (85) d -> . d GREATER_EQ e
+    (86) d -> . e
+    (87) e -> . e PLUS f
+    (88) e -> . e MINUS f
+    (89) e -> . f
+    (90) f -> . f TIMES g
+    (91) f -> . f DIVIDE g
+    (92) f -> . g
+    (93) g -> . MINUS h
+    (94) g -> . h
+    (95) h -> . INTEGER_VALUE
+    (96) h -> . DECIMAL_VALUE
+    (97) h -> . STRING
+    (98) h -> . ID
+    (99) h -> . NAME
+
+    NOT_SIGN        shift and go to state 63
+    MINUS           shift and go to state 67
+    INTEGER_VALUE   shift and go to state 70
+    DECIMAL_VALUE   shift and go to state 71
+    STRING          shift and go to state 72
+    ID              shift and go to state 73
+    NAME            shift and go to state 74
+
+    a                              shift and go to state 210
+    b                              shift and go to state 61
+    c                              shift and go to state 62
+    d                              shift and go to state 64
+    e                              shift and go to state 65
+    f                              shift and go to state 66
+    g                              shift and go to state 68
+    h                              shift and go to state 69
+
+state 181
+
+    (71) type -> NVARCHAR L_PAREN . a R_PAREN
+    (74) a -> . a OR b
+    (75) a -> . b
+    (76) b -> . b AND c
+    (77) b -> . c
+    (78) c -> . NOT_SIGN d
+    (79) c -> . d
+    (80) d -> . d EQUALS e
+    (81) d -> . d NOT_EQ e
+    (82) d -> . d LESS_THAN e
+    (83) d -> . d GREATER_THAN e
+    (84) d -> . d LESS_EQ e
+    (85) d -> . d GREATER_EQ e
+    (86) d -> . e
+    (87) e -> . e PLUS f
+    (88) e -> . e MINUS f
+    (89) e -> . f
+    (90) f -> . f TIMES g
+    (91) f -> . f DIVIDE g
+    (92) f -> . g
+    (93) g -> . MINUS h
+    (94) g -> . h
+    (95) h -> . INTEGER_VALUE
+    (96) h -> . DECIMAL_VALUE
+    (97) h -> . STRING
+    (98) h -> . ID
+    (99) h -> . NAME
+
+    NOT_SIGN        shift and go to state 63
+    MINUS           shift and go to state 67
+    INTEGER_VALUE   shift and go to state 70
+    DECIMAL_VALUE   shift and go to state 71
+    STRING          shift and go to state 72
+    ID              shift and go to state 73
+    NAME            shift and go to state 74
+
+    a                              shift and go to state 211
+    b                              shift and go to state 61
+    c                              shift and go to state 62
+    d                              shift and go to state 64
+    e                              shift and go to state 65
+    f                              shift and go to state 66
+    g                              shift and go to state 68
+    h                              shift and go to state 69
+
+state 182
 
     (26) assignments -> assignments COMMA ID ASSIGN . a
     (74) a -> . a OR b
@@ -3795,6 +3962,7 @@ state 179
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -3802,8 +3970,9 @@ state 179
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    a                              shift and go to state 207
+    a                              shift and go to state 212
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -3812,7 +3981,7 @@ state 179
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 180
+state 183
 
     (37) select_statement -> SELECT columns FROM NAME SEMICOLON .
 
@@ -3836,7 +4005,7 @@ state 180
     ELSE            reduce using rule 37 (select_statement -> SELECT columns FROM NAME SEMICOLON .)
 
 
-state 181
+state 184
 
     (38) select_statement -> SELECT columns FROM NAME WHERE . a SEMICOLON
     (74) a -> . a OR b
@@ -3864,6 +4033,7 @@ state 181
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -3871,8 +4041,9 @@ state 181
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    a                              shift and go to state 208
+    a                              shift and go to state 213
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -3881,9 +4052,9 @@ state 181
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 182
+state 185
 
-    (100) call_function_prod -> CONCATENAR L_PAREN a COMMA . a R_PAREN
+    (101) call_function_prod -> CONCATENAR L_PAREN a COMMA . a R_PAREN
     (74) a -> . a OR b
     (75) a -> . b
     (76) b -> . b AND c
@@ -3909,6 +4080,7 @@ state 182
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -3916,8 +4088,9 @@ state 182
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    a                              shift and go to state 209
+    a                              shift and go to state 214
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -3926,85 +4099,85 @@ state 182
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 183
-
-    (101) call_function_prod -> SUBSTRAER L_PAREN a R_PAREN .
-
-    FROM            reduce using rule 101 (call_function_prod -> SUBSTRAER L_PAREN a R_PAREN .)
-    COMMA           reduce using rule 101 (call_function_prod -> SUBSTRAER L_PAREN a R_PAREN .)
-    R_PAREN         reduce using rule 101 (call_function_prod -> SUBSTRAER L_PAREN a R_PAREN .)
-
-
-state 184
-
-    (102) call_function_prod -> CONTAR L_PAREN a R_PAREN .
-
-    FROM            reduce using rule 102 (call_function_prod -> CONTAR L_PAREN a R_PAREN .)
-    COMMA           reduce using rule 102 (call_function_prod -> CONTAR L_PAREN a R_PAREN .)
-    R_PAREN         reduce using rule 102 (call_function_prod -> CONTAR L_PAREN a R_PAREN .)
-
-
-state 185
-
-    (103) call_function_prod -> SUMA L_PAREN a R_PAREN .
-
-    FROM            reduce using rule 103 (call_function_prod -> SUMA L_PAREN a R_PAREN .)
-    COMMA           reduce using rule 103 (call_function_prod -> SUMA L_PAREN a R_PAREN .)
-    R_PAREN         reduce using rule 103 (call_function_prod -> SUMA L_PAREN a R_PAREN .)
-
-
 state 186
 
-    (104) call_function_prod -> CAS L_PAREN a AS . type R_PAREN
-    (67) type -> . INT
-    (68) type -> . DECIMAL
-    (69) type -> . BIT
-    (70) type -> . NCHAR
-    (71) type -> . NVARCHAR
-    (72) type -> . DATE
-    (73) type -> . DATETIME
+    (102) call_function_prod -> SUBSTRAER L_PAREN a R_PAREN .
 
-    INT             shift and go to state 128
-    DECIMAL         shift and go to state 129
-    BIT             shift and go to state 130
-    NCHAR           shift and go to state 131
-    NVARCHAR        shift and go to state 132
-    DATE            shift and go to state 133
-    DATETIME        shift and go to state 134
+    FROM            reduce using rule 102 (call_function_prod -> SUBSTRAER L_PAREN a R_PAREN .)
+    COMMA           reduce using rule 102 (call_function_prod -> SUBSTRAER L_PAREN a R_PAREN .)
+    R_PAREN         reduce using rule 102 (call_function_prod -> SUBSTRAER L_PAREN a R_PAREN .)
 
-    type                           shift and go to state 210
 
 state 187
 
-    (39) insert_statement -> INSERT INTO NAME L_PAREN columns . R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON
-    (40) columns -> columns . COMMA column
+    (103) call_function_prod -> CONTAR L_PAREN a R_PAREN .
 
-    R_PAREN         shift and go to state 211
-    COMMA           shift and go to state 90
+    FROM            reduce using rule 103 (call_function_prod -> CONTAR L_PAREN a R_PAREN .)
+    COMMA           reduce using rule 103 (call_function_prod -> CONTAR L_PAREN a R_PAREN .)
+    R_PAREN         reduce using rule 103 (call_function_prod -> CONTAR L_PAREN a R_PAREN .)
 
 
 state 188
 
-    (51) alter_table_statement -> ALTER TABLE NAME ADD COLUMN . NAME type SEMICOLON
+    (104) call_function_prod -> SUMA L_PAREN a R_PAREN .
 
-    NAME            shift and go to state 212
+    FROM            reduce using rule 104 (call_function_prod -> SUMA L_PAREN a R_PAREN .)
+    COMMA           reduce using rule 104 (call_function_prod -> SUMA L_PAREN a R_PAREN .)
+    R_PAREN         reduce using rule 104 (call_function_prod -> SUMA L_PAREN a R_PAREN .)
 
 
 state 189
 
-    (52) alter_table_statement -> ALTER TABLE NAME DROP COLUMN . NAME SEMICOLON
+    (105) call_function_prod -> CAS L_PAREN a AS . type R_PAREN
+    (67) type -> . INT
+    (68) type -> . DECIMAL
+    (69) type -> . BIT
+    (70) type -> . NCHAR L_PAREN a R_PAREN
+    (71) type -> . NVARCHAR L_PAREN a R_PAREN
+    (72) type -> . DATE
+    (73) type -> . DATETIME
 
-    NAME            shift and go to state 213
+    INT             shift and go to state 129
+    DECIMAL         shift and go to state 130
+    BIT             shift and go to state 131
+    NCHAR           shift and go to state 132
+    NVARCHAR        shift and go to state 133
+    DATE            shift and go to state 134
+    DATETIME        shift and go to state 135
 
+    type                           shift and go to state 215
 
 state 190
 
-    (53) if_statement -> IF a THEN statement END . IF SEMICOLON
+    (39) insert_statement -> INSERT INTO NAME L_PAREN columns . R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON
+    (40) columns -> columns . COMMA column
 
-    IF              shift and go to state 214
+    R_PAREN         shift and go to state 216
+    COMMA           shift and go to state 91
 
 
 state 191
+
+    (51) alter_table_statement -> ALTER TABLE NAME ADD COLUMN . NAME type SEMICOLON
+
+    NAME            shift and go to state 217
+
+
+state 192
+
+    (52) alter_table_statement -> ALTER TABLE NAME DROP COLUMN . NAME SEMICOLON
+
+    NAME            shift and go to state 218
+
+
+state 193
+
+    (53) if_statement -> IF a THEN statement END . IF SEMICOLON
+
+    IF              shift and go to state 219
+
+
+state 194
 
     (54) if_statement -> IF a THEN statement ELSE . statement END IF SEMICOLON
     (4) statement -> . create_database_statement
@@ -4064,7 +4237,7 @@ state 191
     TRUNCATE        shift and go to state 35
     DELETE          shift and go to state 36
 
-    statement                      shift and go to state 215
+    statement                      shift and go to state 220
     create_database_statement      shift and go to state 4
     use_statement                  shift and go to state 5
     declare_statement              shift and go to state 6
@@ -4084,16 +4257,16 @@ state 191
     truncate_statement             shift and go to state 20
     delete_statement               shift and go to state 21
 
-state 192
+state 195
 
     (55) if_statement -> IF L_PAREN a COMMA a . COMMA a R_PAREN SEMICOLON
     (74) a -> a . OR b
 
-    COMMA           shift and go to state 216
-    OR              shift and go to state 101
+    COMMA           shift and go to state 221
+    OR              shift and go to state 102
 
 
-state 193
+state 196
 
     (45) vals -> vals COMMA a .
     (74) a -> a . OR b
@@ -4101,23 +4274,23 @@ state 193
     SEMICOLON       reduce using rule 45 (vals -> vals COMMA a .)
     COMMA           reduce using rule 45 (vals -> vals COMMA a .)
     R_PAREN         reduce using rule 45 (vals -> vals COMMA a .)
-    OR              shift and go to state 101
+    OR              shift and go to state 102
 
 
-state 194
+state 197
 
     (64) case_statement -> CASE WHEN a THEN a . when_statement ELSE THEN a END
     (74) a -> a . OR b
     (65) when_statement -> . WHEN a THEN a when_statement
     (66) when_statement -> .
 
-    OR              shift and go to state 101
-    WHEN            shift and go to state 217
+    OR              shift and go to state 102
+    WHEN            shift and go to state 222
     ELSE            reduce using rule 66 (when_statement -> .)
 
-    when_statement                 shift and go to state 218
+    when_statement                 shift and go to state 223
 
-state 195
+state 198
 
     (60) column_assignments -> NAME ASSIGN . a
     (74) a -> . a OR b
@@ -4145,6 +4318,7 @@ state 195
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -4152,8 +4326,9 @@ state 195
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    a                              shift and go to state 219
+    a                              shift and go to state 224
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -4162,7 +4337,7 @@ state 195
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 196
+state 199
 
     (58) update_statement -> UPDATE NAME SET column_assignments WHERE . a SEMICOLON
     (74) a -> . a OR b
@@ -4190,6 +4365,7 @@ state 196
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -4197,8 +4373,9 @@ state 196
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    a                              shift and go to state 220
+    a                              shift and go to state 225
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -4207,30 +4384,30 @@ state 196
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 197
+state 200
 
     (59) column_assignments -> column_assignments COMMA . NAME ASSIGN a
 
-    NAME            shift and go to state 221
+    NAME            shift and go to state 226
 
 
-state 198
+state 201
 
     (61) while_statement -> WHILE a BEGIN statements END . SEMICOLON
 
-    SEMICOLON       shift and go to state 222
+    SEMICOLON       shift and go to state 227
 
 
-state 199
+state 202
 
     (63) delete_statement -> DELETE FROM NAME WHERE a . SEMICOLON
     (74) a -> a . OR b
 
-    SEMICOLON       shift and go to state 223
-    OR              shift and go to state 101
+    SEMICOLON       shift and go to state 228
+    OR              shift and go to state 102
 
 
-state 200
+state 203
 
     (31) property -> NAME type . null_prod PRIMARY KEY
     (32) property -> NAME type . null_prod
@@ -4239,160 +4416,178 @@ state 200
     (35) null_prod -> . NULL
     (36) null_prod -> .
 
-    NOT             shift and go to state 225
-    NULL            shift and go to state 226
+    NOT             shift and go to state 230
+    NULL            shift and go to state 231
     PRIMARY         reduce using rule 36 (null_prod -> .)
     REFERENCE       reduce using rule 36 (null_prod -> .)
     R_PAREN         reduce using rule 36 (null_prod -> .)
     COMMA           reduce using rule 36 (null_prod -> .)
 
-    null_prod                      shift and go to state 224
+    null_prod                      shift and go to state 229
 
-state 201
+state 204
 
     (28) create_table_statement -> CREATE TABLE NAME L_PAREN properties R_PAREN . SEMICOLON
 
-    SEMICOLON       shift and go to state 227
+    SEMICOLON       shift and go to state 232
 
 
-state 202
+state 205
 
     (29) properties -> properties COMMA . property
     (31) property -> . NAME type null_prod PRIMARY KEY
     (32) property -> . NAME type null_prod
     (33) property -> . NAME type null_prod REFERENCE NAME L_PAREN NAME R_PAREN
 
-    NAME            shift and go to state 172
+    NAME            shift and go to state 173
 
-    property                       shift and go to state 228
+    property                       shift and go to state 233
 
-state 203
+state 206
 
     (47) create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN . RETURN type AS BEGIN statements END SEMICOLON
 
-    RETURN          shift and go to state 229
+    RETURN          shift and go to state 234
 
 
-state 204
+state 207
 
     (49) parameters -> parameters COMMA . ID AS type
 
-    ID              shift and go to state 230
+    ID              shift and go to state 235
 
 
-state 205
+state 208
 
     (50) parameters -> ID AS . type
     (67) type -> . INT
     (68) type -> . DECIMAL
     (69) type -> . BIT
-    (70) type -> . NCHAR
-    (71) type -> . NVARCHAR
+    (70) type -> . NCHAR L_PAREN a R_PAREN
+    (71) type -> . NVARCHAR L_PAREN a R_PAREN
     (72) type -> . DATE
     (73) type -> . DATETIME
 
-    INT             shift and go to state 128
-    DECIMAL         shift and go to state 129
-    BIT             shift and go to state 130
-    NCHAR           shift and go to state 131
-    NVARCHAR        shift and go to state 132
-    DATE            shift and go to state 133
-    DATETIME        shift and go to state 134
+    INT             shift and go to state 129
+    DECIMAL         shift and go to state 130
+    BIT             shift and go to state 131
+    NCHAR           shift and go to state 132
+    NVARCHAR        shift and go to state 133
+    DATE            shift and go to state 134
+    DATETIME        shift and go to state 135
 
-    type                           shift and go to state 231
+    type                           shift and go to state 236
 
-state 206
+state 209
 
     (48) create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN . AS BEGIN statements END SEMICOLON
 
-    AS              shift and go to state 232
+    AS              shift and go to state 237
 
 
-state 207
+state 210
+
+    (70) type -> NCHAR L_PAREN a . R_PAREN
+    (74) a -> a . OR b
+
+    R_PAREN         shift and go to state 238
+    OR              shift and go to state 102
+
+
+state 211
+
+    (71) type -> NVARCHAR L_PAREN a . R_PAREN
+    (74) a -> a . OR b
+
+    R_PAREN         shift and go to state 239
+    OR              shift and go to state 102
+
+
+state 212
 
     (26) assignments -> assignments COMMA ID ASSIGN a .
     (74) a -> a . OR b
 
     SEMICOLON       reduce using rule 26 (assignments -> assignments COMMA ID ASSIGN a .)
     COMMA           reduce using rule 26 (assignments -> assignments COMMA ID ASSIGN a .)
-    OR              shift and go to state 101
+    OR              shift and go to state 102
 
 
-state 208
+state 213
 
     (38) select_statement -> SELECT columns FROM NAME WHERE a . SEMICOLON
     (74) a -> a . OR b
 
-    SEMICOLON       shift and go to state 233
-    OR              shift and go to state 101
+    SEMICOLON       shift and go to state 240
+    OR              shift and go to state 102
 
 
-state 209
+state 214
 
-    (100) call_function_prod -> CONCATENAR L_PAREN a COMMA a . R_PAREN
+    (101) call_function_prod -> CONCATENAR L_PAREN a COMMA a . R_PAREN
     (74) a -> a . OR b
 
-    R_PAREN         shift and go to state 234
-    OR              shift and go to state 101
+    R_PAREN         shift and go to state 241
+    OR              shift and go to state 102
 
 
-state 210
+state 215
 
-    (104) call_function_prod -> CAS L_PAREN a AS type . R_PAREN
+    (105) call_function_prod -> CAS L_PAREN a AS type . R_PAREN
 
-    R_PAREN         shift and go to state 235
+    R_PAREN         shift and go to state 242
 
 
-state 211
+state 216
 
     (39) insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN . VALUES L_PAREN vals R_PAREN SEMICOLON
 
-    VALUES          shift and go to state 236
+    VALUES          shift and go to state 243
 
 
-state 212
+state 217
 
     (51) alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME . type SEMICOLON
     (67) type -> . INT
     (68) type -> . DECIMAL
     (69) type -> . BIT
-    (70) type -> . NCHAR
-    (71) type -> . NVARCHAR
+    (70) type -> . NCHAR L_PAREN a R_PAREN
+    (71) type -> . NVARCHAR L_PAREN a R_PAREN
     (72) type -> . DATE
     (73) type -> . DATETIME
 
-    INT             shift and go to state 128
-    DECIMAL         shift and go to state 129
-    BIT             shift and go to state 130
-    NCHAR           shift and go to state 131
-    NVARCHAR        shift and go to state 132
-    DATE            shift and go to state 133
-    DATETIME        shift and go to state 134
+    INT             shift and go to state 129
+    DECIMAL         shift and go to state 130
+    BIT             shift and go to state 131
+    NCHAR           shift and go to state 132
+    NVARCHAR        shift and go to state 133
+    DATE            shift and go to state 134
+    DATETIME        shift and go to state 135
 
-    type                           shift and go to state 237
+    type                           shift and go to state 244
 
-state 213
+state 218
 
     (52) alter_table_statement -> ALTER TABLE NAME DROP COLUMN NAME . SEMICOLON
 
-    SEMICOLON       shift and go to state 238
+    SEMICOLON       shift and go to state 245
 
 
-state 214
+state 219
 
     (53) if_statement -> IF a THEN statement END IF . SEMICOLON
 
-    SEMICOLON       shift and go to state 239
+    SEMICOLON       shift and go to state 246
 
 
-state 215
+state 220
 
     (54) if_statement -> IF a THEN statement ELSE statement . END IF SEMICOLON
 
-    END             shift and go to state 240
+    END             shift and go to state 247
 
 
-state 216
+state 221
 
     (55) if_statement -> IF L_PAREN a COMMA a COMMA . a R_PAREN SEMICOLON
     (74) a -> . a OR b
@@ -4420,6 +4615,7 @@ state 216
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -4427,8 +4623,9 @@ state 216
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    a                              shift and go to state 241
+    a                              shift and go to state 248
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -4437,7 +4634,7 @@ state 216
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 217
+state 222
 
     (65) when_statement -> WHEN . a THEN a when_statement
     (74) a -> . a OR b
@@ -4465,6 +4662,7 @@ state 217
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -4472,8 +4670,9 @@ state 217
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    a                              shift and go to state 242
+    a                              shift and go to state 249
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -4482,40 +4681,40 @@ state 217
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 218
+state 223
 
     (64) case_statement -> CASE WHEN a THEN a when_statement . ELSE THEN a END
 
-    ELSE            shift and go to state 243
+    ELSE            shift and go to state 250
 
 
-state 219
+state 224
 
     (60) column_assignments -> NAME ASSIGN a .
     (74) a -> a . OR b
 
     WHERE           reduce using rule 60 (column_assignments -> NAME ASSIGN a .)
     COMMA           reduce using rule 60 (column_assignments -> NAME ASSIGN a .)
-    OR              shift and go to state 101
+    OR              shift and go to state 102
 
 
-state 220
+state 225
 
     (58) update_statement -> UPDATE NAME SET column_assignments WHERE a . SEMICOLON
     (74) a -> a . OR b
 
-    SEMICOLON       shift and go to state 244
-    OR              shift and go to state 101
+    SEMICOLON       shift and go to state 251
+    OR              shift and go to state 102
 
 
-state 221
+state 226
 
     (59) column_assignments -> column_assignments COMMA NAME . ASSIGN a
 
-    ASSIGN          shift and go to state 245
+    ASSIGN          shift and go to state 252
 
 
-state 222
+state 227
 
     (61) while_statement -> WHILE a BEGIN statements END SEMICOLON .
 
@@ -4539,7 +4738,7 @@ state 222
     ELSE            reduce using rule 61 (while_statement -> WHILE a BEGIN statements END SEMICOLON .)
 
 
-state 223
+state 228
 
     (63) delete_statement -> DELETE FROM NAME WHERE a SEMICOLON .
 
@@ -4563,26 +4762,26 @@ state 223
     ELSE            reduce using rule 63 (delete_statement -> DELETE FROM NAME WHERE a SEMICOLON .)
 
 
-state 224
+state 229
 
     (31) property -> NAME type null_prod . PRIMARY KEY
     (32) property -> NAME type null_prod .
     (33) property -> NAME type null_prod . REFERENCE NAME L_PAREN NAME R_PAREN
 
-    PRIMARY         shift and go to state 246
+    PRIMARY         shift and go to state 253
     R_PAREN         reduce using rule 32 (property -> NAME type null_prod .)
     COMMA           reduce using rule 32 (property -> NAME type null_prod .)
-    REFERENCE       shift and go to state 247
+    REFERENCE       shift and go to state 254
 
 
-state 225
+state 230
 
     (34) null_prod -> NOT . NULL
 
-    NULL            shift and go to state 248
+    NULL            shift and go to state 255
 
 
-state 226
+state 231
 
     (35) null_prod -> NULL .
 
@@ -4592,7 +4791,7 @@ state 226
     COMMA           reduce using rule 35 (null_prod -> NULL .)
 
 
-state 227
+state 232
 
     (28) create_table_statement -> CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON .
 
@@ -4616,7 +4815,7 @@ state 227
     ELSE            reduce using rule 28 (create_table_statement -> CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON .)
 
 
-state 228
+state 233
 
     (29) properties -> properties COMMA property .
 
@@ -4624,35 +4823,35 @@ state 228
     COMMA           reduce using rule 29 (properties -> properties COMMA property .)
 
 
-state 229
+state 234
 
     (47) create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN . type AS BEGIN statements END SEMICOLON
     (67) type -> . INT
     (68) type -> . DECIMAL
     (69) type -> . BIT
-    (70) type -> . NCHAR
-    (71) type -> . NVARCHAR
+    (70) type -> . NCHAR L_PAREN a R_PAREN
+    (71) type -> . NVARCHAR L_PAREN a R_PAREN
     (72) type -> . DATE
     (73) type -> . DATETIME
 
-    INT             shift and go to state 128
-    DECIMAL         shift and go to state 129
-    BIT             shift and go to state 130
-    NCHAR           shift and go to state 131
-    NVARCHAR        shift and go to state 132
-    DATE            shift and go to state 133
-    DATETIME        shift and go to state 134
+    INT             shift and go to state 129
+    DECIMAL         shift and go to state 130
+    BIT             shift and go to state 131
+    NCHAR           shift and go to state 132
+    NVARCHAR        shift and go to state 133
+    DATE            shift and go to state 134
+    DATETIME        shift and go to state 135
 
-    type                           shift and go to state 249
+    type                           shift and go to state 256
 
-state 230
+state 235
 
     (49) parameters -> parameters COMMA ID . AS type
 
-    AS              shift and go to state 250
+    AS              shift and go to state 257
 
 
-state 231
+state 236
 
     (50) parameters -> ID AS type .
 
@@ -4660,14 +4859,42 @@ state 231
     COMMA           reduce using rule 50 (parameters -> ID AS type .)
 
 
-state 232
+state 237
 
     (48) create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS . BEGIN statements END SEMICOLON
 
-    BEGIN           shift and go to state 251
+    BEGIN           shift and go to state 258
 
 
-state 233
+state 238
+
+    (70) type -> NCHAR L_PAREN a R_PAREN .
+
+    SEMICOLON       reduce using rule 70 (type -> NCHAR L_PAREN a R_PAREN .)
+    NOT             reduce using rule 70 (type -> NCHAR L_PAREN a R_PAREN .)
+    NULL            reduce using rule 70 (type -> NCHAR L_PAREN a R_PAREN .)
+    PRIMARY         reduce using rule 70 (type -> NCHAR L_PAREN a R_PAREN .)
+    REFERENCE       reduce using rule 70 (type -> NCHAR L_PAREN a R_PAREN .)
+    R_PAREN         reduce using rule 70 (type -> NCHAR L_PAREN a R_PAREN .)
+    COMMA           reduce using rule 70 (type -> NCHAR L_PAREN a R_PAREN .)
+    AS              reduce using rule 70 (type -> NCHAR L_PAREN a R_PAREN .)
+
+
+state 239
+
+    (71) type -> NVARCHAR L_PAREN a R_PAREN .
+
+    SEMICOLON       reduce using rule 71 (type -> NVARCHAR L_PAREN a R_PAREN .)
+    NOT             reduce using rule 71 (type -> NVARCHAR L_PAREN a R_PAREN .)
+    NULL            reduce using rule 71 (type -> NVARCHAR L_PAREN a R_PAREN .)
+    PRIMARY         reduce using rule 71 (type -> NVARCHAR L_PAREN a R_PAREN .)
+    REFERENCE       reduce using rule 71 (type -> NVARCHAR L_PAREN a R_PAREN .)
+    R_PAREN         reduce using rule 71 (type -> NVARCHAR L_PAREN a R_PAREN .)
+    COMMA           reduce using rule 71 (type -> NVARCHAR L_PAREN a R_PAREN .)
+    AS              reduce using rule 71 (type -> NVARCHAR L_PAREN a R_PAREN .)
+
+
+state 240
 
     (38) select_statement -> SELECT columns FROM NAME WHERE a SEMICOLON .
 
@@ -4691,39 +4918,39 @@ state 233
     ELSE            reduce using rule 38 (select_statement -> SELECT columns FROM NAME WHERE a SEMICOLON .)
 
 
-state 234
+state 241
 
-    (100) call_function_prod -> CONCATENAR L_PAREN a COMMA a R_PAREN .
+    (101) call_function_prod -> CONCATENAR L_PAREN a COMMA a R_PAREN .
 
-    FROM            reduce using rule 100 (call_function_prod -> CONCATENAR L_PAREN a COMMA a R_PAREN .)
-    COMMA           reduce using rule 100 (call_function_prod -> CONCATENAR L_PAREN a COMMA a R_PAREN .)
-    R_PAREN         reduce using rule 100 (call_function_prod -> CONCATENAR L_PAREN a COMMA a R_PAREN .)
-
-
-state 235
-
-    (104) call_function_prod -> CAS L_PAREN a AS type R_PAREN .
-
-    FROM            reduce using rule 104 (call_function_prod -> CAS L_PAREN a AS type R_PAREN .)
-    COMMA           reduce using rule 104 (call_function_prod -> CAS L_PAREN a AS type R_PAREN .)
-    R_PAREN         reduce using rule 104 (call_function_prod -> CAS L_PAREN a AS type R_PAREN .)
+    FROM            reduce using rule 101 (call_function_prod -> CONCATENAR L_PAREN a COMMA a R_PAREN .)
+    COMMA           reduce using rule 101 (call_function_prod -> CONCATENAR L_PAREN a COMMA a R_PAREN .)
+    R_PAREN         reduce using rule 101 (call_function_prod -> CONCATENAR L_PAREN a COMMA a R_PAREN .)
 
 
-state 236
+state 242
+
+    (105) call_function_prod -> CAS L_PAREN a AS type R_PAREN .
+
+    FROM            reduce using rule 105 (call_function_prod -> CAS L_PAREN a AS type R_PAREN .)
+    COMMA           reduce using rule 105 (call_function_prod -> CAS L_PAREN a AS type R_PAREN .)
+    R_PAREN         reduce using rule 105 (call_function_prod -> CAS L_PAREN a AS type R_PAREN .)
+
+
+state 243
 
     (39) insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES . L_PAREN vals R_PAREN SEMICOLON
 
-    L_PAREN         shift and go to state 252
+    L_PAREN         shift and go to state 259
 
 
-state 237
+state 244
 
     (51) alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME type . SEMICOLON
 
-    SEMICOLON       shift and go to state 253
+    SEMICOLON       shift and go to state 260
 
 
-state 238
+state 245
 
     (52) alter_table_statement -> ALTER TABLE NAME DROP COLUMN NAME SEMICOLON .
 
@@ -4747,7 +4974,7 @@ state 238
     ELSE            reduce using rule 52 (alter_table_statement -> ALTER TABLE NAME DROP COLUMN NAME SEMICOLON .)
 
 
-state 239
+state 246
 
     (53) if_statement -> IF a THEN statement END IF SEMICOLON .
 
@@ -4771,39 +4998,39 @@ state 239
     ELSE            reduce using rule 53 (if_statement -> IF a THEN statement END IF SEMICOLON .)
 
 
-state 240
+state 247
 
     (54) if_statement -> IF a THEN statement ELSE statement END . IF SEMICOLON
 
-    IF              shift and go to state 254
+    IF              shift and go to state 261
 
 
-state 241
+state 248
 
     (55) if_statement -> IF L_PAREN a COMMA a COMMA a . R_PAREN SEMICOLON
     (74) a -> a . OR b
 
-    R_PAREN         shift and go to state 255
-    OR              shift and go to state 101
+    R_PAREN         shift and go to state 262
+    OR              shift and go to state 102
 
 
-state 242
+state 249
 
     (65) when_statement -> WHEN a . THEN a when_statement
     (74) a -> a . OR b
 
-    THEN            shift and go to state 256
-    OR              shift and go to state 101
+    THEN            shift and go to state 263
+    OR              shift and go to state 102
 
 
-state 243
+state 250
 
     (64) case_statement -> CASE WHEN a THEN a when_statement ELSE . THEN a END
 
-    THEN            shift and go to state 257
+    THEN            shift and go to state 264
 
 
-state 244
+state 251
 
     (58) update_statement -> UPDATE NAME SET column_assignments WHERE a SEMICOLON .
 
@@ -4827,7 +5054,7 @@ state 244
     ELSE            reduce using rule 58 (update_statement -> UPDATE NAME SET column_assignments WHERE a SEMICOLON .)
 
 
-state 245
+state 252
 
     (59) column_assignments -> column_assignments COMMA NAME ASSIGN . a
     (74) a -> . a OR b
@@ -4855,6 +5082,7 @@ state 245
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -4862,8 +5090,9 @@ state 245
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    a                              shift and go to state 258
+    a                              shift and go to state 265
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -4872,21 +5101,21 @@ state 245
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 246
+state 253
 
     (31) property -> NAME type null_prod PRIMARY . KEY
 
-    KEY             shift and go to state 259
+    KEY             shift and go to state 266
 
 
-state 247
+state 254
 
     (33) property -> NAME type null_prod REFERENCE . NAME L_PAREN NAME R_PAREN
 
-    NAME            shift and go to state 260
+    NAME            shift and go to state 267
 
 
-state 248
+state 255
 
     (34) null_prod -> NOT NULL .
 
@@ -4896,35 +5125,35 @@ state 248
     COMMA           reduce using rule 34 (null_prod -> NOT NULL .)
 
 
-state 249
+state 256
 
     (47) create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type . AS BEGIN statements END SEMICOLON
 
-    AS              shift and go to state 261
+    AS              shift and go to state 268
 
 
-state 250
+state 257
 
     (49) parameters -> parameters COMMA ID AS . type
     (67) type -> . INT
     (68) type -> . DECIMAL
     (69) type -> . BIT
-    (70) type -> . NCHAR
-    (71) type -> . NVARCHAR
+    (70) type -> . NCHAR L_PAREN a R_PAREN
+    (71) type -> . NVARCHAR L_PAREN a R_PAREN
     (72) type -> . DATE
     (73) type -> . DATETIME
 
-    INT             shift and go to state 128
-    DECIMAL         shift and go to state 129
-    BIT             shift and go to state 130
-    NCHAR           shift and go to state 131
-    NVARCHAR        shift and go to state 132
-    DATE            shift and go to state 133
-    DATETIME        shift and go to state 134
+    INT             shift and go to state 129
+    DECIMAL         shift and go to state 130
+    BIT             shift and go to state 131
+    NCHAR           shift and go to state 132
+    NVARCHAR        shift and go to state 133
+    DATE            shift and go to state 134
+    DATETIME        shift and go to state 135
 
-    type                           shift and go to state 262
+    type                           shift and go to state 269
 
-state 251
+state 258
 
     (48) create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN . statements END SEMICOLON
     (2) statements -> . statements statement
@@ -4947,9 +5176,9 @@ state 251
     TRUNCATE        reduce using rule 3 (statements -> .)
     DELETE          reduce using rule 3 (statements -> .)
 
-    statements                     shift and go to state 263
+    statements                     shift and go to state 270
 
-state 252
+state 259
 
     (39) insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN . vals R_PAREN SEMICOLON
     (45) vals -> . vals COMMA a
@@ -4979,6 +5208,7 @@ state 252
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -4986,9 +5216,10 @@ state 252
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    vals                           shift and go to state 264
-    a                              shift and go to state 117
+    vals                           shift and go to state 271
+    a                              shift and go to state 118
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -4997,7 +5228,7 @@ state 252
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 253
+state 260
 
     (51) alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON .
 
@@ -5021,21 +5252,21 @@ state 253
     ELSE            reduce using rule 51 (alter_table_statement -> ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON .)
 
 
-state 254
+state 261
 
     (54) if_statement -> IF a THEN statement ELSE statement END IF . SEMICOLON
 
-    SEMICOLON       shift and go to state 265
+    SEMICOLON       shift and go to state 272
 
 
-state 255
+state 262
 
     (55) if_statement -> IF L_PAREN a COMMA a COMMA a R_PAREN . SEMICOLON
 
-    SEMICOLON       shift and go to state 266
+    SEMICOLON       shift and go to state 273
 
 
-state 256
+state 263
 
     (65) when_statement -> WHEN a THEN . a when_statement
     (74) a -> . a OR b
@@ -5063,6 +5294,7 @@ state 256
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -5070,8 +5302,9 @@ state 256
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    a                              shift and go to state 267
+    a                              shift and go to state 274
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -5080,7 +5313,7 @@ state 256
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 257
+state 264
 
     (64) case_statement -> CASE WHEN a THEN a when_statement ELSE THEN . a END
     (74) a -> . a OR b
@@ -5108,6 +5341,7 @@ state 257
     (96) h -> . DECIMAL_VALUE
     (97) h -> . STRING
     (98) h -> . ID
+    (99) h -> . NAME
 
     NOT_SIGN        shift and go to state 63
     MINUS           shift and go to state 67
@@ -5115,8 +5349,9 @@ state 257
     DECIMAL_VALUE   shift and go to state 71
     STRING          shift and go to state 72
     ID              shift and go to state 73
+    NAME            shift and go to state 74
 
-    a                              shift and go to state 268
+    a                              shift and go to state 275
     b                              shift and go to state 61
     c                              shift and go to state 62
     d                              shift and go to state 64
@@ -5125,17 +5360,17 @@ state 257
     g                              shift and go to state 68
     h                              shift and go to state 69
 
-state 258
+state 265
 
     (59) column_assignments -> column_assignments COMMA NAME ASSIGN a .
     (74) a -> a . OR b
 
     WHERE           reduce using rule 59 (column_assignments -> column_assignments COMMA NAME ASSIGN a .)
     COMMA           reduce using rule 59 (column_assignments -> column_assignments COMMA NAME ASSIGN a .)
-    OR              shift and go to state 101
+    OR              shift and go to state 102
 
 
-state 259
+state 266
 
     (31) property -> NAME type null_prod PRIMARY KEY .
 
@@ -5143,21 +5378,21 @@ state 259
     COMMA           reduce using rule 31 (property -> NAME type null_prod PRIMARY KEY .)
 
 
-state 260
+state 267
 
     (33) property -> NAME type null_prod REFERENCE NAME . L_PAREN NAME R_PAREN
 
-    L_PAREN         shift and go to state 269
+    L_PAREN         shift and go to state 276
 
 
-state 261
+state 268
 
     (47) create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS . BEGIN statements END SEMICOLON
 
-    BEGIN           shift and go to state 270
+    BEGIN           shift and go to state 277
 
 
-state 262
+state 269
 
     (49) parameters -> parameters COMMA ID AS type .
 
@@ -5165,7 +5400,7 @@ state 262
     COMMA           reduce using rule 49 (parameters -> parameters COMMA ID AS type .)
 
 
-state 263
+state 270
 
     (48) create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements . END SEMICOLON
     (2) statements -> statements . statement
@@ -5210,7 +5445,7 @@ state 263
     (62) truncate_statement -> . TRUNCATE TABLE NAME SEMICOLON
     (63) delete_statement -> . DELETE FROM NAME WHERE a SEMICOLON
 
-    END             shift and go to state 271
+    END             shift and go to state 278
     CREATE          shift and go to state 22
     USE             shift and go to state 23
     DECLARE         shift and go to state 24
@@ -5247,16 +5482,16 @@ state 263
     truncate_statement             shift and go to state 20
     delete_statement               shift and go to state 21
 
-state 264
+state 271
 
     (39) insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals . R_PAREN SEMICOLON
     (45) vals -> vals . COMMA a
 
-    R_PAREN         shift and go to state 272
-    COMMA           shift and go to state 164
+    R_PAREN         shift and go to state 279
+    COMMA           shift and go to state 165
 
 
-state 265
+state 272
 
     (54) if_statement -> IF a THEN statement ELSE statement END IF SEMICOLON .
 
@@ -5280,7 +5515,7 @@ state 265
     ELSE            reduce using rule 54 (if_statement -> IF a THEN statement ELSE statement END IF SEMICOLON .)
 
 
-state 266
+state 273
 
     (55) if_statement -> IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON .
 
@@ -5304,36 +5539,36 @@ state 266
     ELSE            reduce using rule 55 (if_statement -> IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON .)
 
 
-state 267
+state 274
 
     (65) when_statement -> WHEN a THEN a . when_statement
     (74) a -> a . OR b
     (65) when_statement -> . WHEN a THEN a when_statement
     (66) when_statement -> .
 
-    OR              shift and go to state 101
-    WHEN            shift and go to state 217
+    OR              shift and go to state 102
+    WHEN            shift and go to state 222
     ELSE            reduce using rule 66 (when_statement -> .)
 
-    when_statement                 shift and go to state 273
+    when_statement                 shift and go to state 280
 
-state 268
+state 275
 
     (64) case_statement -> CASE WHEN a THEN a when_statement ELSE THEN a . END
     (74) a -> a . OR b
 
-    END             shift and go to state 274
-    OR              shift and go to state 101
+    END             shift and go to state 281
+    OR              shift and go to state 102
 
 
-state 269
+state 276
 
     (33) property -> NAME type null_prod REFERENCE NAME L_PAREN . NAME R_PAREN
 
-    NAME            shift and go to state 275
+    NAME            shift and go to state 282
 
 
-state 270
+state 277
 
     (47) create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN . statements END SEMICOLON
     (2) statements -> . statements statement
@@ -5356,30 +5591,30 @@ state 270
     TRUNCATE        reduce using rule 3 (statements -> .)
     DELETE          reduce using rule 3 (statements -> .)
 
-    statements                     shift and go to state 276
+    statements                     shift and go to state 283
 
-state 271
+state 278
 
     (48) create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END . SEMICOLON
 
-    SEMICOLON       shift and go to state 277
+    SEMICOLON       shift and go to state 284
 
 
-state 272
+state 279
 
     (39) insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN . SEMICOLON
 
-    SEMICOLON       shift and go to state 278
+    SEMICOLON       shift and go to state 285
 
 
-state 273
+state 280
 
     (65) when_statement -> WHEN a THEN a when_statement .
 
     ELSE            reduce using rule 65 (when_statement -> WHEN a THEN a when_statement .)
 
 
-state 274
+state 281
 
     (64) case_statement -> CASE WHEN a THEN a when_statement ELSE THEN a END .
 
@@ -5403,14 +5638,14 @@ state 274
     ELSE            reduce using rule 64 (case_statement -> CASE WHEN a THEN a when_statement ELSE THEN a END .)
 
 
-state 275
+state 282
 
     (33) property -> NAME type null_prod REFERENCE NAME L_PAREN NAME . R_PAREN
 
-    R_PAREN         shift and go to state 279
+    R_PAREN         shift and go to state 286
 
 
-state 276
+state 283
 
     (47) create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements . END SEMICOLON
     (2) statements -> statements . statement
@@ -5455,7 +5690,7 @@ state 276
     (62) truncate_statement -> . TRUNCATE TABLE NAME SEMICOLON
     (63) delete_statement -> . DELETE FROM NAME WHERE a SEMICOLON
 
-    END             shift and go to state 280
+    END             shift and go to state 287
     CREATE          shift and go to state 22
     USE             shift and go to state 23
     DECLARE         shift and go to state 24
@@ -5492,7 +5727,7 @@ state 276
     truncate_statement             shift and go to state 20
     delete_statement               shift and go to state 21
 
-state 277
+state 284
 
     (48) create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON .
 
@@ -5516,7 +5751,7 @@ state 277
     ELSE            reduce using rule 48 (create_procedure_statement -> CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON .)
 
 
-state 278
+state 285
 
     (39) insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON .
 
@@ -5540,7 +5775,7 @@ state 278
     ELSE            reduce using rule 39 (insert_statement -> INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON .)
 
 
-state 279
+state 286
 
     (33) property -> NAME type null_prod REFERENCE NAME L_PAREN NAME R_PAREN .
 
@@ -5548,14 +5783,14 @@ state 279
     COMMA           reduce using rule 33 (property -> NAME type null_prod REFERENCE NAME L_PAREN NAME R_PAREN .)
 
 
-state 280
+state 287
 
     (47) create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END . SEMICOLON
 
-    SEMICOLON       shift and go to state 281
+    SEMICOLON       shift and go to state 288
 
 
-state 281
+state 288
 
     (47) create_function_statement -> CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON .
 
