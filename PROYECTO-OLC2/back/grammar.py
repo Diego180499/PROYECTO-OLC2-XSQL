@@ -62,7 +62,7 @@ reservadas = {
     'hoy': 'HOY',
     'contar': 'CONTAR',
     'suma': 'SUMA',
-    'cast': 'CAST',
+    'cas': 'CAS',
     'set': 'SET',
     'while': 'WHILE',
     'delete':'DELETE'
@@ -365,7 +365,15 @@ def p_alter_table_statement_2(t):
 
 #### IF STATEMENT ####
 def p_if_statement(t):
+    'if_statement   : IF a THEN statement END IF SEMICOLON'
+
+def p_if_statement2(t):
+    'if_statement   : IF a THEN statement ELSE statement END IF SEMICOLON'
+
+
+def p_if_statement3(t):
     'if_statement   : IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON'
+
 
 
 #### EXEC ####
@@ -502,7 +510,7 @@ def p_call_function_prod(t):
                             | SUBSTRAER L_PAREN a R_PAREN
                             | CONTAR L_PAREN a R_PAREN
                             | SUMA L_PAREN a R_PAREN
-                            | CAST L_PAREN a AS type R_PAREN
+                            | CAS L_PAREN a AS type R_PAREN
     """
 
 
