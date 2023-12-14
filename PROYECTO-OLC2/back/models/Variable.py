@@ -1,11 +1,10 @@
-from VariableType import VariableType
-from SymbolType import SymbolType
-
-
 class Variable:
 
-    def __init__(self, id: str, variable_type: VariableType, symbol_type: SymbolType, value):
-        self.id = id
-        self.variable_type = variable_type
-        self.symbol_type = symbol_type
-        self.value = value
+    def __init__(self):
+        self.id = None
+        self.variable_type = None
+        self.symbol_type = None
+        self.value = None
+
+    def __str__(self):
+        return f"""Variable: {self.id}, {self.variable_type}, {self.value}"""

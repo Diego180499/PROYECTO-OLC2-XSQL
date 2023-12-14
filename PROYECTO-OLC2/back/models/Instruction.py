@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from symbolTable import SymbolTable
 
 
 class Instruction(ABC):
@@ -9,7 +10,7 @@ class Instruction(ABC):
         super().__init__()
 
     @abstractmethod
-    def execute(self):
+    def execute(self, symbol_table: SymbolTable):
         pass
 
     def __str__(self):

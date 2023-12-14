@@ -272,7 +272,7 @@ def p_set_statement(t):
 
 def p_assignments(t):
     'assignments    : assignments COMMA ID ASSIGN a'
-    t[1].append(Assignment(t.lineno(1), find_column(input, t.slice[2]), t[1], t[3]))
+    t[1].append(Assignment(t.lineno(1), find_column(input, t.slice[2]), t[3], t[5]))
     t[0] = t[1]
 
 

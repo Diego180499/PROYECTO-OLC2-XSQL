@@ -1,5 +1,5 @@
-from ..models.Variable import Variable
-from ..models.SymbolType import SymbolType
+from models.Variable import Variable
+from models.SymbolType import SymbolType
 
 
 class SymbolTable:
