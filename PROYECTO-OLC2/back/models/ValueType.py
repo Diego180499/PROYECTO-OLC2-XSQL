@@ -3,3 +3,4 @@ class ValueType:
     DECIMAL_VALUE = "DECIMAL_VALUE"
     STRING = "STRING"
     COLUMN = "COLUMN"
+    ID = "ID"

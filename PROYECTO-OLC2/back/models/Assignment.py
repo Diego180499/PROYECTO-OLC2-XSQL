@@ -1,4 +1,4 @@
-from Instruction import Instruction
+from .Instruction import Instruction
 
 
 class Assignment(Instruction):
@@ -9,4 +9,5 @@ class Assignment(Instruction):
         self.value = value
 
     def execute(self):
-        pass
+        val = self.value.execute()
+        print('executing val', val)

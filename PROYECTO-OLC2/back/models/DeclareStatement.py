@@ -1,4 +1,4 @@
-from Instruction import Instruction
+from .Instruction import Instruction
 
 
 class DeclareStatement(Instruction):

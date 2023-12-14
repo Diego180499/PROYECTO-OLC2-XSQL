@@ -1,5 +1,12 @@
+
+
 class VariableType:
-    INT = "INT"
-    STRING = "STRING"
-    DATE = "DATE"
-    DATETIME = "DATETIME"
+
+    def __init__(self, type: str, length: int):
+        self.type = type
+        self.length = length
+
+
+
+
+

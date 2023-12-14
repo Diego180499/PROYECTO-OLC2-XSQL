@@ -10,6 +10,7 @@ from error.xsql_error import xsql_error
 global_arr = []
 errores_sintacticos = []
 
+
 def get_errores():
     return errores_sintacticos
 
@@ -51,7 +52,6 @@ reservadas = {
     'reference': 'REFERENCE',
     'add': 'ADD',
     'int': 'INT',
-    'bit': 'BIT',
     'decimal': 'DECIMAL',
     'date': 'DATE',
     'datetime': 'DATETIME',
@@ -65,33 +65,33 @@ reservadas = {
     'cas': 'CAS',
     'set': 'SET',
     'while': 'WHILE',
-    'delete':'DELETE'
+    'delete': 'DELETE'
 }
 tokens = [
-    'ID',
-    'INTEGER_VALUE',
-    'DECIMAL_VALUE',
-    'SEMICOLON',
-    'NAME',
-    'STRING',
-    'L_PAREN',
-    'R_PAREN',
-    'COMMA',
-    'ASSIGN',
-    'EQUALS',
-    'NOT_EQ',
-    'LESS_THAN',
-    'GREATER_THAN',
-    'LESS_EQ',
-    'GREATER_EQ',
-    'AND',  
-    'OR',
-    'NOT_SIGN',
-    'PLUS',
-    'MINUS',
-    'TIMES',
-    'DIVIDE'
-] + list(reservadas.values())
+             'ID',
+             'INTEGER_VALUE',
+             'DECIMAL_VALUE',
+             'SEMICOLON',
+             'NAME',
+             'STRING',
+             'L_PAREN',
+             'R_PAREN',
+             'COMMA',
+             'ASSIGN',
+             'EQUALS',
+             'NOT_EQ',
+             'LESS_THAN',
+             'GREATER_THAN',
+             'LESS_EQ',
+             'GREATER_EQ',
+             'AND',
+             'OR',
+             'NOT_SIGN',
+             'PLUS',
+             'MINUS',
+             'TIMES',
+             'DIVIDE'
+         ] + list(reservadas.values())
 
 # Tokens
 t_EQUALS = r'=='
@@ -148,8 +148,9 @@ def t_INTEGER_VALUE(t):
     except ValueError:
         # global_arr.append(ExceptionPyType(str(t.value) + " DEMASIADO GRANDE", t.lexer.lineno, -1))
         t.value = 0
-    print('find an integer:',t.value)
+    # print('find an integer:', t.value)
     return t
+
 
 # Expresion Regular para IDS
 def t_ID(t):
@@ -157,15 +158,17 @@ def t_ID(t):
     t.type = reservadas.get(t.value, 'ID')
     return t
 
+
 # ignorar espacios
 t_ignore = " \t"
 
 
-#Expresion regular para los nombre de las tablas, bases de datos, columnas
+# Expresion regular para los nombre de las tablas, bases de datos, columnas
 def t_NAME(t):
     r'[a-zA-Z][a-zA-Z0-9_]*'
     t.type = reservadas.get(t.value, 'NAME')
     return t
+
 
 # Manejo de Linea
 def t_newline(t):
@@ -190,20 +193,33 @@ import ply.lex as lex
 lexer = lex.lex(reflags=re.IGNORECASE)
 
 import sys
+from models.VariableType import VariableType
+from models.ValueType import ValueType
+from models.Value import Value
+from models.DeclareStatement import DeclareStatement
+from models.UnaryOperation import UnaryOperation
+from models.OperationType import OperationType
+from models.BinaryOperation import BinaryOperation
+from models.SetStatement import SetStatement
+from models.Assignment import Assignment
 
 sys.setrecursionlimit(10000000)
 
 
 def p_init(t):
     'init   : statements'
+    t[0] = t[1]
 
 
 def p_statements(t):
     'statements : statements statement'
+    t[1].append(t[2])
+    t[0] = t[1]
 
 
 def p_statements_2(t):
     'statements : '
+    t[0] = []
 
 
 def p_statement(t):
@@ -225,6 +241,7 @@ def p_statement(t):
                     | while_statement
                     | truncate_statement
                     | delete_statement'''
+    t[0] = t[1]
 
 
 ##### CREATE DATABASE #####
@@ -232,29 +249,38 @@ def p_statement(t):
 def p_create_database_statement(t):
     'create_database_statement    : CREATE DATA BASE NAME SEMICOLON'
 
+
 #### USE ####
 
 def p_use_statement(t):
     'use_statement   : USE NAME SEMICOLON'
 
+
 #### DECLARE ####
 
 def p_declare_statement(t):
     'declare_statement   : DECLARE ID AS type SEMICOLON'
+    t[0] = DeclareStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[4])
+
 
 #### SET ####
 
 def p_set_statement(t):
     'set_statement   : SET assignments SEMICOLON'
-
+    t[0] = SetStatement(t.lineno(1), find_column(input, t.slice[1]), t[2])
 
 
 def p_assignments(t):
     'assignments    : assignments COMMA ID ASSIGN a'
+    t[1].append(Assignment(t.lineno(1), find_column(input, t.slice[2]), t[1], t[3]))
+    t[0] = t[1]
 
 
 def p_assignments_2(t):
     'assignments    : ID ASSIGN a'
+    t[0] = []
+    t[0].append(Assignment(t.lineno(1), find_column(input, t.slice[2]), t[1], t[3]))
+
 
 #### CREATE TABLE ####
 
@@ -265,6 +291,7 @@ def p_create_table_statement(t):
 def p_properties(t):
     'properties : properties COMMA property'
 
+
 def p_properties_2(t):
     'properties : property'
 
@@ -272,7 +299,7 @@ def p_properties_2(t):
 def p_property(t):
     'property   : NAME type null_prod PRIMARY KEY'
 
-    
+
 def p_property_2(t):
     'property   : NAME type null_prod'
 
@@ -284,12 +311,14 @@ def p_property_3(t):
 def p_null_prod(t):
     'null_prod  : NOT NULL'
 
+
 def p_null_prod_2(t):
     'null_prod  : NULL'
 
 
 def p_null_prod_3(t):
     'null_prod  : '
+
 
 #### SELECT ####
 
@@ -330,6 +359,7 @@ def p_vals(t):
 def p_vals_2(t):
     'vals   : a'
 
+
 #### CREATE FUNCTION AND PROCEDURE ####
 
 def p_create_function_statement(t):
@@ -339,12 +369,14 @@ def p_create_function_statement(t):
 def p_create_procedure_statement(t):
     'create_procedure_statement : CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON'
 
+
 def p_parameters(t):
     'parameters : parameters COMMA ID AS type'
 
 
 def p_parameters_2(t):
     'parameters : ID AS type'
+
 
 #### ALTER TABLE, FUNCTION AND PROCEDURE ####
 def p_alter_table_statement(t):
@@ -360,12 +392,13 @@ def p_alter_table_statement_2(t):
 #
 #
 # def p_alter_procedure_statement(t):
-    # 'alter_procedure_statement  : ALTER PROCEDURE '
+# 'alter_procedure_statement  : ALTER PROCEDURE '
 
 
 #### IF STATEMENT ####
 def p_if_statement(t):
     'if_statement   : IF a THEN statement END IF SEMICOLON'
+
 
 def p_if_statement2(t):
     'if_statement   : IF a THEN statement ELSE statement END IF SEMICOLON'
@@ -373,7 +406,6 @@ def p_if_statement2(t):
 
 def p_if_statement3(t):
     'if_statement   : IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON'
-
 
 
 #### EXEC ####
@@ -390,6 +422,7 @@ def p_drop_table_statement(t):
 def p_update_statement(t):
     'update_statement   : UPDATE NAME SET column_assignments WHERE a SEMICOLON'
 
+
 #### COLUMN aSSIGNMENTS ####
 def p_column_assignments(t):
     'column_assignments  : column_assignments COMMA NAME ASSIGN a'
@@ -399,11 +432,9 @@ def p_column_assignments_2(t):
     'column_assignments : NAME ASSIGN a'
 
 
-
 #### WHILE STATEMENT ####
 def p_while_statement(t):
     'while_statement    : WHILE a BEGIN statements END SEMICOLON'
-
 
 
 ### TRUNCATE TABLE STATEMENT ###
@@ -420,41 +451,59 @@ def p_delete_statement(t):
 def p_case_statement(t):
     'case_statement : CASE WHEN a THEN a when_statement ELSE THEN a END'
 
+
 def p_when_statement(t):
     'when_statement : WHEN a THEN a when_statement'
 
+
 def p_when_statement2(t):
     'when_statement : '
+    t[0] = []
+
 
 def p_type(t):
     '''type : INT
             | DECIMAL
-            | BIT
-            | NCHAR L_PAREN a R_PAREN
-            | NVARCHAR L_PAREN a R_PAREN
             | DATE
             | DATETIME'''
 
+    t[0] = VariableType(t[1], 32)
+
+
+def p_type_2(t):
+    """type : NCHAR L_PAREN a R_PAREN
+            | NVARCHAR L_PAREN a R_PAREN"""
+    t[0] = VariableType(t[1], t[3])
+
+
 def p_a(t):
     '''a    : a OR b'''
+    t[0] = BinaryOperation(t.lineno(1), find_column(input, t.slice[2]), t[1], t[3], t[2])
+
 
 def p_a_2(t):
     'a  : b'
+    t[0] = t[1]
+
 
 def p_b(t):
     'b  : b AND c'
+    t[0] = BinaryOperation(t.lineno(1), find_column(input, t.slice[2]), t[1], t[3], t[2])
 
 
 def p_b_2(t):
     'b  : c'
+    t[0] = t[1]
 
 
 def p_c(t):
     'c  : NOT_SIGN d'
+    t[0] = UnaryOperation(t.lineno(1), find_column(input, t.slice[1]), t[2], OperationType.NOT)
 
 
 def p_c_2(t):
     'c  : d'
+    t[0] = t[1]
 
 
 def p_d(t):
@@ -465,44 +514,69 @@ def p_d(t):
             | d LESS_EQ e
             | d GREATER_EQ e
     """
+    t[0] = BinaryOperation(t.lineno(1), find_column(input, t.slice[2]), t[1], t[3], t[2])
 
 
 def p_d_2(t):
     'd  : e'
+    t[0] = t[1]
 
 
 def p_e(t):
     """e    : e PLUS f
             | e MINUS f"""
+    t[0] = BinaryOperation(t.lineno(1), find_column(input, t.slice[2]), t[1], t[3], t[2])
 
 
 def p_e_2(t):
     'e  : f'
+    t[0] = t[1]
 
 
 def p_f(t):
     """f    : f TIMES g
             | f DIVIDE g"""
+    t[0] = BinaryOperation(t.lineno(1), find_column(input, t.slice[2]), t[1], t[3], t[2])
 
 
 def p_f_2(t):
     'f  : g'
+    t[0] = t[1]
 
 
 def p_g(t):
     'g  : MINUS h'
+    t[0] = UnaryOperation(t.lineno(1), find_column(input, t.slice[1]), t[2], OperationType.MINUS)
 
 
 def p_g_2(t):
     'g  : h'
+    t[0] = t[1]
 
 
 def p_h(t):
-    """h    : INTEGER_VALUE
-            | DECIMAL_VALUE
-            | STRING
-            | ID
-            | NAME"""
+    """h    : INTEGER_VALUE"""
+    t[0] = Value(t.lineno(1), find_column(input, t.slice[1]), t[1], ValueType.INTEGER_VALUE)
+
+
+def p_h_2(t):
+    """h    : DECIMAL_VALUE"""
+    t[0] = Value(t.lineno(1), find_column(input, t.slice[1]), t[1], ValueType.DECIMAL_VALUE)
+
+
+def p_h_3(t):
+    """h    : STRING"""
+    t[0] = Value(t.lineno(1), find_column(input, t.slice[1]), t[1], ValueType.STRING)
+
+
+def p_h_4(t):
+    """h    : ID"""
+    t[0] = Value(t.lineno(1), find_column(input, t.slice[1]), t[1], ValueType.ID)
+
+
+def p_h_5(t):
+    """h    : NAME"""
+    t[0] = Value(t.lineno(1), find_column(input, t.slice[1]), t[1], ValueType.COLUMN)
 
 
 def p_call_function_prod(t):
@@ -518,12 +592,14 @@ def p_call_function_prod(t):
 def p_error(t):
     error = xsql_error("Error sintactico", t.value, t.type, t.lineno - 1)
     errores_sintacticos.append(error)
-    #print("Error sintáctico en '%s'" % t.value+" "+ t.type)
-    #print(f'en linea {t.lineno-1}')
+    # print("Error sintáctico en '%s'" % t.value+" "+ t.type)
+    # print(f'en linea {t.lineno-1}')
     # if t is not None:
-        # global_arr.append(ExceptionPyType("ERROR SINTACTICO en " + str(t.value) + " SE ESPERABA ALGO MAS", t.lexer.lineno, find_column(input, t)))
+    # global_arr.append(ExceptionPyType("ERROR SINTACTICO en " + str(t.value) + " SE ESPERABA ALGO MAS", t.lexer.lineno, find_column(input, t)))
+
 
 import ply.yacc as yacc
+
 
 def parse(inp):
     global parser
@@ -532,6 +608,6 @@ def parse(inp):
     parser = yacc.yacc()
     lexer.lineno = 1
     result = parser.parse(inp)
-    #print(errores_sintacticos)
+    # print(errores_sintacticos)
 
     return result

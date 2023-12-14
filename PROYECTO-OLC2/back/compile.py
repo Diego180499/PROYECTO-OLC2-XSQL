@@ -11,7 +11,7 @@ def parsear():
                 declare @variable1 as nvarchar(10);
                 declare @variable3 as nchar(5);
                 declare @variable10 as int;
-                set @variable10 = 40;
+                set @variable10 = 40 * 10;
                 declare @variable3 as nchar(@variable10);
                 
                 create table tabla1(
@@ -31,9 +31,9 @@ def parsear():
                     end;
                     
                     if @MONTO > 2000 then
-                        set @ISR = @MONTO *0.07;
+                        set @ISR = @MONTO * 0.07;
                         else
-                        set @ISR = @MONTO *0.10;
+                        set @ISR = @MONTO * 0.10;
                     end if;
                     
                     case
@@ -64,6 +64,10 @@ def parsear():
     if len(errores_sintacticos) > 0:
         print(errors_to_matrix(errores_sintacticos))
         return errors_to_matrix(errores_sintacticos)
+
+    for i in inst:
+        if i is not None:
+            i.execute()
 
 
 parsear()
