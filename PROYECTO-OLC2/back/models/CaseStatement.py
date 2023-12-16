@@ -32,7 +32,7 @@ class CaseStatement(Instruction):
 
     def __init__(self, line, column, condition, bloque_else, columnName):
         super().__init__(line, column)
-        self.conditions = conditions#When statements
+        self.conditions = condition #When statements
         self.bloque_else = bloque_else
         self.columnName = columnName
 

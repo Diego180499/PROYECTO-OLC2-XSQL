@@ -5,14 +5,26 @@ from grammar import *
 
 def parsear():
     inst = parse("""
-    declare @nuevaVariable as decimal;
-    declare @nuevaVariable2 as int;
-    declare @andPrueba as int;
-    declare @orPrueba as int;
-    set @nuevaVariable = 10 * 5 - 1;
-    set @nuevaVariable2 = @nuevaVariable > 200;
-    set @andPrueba = 1 && 1;
-    set @orPrueba = 111 || 1;
+    declare @age as int;
+    declare @name as nchar(10);
+    declare @lastName as nchar(20);
+    
+    set @age = 20, @name = "Lucía";
+    
+    if @age < 21 then
+        set @name = "Juana";
+    else
+        set @name = "Patricia";
+    end if;
+    
+    if(@age == 21, 'mayor de edad', 'menor de edad');ç
+    
+    declare @counter as int;
+    set @counter = 10;
+    while @counter > 1 begin
+        set @counter = @counter - 1;
+    end;
+    
     """)
     if len(errores_sintacticos) > 0:
         print(errors_to_matrix(errores_sintacticos))

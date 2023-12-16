@@ -120,7 +120,7 @@ def t_STRING(t):
     r'(\"(\\\'|\\"|\\\\|\\n|\\t|[^\'\\\"])*?\")|(\'(\\\'|\\"|\\\\|\\n|\\t|[^\'\\\"])*?\')'
     t.value = t.value[1:-1]  # remuevo las comillas
 
-    print(str(t.value))
+    # print(str(t.value))
     t.value = t.value.replace('\\n', '\n')
     t.value = t.value.replace('\\r', '\r')
     t.value = t.value.replace('\\t', '\t')
@@ -205,6 +205,9 @@ from models.SetStatement import SetStatement
 from models.Assignment import Assignment
 from models.CaseStatement import CaseStatement
 from models.WhenStatement import WhenStatement
+from models.IfStatement import IfStatement
+from models.WhileStatement import WhileStatement
+
 
 sys.setrecursionlimit(10000000)
 
@@ -402,16 +405,19 @@ def p_alter_table_statement_2(t):
 
 #### IF STATEMENT ####
 def p_if_statement(t):
-    'if_statement   : IF a THEN statement END IF SEMICOLON'
+    'if_statement   : IF a THEN statements END IF SEMICOLON'
+    t[0] = IfStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[4], None)
 
 
-def p_if_statement2(t):
-    'if_statement   : IF a THEN statement ELSE statement END IF SEMICOLON'
+def p_if_statement_2(t):
+    'if_statement   : IF a THEN statements ELSE statements END IF SEMICOLON'
+    t[0] = IfStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[4], t[6])
 
 
-def p_if_statement3(t):
+
+def p_if_statement_3(t):
     'if_statement   : IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON'
-
+    t[0] = IfStatement(t.lineno(1), find_column(input, t.slice[1]), t[3], [t[5]], [t[7]])
 
 #### EXEC ####
 def p_exec_statement(t):
@@ -440,6 +446,7 @@ def p_column_assignments_2(t):
 #### WHILE STATEMENT ####
 def p_while_statement(t):
     'while_statement    : WHILE a BEGIN statements END SEMICOLON'
+    t[0] = WhileStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[4])
 
 
 ### TRUNCATE TABLE STATEMENT ###
@@ -482,7 +489,6 @@ def p_type_2(t):
     """type : NCHAR L_PAREN a R_PAREN
             | NVARCHAR L_PAREN a R_PAREN"""
     t[0] = VariableType(t[1], t[3])
-
 
 def p_a(t):
     '''a    : a OR b'''
@@ -586,6 +592,9 @@ def p_h_5(t):
     """h    : NAME"""
     t[0] = Value(t.lineno(1), find_column(input, t.slice[1]), t[1], ValueType.COLUMN)
 
+def p_h_6(t):
+    """h    : if_statement"""
+    t[0] = t[1]
 
 def p_call_function_prod(t):
     """call_function_prod   : HOY L_PAREN R_PAREN

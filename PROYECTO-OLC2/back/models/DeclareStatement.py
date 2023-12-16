@@ -18,8 +18,25 @@ class DeclareStatement(Instruction):
             print(f'The variable: {self.id} already exists')
             return None
 
+        length = 0
+        if isinstance(self.type.length, Instruction):
+            result: Variable = self.type.length.execute(symbol_table)
+
+            if result is None:
+                print('value cannot be set to the data type')
+                return None
+
+            if result.variable_type.type != 'int':
+                print('int type was expected')
+                return None
+
+            length = int(result.value)
+        else:
+            length = int(self.type.length)
+
+
         result = Variable()
-        result.variable_type = self.type
+        result.variable_type = VariableType(self.type.type, length)
         result.symbol_type = SymbolType().VARIABLE
         result.id = self.id
 
