@@ -5,25 +5,18 @@ from grammar import *
 
 def parsear():
     inst = parse("""
-    declare @age as int;
-    declare @name as nchar(10);
-    declare @lastName as nchar(20);
-    
-    set @age = 20, @name = "Lucía";
-    
-    if @age < 21 then
-        set @name = "Juana";
-    else
-        set @name = "Patricia";
-    end if;
-    
-    if(@age == 21, 'mayor de edad', 'menor de edad');ç
-    
-    declare @counter as int;
-    set @counter = 10;
-    while @counter > 1 begin
-        set @counter = @counter - 1;
-    end;
+    select nombre,
+        case
+        when edad > 18 && edad <= 25
+            then 'Adolecente'
+        when edad > 25 && edad <= 35
+            then 'Adulto joven'
+        when edad >35 && edad <= 45
+            then 'Adulto Maduro'
+        else
+            then 'Adulto Mayor'
+        end clasificacion
+    from tbpersona;
     
     """)
     if len(errores_sintacticos) > 0:

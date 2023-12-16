@@ -203,7 +203,7 @@ from models.OperationType import OperationType
 from models.BinaryOperation import BinaryOperation
 from models.SetStatement import SetStatement
 from models.Assignment import Assignment
-from models.CaseStatement import CaseStatement
+from models.ElseStatement import ElseStatement
 from models.WhenStatement import WhenStatement
 from models.IfStatement import IfStatement
 from models.WhileStatement import WhileStatement
@@ -328,11 +328,11 @@ def p_null_prod_3(t):
 #### SELECT ####
 
 def p_select_statement(t):
-    'select_statement   : SELECT columnss FROM NAME SEMICOLON'
+    'select_statement   : SELECT columns FROM NAME SEMICOLON'
 
 
 def p_select_statement_2(t):
-    'select_statement   : SELECT columnss FROM NAME WHERE a SEMICOLON'
+    'select_statement   : SELECT columns FROM NAME WHERE a SEMICOLON'
 
 #### INSERT ####
 
@@ -349,15 +349,12 @@ def p_columns(t):
 def p_columns_2(t):
     'columns    : column'
 
-def p_columnss(t):
-    '''columnss   : columns
-                  | case_statement'''
-
-
 def p_column(t):
     """column   : TIMES
                 | NAME
+                | case_statement
                 | call_function_prod"""
+    t[0] = t[1]
 
 
 def p_vals(t):
@@ -461,20 +458,16 @@ def p_delete_statement(t):
 
 ### CASE STATEMENT ###
 def p_case_statement(t):
-    'case_statement : CASE when_statement ELSE THEN a END NAME'
-    t[0] = CaseStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[5], t[7])
+    'case_statement : CASE when_statements END NAME'
+    t[0] = t[2]
 
 def p_when_statement(t):
-    'when_statement : WHEN a THEN a when_statement'
-    t[0] = t[5].append(WhenStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[4]))
+    'when_statements : WHEN a THEN a when_statements'
+    t[0] = WhenStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[4], t[5])
 
-def p_when_statement2(t):
-    'when_statement : WHEN a THEN a'
-    t[0] = WhenStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[4])
-
-def p_when_statement2(t):
-    'when_statement : '
-    t[0] = []
+def p_when_statement_2(t):
+    'when_statements : ELSE THEN a'
+    t[0] = ElseStatement(t.lineno(1), find_column(input, t.slice[1]), t[3])
 
 def p_type(t):
     '''type : INT
