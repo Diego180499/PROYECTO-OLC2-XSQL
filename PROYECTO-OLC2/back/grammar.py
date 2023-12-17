@@ -91,7 +91,8 @@ tokens = [
              'PLUS',
              'MINUS',
              'TIMES',
-             'DIVIDE'
+             'DIVIDE',
+             'POINT'  ### maked by diego xd
          ] + list(reservadas.values())
 
 # Tokens
@@ -113,7 +114,7 @@ t_TIMES = r'\*'
 t_ASSIGN = r'='
 t_SEMICOLON = r';'
 t_COMMA = r','
-
+t_POINT = r'\.'    ### maked by diego xd
 
 # Expresiones Regulares de las cadenas con "" o ''
 def t_STRING(t):
@@ -347,7 +348,13 @@ def p_columns(t):
 
 
 def p_columns_2(t):
-    'columns    : column'
+    'columns    : columns COMMA column POINT column'  ####### maked by diego xd
+
+def p_columns_3(t):
+    'columns    : column POINT column'   ####### maked by diego xd
+
+def p_columns_4(t):
+    'columns    : column'     ####### maked by diego xd
 
 def p_column(t):
     """column   : TIMES
