@@ -268,6 +268,9 @@ def p_declare_statement(t):
     'declare_statement   : DECLARE ID AS type SEMICOLON'
     t[0] = DeclareStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[4])
 
+def p_declare_statement_2(t):
+    'declare_statement   : DECLARE ID  type SEMICOLON'
+    t[0] = DeclareStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[3])
 
 #### SET ####
 
@@ -348,19 +351,20 @@ def p_columns(t):
 
 
 def p_columns_2(t):
-    'columns    : columns COMMA column POINT column'  ####### maked by diego xd
+    'columns    : columns COMMA column POINT column'
 
 def p_columns_3(t):
-    'columns    : column POINT column'   ####### maked by diego xd
+    'columns    : column POINT column'
 
 def p_columns_4(t):
-    'columns    : column'     ####### maked by diego xd
+    'columns    : column'
 
 def p_column(t):
     """column   : TIMES
                 | NAME
                 | case_statement
-                | call_function_prod"""
+                | call_function_prod
+                | a NAME"""  #### pueden haber columnas a las que se le asignan un valor, que sería 'a' maked by diego xd"""
     t[0] = t[1]
 
 
@@ -379,15 +383,21 @@ def p_create_function_statement(t):
 
 
 def p_create_procedure_statement(t):
-    'create_procedure_statement : CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END SEMICOLON'
+    'create_procedure_statement : CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements RETURN a END SEMICOLON'
 
 
 def p_parameters(t):
     'parameters : parameters COMMA ID AS type'
 
-
 def p_parameters_2(t):
+    'parameters : parameters COMMA ID type'
+
+def p_parameters_3(t):
     'parameters : ID AS type'
+
+def p_parameters_4(t):
+    'parameters : ID  type'
+
 
 
 #### ALTER TABLE, FUNCTION AND PROCEDURE ####
