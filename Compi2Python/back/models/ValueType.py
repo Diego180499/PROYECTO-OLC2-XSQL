@@ -1,0 +1,6 @@
+class ValueType:
+    INTEGER_VALUE = "INTEGER_VALUE"
+    DECIMAL_VALUE = "DECIMAL_VALUE"
+    STRING = "STRING"
+    COLUMN = "COLUMN"
+    ID = "ID"
