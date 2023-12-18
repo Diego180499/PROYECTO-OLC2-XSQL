@@ -4,7 +4,7 @@ from .Instruction import Instruction
 from .ValueType import ValueType
 from .Variable import Variable
 from .VariableType import VariableType
-from symbolTable import SymbolTable
+from .symbolTable.SymbolTable import SymbolTable
 
 
 class Value(Instruction):

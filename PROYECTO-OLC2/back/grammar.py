@@ -2,12 +2,6 @@ import re
 
 from error.xsql_error import xsql_error
 
-# here start grammar
-# --------------------------------------------------------------
-# 04-06-2023: Created by Daniel Morales
-# proyecto 1 - compiladores 2 usac 2023
-# --------------------------------------------------------------
-# Definimos las palabras reservadas de nuestro lenguaje
 global_arr = []
 errores_sintacticos = []
 
@@ -208,7 +202,10 @@ from models.ElseStatement import ElseStatement
 from models.WhenStatement import WhenStatement
 from models.IfStatement import IfStatement
 from models.WhileStatement import WhileStatement
-
+from models.FunctionStatement import FunctionStatement
+from models.ProcedureStatement import ProcedureStatement
+from models.ParameterStatement import ParameterStatement
+from models.ReturnStatement import ReturnStatement
 
 sys.setrecursionlimit(10000000)
 
@@ -230,52 +227,53 @@ def p_statements_2(t):
 
 
 def p_statement(t):
-    '''statement    : create_database_statement
-                    | use_statement
-                    | declare_statement
-                    | set_statement
-                    | create_table_statement
-                    | select_statement
-                    | insert_statement
-                    | create_function_statement
-                    | create_procedure_statement
-                    | alter_table_statement
-                    | if_statement
-                    | exec_statement
-                    | drop_table_statement
-                    | update_statement
-                    | while_statement
-                    | truncate_statement
-                    | delete_statement'''
+    '''statement    : create_database_statement SEMICOLON
+                    | use_statement SEMICOLON
+                    | declare_statement SEMICOLON
+                    | set_statement SEMICOLON
+                    | create_table_statement SEMICOLON
+                    | select_statement SEMICOLON
+                    | insert_statement SEMICOLON
+                    | create_function_statement SEMICOLON
+                    | create_procedure_statement SEMICOLON
+                    | alter_table_statement SEMICOLON
+                    | if_statement SEMICOLON
+                    | exec_statement SEMICOLON
+                    | drop_table_statement SEMICOLON
+                    | update_statement SEMICOLON
+                    | while_statement SEMICOLON
+                    | truncate_statement SEMICOLON
+                    | return_statement SEMICOLON
+                    | delete_statement SEMICOLON'''
     t[0] = t[1]
 
 
 ##### CREATE DATABASE #####
 
 def p_create_database_statement(t):
-    'create_database_statement    : CREATE DATA BASE NAME SEMICOLON'
+    'create_database_statement    : CREATE DATA BASE NAME'
 
 
 #### USE ####
 
 def p_use_statement(t):
-    'use_statement   : USE NAME SEMICOLON'
+    'use_statement   : USE NAME'
 
 
 #### DECLARE ####
 
 def p_declare_statement(t):
-    'declare_statement   : DECLARE ID AS type SEMICOLON'
+    'declare_statement   : DECLARE ID AS type'
     t[0] = DeclareStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[4])
 
 def p_declare_statement_2(t):
-    'declare_statement   : DECLARE ID  type SEMICOLON'
+    'declare_statement   : DECLARE ID  type'
     t[0] = DeclareStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[3])
 
 #### SET ####
 
 def p_set_statement(t):
-    'set_statement   : SET assignments SEMICOLON'
+    'set_statement   : SET assignments'
     t[0] = SetStatement(t.lineno(1), find_column(input, t.slice[1]), t[2])
 
 
@@ -294,7 +292,7 @@ def p_assignments_2(t):
 #### CREATE TABLE ####
 
 def p_create_table_statement(t):
-    'create_table_statement : CREATE TABLE NAME L_PAREN properties R_PAREN SEMICOLON'
+    'create_table_statement : CREATE TABLE NAME L_PAREN properties R_PAREN'
 
 
 def p_properties(t):
@@ -332,16 +330,16 @@ def p_null_prod_3(t):
 #### SELECT ####
 
 def p_select_statement(t):
-    'select_statement   : SELECT columns FROM NAME SEMICOLON'
+    'select_statement   : SELECT columns FROM NAME'
 
 
 def p_select_statement_2(t):
-    'select_statement   : SELECT columns FROM NAME WHERE a SEMICOLON'
+    'select_statement   : SELECT columns FROM NAME WHERE a'
 
 #### INSERT ####
 
 def p_insert_statement(t):
-    'insert_statement   : INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN SEMICOLON'
+    'insert_statement   : INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN'
 
 
 #### COLUMNS AND VALS PRODS ####
@@ -364,6 +362,7 @@ def p_column(t):
                 | NAME
                 | case_statement
                 | call_function_prod
+                | if_statement NAME
                 | a NAME"""  #### pueden haber columnas a las que se le asignan un valor, que sería 'a' maked by diego xd"""
     t[0] = t[1]
 
@@ -379,34 +378,54 @@ def p_vals_2(t):
 #### CREATE FUNCTION AND PROCEDURE ####
 
 def p_create_function_statement(t):
-    'create_function_statement  : CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END SEMICOLON'
+    'create_function_statement  : CREATE FUNCTION NAME L_PAREN parameters R_PAREN RETURN type AS BEGIN statements END'
+    t[0] = FunctionStatement(t.lineno(1), find_column(input, t.slice[1]), t[3], t[5], t[11], t[8])
 
+def p_create_function_statement_2(t):
+    'create_function_statement  : CREATE FUNCTION NAME L_PAREN R_PAREN RETURN type AS BEGIN statements END'
+    t[0] = FunctionStatement(t.lineno(1), find_column(input, t.slice[1]), t[3], [], t[10], t[7])
 
 def p_create_procedure_statement(t):
-    'create_procedure_statement : CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements RETURN a END SEMICOLON'
+    'create_procedure_statement : CREATE PROCEDURE NAME L_PAREN parameters R_PAREN AS BEGIN statements END'
+    t[0] = ProcedureStatement(t.lineno(1), find_column(input, t.slice[1]), t[3], t[5], t[9])
+
+def p_create_procedure_statement_2(t):
+    'create_procedure_statement : CREATE PROCEDURE NAME L_PAREN R_PAREN AS BEGIN statements END'
+    t[0] = ProcedureStatement(t.lineno(1), find_column(input, t.slice[1]), t[3], [], t[8])
+
 
 
 def p_parameters(t):
     'parameters : parameters COMMA ID AS type'
+    t[0] = t[1]
+    t[0].append(ParameterStatement(t.lineno(1), find_column(input, t.slice[2]), t[3], t[5]))
+
 
 def p_parameters_2(t):
     'parameters : parameters COMMA ID type'
+    t[0] = t[1]
+    t[0].append(ParameterStatement(t.lineno(1), find_column(input, t.slice[2]), t[3], t[4]))
 
 def p_parameters_3(t):
-    'parameters : ID AS type'
+    'parameters : ID type'
+    t[0] = []
+    t[0].append(ParameterStatement(t.lineno(1), find_column(input, t.slice[1]), t[1], t[2]))
 
 def p_parameters_4(t):
-    'parameters : ID  type'
+    'parameters : ID AS type'
+    t[0] = []
+    t[0].append(ParameterStatement(t.lineno(1), find_column(input, t.slice[1]), t[1], t[3]))
+
 
 
 
 #### ALTER TABLE, FUNCTION AND PROCEDURE ####
 def p_alter_table_statement(t):
-    'alter_table_statement  : ALTER TABLE NAME ADD COLUMN NAME type SEMICOLON'
+    'alter_table_statement  : ALTER TABLE NAME ADD COLUMN NAME type'
 
 
 def p_alter_table_statement_2(t):
-    'alter_table_statement  : ALTER TABLE NAME DROP COLUMN NAME SEMICOLON'
+    'alter_table_statement  : ALTER TABLE NAME DROP COLUMN NAME'
 
 
 # def p_alter_function_statement(t):
@@ -419,33 +438,33 @@ def p_alter_table_statement_2(t):
 
 #### IF STATEMENT ####
 def p_if_statement(t):
-    'if_statement   : IF a THEN statements END IF SEMICOLON'
+    'if_statement   : IF a THEN statements END IF'
     t[0] = IfStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[4], None)
 
 
 def p_if_statement_2(t):
-    'if_statement   : IF a THEN statements ELSE statements END IF SEMICOLON'
+    'if_statement   : IF a THEN statements ELSE statements END IF'
     t[0] = IfStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[4], t[6])
 
 
 
 def p_if_statement_3(t):
-    'if_statement   : IF L_PAREN a COMMA a COMMA a R_PAREN SEMICOLON'
+    'if_statement   : IF L_PAREN a COMMA a COMMA a R_PAREN'
     t[0] = IfStatement(t.lineno(1), find_column(input, t.slice[1]), t[3], [t[5]], [t[7]])
 
 #### EXEC ####
 def p_exec_statement(t):
-    'exec_statement : EXEC NAME vals SEMICOLON'
+    'exec_statement : EXEC NAME vals'
 
 
 #### DROP TABLE ####
 def p_drop_table_statement(t):
-    'drop_table_statement   : DROP TABLE NAME SEMICOLON'
+    'drop_table_statement   : DROP TABLE NAME'
 
 
 #### UPDATE STATEMENT ####
 def p_update_statement(t):
-    'update_statement   : UPDATE NAME SET column_assignments WHERE a SEMICOLON'
+    'update_statement   : UPDATE NAME SET column_assignments WHERE a'
 
 
 #### COLUMN aSSIGNMENTS ####
@@ -459,18 +478,18 @@ def p_column_assignments_2(t):
 
 #### WHILE STATEMENT ####
 def p_while_statement(t):
-    'while_statement    : WHILE a BEGIN statements END SEMICOLON'
+    'while_statement    : WHILE a BEGIN statements END'
     t[0] = WhileStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[4])
 
 
 ### TRUNCATE TABLE STATEMENT ###
 def p_truncate_statement(t):
-    'truncate_statement : TRUNCATE TABLE NAME SEMICOLON'
+    'truncate_statement : TRUNCATE TABLE NAME'
 
 
 ### DELETE STATEMENT ###
 def p_delete_statement(t):
-    'delete_statement : DELETE FROM NAME WHERE a SEMICOLON'
+    'delete_statement : DELETE FROM NAME WHERE a'
 
 
 ### CASE STATEMENT ###
@@ -603,8 +622,8 @@ def p_h_5(t):
     t[0] = Value(t.lineno(1), find_column(input, t.slice[1]), t[1], ValueType.COLUMN)
 
 def p_h_6(t):
-    """h    : if_statement"""
-    t[0] = t[1]
+    """h    : L_PAREN a R_PAREN"""
+    t[0] = t[2]
 
 def p_call_function_prod(t):
     """call_function_prod   : HOY L_PAREN R_PAREN
@@ -614,6 +633,10 @@ def p_call_function_prod(t):
                             | SUMA L_PAREN a R_PAREN
                             | CAS L_PAREN a AS type R_PAREN
     """
+
+def p_return_statement(t):
+    """return_statement : RETURN a"""
+    t[0] = ReturnStatement(t.lineno(1), find_column(input, t.slice[1]), t[2])
 
 
 def p_error(t):
