@@ -162,7 +162,7 @@ t_ignore = " \t"
 # Expresion regular para los nombre de las tablas, bases de datos, columnas
 def t_NAME(t):
     r'[a-zA-Z][a-zA-Z0-9_]*'
-    t.type = reservadas.get(t.value, 'NAME')
+    t.type = reservadas.get(t.value.lower(), 'NAME')
     return t
 
 
@@ -693,3 +693,4 @@ def parse(inp):
     # print(errores_sintacticos)
 
     return result
+
