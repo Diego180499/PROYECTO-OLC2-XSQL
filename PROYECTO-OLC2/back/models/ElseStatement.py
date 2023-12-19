@@ -1,5 +1,5 @@
 from .Instruction import Instruction
-from .symbolTable import SymbolTable
+from .symbolTable.SymbolTable import SymbolTable
 
 
 class ElseStatement(Instruction):

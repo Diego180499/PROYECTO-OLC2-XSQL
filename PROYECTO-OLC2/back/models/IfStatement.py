@@ -1,5 +1,6 @@
 from .Instruction import Instruction
-from .symbolTable import SymbolTable
+from .symbolTable.SymbolTable import SymbolTable
+from .symbolTable.ScopeType import ScopeType
 from .Variable import Variable
 
 
@@ -22,17 +23,22 @@ class IfStatement(Instruction):
             print("Only can use int type into conditions")
             return None
 
+        symbol_table = SymbolTable(ScopeType().IF, symbol_table)
         if result.value > 0:
             for instruction in self.true_block:
                 true_result = instruction.execute(symbol_table)
                 if true_result is not None:
+                    symbol_table = symbol_table.parent
                     return true_result
 
         else:
             for instruction in self.false_block:
                 false_result = instruction.execute(symbol_table)
                 if false_result is not None:
+                    symbol_table = symbol_table.parent
                     return false_result
+
+        symbol_table = symbol_table.parent
 
     def __str__(self):
         return f"""{{"IfStatement": {self.condition}, {self.true_block}, {self.false_block} }}"""

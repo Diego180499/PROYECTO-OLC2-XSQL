@@ -1,11 +1,13 @@
 from models.Variable import Variable
 from models.SymbolType import SymbolType
+from .ScopeType import ScopeType
 
 
 class SymbolTable:
 
-    def __init__(self, parent=None):
+    def __init__(self, scope_type: ScopeType, parent=None):
         self.symbols = []
+        self.scope_type = scope_type
         self.parent = parent
 
     def add_variable(self, variable: Variable):
@@ -55,3 +57,17 @@ class SymbolTable:
             current_table = current_table.parent
 
         return None
+
+    def is_in_fun_scope(self):
+        current_table = self
+
+        while current_table is not None:
+            if current_table.scope_type == ScopeType().GLOBAL or current_table.scope_type == ScopeType().PROC:
+                return False
+
+            if current_table.scope_type == ScopeType().FUN:
+                return True
+
+            current_table = current_table.parent
+
+        return False

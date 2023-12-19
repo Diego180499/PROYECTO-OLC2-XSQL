@@ -1,8 +1,9 @@
 from .Instruction import Instruction
-from .symbolTable import SymbolTable
+from .symbolTable.SymbolTable import SymbolTable
 from .Variable import Variable
 from .VariableType import VariableType
 from .SymbolType import SymbolType
+from .FunctionModel import FunctionModel
 
 
 class FunctionStatement(Instruction):
@@ -32,10 +33,32 @@ class FunctionStatement(Instruction):
 
             find = any((p.id == param_result.id) for p in params)
 
-            if find is not None:
-                print('Variable already exists')
+            if find:
+                print('Parameter already exists')
                 return None
 
             params.append(param_result)
 
+        length = 0
+        if isinstance(self.return_type.length, Instruction):
+            result: Variable = self.return_type.length.execute(symbol_table)
 
+            if result is None:
+                print('value cannot be set to the data type')
+                return None
+
+            if result.variable_type.type != 'int':
+                print('int type was expected')
+                return None
+
+            length = int(result.value)
+        else:
+            length = int(self.return_type.length)
+
+        function_result = Variable()
+        function_result.variable_type = VariableType(self.return_type.type, length)
+        function_result.symbol_type = SymbolType().FUNCTION
+        function_result.id = self.id
+        function_result.value = FunctionModel(self.id, params, self.instructions, function_result.variable_type)
+
+        symbol_table.add_variable(function_result)

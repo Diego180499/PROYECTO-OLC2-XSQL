@@ -1,6 +1,7 @@
 from .Instruction import Instruction
 from .Variable import Variable
-from .symbolTable import SymbolTable
+from .symbolTable.SymbolTable import SymbolTable
+from .symbolTable.ScopeType import ScopeType
 
 
 class WhileStatement(Instruction):
@@ -23,8 +24,11 @@ class WhileStatement(Instruction):
 
         while result.value > 0:
 
+            symbol_table = SymbolTable(ScopeType().IF, symbol_table)
             for instruction in self.block:
                 instruction.execute(symbol_table)
+
+            symbol_table = symbol_table.parent
 
             result = self.condition.execute(symbol_table)
 

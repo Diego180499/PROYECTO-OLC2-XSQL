@@ -206,6 +206,7 @@ from models.FunctionStatement import FunctionStatement
 from models.ProcedureStatement import ProcedureStatement
 from models.ParameterStatement import ParameterStatement
 from models.ReturnStatement import ReturnStatement
+from models.ExecStatement import ExecStatement
 
 sys.setrecursionlimit(10000000)
 
@@ -369,10 +370,14 @@ def p_column(t):
 
 def p_vals(t):
     'vals   : vals COMMA a'
+    t[0] = t[1]
+    t[0].append(t[3])
 
 
 def p_vals_2(t):
     'vals   : a'
+    t[0] = []
+    t[0].append(t[1])
 
 
 #### CREATE FUNCTION AND PROCEDURE ####
@@ -455,6 +460,29 @@ def p_if_statement_3(t):
 #### EXEC ####
 def p_exec_statement(t):
     'exec_statement : EXEC NAME vals'
+    t[0] = ExecStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[3])
+
+
+
+def p_exec_statement_2(t):
+    'exec_statement : EXEC NAME args'
+    t[0] = ExecStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[3])
+
+
+
+def p_exec_statement_3(t):
+    'exec_statement : EXEC NAME'
+    t[0] = ExecStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], [])
+
+def p_args(t):
+    'args   : args COMMA ID ASSIGN a'
+    t[0] = t[1]
+    t[0].append(Assignment(t.lineno(1), find_column(input, t.slice[2]), t[3], t[5]))
+
+def p_args_2(t):
+    'args   : ID ASSIGN a'
+    t[0] = []
+    t[0].append(Assignment(t.lineno(1), find_column(input, t.slice[1]), t[1], t[3]))
 
 
 #### DROP TABLE ####
@@ -624,6 +652,10 @@ def p_h_5(t):
 def p_h_6(t):
     """h    : L_PAREN a R_PAREN"""
     t[0] = t[2]
+
+def p_h_7(t):
+    """h    : exec_statement"""
+    t[0] = t[1]
 
 def p_call_function_prod(t):
     """call_function_prod   : HOY L_PAREN R_PAREN

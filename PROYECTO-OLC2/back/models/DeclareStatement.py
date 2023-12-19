@@ -44,5 +44,9 @@ class DeclareStatement(Instruction):
             result.value = 0
         elif self.type.type == 'nvarchar' or self.type.type == 'nchar':
             result.value = ''
+        elif self.type.type == 'date':
+            result.value = '12-12-2000'
+        elif self.type.type == 'datetime':
+            result.value = '12-12-2000 23:00:00'
 
         symbol_table.add_variable(result)

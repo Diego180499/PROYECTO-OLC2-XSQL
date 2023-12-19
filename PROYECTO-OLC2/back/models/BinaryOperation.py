@@ -1,5 +1,5 @@
 from .Instruction import Instruction
-from .symbolTable import SymbolTable
+from .symbolTable.SymbolTable import SymbolTable
 from .OperationType import OperationType
 from .Variable import Variable
 from .VariableType import VariableType

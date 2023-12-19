@@ -1,5 +1,5 @@
 from .Instruction import Instruction
-from .symbolTable import SymbolTable
+from .symbolTable.SymbolTable import SymbolTable
 from .Variable import Variable
 from .VariableType import VariableType
 from .SymbolType import SymbolType
@@ -15,7 +15,24 @@ class ParameterStatement(Instruction):
     def execute(self, symbol_table: SymbolTable):
 
         result = Variable()
-        result.variable_type = self.type
+
         result.symbol_type = SymbolType().VARIABLE
-        result.id = id
+        result.id = self.id
+
+        length = 0
+        if isinstance(self.type.length, Instruction):
+            length_result: Variable = self.type.length.execute(symbol_table)
+
+            if length_result is None:
+                print("The operation doesn't return anything")
+                return None
+
+            if length_result.variable_type.type != 'int':
+                print("int type was expected")
+                return None
+
+            length = length_result.value
+
+        result.variable_type = VariableType(self.type.type, length)
+
         return result
