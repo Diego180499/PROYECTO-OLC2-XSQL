@@ -1,7 +1,8 @@
 class Node(Instruction):
-    def __init__(self, line, column, value):
+    def __init__(self, line, column, left, right):
         super().__init__(line, column)
-        self.value = value
+        self.left = left
+        self.right = right
     
     def execute(self, symbol_table: SymbolTable):
         pass
