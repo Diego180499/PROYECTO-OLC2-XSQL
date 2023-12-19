@@ -63,6 +63,9 @@ class FunctionStatement(Instruction):
 
         symbol_table.add_variable(function_result)
 
+    def __str__(self):
+        return f"FunctionStatement: id: {self.id}, tipo: {self.return_type.type}"
+        
     def dot(self):
         pass
         

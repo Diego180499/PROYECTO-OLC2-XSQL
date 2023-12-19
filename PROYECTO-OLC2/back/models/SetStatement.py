@@ -55,6 +55,9 @@ class SetStatement(Instruction):
 
             var_in_table.value = result.value
 
+    def __str__(self):
+        return f"SetStatement: assignments: {self.assignments}"
+
     def dot(self):
         pass
         
