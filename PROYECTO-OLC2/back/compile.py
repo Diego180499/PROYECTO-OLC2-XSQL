@@ -26,14 +26,16 @@ def parsear():
     set @hello = exec hello;
     set @message = exec isAnAdult 20;
     """)
+    print('Errores sintacticos:')
     if len(errores_sintacticos) > 0:
         print(errors_to_matrix(errores_sintacticos))
         return errors_to_matrix(errores_sintacticos)
-
+    print('Resultado del analisis sintactico:')
     symbol_table = SymbolTable(ScopeType().GLOBAL)
     for i in inst:
         if i is not None:
-            i.execute(symbol_table)
+            print(i)
+            #i.execute(symbol_table)
 
     for symbol in symbol_table.symbols:
         print(symbol.id, symbol.variable_type.type, symbol.symbol_type, symbol.value)

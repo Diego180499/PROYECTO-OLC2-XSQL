@@ -15,3 +15,9 @@ class ElseStatement(Instruction):
             print('A value was expected')
 
         return result
+
+    def dot(self):
+        pass
+        
+    def c3d(self,scope):
+        pass

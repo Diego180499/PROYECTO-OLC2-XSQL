@@ -42,3 +42,9 @@ class UnaryOperation(Instruction):
             result.symbol_type = SymbolType().VARIABLE
             result.value = int(not left.value)
             return result
+    
+    def dot(self):
+        pass
+        
+    def c3d(self,scope):
+        pass

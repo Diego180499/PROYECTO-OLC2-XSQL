@@ -62,3 +62,9 @@ class FunctionStatement(Instruction):
         function_result.value = FunctionModel(self.id, params, self.instructions, function_result.variable_type)
 
         symbol_table.add_variable(function_result)
+
+    def dot(self):
+        pass
+        
+    def c3d(self,scope):
+        pass

@@ -39,3 +39,9 @@ class WhileStatement(Instruction):
             if result.variable_type.type != 'int':
                 print('int type was expected')
                 return None
+
+    def dot(self):
+        pass
+        
+    def c3d(self,scope):
+        pass

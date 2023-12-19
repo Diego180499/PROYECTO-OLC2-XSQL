@@ -42,3 +42,9 @@ class IfStatement(Instruction):
 
     def __str__(self):
         return f"""{{"IfStatement": {self.condition}, {self.true_block}, {self.false_block} }}"""
+
+    def dot(self):
+        pass
+        
+    def c3d(self,scope):
+        pass

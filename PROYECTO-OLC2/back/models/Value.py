@@ -49,3 +49,9 @@ class Value(Instruction):
 
             variable = copy.deepcopy(var_in_table)
             return variable
+
+    def dot(self):
+        pass
+        
+    def c3d(self,scope):
+        pass

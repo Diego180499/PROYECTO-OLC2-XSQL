@@ -26,3 +26,9 @@ class Assignment(Instruction):
         result.variable_type = result_val.variable_type
 
         return result
+
+    def dot(self):
+        pass
+        
+    def c3d(self,scope):
+        pass

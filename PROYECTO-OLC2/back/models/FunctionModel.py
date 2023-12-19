@@ -10,3 +10,9 @@ class FunctionModel:
         self.parameters = parameters
         self.instructions = instructions
         self.return_type = return_type
+
+    def dot(self):
+        pass
+        
+    def c3d(self,scope):
+        pass

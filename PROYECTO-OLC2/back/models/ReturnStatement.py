@@ -24,3 +24,8 @@ class ReturnStatement(Instruction):
 
         return result
     
+    def dot(self):
+        pass
+        
+    def c3d(self,scope):
+        pass

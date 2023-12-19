@@ -305,3 +305,9 @@ class ExecStatement(Instruction):
                 return return_result
 
         symbol_table = symbol_table.parent
+
+    def dot(self):
+        pass
+        
+    def c3d(self,scope):
+        pass

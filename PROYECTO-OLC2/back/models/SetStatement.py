@@ -54,3 +54,9 @@ class SetStatement(Instruction):
                 continue
 
             var_in_table.value = result.value
+
+    def dot(self):
+        pass
+        
+    def c3d(self,scope):
+        pass

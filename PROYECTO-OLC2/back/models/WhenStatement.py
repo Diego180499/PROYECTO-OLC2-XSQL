@@ -34,4 +34,10 @@ class WhenStatement(Instruction):
                 return self.false_block.execute(symbol_table)
 
     def __str__(self):
-        return f"""{{"WhenState": {self.condition}, {self.instruccion}}}"""
+        return f"""{{"WhenState": {self.condition}, {self.instruccion}}}""" 
+    
+    def dot(self):
+        pass
+        
+    def c3d(self,scope):
+        pass

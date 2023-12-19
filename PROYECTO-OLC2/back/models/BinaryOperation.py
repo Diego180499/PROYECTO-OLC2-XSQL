@@ -142,3 +142,9 @@ class BinaryOperation(Instruction):
             result.value = 1 if int(left.value or right.value) > 0 else 0
             print('or result:', result.value)
             return result
+
+    def dot(self):
+        pass
+        
+    def c3d(self,scope):
+        pass

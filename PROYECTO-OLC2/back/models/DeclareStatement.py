@@ -50,3 +50,9 @@ class DeclareStatement(Instruction):
             result.value = '12-12-2000 23:00:00'
 
         symbol_table.add_variable(result)
+
+    def dot(self):
+        pass
+        
+    def c3d(self,scope):
+        pass

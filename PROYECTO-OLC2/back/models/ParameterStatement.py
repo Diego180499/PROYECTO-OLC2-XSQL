@@ -36,3 +36,9 @@ class ParameterStatement(Instruction):
         result.variable_type = VariableType(self.type.type, length)
 
         return result
+
+    def dot(self):
+        pass
+
+    def c3d(self,scope):
+        pass

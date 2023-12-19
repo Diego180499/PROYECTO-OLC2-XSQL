@@ -1,0 +1,32 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Creado por setuptools
+/*.egg-info/
+
+# Carpeta de entorno virtual
+venv/
+
+# Archivos de configuración
+*.pyc
+*.pyo
+.DS_Store
+Thumbs.db
+
+# Archivos de caché
+*.pyc
+.cython/
+
+# Carpeta de construcción
+build/
+
+# Carpeta de distribución
+dist/
+
+# Carpeta de construcción de pyinstaller
+__pycache__/
+build/
+dist/
