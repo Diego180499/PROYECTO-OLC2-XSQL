@@ -51,6 +51,9 @@ class DeclareStatement(Instruction):
 
         symbol_table.add_variable(result)
 
+    def __str__(self):
+        return f"DeclareStatement: id: {self.id}, tipo: {self.type.type}"
+
     def dot(self):
         pass
         
