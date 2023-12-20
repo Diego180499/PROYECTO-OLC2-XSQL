@@ -23,12 +23,8 @@ class OrdenEjecucion(Instruction):
             graficador.agregarRelacion(nodo_padre, current_node)
         if self.left is not None:
             nodo_left = self.left.dot(current_node, graficador)
-            if nodo_left is not None:
-                graficador.agregarRelacion(current_node, nodo_left)
         if self.right is not None:
             nodo_right = self.right.dot(current_node, graficador)
-            if nodo_right is not None:
-                graficador.agregarRelacion(current_node, nodo_right)
         return current_node
     
     def c3d(self,scope):
