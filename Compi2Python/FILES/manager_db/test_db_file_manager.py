@@ -1,7 +1,7 @@
 from db_file_manager import *
 
 
-eliminar_columna('escuela','usuario','campo_prueba')
+eliminar_campo('escuela', 'usuario', 'campo_prueba')
 
 
 

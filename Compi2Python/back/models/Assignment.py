@@ -1,6 +1,6 @@
 from .Instruction import Instruction
+from .symbolTable import SymbolTable
 from .Variable import Variable
-from ..symbolTable.SymbolTable import SymbolTable
 
 
 class Assignment(Instruction):

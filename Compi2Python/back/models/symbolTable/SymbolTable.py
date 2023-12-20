@@ -1,5 +1,5 @@
-from back.models.SymbolType import SymbolType
 from back.models.Variable import Variable
+from back.models.SymbolType import SymbolType
 
 
 class SymbolTable:

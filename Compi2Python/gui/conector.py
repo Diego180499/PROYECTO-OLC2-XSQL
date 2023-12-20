@@ -12,6 +12,7 @@ class Conector:
     ### AQUI RECIBO EL CONTENIDO DEL EDITOR DE TEXTO DEL FRONT...
     def compilar(self, contenido):        
         matriz_resultante = parsear(contenido)
+
         return matriz_resultante
 
     def cargar_arbol(self,url):

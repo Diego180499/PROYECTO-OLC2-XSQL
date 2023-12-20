@@ -59,10 +59,8 @@ def xml_to_diccionario(url):
     # en la url debe estar especificado el nombre de la base de datos,
     # ya que solo una en específico vamos a obtener.
 def xml_to_base_de_datos(url):
-    manejadorDB = ManejadorDB()
+    #manejadorDB = ManejadorDB()
     try:
-        # Creamos el Manejador de Bases de Datos
-
         # en open, ponemos el path del archivo.
         xml_file = open(url)
         # Evaluamos si se lee el archivo

@@ -2,21 +2,42 @@ from FILES.import_to_xml_dml import *
 from FILES.manager_db.records_to_xml import *
 from utils.archivo import Archivo
 
-url_records_xml = f'resources/REGISTROS_XML'
+url_records_xml = f'U:/Universidad/Ciclo 2023/EDV-DICIEMBRE/LAB - OLC2/REPO-PROYECTO-OLC2-XSQL/Compi2Python/resources/REGISTROS_XML'
 
 def obtener_registros_tabla(nombre_db, nombre_tabla):
     registros : Registros = xml_to_records(f'{url_records_xml}/{nombre_db}/{nombre_tabla}.xml')
     matriz_registros = registros.matriz()
     return matriz_registros
 
+### se obtienen los registros de una tabla como un listado de BOJETOS DE TIPO REGISTRO
+def obtener_registros_tabla_2(nombre_db, nombre_tabla):
+    registros : Registros = xml_to_records(f'{url_records_xml}/{nombre_db}/{nombre_tabla}.xml')
+
+    registro_lista = []
+
+    for registro in registros.registros :
+        registro_lista.append(registro)
+
+    return registro_lista
+
+
 
 def insertar_registro(nombre_db, nombre_tabla, registro : Registro):
-    registros: Registros = xml_to_records(f'{url_records_xml}/{nombre_db}/{nombre_tabla}.xml')
-    registros.registros.append(registro)
-    registros_xml = records_to_xml(registros)
-    archivo: Archivo = Archivo(f'{url_records_xml}/{nombre_db}/{nombre_tabla}.xml')
-    archivo.guardar(registros_xml)
-    print(registros_xml)
+
+    try:
+        registros: Registros = xml_to_records(f'{url_records_xml}/{nombre_db}/{nombre_tabla}.xml')
+        registros.registros.append(registro)
+        registros_xml = records_to_xml(registros)
+        archivo: Archivo = Archivo(f'{url_records_xml}/{nombre_db}/{nombre_tabla}.xml')
+        archivo.guardar(registros_xml)
+        print(registros_xml)
+    except UnboundLocalError as ule :
+        registros: Registros = Registros(nombre_db,nombre_tabla,[])
+        registros.registros.append(registro)
+        registros_xml = records_to_xml(registros)
+        archivo: Archivo = Archivo(f'{url_records_xml}/{nombre_db}/{nombre_tabla}.xml')
+        archivo.guardar(registros_xml)
+        print(registros_xml)
 
 
 ## eliminar registros: se recibe como parametro una lista de objetos REGISTRO, ya que en la lista puede venir uno o varios

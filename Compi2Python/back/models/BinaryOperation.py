@@ -1,8 +1,9 @@
 from .Instruction import Instruction
-from ..symbolTable.SymbolTable import SymbolTable
+from .symbolTable import SymbolTable
 from .OperationType import OperationType
 from .Variable import Variable
 from .VariableType import VariableType
+
 
 class BinaryOperation(Instruction):
 
@@ -22,7 +23,7 @@ class BinaryOperation(Instruction):
 
         if self.operator == OperationType().PLUS:
 
-            if left.variable_type != 'int' and left.variable_type.type != 'decimal' or right.variable_type.type != 'int'\
+            if left.variable_type.type != 'int' and left.variable_type.type != 'decimal' or right.variable_type.type != 'int' \
                     and right.variable_type.type != 'decimal':
                 print("Plus operation only can be executed by int and decimal values")
                 return None
@@ -141,4 +142,3 @@ class BinaryOperation(Instruction):
             result.value = 1 if int(left.value or right.value) > 0 else 0
             print('or result:', result.value)
             return result
-

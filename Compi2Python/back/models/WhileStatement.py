@@ -1,6 +1,6 @@
 from .Instruction import Instruction
 from .Variable import Variable
-from ..symbolTable.SymbolTable import SymbolTable
+from .symbolTable import SymbolTable
 
 
 class WhileStatement(Instruction):

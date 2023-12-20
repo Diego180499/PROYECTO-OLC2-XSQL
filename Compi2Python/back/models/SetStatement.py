@@ -1,5 +1,5 @@
 from .Instruction import Instruction
-from ..symbolTable.SymbolTable import SymbolTable
+from .symbolTable import SymbolTable
 
 
 class SetStatement(Instruction):

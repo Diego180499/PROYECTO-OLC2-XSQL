@@ -1,5 +1,5 @@
 from .Instruction import Instruction
-from ..symbolTable.SymbolTable import SymbolTable
+from .symbolTable import SymbolTable
 from .Variable import Variable
 
 class WhenStatement(Instruction):

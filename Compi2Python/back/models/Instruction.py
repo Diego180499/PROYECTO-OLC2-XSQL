@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from ..symbolTable.SymbolTable import SymbolTable
+from .symbolTable.SymbolTable import SymbolTable
 
 
 class Instruction(ABC):
