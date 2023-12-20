@@ -46,7 +46,7 @@ class ProcedureStatement(Instruction):
 
         symbol_table.add_variable(procedure_result)
 
-    def dot(self):
+    def dot(self,nodo_padre, graficador):
         pass
 
     def c3d(self,scope):

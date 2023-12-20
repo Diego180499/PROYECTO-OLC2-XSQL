@@ -85,7 +85,7 @@ class CallFunctionStatement(Instruction):
             result.value = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
             return result
 
-    def dot(self):
+    def dot(self,nodo_padre, graficador):
         pass
 
     def c3d(self, scope):

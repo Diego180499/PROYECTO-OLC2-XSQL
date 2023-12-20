@@ -58,7 +58,7 @@ class SetStatement(Instruction):
     def __str__(self):
         return f"SetStatement: assignments: {self.assignments}"
 
-    def dot(self):
+    def dot(self,nodo_padre, graficador):
         pass
         
     def c3d(self,scope):

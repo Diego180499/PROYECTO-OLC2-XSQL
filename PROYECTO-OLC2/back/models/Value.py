@@ -5,6 +5,7 @@ from .ValueType import ValueType
 from .Variable import Variable
 from .VariableType import VariableType
 from .symbolTable.SymbolTable import SymbolTable
+from .graphviz.Graficador import Graficador
 
 
 class Value(Instruction):
@@ -52,7 +53,7 @@ class Value(Instruction):
             variable.variable_type = var_in_table.variable_type
             return variable
 
-    def dot(self):
+    def dot(self,nodo_padre, graficador):
         pass
         
     def c3d(self,scope):

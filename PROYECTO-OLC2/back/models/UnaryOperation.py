@@ -43,7 +43,7 @@ class UnaryOperation(Instruction):
             result.value = int(not left.value)
             return result
     
-    def dot(self):
+    def dot(self,nodo_padre, graficador):
         pass
         
     def c3d(self,scope):

@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 from .symbolTable.SymbolTable import SymbolTable
 
-
 class Instruction(ABC):
 
     def __init__(self, line, column):
@@ -14,7 +13,7 @@ class Instruction(ABC):
         pass
 
     @abstractmethod
-    def dot(self):
+    def dot(self,nodo_padre, graficador):
         pass
 
     @abstractmethod

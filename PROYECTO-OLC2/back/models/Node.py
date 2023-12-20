@@ -10,7 +10,7 @@ class Node(Instruction):
     def __str__(self):
         return f"Node: {self.value}"
 
-    def dot(self):
+    def dot(self,nodo_padre, graficador):
         pass
         
     def c3d(self,scope):

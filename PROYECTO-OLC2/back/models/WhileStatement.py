@@ -40,7 +40,7 @@ class WhileStatement(Instruction):
                 print('int type was expected')
                 return None
 
-    def dot(self):
+    def dot(self,nodo_padre, graficador):
         pass
         
     def c3d(self,scope):

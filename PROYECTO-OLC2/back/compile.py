@@ -2,6 +2,7 @@ from utilities.utilities import errors_to_matrix
 from models.symbolTable.SymbolTable import SymbolTable
 from models.symbolTable.ScopeType import ScopeType
 from grammar import *
+from models.graphviz.Graficador import Graficador
 
 
 def parsear():
@@ -11,7 +12,6 @@ def parsear():
     declare @concatenar as nchar(50);
     declare @int as int;
     declare @decimalValue as decimal;
-    
     
     set @today = hoy();
     set @concatenar = concatena('hola', ' mundo');
@@ -27,10 +27,14 @@ def parsear():
         return errors_to_matrix(errores_sintacticos)
     print('Resultado del analisis sintactico:')
     symbol_table = SymbolTable(ScopeType().GLOBAL)
-    for i in inst:
-        if i is not None:
-            #print(i)
-            i.execute(symbol_table)
+    #Impricion del ast en formato string
+    #print(inst)
+    #Generacion del dot para el ast
+    graficador = Graficador()
+    inst.dot(None, graficador)
+    graficador.generarDOT()
+    #Ejecucion del codigo
+    inst.execute(symbol_table)
 
     for symbol in symbol_table.symbols:
         print(symbol.id, symbol.variable_type.type, symbol.symbol_type, symbol.value)

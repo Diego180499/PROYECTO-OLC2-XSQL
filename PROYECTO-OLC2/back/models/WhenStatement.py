@@ -36,7 +36,7 @@ class WhenStatement(Instruction):
     def __str__(self):
         return f"""{{"WhenState": {self.condition}, {self.instruccion}}}""" 
     
-    def dot(self):
+    def dot(self,nodo_padre, graficador):
         pass
         
     def c3d(self,scope):

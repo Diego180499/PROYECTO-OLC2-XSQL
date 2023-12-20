@@ -43,7 +43,7 @@ class IfStatement(Instruction):
     def __str__(self):
         return f"""{{"IfStatement": {self.condition}, {self.true_block}, {self.false_block} }}"""
 
-    def dot(self):
+    def dot(self,nodo_padre, graficador):
         pass
         
     def c3d(self,scope):

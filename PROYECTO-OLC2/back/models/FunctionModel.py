@@ -11,7 +11,7 @@ class FunctionModel:
         self.instructions = instructions
         self.return_type = return_type
 
-    def dot(self):
+    def dot(self,nodo_padre, graficador):
         pass
         
     def c3d(self,scope):

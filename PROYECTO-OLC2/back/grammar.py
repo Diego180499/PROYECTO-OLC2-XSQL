@@ -209,6 +209,7 @@ from models.ReturnStatement import ReturnStatement
 from models.ExecStatement import ExecStatement
 from models.CallFunctionStatement import CallFunctionStatement
 from models.CasStatement import CasStatement
+from models.OrdenEjecucion import OrdenEjecucion
 
 sys.setrecursionlimit(10000000)
 
@@ -220,13 +221,18 @@ def p_init(t):
 
 def p_statements(t):
     'statements : statements statement'
-    t[1].append(t[2])
-    t[0] = t[1]
+    # t[1].append(t[2])
+    # t[0] = t[1]
+    ordEje:OrdenEjecucion = t[1]
+    ordEje.right = t[2]
+    ordenEjecucion = OrdenEjecucion(0, 0, ordEje, None)
+    t[0] = ordenEjecucion
 
 
 def p_statements_2(t):
-    'statements : '
-    t[0] = []
+    'statements : statement'
+    # t[0] = []
+    t[0] = OrdenEjecucion(0, 0, t[1], None)
 
 
 def p_statement(t):

@@ -54,8 +54,11 @@ class DeclareStatement(Instruction):
     def __str__(self):
         return f"DeclareStatement: id: {self.id}, tipo: {self.type.type}"
 
-    def dot(self):
-        pass
+    def dot(self,nodo_padre, graficador):
+        current_node = graficador.agregarNode('declare')
+        graficador.agregarRelacion(nodo_padre, current_node)
+        current_node_id = graficador.agregarNode(self.id)
+        graficador.agregarRelacion(current_node, current_node_id)
         
     def c3d(self,scope):
         pass

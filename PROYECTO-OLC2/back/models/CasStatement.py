@@ -83,7 +83,7 @@ class CasStatement(Instruction):
             result.value = value_result.value
             return result
 
-    def dot(self):
+    def dot(self,nodo_padre, graficador):
         pass
 
     def c3d(self, scope):

@@ -66,7 +66,7 @@ class FunctionStatement(Instruction):
     def __str__(self):
         return f"FunctionStatement: id: {self.id}, tipo: {self.return_type.type}"
         
-    def dot(self):
+    def dot(self,nodo_padre, graficador):
         pass
         
     def c3d(self,scope):
