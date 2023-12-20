@@ -59,7 +59,8 @@ class SetStatement(Instruction):
         return f"SetStatement: assignments: {self.assignments}"
 
     def dot(self,nodo_padre, graficador):
-        pass
+        current_node = graficador.agregarNode('set')
+        graficador.agregarRelacion(nodo_padre, current_node)
         
     def c3d(self,scope):
         pass
