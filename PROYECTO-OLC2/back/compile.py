@@ -6,25 +6,20 @@ from grammar import *
 
 def parsear():
     inst = parse("""
-    declare @message as nvarchar(100);
-    declare @hello as nvarchar(5);
+    DECLARE @today as datetime;
+    declare @substring as nchar(10);
+    declare @concatenar as nchar(50);
+    declare @int as int;
+    declare @decimalValue as decimal;
     
-    create function isAnAdult(@age as int) return nchar(50) as
-        begin
-        if @age > 17 then
-            return 'mayor';
-        else
-            return 'menor';
-        end if;
-    end;
     
-    create function hello() return int as
-        begin
-        return 'hello';
-    end;
+    set @today = hoy();
+    set @concatenar = concatena('hola', ' mundo');
+    set @substring = substraer(cas(@today as nchar(100)), 7, 10);
+    set @int = cas(cas('1' as decimal) as int);
+    set @decimalValue = cas(@concatenar as int) * 10;
+    set @today = cas('10-09-2025 05:10:40' as datetime);
     
-    set @hello = exec hello;
-    set @message = exec isAnAdult 20;
     """)
     print('Errores sintacticos:')
     if len(errores_sintacticos) > 0:
@@ -34,8 +29,8 @@ def parsear():
     symbol_table = SymbolTable(ScopeType().GLOBAL)
     for i in inst:
         if i is not None:
-            print(i)
-            #i.execute(symbol_table)
+            #print(i)
+            i.execute(symbol_table)
 
     for symbol in symbol_table.symbols:
         print(symbol.id, symbol.variable_type.type, symbol.symbol_type, symbol.value)

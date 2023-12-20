@@ -52,7 +52,7 @@ reservadas = {
     'datetime': 'DATETIME',
     'nchar': 'NCHAR',
     'nvarchar': 'NVARCHAR',
-    'concatenar': 'CONCATENAR',
+    'concatena': 'CONCATENA',
     'substraer': 'SUBSTRAER',
     'hoy': 'HOY',
     'contar': 'CONTAR',
@@ -207,6 +207,8 @@ from models.ProcedureStatement import ProcedureStatement
 from models.ParameterStatement import ParameterStatement
 from models.ReturnStatement import ReturnStatement
 from models.ExecStatement import ExecStatement
+from models.CallFunctionStatement import CallFunctionStatement
+from models.CasStatement import CasStatement
 
 sys.setrecursionlimit(10000000)
 
@@ -237,6 +239,7 @@ def p_statement(t):
                     | insert_statement SEMICOLON
                     | create_function_statement SEMICOLON
                     | create_procedure_statement SEMICOLON
+                    | call_function_statement SEMICOLON
                     | alter_table_statement SEMICOLON
                     | if_statement SEMICOLON
                     | exec_statement SEMICOLON
@@ -362,7 +365,7 @@ def p_column(t):
     """column   : TIMES
                 | NAME
                 | case_statement
-                | call_function_prod
+                | call_function_statement
                 | if_statement NAME
                 | a NAME"""  #### pueden haber columnas a las que se le asignan un valor, que sería 'a' maked by diego xd"""
     t[0] = t[1]
@@ -654,17 +657,31 @@ def p_h_6(t):
     t[0] = t[2]
 
 def p_h_7(t):
-    """h    : exec_statement"""
+    """h    : exec_statement
+            | call_function_statement"""
     t[0] = t[1]
 
-def p_call_function_prod(t):
-    """call_function_prod   : HOY L_PAREN R_PAREN
-                            | CONCATENAR L_PAREN a COMMA a R_PAREN
-                            | SUBSTRAER L_PAREN a R_PAREN
-                            | CONTAR L_PAREN a R_PAREN
-                            | SUMA L_PAREN a R_PAREN
-                            | CAS L_PAREN a AS type R_PAREN
+def p_call_function_statement(t):
+    """call_function_statement   : function_name_prod L_PAREN vals R_PAREN"""
+    t[0] = CallFunctionStatement(t.lineno(1), find_column(input, t.slice[2]), t[1], t[3])
+
+
+def p_call_function_statement_2(t):
+    "call_function_statement : function_name_prod L_PAREN R_PAREN"
+    t[0] = CallFunctionStatement(t.lineno(1), find_column(input, t.slice[2]), t[1], [])
+
+def p_call_function_statement_3(t):
+    "call_function_statement    : CAS L_PAREN a AS type R_PAREN"
+    t[0] = CasStatement(t.lineno(1), find_column(input, t.slice[1]), t[3], t[5])
+
+def p_function_name_prod(t):
+    """function_name_prod   : HOY
+                            | CONCATENA
+                            | SUBSTRAER
+                            | CONTAR
+                            | SUMA
     """
+    t[0] = t[1]
 
 def p_return_statement(t):
     """return_statement : RETURN a"""

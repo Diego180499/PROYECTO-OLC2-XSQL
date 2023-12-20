@@ -42,12 +42,14 @@ class Value(Instruction):
             return variable
 
         elif self.value_type == ValueType().ID:
-            var_in_table = symbol_table.find_var_by_id(self.value)
+            var_in_table: Variable = symbol_table.find_var_by_id(self.value)
             if var_in_table is None:
                 print("Variable doesn't found")
                 return None
 
-            variable = copy.deepcopy(var_in_table)
+            variable.value = var_in_table.value
+            variable.symbol_type = var_in_table.symbol_type
+            variable.variable_type = var_in_table.variable_type
             return variable
 
     def dot(self):

@@ -23,12 +23,20 @@ class BinaryOperation(Instruction):
 
         if self.operator == OperationType().PLUS:
 
+            result = Variable()
+
+            if left.variable_type.type == 'nchar' or left.variable_type.type == 'nvarchar' or right.variable_type.type == 'nchar' \
+                or right.variable_type.type == 'nvarchar':
+                result.value = str(left.value) + str(right.value)
+                result.variable_type = VariableType('nchar', len(result.value))
+                return result
+
+
             if left.variable_type.type != 'int' and left.variable_type.type != 'decimal' or right.variable_type.type != 'int' \
                     and right.variable_type.type != 'decimal':
                 print("Plus operation only can be executed by int and decimal values")
                 return None
 
-            result = Variable()
 
             if left.variable_type.type == 'decimal' or right.variable_type.type == 'decimal':
                 result.variable_type = VariableType('decimal', 32)
