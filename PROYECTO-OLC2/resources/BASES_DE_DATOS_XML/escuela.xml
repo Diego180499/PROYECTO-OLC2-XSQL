@@ -1,0 +1,43 @@
+
+        <base>
+            <nombre>escuela</nombre>
+            
+        <tabla>
+            <nombre>usuario</nombre>
+            
+        <campo>
+            <nombre>id_usuario</nombre>
+            <tipo_dato>varchar</tipo_dato>
+            <llave_primaria>1</llave_primaria>
+            <nulo>0</nulo>
+            <tabla_referencia>0</tabla_referencia>
+            <campo_referencia>0</campo_referencia>
+        </campo>
+        
+        </tabla>
+        
+        <tabla>
+            <nombre>alumno</nombre>
+            
+        <campo>
+            <nombre>nombre_alumno</nombre>
+            <tipo_dato>nvarchar</tipo_dato>
+            <llave_primaria>0</llave_primaria>
+            <nulo>1</nulo>
+            <tabla_referencia>0</tabla_referencia>
+            <campo_referencia>0</campo_referencia>
+        </campo>
+        
+        <campo>
+            <nombre>apellido_alumno</nombre>
+            <tipo_dato>nvarchar</tipo_dato>
+            <llave_primaria>0</llave_primaria>
+            <nulo>1</nulo>
+            <tabla_referencia>0</tabla_referencia>
+            <campo_referencia>0</campo_referencia>
+        </campo>
+        
+        </tabla>
+        
+        </base>        
+    

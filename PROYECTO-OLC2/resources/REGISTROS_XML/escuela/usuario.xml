@@ -1,0 +1,41 @@
+
+    <registros>
+        <base_datos>usuarios</base_datos>        
+        <tabla>usuario</tabla>
+        
+        <registro>
+            
+        <campo>id_usuario</campo>
+        
+        <campo>nombre</campo>
+        
+        <campo>apellido</campo>
+        
+            
+        <valor>5</valor>
+        
+        <valor>Levi</valor>
+        
+        <valor>Hernandez</valor>
+        
+        </registro>                    
+    
+        <registro>
+            
+        <campo>id_usuario</campo>
+        
+        <campo>nombre</campo>
+        
+        <campo>apellido</campo>
+        
+            
+        <valor>6</valor>
+        
+        <valor>Levi</valor>
+        
+        <valor>Hernandez</valor>
+        
+        </registro>                    
+    
+    </registros>
+    
