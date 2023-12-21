@@ -350,6 +350,20 @@ def p_select_statement(t):
 def p_select_statement_2(t):
     'select_statement   : SELECT columns FROM NAME WHERE a'
 
+def p_select_statement_3(t):
+    'select_statement : SELECT columns FROM table_names_select WHERE a'
+
+def p_select_statement_4(t):
+    'select_statement : SELECT columns FROM table_names_select'
+
+def p_lista_names_select(t):
+    'table_names_select : NAME table_names_select_p'
+
+def p_lista_names_select_2(t):
+    ''' table_names_select_p : COMMA NAME table_names_select_p
+                            |'''
+
+
 #### INSERT ####
 
 def p_insert_statement(t):
@@ -376,8 +390,7 @@ def p_column(t):
                 | NAME
                 | case_statement
                 | call_function_statement
-                | if_statement NAME
-                | a NAME"""  #### pueden haber columnas a las que se le asignan un valor, que sería 'a' maked by diego xd"""
+                | if_statement NAME"""  #### | a NAME pueden haber columnas a las que se le asignan un valor, que sería 'a' maked by diego xd"""
     t[0] = t[1]
 
 
@@ -670,6 +683,9 @@ def p_h_7(t):
     """h    : exec_statement
             | call_function_statement"""
     t[0] = t[1]
+
+def p_h_8(t):
+    ''' h : NAME POINT NAME'''
 
 def p_call_function_statement(t):
     """call_function_statement   : function_name_prod L_PAREN vals R_PAREN"""

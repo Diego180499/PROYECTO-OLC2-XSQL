@@ -6,13 +6,15 @@ from src.models.graphviz.Graficador import Graficador
 
 
 def parsear():
-    inst = parse("""
+
+    contenido_1 = '''
+    CREATE DATA BASE zapateria;
     DECLARE @today as datetime;
     declare @substring as nchar(10);
     declare @concatenar as nchar(50);
     declare @int as int;
     declare @decimalValue as decimal;
-    
+    SELECT tbproducto.id, tbcliente.nombre FROM tbproducto, tbcliente WHERE tbproducto.id == 2;
     set @today = hoy();
     set @concatenar = concatena('hola', ' mundo');
     set @substring = substraer(cas(@today as nchar(100)), 7, 10);
@@ -39,6 +41,22 @@ def parsear():
     set @int = exec retorna_valor 10;
     use banco;
     use colegio;
+    '''
+
+    inst = parse("""
+        SELECT tbcliente.codigocliente,CONCATENA(tbcliente.primer_nombre,tbcliente.primer_apellido),
+        tbidentificacion.identificacion,tbidentificaciontipo.identificaciontipo
+        FROM tbcliente,tbidentificacion ,tbidentificaciontipo 
+        where tbcliente.codigocliente == tbidentificacion.codigocliente 
+        && tbcliente.identificaciontipo == tbidentificacion.identificaciontipo;
+        
+        SELECT tbcredito.credito,tbcredito.fechaultimocorte,tbcredito.nocuenta,fechaultimocorte,tbproducto.producto,
+        idmoneda,SaldoActual,SaldoMora,ValorCuota,DiasMora,alturamora,limite,idcalificacion
+        FROM tbcredito,tbcreditoobligacion,tbcreditoSaldo,tbcliente,tbproducto 
+        where tbcredito.credito == tbcreditoobligacion.credito 
+        && tbcreditoobligacion.Credito == tbcreditoSaldo.credito 
+        && tbcliente.codigocliente == tbcreditoobligacion.codigocliente
+        && tbproducto.idproducto == tbcredito.idproducto;
     """)
     print('Errores sintacticos:')
     if len(errores_sintacticos) > 0:
