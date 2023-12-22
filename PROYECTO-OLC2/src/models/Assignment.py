@@ -4,6 +4,8 @@ from .Variable import Variable
 from .SymbolType import SymbolType
 import re
 
+from ..error.xsql_error import xsql_error
+
 
 class Assignment(Instruction):
 
@@ -19,6 +21,7 @@ class Assignment(Instruction):
 
         if result_val is None:
             print('A value was expected')
+            errors.append(self.semantic_error('A value was expected'))
             return None
 
         result.value = result_val.value
@@ -26,6 +29,11 @@ class Assignment(Instruction):
         result.variable_type = result_val.variable_type
 
         return result
+
+
+    def semantic_error(self, description):
+        return xsql_error(description,'','Error Semantico',f'Linea {self.line} Columna {self.column}')
+
 
     def dot(self,nodo_padre, graficador):
         pass

@@ -3,6 +3,7 @@ from .symbolTable.SymbolTable import SymbolTable
 from .Variable import Variable
 from .VariableType import VariableType
 from .SymbolType import SymbolType
+from ..error.xsql_error import xsql_error
 
 
 class ParameterStatement(Instruction):
@@ -25,10 +26,12 @@ class ParameterStatement(Instruction):
 
             if length_result is None:
                 print("The operation doesn't return anything")
+                errors.append(self.semantic_error("The operation doesn't return anything"))
                 return None
 
             if length_result.variable_type.type != 'int':
                 print("int type was expected")
+                errors.append(self.semantic_error("int type was expected"))
                 return None
 
             length = length_result.value
@@ -36,6 +39,9 @@ class ParameterStatement(Instruction):
         result.variable_type = VariableType(self.type.type, length)
 
         return result
+
+    def semantic_error(self, description):
+        return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self,nodo_padre, graficador):
         pass

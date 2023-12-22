@@ -4,6 +4,7 @@ from .Variable import Variable
 from .VariableType import VariableType
 from .SymbolType import SymbolType
 from .FunctionModel import FunctionModel
+from ..error.xsql_error import xsql_error
 
 
 class FunctionStatement(Instruction):
@@ -65,7 +66,11 @@ class FunctionStatement(Instruction):
 
     def __str__(self):
         return f"FunctionStatement: id: {self.id}, tipo: {self.return_type.type}"
-        
+
+
+    def semantic_error(self, description):
+        return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
+
     def dot(self,nodo_padre, graficador):
         pass
         

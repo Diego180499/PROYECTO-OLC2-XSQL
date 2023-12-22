@@ -2,6 +2,7 @@ from .Instruction import Instruction
 from .symbolTable.SymbolTable import SymbolTable
 from .symbolTable.ScopeType import ScopeType
 from .Variable import Variable
+from ..error.xsql_error import xsql_error
 
 
 class IfStatement(Instruction):
@@ -17,10 +18,12 @@ class IfStatement(Instruction):
 
         if result is None:
             print("The condition didn't return anything")
+            errors.append(self.semantic_error("The condition didn't return anything"))
             return None
 
         if result.variable_type.type != 'int':
             print("Only can use int type into conditions")
+            errors.append(self.semantic_error("Only can use int type into conditions"))
             return None
 
         symbol_table = SymbolTable(ScopeType().IF, symbol_table)
@@ -44,6 +47,9 @@ class IfStatement(Instruction):
 
     def __str__(self):
         return f"""{{"IfStatement": {self.condition}, {self.true_block}, {self.false_block} }}"""
+
+    def semantic_error(self, description):
+        return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self,nodo_padre, graficador):
         pass

@@ -2,6 +2,7 @@ from .Instruction import Instruction
 from .Variable import Variable
 from .symbolTable.SymbolTable import SymbolTable
 from .symbolTable.ScopeType import ScopeType
+from ..error.xsql_error import xsql_error
 
 
 class WhileStatement(Instruction):
@@ -16,6 +17,7 @@ class WhileStatement(Instruction):
 
         if result is None:
             print("The condition couldn't be executed")
+            errors.append(self.semantic_error("The condition couldn't be executed"))
             return None
 
         if result.variable_type.type != 'int':
@@ -37,11 +39,16 @@ class WhileStatement(Instruction):
 
             if result is None:
                 print("The condition couldn't be executed")
+                errors.append(self.semantic_error("The condition couldn't be executed"))
                 return None
 
             if result.variable_type.type != 'int':
                 print('int type was expected')
+                errors.append(self.semantic_error('int type was expected'))
                 return None
+
+    def semantic_error(self, description):
+        return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self,nodo_padre, graficador):
         pass

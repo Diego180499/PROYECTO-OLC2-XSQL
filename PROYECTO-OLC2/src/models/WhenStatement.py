@@ -1,6 +1,8 @@
 from .Instruction import Instruction
 from .symbolTable.SymbolTable import SymbolTable
 from .Variable import Variable
+from ..error.xsql_error import xsql_error
+
 
 class WhenStatement(Instruction):
 
@@ -15,10 +17,12 @@ class WhenStatement(Instruction):
 
         if result is None:
             print('A value was expected')
+            errors.append(self.semantic_error('A value was expected'))
             return None
 
         if result.variable_type.type != 'int':
             print('int type was expected')
+            errors.append(self.semantic_error('int type was expected'))
             return None
 
         if result.value > 0:
@@ -26,6 +30,7 @@ class WhenStatement(Instruction):
 
             if true_result is None:
                 print('A value was expected in when then statement')
+                errors.append(self.semantic_error('A value was expected in when then statement'))
                 return None
 
             return true_result
@@ -35,7 +40,10 @@ class WhenStatement(Instruction):
 
     def __str__(self):
         return f"""{{"WhenState": {self.condition}, {self.false_block}}}"""
-    
+
+    def semantic_error(self, description):
+        return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
+
     def dot(self,nodo_padre, graficador):
         pass
         

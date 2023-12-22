@@ -3,6 +3,7 @@ from .symbolTable.SymbolTable import SymbolTable
 from .Variable import Variable
 from .VariableType import VariableType
 from .SymbolType import SymbolType
+from ..error.xsql_error import xsql_error
 
 
 class DeclareStatement(Instruction):
@@ -16,6 +17,7 @@ class DeclareStatement(Instruction):
         var_in_table = symbol_table.find_var_by_id(self.id)
         if var_in_table is not None:
             print(f'The variable: {self.id} already exists')
+            errors.append(self.semantic_error(f'The variable: {self.id} already exists'))
             return None
 
         length = 0
@@ -24,10 +26,12 @@ class DeclareStatement(Instruction):
 
             if result is None:
                 print('value cannot be set to the data type')
+                errors.append(self.semantic_error('value cannot be set to the data type'))
                 return None
 
             if result.variable_type.type != 'int':
                 print('int type was expected')
+                errors.append(self.semantic_error('int type was expected'))
                 return None
 
             length = int(result.value)
@@ -53,6 +57,9 @@ class DeclareStatement(Instruction):
     def __str__(self):
         return f"DeclareStatement: id: {self.id}, tipo: {self.type.type}"
 
+
+    def semantic_error(self, description):
+        return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
     def dot(self,nodo_padre, graficador):
         current_node = graficador.agregarNode('declare')
         graficador.agregarRelacion(nodo_padre, current_node)

@@ -15,23 +15,24 @@ class RecordRepository:
 
         if self.campos_existen_en_tabla(nombre_bd, nombre_tabla, campos) :
             insertar_registro(nombre_bd,nombre_tabla,registro) ## este metodo es de db_file_manager
-            return [["Mensaje"],[f'Se ha creado un nuevo registro para la tabla "{nombre_tabla}"']]
+            return ["Mensaje",f'Se ha creado un nuevo registro para la tabla "{nombre_tabla}"']
 
-        return [["Mensaje de error"], [f'Los campos no coinciden con los campos de la tabla "{nombre_tabla}"']]
+        return ["Mensaje de error", f'Los campos no coinciden con los campos de la tabla "{nombre_tabla}"']
 
 
     def obtener_registros_de_tabla(self, nombre_bd, nombre_tabla):
         if self.tabla_repo.existe_tabla_en_bd(nombre_bd, nombre_tabla) :
             lista_registros = obtener_registros_tabla_2(nombre_bd, nombre_tabla)
             return lista_registros
-        return [["Mensaje de Error"],[f'La tabla "{nombre_tabla}" no se encuentra dentro de la base de datos "{nombre_bd}"']]
+        return ["Mensaje de Error",f'La tabla "{nombre_tabla}" no se encuentra dentro de la base de datos "{nombre_bd}"']
 
     def eliminar_registro(self, nombre_bd, nombre_tabla, registros_a_eliminar : []):
 
         if self.tabla_repo.existe_tabla_en_bd(nombre_bd, nombre_tabla) :
             eliminar_registro(nombre_bd,nombre_tabla,registros_a_eliminar)  ### este metodo es de record_file_manager
-            return [["Mensaje"],[f'Se ha eliminado el registro en la tabla "{nombre_tabla}"']]
-        return [["Mensaje de Error"],[f'La tabla "{nombre_tabla}" no se encuentra dentro de la base de datos "{nombre_bd}"']]
+            return ["Mensaje",f'Se ha eliminado el registro en la tabla "{nombre_tabla}"']
+
+        return ["Mensaje de Error",f'La tabla "{nombre_tabla}" no se encuentra dentro de la base de datos "{nombre_bd}"']
 
     def campos_existen_en_tabla(self, nombre_bd, nombre_tabla, campos : []):
         campos_tabla = obtener_campos_tabla(nombre_bd, nombre_tabla)
@@ -54,6 +55,8 @@ class RecordRepository:
                 self.actualizar_valores_registro(campos_a_actualzar,valores_a_actualizar,registro)
                 self.insertar_registro(nombre_bd,nombre_tabla,registro.campos, registro.valores) ## actualiza el registro
         print("Se actualizaron los registros")
+        matriz_respuesta = ["Mensaje", "Se actualizaron los registros"]
+        return matriz_respuesta
 
 
     def validar_campos_en_registro(self, campos : [], registro : Registro):
@@ -77,14 +80,6 @@ class RecordRepository:
 
 
         return True
-### pruebas
-record_repo : RecordRepository = RecordRepository()
-registro : Registro = Registro(["nombre_alumno","apellido_alumno"],['Jose','Estrada'])
-registros_a_actualizar = []
-registros_a_actualizar.append(registro)
-campos = ["nombre_alumno"]
-valores = ["Diego"]
-record_repo.actualizar_registro('escuela','alumno',campos,valores,registros_a_actualizar)
 
 
 

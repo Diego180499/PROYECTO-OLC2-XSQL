@@ -7,6 +7,8 @@ from .ProcedureModel import ProcedureModel
 from .FunctionModel import FunctionModel
 import re
 
+from ..error.xsql_error import xsql_error
+
 
 class ExecStatement(Instruction):
 
@@ -24,6 +26,7 @@ class ExecStatement(Instruction):
 
             if procedure_in_table is None:
                 print(f"fun/procedure with name: {self.id} doesn't found")
+                errors.append(self.semantic_error(f"fun/procedure with name: {self.id} doesn't found"))
                 return None
             self.exec_procedure(procedure_in_table, symbol_table, errors)
             return None
@@ -32,6 +35,7 @@ class ExecStatement(Instruction):
 
         if fun_result is None:
             print("The function doesn't return anything.")
+            errors.append(self.semantic_error(f'The function doesnt return anything.'))
 
         return fun_result
 
@@ -43,6 +47,7 @@ class ExecStatement(Instruction):
 
             if arg_result is None:
                 print("The argument couldn't be executed")
+                errors.append(self.semantic_error(f"The argument couldn't be executed"))
                 return None
 
             if arg_result.id is not None:
@@ -50,12 +55,14 @@ class ExecStatement(Instruction):
 
                 if find:
                     print('The argument already exists')
+                    errors.append(self.semantic_error("The argument already exists"))
                     return None
 
             args_result.append(arg_result)
 
         if len(args_result) != len(procedure.parameters):
             print("The arguments and parameters number doesn't match")
+            errors.append(self.semantic_error("The arguments and parameters number doesn't match"))
             return None
 
         symbol_table = SymbolTable(ScopeType().PROC, symbol_table)
@@ -70,6 +77,7 @@ class ExecStatement(Instruction):
 
                 if find is None:
                     print(f"The parameter {arg.id} doesn't exist")
+                    errors.append(self.semantic_error(f"The parameter {arg.id} doesn't exist"))
                     symbol_table = symbol_table.parent
 
                     return None
@@ -77,6 +85,7 @@ class ExecStatement(Instruction):
                 if find.variable_type.type == 'nchar' or find.variable_type.type == 'nvarchar':
                     if find.variable_type.length < arg.variable_type.length:
                         print("The length value is too long")
+                        errors.append(self.semantic_error("The length value is too long"))
                         symbol_table = symbol_table.parent
 
                         return None
@@ -84,6 +93,7 @@ class ExecStatement(Instruction):
                 if find.variable_type.type == 'date':
                     if not re.search("\d{2}-\d{2}-\d{4}", arg.value):
                         print('Date value was expected')
+                        errors.append(self.semantic_error('Date value was expected'))
                         symbol_table = symbol_table.parent
 
                         return None
@@ -95,6 +105,7 @@ class ExecStatement(Instruction):
                 if find.variable_type.type == 'datetime':
                     if not re.search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", arg.value):
                         print('Datetime value was expected')
+                        errors.append(self.semantic_error('Datetime value was expected'))
                         symbol_table = symbol_table.parent
 
                         return None
@@ -105,6 +116,7 @@ class ExecStatement(Instruction):
 
                 if find.variable_type.type != arg.variable_type.type:
                     print(f"Variable type doesn't match")
+                    errors.append(self.semantic_error(f"Variable type doesn't match"))
                     symbol_table = symbol_table.parent
 
                     return None
@@ -120,6 +132,7 @@ class ExecStatement(Instruction):
                 if parameter.variable_type.type == 'nchar' or parameter.variable_type.type == 'nvarchar':
                     if parameter.variable_type.length < args_result[i].variable_type.length:
                         print("The length value is too long")
+                        errors.append(self.semantic_error("The length value is too long"))
                         symbol_table = symbol_table.parent
 
                         return None
@@ -127,6 +140,7 @@ class ExecStatement(Instruction):
                 if parameter.variable_type.type == 'date':
                     if not re.search("\d{2}-\d{2}-\d{4}", args_result[i].value):
                         print('Date value was expected')
+                        errors.append(self.semantic_error('Date value was expected'))
                         symbol_table = symbol_table.parent
 
                         return None
@@ -138,6 +152,7 @@ class ExecStatement(Instruction):
                 if parameter.variable_type.type == 'datetime':
                     if not re.search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", args_result[i].value):
                         print('Datetime value was expected')
+                        errors.append(self.semantic_error('Datetime value was expected'))
                         symbol_table = symbol_table.parent
 
                         return None
@@ -148,6 +163,7 @@ class ExecStatement(Instruction):
 
                 if parameter.variable_type.type != args_result[i].variable_type.type:
                     print(f"Variable type doesn't match")
+                    errors.append(self.semantic_error(f"Variable type doesn't match"))
                     symbol_table = symbol_table.parent
 
                     return None
@@ -166,6 +182,7 @@ class ExecStatement(Instruction):
 
             if arg_result is None:
                 print("The argument couldn't be executed")
+                errors.append(self.semantic_error("The argument couldn't be executed"))
                 return None
 
             if arg_result.id is not None:
@@ -173,12 +190,14 @@ class ExecStatement(Instruction):
 
                 if find:
                     print('The argument already exists')
+                    errors.append(self.semantic_error('The argument already exists'))
                     return None
 
             args_result.append(arg_result)
 
         if len(args_result) != len(function.parameters):
             print("The arguments and parameters number doesn't match")
+            errors.append(self.semantic_error("The arguments and parameters number doesn't match"))
             return None
 
         symbol_table = SymbolTable(ScopeType().FUN, symbol_table)
@@ -193,12 +212,14 @@ class ExecStatement(Instruction):
 
                 if find is None:
                     print(f"The parameter {arg.id} doesn't exist")
+                    errors.append(self.semantic_error(f"The parameter {arg.id} doesn't exist"))
                     symbol_table = symbol_table.parent
                     return None
 
                 if find.variable_type.type == 'nchar' or find.variable_type.type == 'nvarchar':
                     if find.variable_type.length < arg.variable_type.length:
                         print("The length value is too long")
+                        errors.append(self.semantic_error("The length value is too long"))
                         symbol_table = symbol_table.parent
 
                         return None
@@ -206,6 +227,7 @@ class ExecStatement(Instruction):
                 if find.variable_type.type == 'date':
                     if not re.search("\d{2}-\d{2}-\d{4}", arg.value):
                         print('Date value was expected')
+                        errors.append(self.semantic_error('Date value was expected'))
                         symbol_table = symbol_table.parent
 
                         return None
@@ -217,6 +239,7 @@ class ExecStatement(Instruction):
                 if find.variable_type.type == 'datetime':
                     if not re.search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", arg.value):
                         print('Datetime value was expected')
+                        errors.append(self.semantic_error('Datetime value was expected'))
                         symbol_table = symbol_table.parent
                         return None
 
@@ -226,6 +249,7 @@ class ExecStatement(Instruction):
 
                 if find.variable_type.type != arg.variable_type.type:
                     print(f"Variable type doesn't match")
+                    errors.append(self.semantic_error(f"Variable type doesn't match"))
                     symbol_table = symbol_table.parent
                     return None
 
@@ -240,12 +264,14 @@ class ExecStatement(Instruction):
                 if parameter.variable_type.type == 'nchar' or parameter.variable_type.type == 'nvarchar':
                     if parameter.variable_type.length < args_result[i].variable_type.length:
                         print("The length value is too long")
+                        errors.append(self.semantic_error("The length value is too long"))
                         symbol_table = symbol_table.parent
                         return None
 
                 if parameter.variable_type.type == 'date':
                     if not re.search("\d{2}-\d{2}-\d{4}", args_result[i].value):
                         print('Date value was expected')
+                        errors.append(self.semantic_error('Date value was expected'))
                         symbol_table = symbol_table.parent
 
                         return None
@@ -257,6 +283,7 @@ class ExecStatement(Instruction):
                 if parameter.variable_type.type == 'datetime':
                     if not re.search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", args_result[i].value):
                         print('Datetime value was expected')
+                        errors.append(self.semantic_error('Datetime value was expected'))
                         symbol_table = symbol_table.parent
 
                         return None
@@ -267,6 +294,7 @@ class ExecStatement(Instruction):
 
                 if parameter.variable_type.type != args_result[i].variable_type.type:
                     print(f"Variable type doesn't match")
+                    errors.append(self.semantic_error(f"Variable type doesn't match"))
                     symbol_table = symbol_table.parent
 
                     return None
@@ -283,11 +311,12 @@ class ExecStatement(Instruction):
 
                 if return_result.variable_type.type != 'nchar' and return_result.variable_type.type != 'nvarchar':
                     print("The return type doesn't match")
+                    errors.append(self.semantic_error("The return type doesn't match"))
                     return None
 
                 if function.return_type.length < return_result.variable_type.length:
-
                     print("The value is too long")
+                    errors.append(self.semantic_error("The value is too long"))
                     symbol_table = symbol_table.parent
                     return None
 
@@ -295,6 +324,7 @@ class ExecStatement(Instruction):
 
             if return_result.variable_type.type != function.return_type.type:
                 print("The return type doesn't match")
+                errors.append(self.semantic_error("The return type doesn't match"))
                 symbol_table = symbol_table.parent
                 return None
 
@@ -303,6 +333,9 @@ class ExecStatement(Instruction):
 
 
         symbol_table = symbol_table.parent
+
+    def semantic_error(self, description):
+        return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self,nodo_padre, graficador):
         pass

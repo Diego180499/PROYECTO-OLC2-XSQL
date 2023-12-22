@@ -9,10 +9,10 @@ class DataBaseRepository:
     def crear_bd(self, nombre_bd):
         base_datos: BaseDatos = BaseDatos(nombre_bd,[])
         if self.existe_bd(nombre_bd) :
-            matriz_respuesta = [["Mensaje de Error"],[f'La base de datos con el nombre "{base_datos.nombre}" ya existe en el sistema']]
+            matriz_respuesta = ["Mensaje de Error",f'La base de datos con el nombre "{base_datos.nombre}" ya existe en el sistema']
             return matriz_respuesta
         guardar_base_de_datos_xml(base_datos.nombre, base_datos)
-        matriz_respuesta = [["Mensaje"], ["Se ha creado la base de datos correctamente"]]
+        matriz_respuesta = ["Mensaje", "Se ha creado la base de datos correctamente"]
         return matriz_respuesta
 
 
@@ -20,8 +20,8 @@ class DataBaseRepository:
 
         if self.existe_bd(nombre_bd) :
             eliminar_base_de_datos(nombre_bd)
-            return [["Mensaje"],[f'Se ha eliminado la base de datos "{nombre_bd}" ']]
-        return [["Mensaje de Error"],[f'No se ha encontrado la base de datos "{nombre_bd}" ']]
+            return ["Mensaje",f'Se ha eliminado la base de datos "{nombre_bd}" ']
+        return ["Mensaje de Error",f'No se ha encontrado la base de datos "{nombre_bd}" ']
 
 
 

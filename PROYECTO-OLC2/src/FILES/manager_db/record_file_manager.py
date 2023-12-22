@@ -8,7 +8,7 @@ def obtener_registros_tabla(nombre_db, nombre_tabla):
     matriz_registros = registros.matriz()
     return matriz_registros
 
-### se obtienen los registros de una tabla como un listado de BOJETOS DE TIPO REGISTRO
+### se obtienen los registros de una tabla como un listado de OBJETOS DE TIPO REGISTRO
 def obtener_registros_tabla_2(nombre_db, nombre_tabla):
     registros : Registros = xml_to_records(f'{url_records_xml}/{nombre_db}/{nombre_tabla}.xml')
 
@@ -18,6 +18,68 @@ def obtener_registros_tabla_2(nombre_db, nombre_tabla):
         registro_lista.append(registro)
 
     return registro_lista
+
+
+
+## unir dos o mas tablas para un select
+
+def obtener_registros_de_varias_tablas(nombre_bd, nombres_tablas : []):
+    matrices_registros = []
+    matriz_resultante = []
+    ## llenamos el arreglo de matrices segun la cantidad de tablas solicitadas
+    for nombre_tabla in nombres_tablas :
+        matriz = obtener_registros_tabla(nombre_bd,nombre_tabla)
+        matrices_registros.append(matriz)
+
+    encabezados_resultantes = []
+
+    ### llenado de los encabezados
+    for matriz_registro in matrices_registros :
+        encabezados_matriz = matriz_registro[0]
+
+        for encabezado in encabezados_matriz :
+            encabezados_resultantes.append(encabezado)
+
+    ### añadimos los encabezados a nuestra matriz resultante
+    matriz_resultante.append(encabezados_resultantes)
+
+    ### llenado de las filas
+    cantidad_filas_resultantes = obtener_valor_mayor_tablas(matrices_registros)
+
+    indice_fila_matriz_registro = 1
+
+    while indice_fila_matriz_registro < cantidad_filas_resultantes :
+        filas_resultantes = []
+        for matriz_registro in matrices_registros :
+            if indice_fila_matriz_registro >= len(matriz_registro):
+                for valor in matriz_registro[0] :
+                    filas_resultantes.append("-")
+            else:
+                fila_matriz = matriz_registro[indice_fila_matriz_registro]
+                for valor in fila_matriz:
+                    filas_resultantes.append(valor)
+        indice_fila_matriz_registro += 1
+        matriz_resultante.append(filas_resultantes)
+
+    return matriz_resultante
+
+
+def obtener_valor_mayor_tablas(tablas : []):
+
+    valores = []
+    for tabla in tablas :
+        valores.append(len(tabla))
+
+    mayor = valores[0]
+    for numero in valores :
+        if numero > mayor :
+            mayor = numero
+    return mayor
+
+
+
+
+
 
 
 
@@ -59,3 +121,7 @@ def eliminar_registro_individual(registros_actuales : Registro = [], registro_a_
 
 
 
+### pruebas
+matriz = obtener_registros_de_varias_tablas('escuela',['alumno','usuario'])
+for fila in matriz :
+    print(fila)

@@ -3,6 +3,7 @@ from .symbolTable.SymbolTable import SymbolTable
 from .OperationType import OperationType
 from .Variable import Variable
 from .VariableType import VariableType
+from ..error.xsql_error import xsql_error
 
 
 class BinaryOperation(Instruction):
@@ -19,6 +20,7 @@ class BinaryOperation(Instruction):
 
         if left is None or right is None:
             print("The operation couldn't be executed")
+            errors.append(self.semantic_error("The operation couldn't be executed"))
             return None
 
         if self.operator == OperationType().PLUS:
@@ -35,6 +37,7 @@ class BinaryOperation(Instruction):
             if left.variable_type.type != 'int' and left.variable_type.type != 'decimal' or right.variable_type.type != 'int' \
                     and right.variable_type.type != 'decimal':
                 print("Plus operation only can be executed by int and decimal values")
+                errors.append(self.semantic_error("Plus operation only can be executed by int and decimal values"))
                 return None
 
 
@@ -52,6 +55,7 @@ class BinaryOperation(Instruction):
             if (left.variable_type.type != 'int' and left.variable_type.type != 'decimal' or
                     right.variable_type.type != 'int' and right.variable_type.type != 'decimal'):
                 print("Minus operation only can be executed by int and decimal values")
+                errors.append(self.semantic_error("Minus operation only can be executed by int and decimal values"))
                 return None
 
             result = Variable()
@@ -70,6 +74,7 @@ class BinaryOperation(Instruction):
             if (left.variable_type.type != 'int' and left.variable_type.type != 'decimal' or
                     right.variable_type.type != 'int' and right.variable_type.type != 'decimal'):
                 print("Times operation only can be executed by int and decimal values")
+                errors.append(self.semantic_error("Times operation only can be executed by int and decimal values"))
                 return None
 
             result = Variable()
@@ -84,6 +89,7 @@ class BinaryOperation(Instruction):
             if left.variable_type.type != 'int' and left.variable_type.type != 'decimal' or right.variable_type.type != 'int' \
                     and right.variable_type.type != 'decimal':
                 print("Divide operation only can be executed by int and decimal values")
+                errors.append(self.semantic_error("Divide operation only can be executed by int and decimal values"))
                 return None
 
             result = Variable()
@@ -140,6 +146,7 @@ class BinaryOperation(Instruction):
             result.variable_type = VariableType('int', 32)
             result.value = 1 if int(left.value and right.value) > 0 else 0
             print('and result:', result.value)
+            errors.append(self.semantic_error('and result:', result.value))
 
             return result
 
@@ -149,7 +156,12 @@ class BinaryOperation(Instruction):
             result.variable_type = VariableType('int', 32)
             result.value = 1 if int(left.value or right.value) > 0 else 0
             print('or result:', result.value)
+            errors.append(self.semantic_error('or result:', result.value))
             return result
+
+    def semantic_error(self, description):
+        return xsql_error(description,'','Error Semantico',f'Linea {self.line} Columna {self.column}')
+
 
     def dot(self,nodo_padre, graficador):
         pass

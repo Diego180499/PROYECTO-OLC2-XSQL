@@ -1,5 +1,6 @@
 from .Instruction import Instruction
 from .symbolTable.SymbolTable import SymbolTable
+from ..error.xsql_error import xsql_error
 
 
 class ElseStatement(Instruction):
@@ -13,8 +14,12 @@ class ElseStatement(Instruction):
 
         if result is None:
             print('A value was expected')
+            errors.append(self.semantic_error('A value was expected'))
 
         return result
+
+    def semantic_error(self, description):
+        return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self,nodo_padre, graficador):
         pass

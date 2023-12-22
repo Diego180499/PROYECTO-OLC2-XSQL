@@ -4,6 +4,7 @@ from .Variable import Variable
 from .VariableType import VariableType
 from .SymbolType import SymbolType
 from .ProcedureModel import ProcedureModel
+from ..error.xsql_error import xsql_error
 
 
 class ProcedureStatement(Instruction):
@@ -19,6 +20,7 @@ class ProcedureStatement(Instruction):
 
         if procedure_in_table is not None:
             print('Procedure already exists')
+            errors.append(self.semantic_error('Procedure already exists'))
             return None
 
         params = []
@@ -28,12 +30,14 @@ class ProcedureStatement(Instruction):
 
             if param_result is None:
                 print("The parameter couldn't be declared")
+                errors.append(self.semantic_error("The parameter couldn't be declared"))
                 return None
 
             find = any((p.id == param_result.id) for p in params)
 
             if find:
                 print('Parameter already exists')
+                errors.append(self.semantic_error('Parameter already exists'))
                 return None
 
             params.append(param_result)
@@ -45,6 +49,10 @@ class ProcedureStatement(Instruction):
         procedure_result.value = ProcedureModel(self.id, params, self.block)
 
         symbol_table.add_variable(procedure_result)
+
+
+    def semantic_error(self, description):
+        return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self,nodo_padre, graficador):
         pass

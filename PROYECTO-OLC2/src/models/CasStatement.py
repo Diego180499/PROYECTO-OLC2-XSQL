@@ -4,6 +4,8 @@ from .VariableType import VariableType
 from .symbolTable.SymbolTable import SymbolTable
 import re
 
+from ..error.xsql_error import xsql_error
+
 
 class CasStatement(Instruction):
 
@@ -18,6 +20,7 @@ class CasStatement(Instruction):
 
         if value_result is None:
             print('A value was expected')
+            errors.append(self.semantic_error('A value was expected'))
             return None
 
         variable_type = VariableType(self.type.type, 32)
@@ -26,10 +29,12 @@ class CasStatement(Instruction):
 
             if length_result is None:
                 print("A value was expected")
+                errors.append(self.semantic_error("A value was expected"))
                 return None
 
             if length_result.variable_type.type != 'int':
                 print('Int type was expected')
+                errors.append(self.semantic_error('Int type was expected'))
                 return None
 
             variable_type.length = length_result.value
@@ -57,6 +62,7 @@ class CasStatement(Instruction):
         elif variable_type.type == 'nchar' or variable_type.type == 'nvarchar':
             if len(value_result.value) > variable_type.length:
                 print('the value is too long')
+                errors.append(self.semantic_error('the value is too long'))
                 return None
 
             result = Variable()
@@ -67,6 +73,7 @@ class CasStatement(Instruction):
         elif variable_type.type == 'date':
             if not re.search("\d{2}-\d{2}-\d{4}", value_result.value):
                 print('Date value was expected')
+                errors.append(self.semantic_error('Date value was expected'))
                 return None
 
             result = Variable()
@@ -76,6 +83,7 @@ class CasStatement(Instruction):
         elif variable_type.type == 'datetime':
             if not re.search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", value_result.value):
                 print('Datetime value was expected')
+                errors.append(self.semantic_error('Datetime value was expected'))
                 return None
 
             result = Variable()
@@ -83,6 +91,8 @@ class CasStatement(Instruction):
             result.value = value_result.value
             return result
 
+    def semantic_error(self, description):
+        return xsql_error(description,'','Error Semantico',f'Linea {self.line} Columna {self.column}')
     def dot(self,nodo_padre, graficador):
         pass
 

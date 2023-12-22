@@ -4,6 +4,7 @@ from src.repository.data_base.data_base_repository import DataBaseRepository
 from .Variable import Variable
 from .VariableType import VariableType
 from .SymbolType import SymbolType
+from ..error.xsql_error import xsql_error
 
 
 class UseStatement(Instruction):
@@ -17,6 +18,7 @@ class UseStatement(Instruction):
 
         if not db_exists:
             print(f"The database: {self.db_name} doesn't exist")
+            errors.append(self.semantic_error(f"The database: {self.db_name} doesn't exist"))
             return None
 
         db_in_table: Variable = symbol_table.find_database()
@@ -34,6 +36,8 @@ class UseStatement(Instruction):
         result.symbol_type = SymbolType().DB_NAME
         symbol_table.add_variable(result)
 
+    def semantic_error(self, description):
+        return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self, nodo_padre, graficador):
         pass

@@ -27,7 +27,19 @@
         
         <valor>Estrada</valor>
         
-        </registro>                    
+        </registro>
+        <registro>
+
+        <campo>nombre_alumno</campo>
+
+        <campo>apellido_alumno</campo>
+
+
+        <valor>Levi</valor>
+
+        <valor>Hernandez</valor>
+
+        </registro>
     
     </registros>
     
