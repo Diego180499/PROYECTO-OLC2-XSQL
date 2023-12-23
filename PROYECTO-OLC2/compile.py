@@ -44,19 +44,11 @@ def parsear():
     '''
 
     inst = parse("""
-        SELECT tbcliente.codigocliente,CONCATENA(tbcliente.primer_nombre,tbcliente.primer_apellido),
-        tbidentificacion.identificacion,tbidentificaciontipo.identificaciontipo
-        FROM tbcliente,tbidentificacion ,tbidentificaciontipo 
-        where tbcliente.codigocliente == tbidentificacion.codigocliente 
-        && tbcliente.identificaciontipo == tbidentificacion.identificaciontipo;
+        use school;
         
-        SELECT tbcredito.credito,tbcredito.fechaultimocorte,tbcredito.nocuenta,fechaultimocorte,tbproducto.producto,
-        idmoneda,SaldoActual,SaldoMora,ValorCuota,DiasMora,alturamora,limite,idcalificacion
-        FROM tbcredito,tbcreditoobligacion,tbcreditoSaldo,tbcliente,tbproducto 
-        where tbcredito.credito == tbcreditoobligacion.credito 
-        && tbcreditoobligacion.Credito == tbcreditoSaldo.credito 
-        && tbcliente.codigocliente == tbcreditoobligacion.codigocliente
-        && tbproducto.idproducto == tbcredito.idproducto;
+        alter table professor drop column age_updated;
+        alter table professor add column age int;
+        alter table professor add column hobby nvarchar(100);
     """)
     print('Errores sintacticos:')
     if len(errores_sintacticos) > 0:

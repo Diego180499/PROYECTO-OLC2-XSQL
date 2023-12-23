@@ -76,10 +76,4 @@ class RecordRepository:
                     registro.valores[indice] = valores[indice_campo_a_actualizar]
                 indice_campo_a_actualizar += 1
             indice += 1
-
-
-
         return True
-
-
-

@@ -212,6 +212,9 @@ from src.models.CasStatement import CasStatement
 from src.models.OrdenEjecucion import OrdenEjecucion
 from src.models.CreateDBStatement import CreateDBStatement
 from src.models.UseStatement import UseStatement
+from src.models.CreateTableStatement import CreateTableStatement
+from src.models.TableProperty import TableProperty
+from src.models.AlterTableStatement import AlterTableStatement
 
 sys.setrecursionlimit(10000000)
 
@@ -307,38 +310,49 @@ def p_assignments_2(t):
 
 def p_create_table_statement(t):
     'create_table_statement : CREATE TABLE NAME L_PAREN properties R_PAREN'
+    t[0] = CreateTableStatement(t.lineno(1), find_column(input, t.slice[1]), t[3], t[5])
 
 
 def p_properties(t):
     'properties : properties COMMA property'
+    t[0] = t[1]
+    t[0].append(t[3])
 
 
 def p_properties_2(t):
     'properties : property'
+    t[0] = []
+    t[0].append(t[1])
 
 
 def p_property(t):
     'property   : NAME type null_prod PRIMARY KEY'
+    t[0] = TableProperty(t.lineno(1), find_column(input, t.slice[1]), t[1], t[2], t[3], True, "-", "-")
 
 
 def p_property_2(t):
     'property   : NAME type null_prod'
+    t[0] = TableProperty(t.lineno(1), find_column(input, t.slice[1]), t[1], t[2], t[3], False, "-", "-")
 
 
 def p_property_3(t):
     'property   : NAME type null_prod REFERENCE NAME L_PAREN NAME R_PAREN'
+    t[0] = TableProperty(t.lineno(1), find_column(input, t.slice[1]), t[1], t[2], t[3], False, t[5], t[7])
 
 
 def p_null_prod(t):
     'null_prod  : NOT NULL'
+    t[0] = False
 
 
 def p_null_prod_2(t):
     'null_prod  : NULL'
+    t[0] = True
 
 
 def p_null_prod_3(t):
     'null_prod  : '
+    t[0] = False
 
 
 #### SELECT ####
@@ -453,18 +467,12 @@ def p_parameters_4(t):
 #### ALTER TABLE, FUNCTION AND PROCEDURE ####
 def p_alter_table_statement(t):
     'alter_table_statement  : ALTER TABLE NAME ADD COLUMN NAME type'
+    t[0] = AlterTableStatement(t.lineno(1), find_column(input, t.slice[1]), t[3], t[6], t[7], 'add')
 
 
 def p_alter_table_statement_2(t):
     'alter_table_statement  : ALTER TABLE NAME DROP COLUMN NAME'
-
-
-# def p_alter_function_statement(t):
-#     'alter_function_statement   : ALTER FUNCTION NAME AS BEGIN statements END SEMICOLON'
-#
-#
-# def p_alter_procedure_statement(t):
-# 'alter_procedure_statement  : ALTER PROCEDURE '
+    t[0] = AlterTableStatement(t.lineno(1), find_column(input, t.slice[1]), t[3], t[6], None, 'drop')
 
 
 #### IF STATEMENT ####

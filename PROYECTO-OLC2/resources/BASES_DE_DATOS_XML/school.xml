@@ -1,0 +1,47 @@
+
+        <base>
+            <nombre>school</nombre>
+            
+        <tabla>
+            <nombre>professor</nombre>
+            
+        <campo>
+            <nombre>name</nombre>
+            <tipo_dato>nvarchar</tipo_dato>
+            <llave_primaria>1</llave_primaria>
+            <nulo>0</nulo>
+            <tabla_referencia>-</tabla_referencia>
+            <campo_referencia>-</campo_referencia>
+        </campo>
+        
+        <campo>
+            <nombre>last_name</nombre>
+            <tipo_dato>nvarchar</tipo_dato>
+            <llave_primaria>0</llave_primaria>
+            <nulo>0</nulo>
+            <tabla_referencia>-</tabla_referencia>
+            <campo_referencia>-</campo_referencia>
+        </campo>
+        
+        <campo>
+            <nombre>age</nombre>
+            <tipo_dato>int</tipo_dato>
+            <llave_primaria>0</llave_primaria>
+            <nulo>0</nulo>
+            <tabla_referencia>-</tabla_referencia>
+            <campo_referencia>-</campo_referencia>
+        </campo>
+        
+        <campo>
+            <nombre>hobby</nombre>
+            <tipo_dato>nvarchar</tipo_dato>
+            <llave_primaria>0</llave_primaria>
+            <nulo>0</nulo>
+            <tabla_referencia>-</tabla_referencia>
+            <campo_referencia>-</campo_referencia>
+        </campo>
+        
+        </tabla>
+        
+        </base>        
+    

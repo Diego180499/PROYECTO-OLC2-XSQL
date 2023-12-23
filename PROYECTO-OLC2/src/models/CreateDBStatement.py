@@ -11,9 +11,15 @@ class CreateDBStatement(Instruction):
         self.db_name = db_name
 
     def execute(self, symbol_table: SymbolTable, errors):
-        response = DataBaseRepository().crear_bd(self.db_name)
-        if response[0] == "Mensaje de Error" :
-            errors.append(self.semantic_error(response[1]))
+
+        db_exists = DataBaseRepository().existe_bd(self.db_name)
+
+        if db_exists:
+            errors.append(self.semantic_error(f"The database: {self.db_name} already exists."))
+            return None
+
+        DataBaseRepository().crear_bd(self.db_name)
+
     def semantic_error(self, description):
         return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 

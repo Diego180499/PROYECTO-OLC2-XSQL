@@ -1,10 +1,7 @@
-
-        <base>
-            <nombre>banco</nombre>
-            
-        <tabla>
-            <nombre>cliente</nombre>
-            
+<base>
+    <nombre>banco</nombre>
+    <tabla>
+        <nombre>cliente</nombre>
         <campo>
             <nombre>id_ciente</nombre>
             <tipo_dato>id_ciente</tipo_dato>
@@ -13,7 +10,6 @@
             <tabla_referencia>id_ciente</tabla_referencia>
             <campo_referencia>id_ciente</campo_referencia>
         </campo>
-        
         <campo>
             <nombre>nombre_cliente</nombre>
             <tipo_dato>nombre_cliente</tipo_dato>
@@ -22,7 +18,6 @@
             <tabla_referencia>nombre_cliente</tabla_referencia>
             <campo_referencia>nombre_cliente</campo_referencia>
         </campo>
-        
         <campo>
             <nombre>apellido</nombre>
             <tipo_dato>nvarchar</tipo_dato>
@@ -31,8 +26,7 @@
             <tabla_referencia></tabla_referencia>
             <campo_referencia></campo_referencia>
         </campo>
-        
-        </tabla>
-        
-        </base>        
+    </tabla>
+
+</base>
     

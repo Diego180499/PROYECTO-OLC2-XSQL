@@ -5,3 +5,4 @@ class ScopeType:
     FUN = 4
     PROC = 5
     SELECT = 6
+    CREATE = 7
