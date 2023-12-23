@@ -34,6 +34,14 @@ class RecordRepository:
 
         return ["Mensaje de Error",f'La tabla "{nombre_tabla}" no se encuentra dentro de la base de datos "{nombre_bd}"']
 
+    def vaciar_registros_de_tabla(self, nombre_bd, nombre_tabla):
+        if self.tabla_repo.existe_tabla_en_bd(nombre_bd, nombre_tabla):
+            registros_bd: [] = obtener_registros_tabla_2(nombre_bd, nombre_tabla)
+            eliminar_registro(nombre_bd, nombre_tabla, registros_bd)
+            return ["Mensaje", f'Se han eliminado los registros de la tabla "{nombre_tabla}"']
+        return ["Mensaje de Error",f'La tabla"{nombre_tabla}" no pertenece a la base de datos "{nombre_bd}"']
+
+
     def campos_existen_en_tabla(self, nombre_bd, nombre_tabla, campos : []):
         campos_tabla = obtener_campos_tabla(nombre_bd, nombre_tabla)
         for campo in campos:
@@ -77,3 +85,7 @@ class RecordRepository:
                 indice_campo_a_actualizar += 1
             indice += 1
         return True
+
+
+recor_repo : RecordRepository = RecordRepository()
+recor_repo.vaciar_registros_de_tabla('escuela','alumno')

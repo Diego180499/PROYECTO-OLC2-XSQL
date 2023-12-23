@@ -1,5 +1,6 @@
 from .Instruction import Instruction
 from .symbolTable.SymbolTable import SymbolTable
+from ..error.xsql_error import xsql_error
 from ..repository.table.table_repository import TableRepository
 from .Variable import Variable
 
@@ -15,13 +16,18 @@ class TruncateTableStatement(Instruction):
 
         if db is None:
             print("There's no database selected")
+            errors.append(self.semantic_error("There's no database selected"))
             return None
 
         exists = TableRepository().existe_tabla_en_bd(db.value, self.table_name)
 
         if not exists:
             print(f"The table: {self.table_name} doesn't exist in the database: {db.value}.")
+            errors.append(self.semantic_error(f"The table: {self.table_name} doesn't exist in the database: {db.value}."))
             return None
+
+    def semantic_error(self, description):
+        return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self, nodo_padre, graficador):
         pass

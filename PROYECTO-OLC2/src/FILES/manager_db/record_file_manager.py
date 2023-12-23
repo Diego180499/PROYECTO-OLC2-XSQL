@@ -122,6 +122,3 @@ def eliminar_registro_individual(registros_actuales : Registro = [], registro_a_
 
 
 ### pruebas
-matriz = obtener_registros_de_varias_tablas('escuela',['alumno','usuario'])
-for fila in matriz :
-    print(fila)

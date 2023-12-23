@@ -5,6 +5,7 @@ from .symbolTable.SymbolTable import SymbolTable
 from .SymbolType import SymbolType
 from ..FILES.Campo import Campo
 from ..FILES.manager_db.db_file_manager import get_table_field_by_name
+from ..error.xsql_error import xsql_error
 
 
 class TableProperty(Instruction):
@@ -24,26 +25,31 @@ class TableProperty(Instruction):
 
         if db is None:
             print("There's no database selected")
+            errors.append(self.semantic_error("There's no database selected"))
             return None
 
         property_in_table: Variable = symbol_table.find_column_by_id(self.property_name)
 
         if property_in_table is not None:
             print(f"The field: {self.property_name} has already been declared")
+            errors.append(self.semantic_error(f"The field: {self.property_name} has already been declared"))
             return None
 
         if self.is_null and self.is_primary_key:
             print("A primary key couldn't be null")
+            errors.append(self.semantic_error("A primary key couldn't be null"))
 
         if isinstance(self.variable_type.length, Instruction):
             length_result: Variable = self.variable_type.length.execute(symbol_table, errors)
 
             if length_result is None:
                 print("The length couldn't return anything")
+                errors.append(self.semantic_error("The length couldn't return anything"))
                 return None
 
             if length_result.variable_type.type != 'int':
                 print('Int value was expected')
+                errors.append(self.semantic_error('Int value was expected'))
                 return None
 
         if self.parent != '-' and self.parent_field != '-':
@@ -51,11 +57,14 @@ class TableProperty(Instruction):
 
             if foreign_field is None:
                 print(f"The field: {self.parent_field} in {self.parent} doesn't exist")
+                errors.append(self.semantic_error(f"The field: {self.parent_field} in {self.parent} doesn't exist"))
                 return None
 
             if foreign_field.tipoDato != self.variable_type.type:
                 print(f"The field: {self.parent_field} has {foreign_field.tipoDato} as data type. You declared: "
                       f"{self.property_name} as {self.variable_type.type}")
+                errors.append(self.semantic_error(f"The field: {self.parent_field} has {foreign_field.tipoDato} as data type. You declared: "
+                      f"{self.property_name} as {self.variable_type.type}"))
                 return None
 
         result = Variable()
@@ -68,7 +77,8 @@ class TableProperty(Instruction):
         return result
 
 
-
+    def semantic_error(self, description):
+        return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self, nodo_padre, graficador):
         pass

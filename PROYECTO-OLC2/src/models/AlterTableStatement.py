@@ -3,6 +3,7 @@ from .symbolTable.SymbolTable import SymbolTable
 from .VariableType import VariableType
 from .Variable import Variable
 from ..FILES.manager_db.db_file_manager import get_table_field_by_name, agregar_campo_tabla, eliminar_campo
+from ..error.xsql_error import xsql_error
 from ..repository.table.table_repository import TableRepository
 from ..FILES.Campo import Campo
 
@@ -21,12 +22,14 @@ class AlterTableStatement(Instruction):
 
         if db is None:
             print("There's no database selected")
+            errors.append(self.semantic_error("There's no database selected"))
             return None
 
         table_exists = TableRepository().existe_tabla_en_bd(db.value, self.table_name)
 
         if not table_exists:
             print(f"The table: {self.table_name} doesn't exist.")
+            errors.append(self.semantic_error(f"The table: {self.table_name} doesn't exist."))
             return None
 
         if self.alter_type == 'add':
@@ -39,6 +42,7 @@ class AlterTableStatement(Instruction):
 
         if table_field is not None:
             print(f"The field: {self.property_name} already exists.")
+            errors.append(self.semantic_error(f"The field: {self.property_name} already exists."))
             return None
 
         if isinstance(self.variable_type.length, Instruction):
@@ -46,10 +50,12 @@ class AlterTableStatement(Instruction):
 
             if length_result is None:
                 print("A value was expected")
+                errors.append(self.semantic_error("A value was expected"))
                 return None
 
             if length_result.variable_type.type != 'int':
                 print("Int value was expected")
+                errors.append(self.semantic_error("Int value was expected"))
                 return None
 
         field: Campo = Campo(self.property_name, self.variable_type.type, 0, 0, "-", "-")
@@ -60,9 +66,14 @@ class AlterTableStatement(Instruction):
 
         if table_field is None:
             print(f"The field: {self.property_name} doesn't exist.")
+            errors.append(self.semantic_error("Int value was expected"))
             return None
 
         eliminar_campo(db.value, self.table_name, self.property_name)
+
+
+    def semantic_error(self, description):
+        return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self, nodo_padre, graficador):
         pass

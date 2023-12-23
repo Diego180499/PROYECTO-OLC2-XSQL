@@ -24,6 +24,9 @@ class DataBaseRepository:
         return ["Mensaje de Error",f'No se ha encontrado la base de datos "{nombre_bd}" ']
 
 
+    def guardar_procedimiento(self,nombre_bd, nombre_procedimiento):
+        procedimiento : Procedimiento = procedimieto(nombre_procedimiento)
+        crear_procedimiento(nombre_bd,procedimiento)
 
 
     def existe_bd(self, nombre_bd):
