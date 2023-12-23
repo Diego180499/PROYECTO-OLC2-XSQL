@@ -113,3 +113,10 @@ def obtener_campos_tabla(nombre_bd, nombre_tabla):
     for campo in tabla.campos :
         campos_tabla.append(campo.nombre)
     return campos_tabla
+
+### acciones con procedimientos
+def crear_procedimiento(nombre_bd, procedimiento : Procedimiento): ### agregar al back
+    base_datos = obtener_base_de_datos(nombre_bd)
+    base_datos.procedimientos.append(procedimiento)
+    guardar_base_de_datos_xml(nombre_bd,base_datos)
+

@@ -24,6 +24,9 @@ class DataBaseRepository:
         return [["Mensaje de Error"],[f'No se ha encontrado la base de datos "{nombre_bd}" ']]
 
 
+    def guardar_procedimiento(self, nombre_bd, procedimiento : Procedimiento):
+        crear_procedimiento(nombre_bd, procedimiento)
+
 
 
     def existe_bd(self, nombre_bd):
@@ -33,3 +36,4 @@ class DataBaseRepository:
             if nombre == f'{nombre_bd}.xml' :
                 return True
         return False
+

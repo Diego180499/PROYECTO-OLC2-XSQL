@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 from FILES.BaseDatos import *
+from FILES.Procedimiento import Procedimiento
 from FILES.Tabla import *
 from FILES.Campo import *
 from FILES.ManejadorDB import *
@@ -27,13 +28,19 @@ def fillCampos(campos):
         camposRet.append(newCamp)
     return camposRet
 
+def fillProcedimientos(procedimientos):  ### agregar al back
+    procedimientos_list = []
 
+    for procedimiento in procedimientos :
+        nombre_procedimiento = procedimiento.find('nombre').text
+        procedimiento_objeto : Procedimiento = Procedimiento(nombre_procedimiento)
+        procedimientos_list.append(procedimiento_objeto)
+    return procedimientos_list
 
 def xml_to_diccionario(url):
     manejadorDB = ManejadorDB()
     try:
         # Creamos el Manejador de Bases de Datos
-
         # en open, ponemos el path del archivo.
         xml_file = open(url)
         # Evaluamos si se lee el archivo
@@ -41,8 +48,12 @@ def xml_to_diccionario(url):
             xml_data = ET.fromstring(xml_file.read())
             # Crea objeto Base de Datos
             nombreDB = xml_data.find('nombre').text
+            ## se buscan sus tablas
             tablas = xml_data.findall('tabla')
+            ## se buscan sus procedimientos
+            procedimientos = xml_data.findall('procedimiento')  ### agregar al back
             baseDatos = BaseDatos(nombreDB, fillTablas(tablas))
+            baseDatos.set_procedimientos(fillProcedimientos(procedimientos)) ### agregar en el back
             # Ingresa nueva base de datos al Manejador DB
             manejadorDB.addBaseDatos(baseDatos)
             diccionario = manejadorDB.getDiccionario()
@@ -70,6 +81,8 @@ def xml_to_base_de_datos(url):
             nombreDB = xml_data.find('nombre').text
             tablas = xml_data.findall('tabla')
             baseDatos = BaseDatos(nombreDB, fillTablas(tablas))
+            procedimientos = xml_data.findall('procedimiento')  ### agregar al back
+            baseDatos.set_procedimientos(fillProcedimientos(procedimientos))  ### agregar en el back
         else:
             print(False)
     except Exception as err:
@@ -77,3 +90,7 @@ def xml_to_base_de_datos(url):
     finally:
         xml_file.close()
     return baseDatos
+
+
+#result = xml_to_diccionario(f'U:/Universidad/Ciclo 2023\EDV-DICIEMBRE/LAB - OLC2/REPO-PROYECTO-OLC2-XSQL/Compi2Python/resources/BASES_DE_DATOS_XML/colegio.xml')
+#print(result)

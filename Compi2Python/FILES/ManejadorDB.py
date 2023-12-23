@@ -31,13 +31,26 @@ class ManejadorDB:
 
        return retTab
 
+    def diccionarioProcedimientos(self, procedimientos):
+        retProcedimiento = []
+
+        for procedimiento in procedimientos :
+            labelProcedure = {
+                "procedimiento":{
+                    "nombre":procedimiento.nombre
+                }
+            }
+            retProcedimiento.append(labelProcedure)
+        return retProcedimiento
+
     def diccionarioBasesDatos(self):
        retDB = []
        for baseD in self.basesDatos:
            temDB = {
                "base_de_datos":{
                    "nombre": baseD.nombre,
-                   "tablas": self.diccionarioTablas(baseD.tablas)
+                   "tablas": self.diccionarioTablas(baseD.tablas),
+                   "procedimientos":self.diccionarioProcedimientos(baseD.procedimientos)
                }
            }
            retDB.append(temDB)

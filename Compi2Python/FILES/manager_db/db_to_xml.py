@@ -1,15 +1,18 @@
 from FILES.BaseDatos import BaseDatos
 from FILES.Campo import Campo
+from FILES.Procedimiento import Procedimiento
 from FILES.Tabla import Tabla
 
 
 ######## ESCRITURA DE UN ARCHIVO XML CON LA ESTRUCTURA DE UNA BASE DE DATOS   ###########
 def data_base_to_xml(base_datos : BaseDatos):
     contenidoTablas = tablas_to_xml(base_datos.tablas)
+    contenido_procedimientos = procedimientos_to_xml(base_datos.procedimientos)
     contenido = f'''
         <base>
             <nombre>{base_datos.nombre}</nombre>
             {contenidoTablas}
+            {contenido_procedimientos}
         </base>        
     '''
     return contenido
@@ -44,6 +47,16 @@ def tablas_to_xml(tablas : Tabla = []):
         </tabla>
         '''
     return contenidoTablas
+
+def procedimientos_to_xml(procedimientos : Procedimiento = []):   ### agregar al back
+    contenido_procedimientos = f''
+    for procedimiento in procedimientos :
+        contenido_procedimientos += f'''
+            <procedimiento>
+                <nombre>{procedimiento.nombre}</nombre>
+            </procedimiento>
+        '''
+    return contenido_procedimientos
 
 ######## FIN ESCRITURA ###########
 
