@@ -85,7 +85,3 @@ class RecordRepository:
                 indice_campo_a_actualizar += 1
             indice += 1
         return True
-
-
-recor_repo : RecordRepository = RecordRepository()
-recor_repo.vaciar_registros_de_tabla('escuela','alumno')
