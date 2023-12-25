@@ -13,7 +13,7 @@ class RecordRepository:
     def insertar_registro(self, nombre_bd, nombre_tabla, campos : [] , valores : []):
         registro : Registro = Registro(campos,valores)
 
-        if self.campos_existen_en_tabla(nombre_bd, nombre_tabla, campos) :
+        if self.campos_existen_en_tabla(nombre_bd, nombre_tabla, campos):
             insertar_registro(nombre_bd,nombre_tabla,registro) ## este metodo es de db_file_manager
             return ["Mensaje",f'Se ha creado un nuevo registro para la tabla "{nombre_tabla}"']
 

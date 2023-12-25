@@ -16,7 +16,7 @@ class TableRepository:
         crear_tabla(nombre_bd,tabla)
         return ["Mensaje",f'Se ha creado la tabla "{nombre_tabla}", en la base de datos "{nombre_bd}"']
 
-    def eliminar_tabla(self, nombre_tabla, nombre_bd):
+    def eliminar_tabla(self, nombre_bd, nombre_tabla):
 
         if self.existe_tabla_en_bd(nombre_bd,nombre_tabla):
             eliminar_tabla(nombre_bd,nombre_tabla)

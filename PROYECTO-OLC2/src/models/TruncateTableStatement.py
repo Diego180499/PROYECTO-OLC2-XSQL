@@ -2,6 +2,7 @@ from .Instruction import Instruction
 from .symbolTable.SymbolTable import SymbolTable
 from ..error.xsql_error import xsql_error
 from ..repository.table.table_repository import TableRepository
+from ..repository.records.record_repository import RecordRepository
 from .Variable import Variable
 
 
@@ -25,6 +26,9 @@ class TruncateTableStatement(Instruction):
             print(f"The table: {self.table_name} doesn't exist in the database: {db.value}.")
             errors.append(self.semantic_error(f"The table: {self.table_name} doesn't exist in the database: {db.value}."))
             return None
+
+        message = RecordRepository().vaciar_registros_de_tabla(db.value, self.table_name)
+        print(message)
 
     def semantic_error(self, description):
         return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')

@@ -46,9 +46,7 @@ def parsear():
     inst = parse("""
         use school;
         
-        alter table professor drop column age_updated;
-        alter table professor add column age int;
-        alter table professor add column hobby nvarchar(100);
+        insert into professor (name, last_name, age, hobby) values ('Luis', 'Munguía', 20); 
     """)
     print('Errores sintacticos:')
     if len(errores_sintacticos) > 0:

@@ -215,6 +215,9 @@ from src.models.UseStatement import UseStatement
 from src.models.CreateTableStatement import CreateTableStatement
 from src.models.TableProperty import TableProperty
 from src.models.AlterTableStatement import AlterTableStatement
+from src.models.DropTableStatement import DropTableStatement
+from src.models.TruncateTableStatement import TruncateTableStatement
+from src.models.InsertStatement import InsertStatement
 
 sys.setrecursionlimit(10000000)
 
@@ -381,8 +384,18 @@ def p_lista_names_select_2(t):
 #### INSERT ####
 
 def p_insert_statement(t):
-    'insert_statement   : INSERT INTO NAME L_PAREN columns R_PAREN VALUES L_PAREN vals R_PAREN'
+    'insert_statement   : INSERT INTO NAME L_PAREN column_names R_PAREN VALUES L_PAREN vals R_PAREN'
+    t[0] = InsertStatement(t.lineno(1), find_column(input, t.slice[1]), t[3], t[5], t[9])
 
+def p_column_names(t):
+    'column_names   : column_names COMMA NAME'
+    t[0] = t[1]
+    t[0].append(t[3])
+
+def p_column_names_2(t):
+    'column_names   : NAME'
+    t[0] = []
+    t[0].append(t[1])
 
 #### COLUMNS AND VALS PRODS ####
 
@@ -522,6 +535,7 @@ def p_args_2(t):
 #### DROP TABLE ####
 def p_drop_table_statement(t):
     'drop_table_statement   : DROP TABLE NAME'
+    t[0] = DropTableStatement(t.lineno(1), find_column(input, t.slice[1]), t[3])
 
 
 #### UPDATE STATEMENT ####
@@ -547,6 +561,7 @@ def p_while_statement(t):
 ### TRUNCATE TABLE STATEMENT ###
 def p_truncate_statement(t):
     'truncate_statement : TRUNCATE TABLE NAME'
+    t[0] = TruncateTableStatement(t.lineno(1), find_column(input, t.slice[1]), t[3])
 
 
 ### DELETE STATEMENT ###

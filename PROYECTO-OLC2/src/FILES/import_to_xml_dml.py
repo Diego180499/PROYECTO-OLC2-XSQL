@@ -19,6 +19,7 @@ def fillRegistros(registros):
 ###### CONVERTIR A MATRIZ  ######
 def xml_to_matriz(url):
     #Crea Objetos Campos
+
     try:
         #en open, ponemos el path del archivo.
         xml_file = open(url)
