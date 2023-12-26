@@ -218,6 +218,7 @@ from src.models.AlterTableStatement import AlterTableStatement
 from src.models.DropTableStatement import DropTableStatement
 from src.models.TruncateTableStatement import TruncateTableStatement
 from src.models.InsertStatement import InsertStatement
+from src.models.EOF import EOF
 
 sys.setrecursionlimit(10000000)
 
@@ -240,7 +241,8 @@ def p_statements(t):
 def p_statements_2(t):
     'statements : statement'
     # t[0] = []
-    t[0] = OrdenEjecucion(0, 0, t[1], None)
+    eof = EOF(0, 0)
+    t[0] = OrdenEjecucion(0, 0, t[1], eof)
 
 
 def p_statement(t):

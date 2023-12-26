@@ -72,7 +72,15 @@ class FunctionStatement(Instruction):
         return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self,nodo_padre, graficador):
-        pass
+        current_node = graficador.agregarNode(self.id)
+        graficador.agregarRelacion(nodo_padre, current_node)
+        code = graficador.agregarNode('code')
+        args = graficador.agregarNode('args')
+        graficador.agregarRelacion(current_node, args)
+        graficador.agregarRelacion(current_node, code)
+        for arg in self.parameters:
+            arg.dot(args, graficador)
+        self.block.dot(code, graficador)
         
     def c3d(self,scope):
         pass
