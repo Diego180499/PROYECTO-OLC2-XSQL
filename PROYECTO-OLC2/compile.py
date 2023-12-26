@@ -43,25 +43,26 @@ def parsear():
     use colegio;
     '''
 
-    inst = parse("""
-        use school;
-        
-        insert into professor (name, last_name, age, hobby) values ('Luis', 'Munguía', 20); 
-    """)
+    # inst = parse("""
+    #    use school;
+    #
+    #    insert into professor (name, last_name, age, hobby) values ('Luis', 'Munguía', 20);
+    # """)
+    inst = parse(contenido_1)
     print('Errores sintacticos:')
     if len(errores_sintacticos) > 0:
         print(errors_to_matrix(errores_sintacticos))
         return errors_to_matrix(errores_sintacticos)
     print('Resultado del analisis sintactico:')
     symbol_table = SymbolTable(ScopeType().GLOBAL)
-    #Impricion del ast en formato string
-    #print(inst)
-    #Generacion del dot para el ast
+    # Imprecion del ast en formato string
+    # print(inst)
+    # Generacion del dot para el ast
     graficador = Graficador()
     inst.dot(None, graficador)
     graficador.generarDOT()
-    #Ejecucion del codigo
-    inst.execute(symbol_table, errores_sintacticos)
+    # Ejecucion del codigo
+    # inst.execute(symbol_table, errores_sintacticos)
 
     for symbol in symbol_table.symbols:
         print(symbol.id, symbol.variable_type.type, symbol.symbol_type, symbol.value)
