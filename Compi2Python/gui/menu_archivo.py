@@ -8,14 +8,14 @@ from src.utils.archivo import Archivo
 class MenuArchivo(Menu):
 
     def __init__(self, ventana_principal):
-        super().__init__(ventana_principal.ventana)
-        self.add_command(label='Abrir', command=self.evento_menu_abrir)
-        self.add_command(label='Guardar', command=self.evento_menu_guardar)
-        self.add_command(label='Guardar Como', command=self.evento_menu_guardar_como)
-        self.add_command(label='Cerrar', command=self.evento_menu_cerrar)
+        super().__init__(ventana_principal.menu)
+        iconos=ventana_principal.iconos
+        self.add_command(label='Abrir',image=iconos['abrir'],compound="left", command=self.evento_menu_abrir)
+        self.add_command(label='Guardar',image=iconos['guardar'],compound="left", command=self.evento_menu_guardar)
+        self.add_command(label='Guardar Como',image=iconos['guardar-como'],compound="left", command=self.evento_menu_guardar_como)
+        self.add_command(label='Cerrar',image=iconos['cerrar'],compound="left", command=self.evento_menu_cerrar)
         self.add_command(label='Salir', command=self.evento_menu_salir)
-        self.frame_pestanas=ventana_principal.frame_pestanas
-
+        self.frame_pestanas = ventana_principal.frame_pestanas
 
     # eventos barra de menú
     def evento_menu_abrir(self):
@@ -63,7 +63,7 @@ class MenuArchivo(Menu):
     def evento_menu_salir(self):
         while self.frame_pestanas.hay_pestanas():
             self.evento_menu_cerrar()
-        self.master.destroy()
+        self.master.master.destroy()
 
     # añadir menus
     def agregar_menu_archivo(self, menu_bar):
@@ -88,8 +88,8 @@ class MenuArchivo(Menu):
             return None
         return ubicacion
 
-    def mostrar_dialogo_guardar_cambios(self,ubicacion=None):
+    def mostrar_dialogo_guardar_cambios(self, ubicacion=None):
         mensaje = "¿Desde guardar cambios?"
         if ubicacion is not None:
-            mensaje += "\nArchivo: "+ubicacion
-        return MessageBox.askquestion("Guardar Cambios",mensaje,icon="question")
+            mensaje += "\nArchivo: " + ubicacion
+        return MessageBox.askquestion("Guardar Cambios", mensaje, icon="question")

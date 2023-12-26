@@ -3,13 +3,13 @@ import os
 import pathlib
 from tkinter import *
 
+
 from gui.conector import Conector
 from gui.frame_arbol import FrameArbol
 from gui.frame_pestanas import FramePestanas
 from gui.frame_salida import FrameSalida
 from gui.menu_archivo import MenuArchivo
 from gui.menu_herramientas import MenuHerramientas
-from shutil import rmtree
 
 
 class VentanaPrincipal:
@@ -26,22 +26,28 @@ class VentanaPrincipal:
         self.frame_pestanas = FramePestanas(self.ventana, width=750, height=270, row=0, column=1)
         self.frame_salida = FrameSalida(self.ventana, width=750, height=270, row=1, column=1)
 
+        self.iconos=dict()
+        current_dir = pathlib.Path(__file__).parent.resolve()  # current directory
+        self.iconos['abrir']= PhotoImage(file=os.path.join(current_dir, 'resources','abrir-carpeta.png'))
+        self.iconos['guardar']= PhotoImage(file=os.path.join(current_dir, 'resources','guardar.png'))
+        self.iconos['guardar-como']= PhotoImage(file=os.path.join(current_dir, 'resources','guardar-como.png'))
+        self.iconos['cerrar']= PhotoImage(file=os.path.join(current_dir, 'resources','cerrar.png'))
+        self.iconos['nuevo-archivo'] = PhotoImage(file=os.path.join(current_dir, 'resources', 'nuevo-archivo.png'))
 
-        # añadimos los menus
-        self.menu_archivo = MenuArchivo(self)
-        self.menu_herramientas = MenuHerramientas(self,self.frame_arbol)
+
 
         # añadimos la barra de menú
-        self.ventana.config(menu=self.agregar_menu(self.ventana))
+        self.menu = Menu(self.ventana)
+        self.menu_archivo = MenuArchivo(self)
+        self.menu_herramientas = MenuHerramientas(self)
+
+        self.menu.add_cascade(label='Archivo', menu=self.menu_archivo)
+        self.menu.add_cascade(label='Herramientas', menu=self.menu_herramientas)
+
+        self.ventana.config(menu=self.menu)
 
         # añadirmos evento del cierre de ventana
         self.ventana.protocol("WM_DELETE_WINDOW", self.menu_archivo.evento_menu_salir)
-
-    def agregar_menu(self, window):
-        menu_bar = Menu(window)
-        menu_bar.add_cascade(label='Archivo', menu=self.menu_archivo)
-        menu_bar.add_cascade(label='Herramientas', menu=self.menu_herramientas)
-        return menu_bar
 
     def ejecutar(self):
         conector = Conector()
@@ -49,10 +55,9 @@ class VentanaPrincipal:
         self._listar_nombres_bd(conector)
         self.ventana.mainloop()
 
-
-    def _listar_nombres_bd(self,conector):
+    def _listar_nombres_bd(self, conector):
         url_proyecto = f'resources/BASES_DE_DATOS_XML'
-        nombres_bd = os.listdir(url_proyecto) #obtiene una lista con todos los archivos que contenga mi carpeta
+        nombres_bd = os.listdir(url_proyecto)  # obtiene una lista con todos los archivos que contenga mi carpeta
         for nombre_bd in nombres_bd:
             diccionario = conector.cargar_arbol(f'{url_proyecto}/{nombre_bd}')
             self.frame_arbol.generar_arbol(diccionario=diccionario)
