@@ -76,7 +76,6 @@ class TableProperty(Instruction):
         symbol_table.add_variable(result)
         return result
 
-
     def semantic_error(self, description):
         return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
