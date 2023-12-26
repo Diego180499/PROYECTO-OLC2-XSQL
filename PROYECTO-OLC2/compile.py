@@ -41,14 +41,35 @@ def parsear():
     set @int = exec retorna_valor 10;
     use banco;
     use colegio;
+    
     '''
 
-    # inst = parse("""
-    #    use school;
-    #
-    #    insert into professor (name, last_name, age, hobby) values ('Luis', 'Munguía', 20);
-    # """)
-    inst = parse(contenido_1)
+    inst = parse("""
+       create data base school;
+       
+       use school;
+       
+       create table student(
+            id int not null primary key,
+            first_name nvarchar(100) not null,
+            last_name nvarchar(100) null,
+            age int,
+            birthday date not null
+       );
+       
+       create table professor(
+            id int not null primary key,
+            first_name nchar(100) not null,
+            age int
+       );
+       
+       create table course(
+            id int not null primary key,
+            course_name nvarchar(100) not null,
+            id_professor int not null reference professor(id)
+       );
+    """)
+    # inst = parse(contenido_1)
     print('Errores sintacticos:')
     if len(errores_sintacticos) > 0:
         print(errors_to_matrix(errores_sintacticos))
@@ -62,7 +83,7 @@ def parsear():
     inst.dot(None, graficador)
     graficador.generarDOT()
     # Ejecucion del codigo
-    # inst.execute(symbol_table, errores_sintacticos)
+    inst.execute(symbol_table, errores_sintacticos)
 
     for symbol in symbol_table.symbols:
         print(symbol.id, symbol.variable_type.type, symbol.symbol_type, symbol.value)
