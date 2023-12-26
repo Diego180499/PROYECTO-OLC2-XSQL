@@ -45,37 +45,9 @@ def parsear():
     '''
 
     inst = parse("""
-       create data base school;
-       
        use school;
        
-       create table student(
-            id int not null primary key,
-            first_name nvarchar(100) not null,
-            last_name nvarchar(100) null,
-            age int,
-            birthday date not null
-       );
-       
-       create table professor(
-            id int not null primary key,
-            first_name nchar(100) not null,
-            age int
-       );
-       
-       create table course(
-            id int not null primary key,
-            course_name nvarchar(100) not null,
-            id_professor int not null reference professor(id)
-       );
-       
-       insert into student (id, first_name, last_name, birthday) values(3, 'Lucía', 'Gonzales', '12-10-2000');
-       insert into professor(id, first_name, age) values(1, 'Martin', 25);
-       insert into professor(id, first_name, age) values(2, 'María', 20);
-       
-       insert into course(id, course_name, id_professor) values(1, 'Chemistry', 1);
-       insert into course(id, course_name, id_professor) values(2, 'English', 3);
-       insert into course(id, course_name, id_professor) values(3, 'Math', 2);
+       select first_name, last_name, birthday from student where cas(age as int) < 10;
     """)
     # inst = parse(contenido_1)
     print('Errores sintacticos:')
