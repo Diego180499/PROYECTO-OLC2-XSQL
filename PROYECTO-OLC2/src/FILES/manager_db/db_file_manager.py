@@ -4,8 +4,8 @@ from src.FILES.import_to_xml_ddl import *
 from src.FILES.manager_db.db_to_xml import data_base_to_xml
 from src.utils.archivo import Archivo
 
-url_base_de_datos_xml = f'U:/Universidad/Ciclo 2023/EDV-DICIEMBRE/LAB - OLC2/REPO-PROYECTO-OLC2-XSQL/PROYECTO-OLC2/resources/BASES_DE_DATOS_XML'
-#url_base_de_datos_xml = f'/home/isaac/Escritorio/2023/compi2/back/PROYECTO-OLC2-XSQL/PROYECTO-OLC2/resources/BASES_DE_DATOS_XML'
+#url_base_de_datos_xml = f'U:/Universidad/Ciclo 2023/EDV-DICIEMBRE/LAB - OLC2/REPO-PROYECTO-OLC2-XSQL/PROYECTO-OLC2/resources/BASES_DE_DATOS_XML'
+url_base_de_datos_xml = f'/home/isaac/Escritorio/2023/compi2/back/PROYECTO-OLC2-XSQL/PROYECTO-OLC2/resources/BASES_DE_DATOS_XML'
 
 def eliminar_base_de_datos(nombre_base_de_datos):
     remove(f'{url_base_de_datos_xml}/{nombre_base_de_datos}.xml')
@@ -152,6 +152,6 @@ def existe_procedimiento(nombre_bd, nombre_procedimiento):
 #base_datos : BaseDatos = BaseDatos('prueba',[])
 #crear_base_de_datos_a_xml('prueba',base_datos)
 
-campo : Campo = Campo('campo','nvarchar','0','0','-','-')
-tabla : Tabla = Tabla('tabla_prueba',[campo])
-crear_tabla_a_xml('prueba',tabla)
+# campo : Campo = Campo('campo','nvarchar','0','0','-','-')
+# tabla : Tabla = Tabla('tabla_prueba',[campo])
+# crear_tabla_a_xml('prueba',tabla)

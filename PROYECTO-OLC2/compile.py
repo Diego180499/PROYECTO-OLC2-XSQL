@@ -68,6 +68,14 @@ def parsear():
             course_name nvarchar(100) not null,
             id_professor int not null reference professor(id)
        );
+       
+       insert into student (id, first_name, last_name, birthday) values(3, 'Lucía', 'Gonzales', '12-10-2000');
+       insert into professor(id, first_name, age) values(1, 'Martin', 25);
+       insert into professor(id, first_name, age) values(2, 'María', 20);
+       
+       insert into course(id, course_name, id_professor) values(1, 'Chemistry', 1);
+       insert into course(id, course_name, id_professor) values(2, 'English', 3);
+       insert into course(id, course_name, id_professor) values(3, 'Math', 2);
     """)
     # inst = parse(contenido_1)
     print('Errores sintacticos:')

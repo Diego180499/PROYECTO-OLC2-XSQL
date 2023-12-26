@@ -3,6 +3,7 @@ from .symbolTable.SymbolTable import SymbolTable
 from .Variable import Variable
 from ..repository.records.record_repository import RecordRepository
 from ..FILES.manager_db.db_file_manager import get_table_field_by_name, obtener_nombres_campos_tabla
+from ..FILES.manager_db.record_file_manager import existe_archivo_registros
 from ..FILES.Campo import Campo
 from ..FILES.Registro import Registro
 from .symbolTable.ScopeType import ScopeType
@@ -89,7 +90,10 @@ class InsertStatement(Instruction):
                 continue
 
             if int(field.llavePrim) == 1:
-                table_records: [Registro] = record_repository.obtener_registros_de_tabla(db.value, self.table_name)
+                table_records: [Registro] = []
+
+                if existe_archivo_registros(db.value, self.table_name):
+                    table_records: [Registro] = record_repository.obtener_registros_de_tabla(db.value, self.table_name)
 
                 already_exist = self.find_value(table_records, table_field, column_in_table.value)
 
@@ -99,7 +103,9 @@ class InsertStatement(Instruction):
                     return None
 
             if str(field.tablaRef) != "-":
-                table_records: [Registro] = record_repository.obtener_registros_de_tabla(db.value, field.tablaRef)
+                table_records: [Registro] = []
+                if existe_archivo_registros(db.value, field.tablaRef):
+                    table_records: [Registro] = record_repository.obtener_registros_de_tabla(db.value, field.tablaRef)
 
                 find = self.find_value(table_records, field.campoRef, column_in_table.value)
 

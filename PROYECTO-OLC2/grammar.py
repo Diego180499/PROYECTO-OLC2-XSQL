@@ -406,12 +406,6 @@ def p_columns(t):
 
 
 def p_columns_2(t):
-    'columns    : columns COMMA column POINT column'
-
-def p_columns_3(t):
-    'columns    : column POINT column'
-
-def p_columns_4(t):
     'columns    : column'
 
 def p_column(t):

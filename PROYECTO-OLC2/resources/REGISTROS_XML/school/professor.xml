@@ -1,0 +1,41 @@
+
+    <registros>
+        <base_datos>school</base_datos>        
+        <tabla>professor</tabla>
+        
+        <registro>
+            
+        <campo>id</campo>
+        
+        <campo>first_name</campo>
+        
+        <campo>age</campo>
+        
+            
+        <valor>1</valor>
+        
+        <valor>Martin</valor>
+        
+        <valor>25</valor>
+        
+        </registro>                    
+    
+        <registro>
+            
+        <campo>id</campo>
+        
+        <campo>first_name</campo>
+        
+        <campo>age</campo>
+        
+            
+        <valor>2</valor>
+        
+        <valor>María</valor>
+        
+        <valor>20</valor>
+        
+        </registro>                    
+    
+    </registros>
+    
