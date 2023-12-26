@@ -51,7 +51,14 @@ class WhileStatement(Instruction):
         return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self,nodo_padre, graficador):
-        pass
+        current_node = graficador.agregarNode("while")
+        graficador.agregarRelacion(nodo_padre, current_node)
+        condition_node = graficador.agregarNode("condition")
+        graficador.agregarRelacion(current_node, condition_node)
+        self.condition.dot(condition_node, graficador)
+        block_node = graficador.agregarNode("code")
+        graficador.agregarRelacion(current_node, block_node)
+        self.block.dot(block_node, graficador)
         
     def c3d(self,scope):
         pass
