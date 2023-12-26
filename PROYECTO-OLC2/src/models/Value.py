@@ -54,7 +54,8 @@ class Value(Instruction):
             return variable
 
     def dot(self,nodo_padre, graficador):
-        pass
+        current_node = graficador.agregarNode(self.value)
+        graficador.agregarRelacion(nodo_padre,current_node)
         
     def c3d(self,scope):
         pass

@@ -338,7 +338,15 @@ class ExecStatement(Instruction):
         return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self,nodo_padre, graficador):
-        pass
+        current_node = graficador.agregarNode('exec')
+        graficador.agregarRelacion(nodo_padre,current_node)
+        lable_exec = graficador.agregarNode(self.id)
+        args = graficador.agregarNode('args')
+        graficador.agregarRelacion(current_node,lable_exec)
+        graficador.agregarRelacion(current_node,args)
+        for arg in self.args:
+            arg.dot(args,graficador)
+
         
     def c3d(self,scope):
         pass

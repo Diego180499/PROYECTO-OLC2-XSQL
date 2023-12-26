@@ -164,7 +164,10 @@ class BinaryOperation(Instruction):
 
 
     def dot(self,nodo_padre, graficador):
-        pass
+        current_node = graficador.agregarNode(self.operator)
+        graficador.agregarRelacion(nodo_padre,current_node)
+        self.left_operation.dot(current_node,graficador)
+        self.right_operation.dot(current_node,graficador)
         
     def c3d(self,scope):
         pass

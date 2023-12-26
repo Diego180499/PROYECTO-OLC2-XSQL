@@ -93,8 +93,13 @@ class CasStatement(Instruction):
 
     def semantic_error(self, description):
         return xsql_error(description,'','Error Semantico',f'Linea {self.line} Columna {self.column}')
+    
     def dot(self,nodo_padre, graficador):
-        pass
+        current_node = graficador.agregarNode('cas')
+        graficador.agregarRelacion(nodo_padre, current_node)
+        self.value.dot(current_node, graficador)
+        node_type = graficador.agregarNode(self.type)
+        graficador.agregarRelacion(current_node, node_type)
 
     def c3d(self, scope):
         pass
