@@ -42,9 +42,9 @@ class Graficador():
         dot += self.obtenerDefNodos()
         dot += self.obtenerDefRelaciones()
         dot += '}'
-        print(dot)
-        #self.escribirDOT(dot)
+        #print(dot)
+        self.escribirDOT(dot)
     
     def escribirDOT(self, dot):
-        with open('graphviz/ast.dot', 'w') as file:
+        with open('ast.dot', 'w') as file:
             file.write(dot)

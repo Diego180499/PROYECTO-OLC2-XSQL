@@ -71,6 +71,13 @@ class SetStatement(Instruction):
     def dot(self,nodo_padre, graficador):
         current_node = graficador.agregarNode('set')
         graficador.agregarRelacion(nodo_padre, current_node)
-        
+        for assignment in self.assignments:
+            result: Variable = assignment
+            if result is not None:
+                node_var = graficador.agregarNode(result.id)
+                node_equal = graficador.agregarNode('=')
+                graficador.agregarRelacion(current_node, node_var)
+                graficador.agregarRelacion(node_var,node_equal)
+                result.value.dot(node_var,graficador)
     def c3d(self,scope):
         pass

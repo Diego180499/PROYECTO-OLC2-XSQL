@@ -103,7 +103,10 @@ class CallFunctionStatement(Instruction):
         return xsql_error(description,'','Error Semantico',f'Linea {self.line} Columna {self.column}')
 
     def dot(self,nodo_padre, graficador):
-        pass
+        concurrent_node = graficador.agregarNode('call_function')
+        graficador.agregarRelacion(nodo_padre,concurrent_node)
+        function_node = graficador.agregarNode(self.function_name)
+        graficador.agregarRelacion(concurrent_node,function_node)
 
     def c3d(self, scope):
         pass

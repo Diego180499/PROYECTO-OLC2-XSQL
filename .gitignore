@@ -30,3 +30,6 @@ dist/
 __pycache__/
 build/
 dist/
+
+# Carpeta de documentación
+.idea
