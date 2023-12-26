@@ -76,7 +76,16 @@ class AlterTableStatement(Instruction):
         return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self, nodo_padre, graficador):
-        pass
+        current_node = graficador.agregarNode('alter_table')
+        graficador.agregarRelacion(nodo_padre, current_node)
+        table_node = graficador.agregarNode(self.table_name)
+        graficador.agregarRelacion(current_node, table_node)
+        property_node = graficador.agregarNode(self.property_name)
+        graficador.agregarRelacion(current_node, property_node)
+        type_node = graficador.agregarNode(self.variable_type.type)
+        graficador.agregarRelacion(current_node, type_node)
+        alter_node = graficador.agregarNode(self.alter_type)
+        graficador.agregarRelacion(current_node, alter_node)
 
     def c3d(self, scope):
         pass

@@ -74,10 +74,10 @@ class SetStatement(Instruction):
         for assignment in self.assignments:
             result: Variable = assignment
             if result is not None:
-                node_var = graficador.agregarNode(result.id)
                 node_equal = graficador.agregarNode('=')
-                graficador.agregarRelacion(current_node, node_var)
-                graficador.agregarRelacion(node_var,node_equal)
-                result.value.dot(node_var,graficador)
+                node_var = graficador.agregarNode(result.id)
+                graficador.agregarRelacion(current_node, node_equal)
+                graficador.agregarRelacion(node_equal,node_var)
+                result.value.dot(node_equal,graficador)
     def c3d(self,scope):
         pass

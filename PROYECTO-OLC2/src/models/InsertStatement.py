@@ -42,7 +42,22 @@ class InsertStatement(Instruction):
                 return None
 
     def dot(self, nodo_padre, graficador):
-        pass
+        current_node = graficador.agregarNode("insert")
+        graficador.agregarRelacion(nodo_padre, current_node)
+        table_node = graficador.agregarNode(self.table_name)
+        graficador.agregarRelacion(current_node, table_node)
+        if self.column_names is not None or len(self.column_names) > 0:
+            columns_node = graficador.agregarNode("columns")
+            graficador.agregarRelacion(current_node, columns_node)
+            for column_name in self.column_names:
+                column_node = graficador.agregarNode(column_name)
+                graficador.agregarRelacion(columns_node, column_node)
+        if self.values is not None or len(self.values) > 0:
+            values_node = graficador.agregarNode("values")
+            graficador.agregarRelacion(current_node, values_node)
+            for value in self.values:
+                value.dot(values_node, graficador)
+
 
     def c3d(self, scope):
         pass

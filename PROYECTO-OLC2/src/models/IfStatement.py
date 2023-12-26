@@ -52,7 +52,17 @@ class IfStatement(Instruction):
         return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self,nodo_padre, graficador):
-        pass
+        current_node = graficador.agregarNode("if")
+        graficador.agregarRelacion(nodo_padre, current_node)
+        condition_node = graficador.agregarNode("condition")
+        graficador.agregarRelacion(current_node, condition_node)
+        self.condition.dot(condition_node, graficador)
+        if self.true_block is not None:
+            true_node = graficador.agregarNode("true_code")
+            graficador.agregarRelacion(current_node, true_node)
+            self.true_block.dot(true_node, graficador)
+        if self.false_block is not None:
+            self.false_block.dot(current_node, graficador)
         
     def c3d(self,scope):
         pass

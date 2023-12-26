@@ -22,7 +22,10 @@ class ElseStatement(Instruction):
         return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self,nodo_padre, graficador):
-        pass
+        current_node = graficador.agregarNode("else")
+        graficador.agregarRelacion(nodo_padre, current_node)
+        if self.instruction is not None:
+            self.instruction.dot(current_node, graficador)
         
     def c3d(self,scope):
         pass

@@ -81,7 +81,28 @@ class TableProperty(Instruction):
         return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self, nodo_padre, graficador):
-        pass
+        current_node = graficador.agregarNode("property")
+        graficador.agregarRelacion(nodo_padre, current_node)
+        id_node = graficador.agregarNode(self.property_name)
+        graficador.agregarRelacion(current_node, id_node)
+        if self.variable_type is not None:
+            type_node = graficador.agregarNode(self.variable_type.type)
+            graficador.agregarRelacion(current_node, type_node)
+            if self.variable_type.length is not None:
+                length_node = graficador.agregarNode(str(self.variable_type.length))
+                graficador.agregarRelacion(type_node, length_node)
+        if self.is_null is not None:
+            null_node = graficador.agregarNode(str(self.is_null))
+            graficador.agregarRelacion(current_node, null_node)
+        if self.is_primary_key is not None:
+            primary_node = graficador.agregarNode(str(self.is_primary_key))
+            graficador.agregarRelacion(current_node, primary_node)
+        if self.parent is not None:
+            parent_node = graficador.agregarNode(self.parent)
+            graficador.agregarRelacion(current_node, parent_node)
+        if self.parent_field is not None:
+            parent_field_node = graficador.agregarNode(self.parent_field)
+            graficador.agregarRelacion(current_node, parent_field_node)
 
     def c3d(self, scope):
         pass
