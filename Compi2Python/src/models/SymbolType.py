@@ -1,0 +1,6 @@
+class SymbolType:
+    VARIABLE = "VARIABLE"
+    COLUMN = "COLUMN"
+    FUNCTION = "FUNCTION"
+    PROCEDURE = "PROCEDURE"
+    DB_NAME = "DB_NAME"

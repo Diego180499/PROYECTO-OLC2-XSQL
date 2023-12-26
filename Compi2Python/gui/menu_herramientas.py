@@ -1,14 +1,10 @@
 import os
 from tkinter import *
-from tkinter.filedialog import askopenfilename, asksaveasfilename
 
 from gui.conector import Conector
-from gui.menu_archivo import MenuArchivo
-from utils.archivo import Archivo
-from gui.frame_arbol import FrameArbol
-from gui.frame_pestanas import FramePestanas
-from gui.frame_salida import FrameSalida
-from tkinter import messagebox as MessageBox
+
+from src.utils.archivo import Archivo
+
 
 
 class MenuHerramientas(Menu):

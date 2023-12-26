@@ -1,6 +1,8 @@
-from FILES.import_to_xml_ddl import *
-from FILES.manager_db.record_file_manager import *
-from back.compile import *
+from src.FILES.import_to_xml_ddl import *
+from src.FILES.manager_db.record_file_manager import *
+from compile import *
+
+from compile import parsear
 
 
 class Conector:

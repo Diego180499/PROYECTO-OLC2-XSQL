@@ -3,31 +3,5 @@
         <base_datos>escuela</base_datos>        
         <tabla>alumno</tabla>
         
-        <registro>
-            
-        <campo>nombre_alumno</campo>
-        
-        <campo>apellido_alumno</campo>
-        
-            
-        <valor>Alex</valor>
-        
-        <valor>Miranda</valor>
-        
-        </registro>                    
-    
-        <registro>
-            
-        <campo>nombre_alumno</campo>
-        
-        <campo>apellido_alumno</campo>
-        
-            
-        <valor>Jose</valor>
-        
-        <valor>Estrada</valor>
-        
-        </registro>                    
-    
     </registros>
     

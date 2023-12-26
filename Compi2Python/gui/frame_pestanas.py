@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter.ttk import Notebook
 
-from utils.archivo import Archivo
+from src.utils.archivo import Archivo
 
 
 class FramePestanas:

@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox as MessageBox
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 
-from utils.archivo import Archivo
+from src.utils.archivo import Archivo
 
 
 class MenuArchivo(Menu):

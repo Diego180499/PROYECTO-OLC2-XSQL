@@ -1,5 +1,0 @@
-class SymbolType:
-    VARIABLE = "VARIABLE"
-    COLUMN = "COLUMN"
-    FUNCTION = "FUNCTION"
-    PROCEDURE = "PROCEDURE"
