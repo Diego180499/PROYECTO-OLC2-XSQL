@@ -2,7 +2,7 @@ from .Instruction import Instruction
 from .symbolTable.SymbolTable import SymbolTable
 from .Variable import Variable
 from ..repository.records.record_repository import RecordRepository
-from ..FILES.manager_db.db_file_manager import get_table_field_by_name, obtener_campos_tabla
+from ..FILES.manager_db.db_file_manager import get_table_field_by_name, obtener_nombres_campos_tabla
 from ..FILES.Campo import Campo
 from ..FILES.Registro import Registro
 from .symbolTable.ScopeType import ScopeType
@@ -30,7 +30,7 @@ class InsertStatement(Instruction):
             return None
 
         symbol_table = SymbolTable(ScopeType().INSERT, symbol_table)
-        table_fields = obtener_campos_tabla(db.value, self.table_name)
+        table_fields = obtener_nombres_campos_tabla(db.value, self.table_name)
 
         for i in range(len(self.column_names)):
             column_declared = any((field == self.column_names[i]) for field in table_fields)

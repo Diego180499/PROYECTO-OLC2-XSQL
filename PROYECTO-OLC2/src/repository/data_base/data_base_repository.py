@@ -11,7 +11,7 @@ class DataBaseRepository:
         if self.existe_bd(nombre_bd) :
             matriz_respuesta = ["Mensaje de Error",f'La base de datos con el nombre "{base_datos.nombre}" ya existe en el sistema']
             return matriz_respuesta
-        guardar_base_de_datos_xml(base_datos.nombre, base_datos)
+        crear_base_de_datos_a_xml(base_datos.nombre, base_datos)
         matriz_respuesta = ["Mensaje", "Se ha creado la base de datos correctamente"]
         return matriz_respuesta
 

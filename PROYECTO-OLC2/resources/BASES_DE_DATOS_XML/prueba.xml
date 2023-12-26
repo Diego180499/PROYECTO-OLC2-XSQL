@@ -1,0 +1,21 @@
+
+        <base>
+            <nombre>prueba</nombre>
+            
+        <tabla>
+            <nombre>tabla_prueba</nombre>
+            
+        <campo>
+            <nombre>campo</nombre>
+            <tipo_dato>nvarchar</tipo_dato>
+            <llave_primaria>0</llave_primaria>
+            <nulo>0</nulo>
+            <tabla_referencia>-</tabla_referencia>
+            <campo_referencia>-</campo_referencia>
+        </campo>
+        
+        </tabla>
+        
+            
+        </base>        
+    
