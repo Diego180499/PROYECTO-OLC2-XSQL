@@ -36,7 +36,12 @@ class Assignment(Instruction):
 
 
     def dot(self,nodo_padre, graficador):
-        pass
+        current_node = graficador.agregarNode("=")
+        graficador.agregarRelacion(nodo_padre, current_node)
+        id_node = graficador.agregarNode(self.id)
+        graficador.agregarRelacion(current_node, id_node)
+        if self.value is not None:
+            self.value.dot(current_node, graficador)
         
     def c3d(self,scope):
         pass

@@ -32,7 +32,9 @@ class ReturnStatement(Instruction):
         return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self,nodo_padre, graficador):
-        pass
+        current_node = graficador.agregarNode("return")
+        graficador.agregarRelacion(nodo_padre, current_node)
+        self.instruction.dot(current_node, graficador)
         
     def c3d(self,scope):
         pass

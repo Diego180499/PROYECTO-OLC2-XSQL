@@ -32,12 +32,12 @@ class MenuHerramientas(Menu):
         _, contenido = self.frame_pestanas.obtener_ubicacion_contenido_desde_pestana_activa()
 
         # el resultado DEBE ser una matriz
-        resultado = conector.compilar(contenido)
+        resultados_finales = conector.compilar(contenido)
 
         ### acciones de prueba  ####
         ### acciones de la tabla
         self.frame_salida.limpiar_tabla()
-        self.frame_salida.construir_tabla(resultado)
+        self.frame_salida.construir_tabla(resultados_finales[0])
 
     def agregar_menu_sql(self):
         menu_sql = Menu(self)

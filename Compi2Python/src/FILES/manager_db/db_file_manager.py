@@ -5,13 +5,13 @@ from src.FILES.manager_db.db_to_xml import data_base_to_xml
 from src.utils.archivo import Archivo
 
 #url_base_de_datos_xml = f'U:/Universidad/Ciclo 2023/EDV-DICIEMBRE/LAB - OLC2/REPO-PROYECTO-OLC2-XSQL/PROYECTO-OLC2/resources/BASES_DE_DATOS_XML'
-url_base_de_datos_xml = f'/home/isaac/Escritorio/2023/compi2/back/PROYECTO-OLC2-XSQL/PROYECTO-OLC2/resources/BASES_DE_DATOS_XML'
-
+#url_base_de_datos_xml = f'/home/isaac/Escritorio/2023/compi2/back/PROYECTO-OLC2-XSQL/PROYECTO-OLC2/resources/BASES_DE_DATOS_XML'
+url_base_de_datos_xml = f'U:/Universidad/Ciclo 2023/EDV-DICIEMBRE/LAB - OLC2/REPO-PROYECTO-OLC2-XSQL/Compi2Python/resources/BASES_DE_DATOS_XML'
 def eliminar_base_de_datos(nombre_base_de_datos):
     remove(f'{url_base_de_datos_xml}/{nombre_base_de_datos}.xml')
 
 
-def guardar_base_de_datos_xml(nombre_base_de_datos, base_de_datos : BaseDatos):
+def crear_base_de_datos_a_xml(nombre_base_de_datos, base_de_datos : BaseDatos):
     archivo : Archivo = Archivo(f'{url_base_de_datos_xml}/{nombre_base_de_datos}.xml')
     contenido = data_base_to_xml(base_de_datos)
     archivo.guardar(contenido)
@@ -37,19 +37,19 @@ def eliminar_tabla(nombre_bd, nombre_tabla):
         if nombre_tabla == tabla.nombre :
             base_de_datos.tablas.remove(tabla)
 
-    guardar_base_de_datos_xml(base_de_datos.nombre, base_de_datos)
+    crear_base_de_datos_a_xml(base_de_datos.nombre, base_de_datos)
 
 
-def crear_tabla(nombre_bd, tabla:Tabla):
+def crear_tabla_a_xml(nombre_bd, tabla:Tabla):
     base_de_datos: BaseDatos = obtener_base_de_datos(nombre_bd)
 
     base_de_datos.tablas.append(tabla)
 
-    guardar_base_de_datos_xml(base_de_datos.nombre, base_de_datos)
+    crear_base_de_datos_a_xml(base_de_datos.nombre, base_de_datos)
 
 
 ### devuelve los nombres de las tablas de una bd
-def obtener_tablas_de_bd(nombre_bd):
+def obtener_nombres_de_tablas_de_bd(nombre_bd):
     base_datos : BaseDatos = obtener_base_de_datos(nombre_bd)
     nombres_tablas : [] = []
 
@@ -59,6 +59,7 @@ def obtener_tablas_de_bd(nombre_bd):
     return nombres_tablas
 
 
+### obtiene una tabla de x base de datos como objeto TABLA
 def obtener_tabla(nombre_bd, nombre_tabla):
     base_datos : BaseDatos = obtener_base_de_datos(nombre_bd)
     tablas : [] = base_datos.tablas
@@ -82,7 +83,7 @@ def agregar_campo_tabla(nombre_base_de_datos, nombre_tabla, campo : Campo):
         if tabla.nombre == nombre_tabla :
             base_de_datos.tablas[indice].campos.append(campo)
         indice += 1
-    guardar_base_de_datos_xml(base_de_datos.nombre, base_de_datos)
+    crear_base_de_datos_a_xml(base_de_datos.nombre, base_de_datos)
 
 
 # eliminar campo:  parametros: ( nombre base de datos  ,  nombre tabla, nombre campo )
@@ -95,7 +96,7 @@ def eliminar_campo(nombre_base_de_datos, nombre_tabla, nombre_campo):
         if tabla.nombre == nombre_tabla :
             __eliminar_campo_2(base_de_datos.tablas[indice], nombre_campo)
         indice += 1
-    guardar_base_de_datos_xml(base_de_datos.nombre, base_de_datos)
+    crear_base_de_datos_a_xml(base_de_datos.nombre, base_de_datos)
 
 def __eliminar_campo_2(tabla: Tabla, nombre_campo):
 
@@ -105,7 +106,7 @@ def __eliminar_campo_2(tabla: Tabla, nombre_campo):
 
 
 ## devuelve un array con los nombres de los campos de una tabla.
-def obtener_campos_tabla(nombre_bd, nombre_tabla):
+def obtener_nombres_campos_tabla(nombre_bd, nombre_tabla):
     tabla : Tabla = obtener_tabla(nombre_bd, nombre_tabla)
     campos_tabla : [] = []
 
@@ -126,7 +127,7 @@ def get_table_field_by_name(db_name, table_name, table_field):
 def crear_procedimiento(nombre_bd, procedimiento : Procedimiento):
     base_datos = obtener_base_de_datos(nombre_bd)
     base_datos.procedimientos.append(procedimiento)
-    guardar_base_de_datos_xml(nombre_bd,base_datos)
+    crear_base_de_datos_a_xml(nombre_bd, base_datos)
 
 def obtener_nombres_procedimientos(nombre_bd):
     base_de_datos = obtener_base_de_datos(nombre_bd)
@@ -146,3 +147,11 @@ def existe_procedimiento(nombre_bd, nombre_procedimiento):
     return False
 
 
+
+
+#base_datos : BaseDatos = BaseDatos('prueba',[])
+#crear_base_de_datos_a_xml('prueba',base_datos)
+
+# campo : Campo = Campo('campo','nvarchar','0','0','-','-')
+# tabla : Tabla = Tabla('tabla_prueba',[campo])
+# crear_tabla_a_xml('prueba',tabla)

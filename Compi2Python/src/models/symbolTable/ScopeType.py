@@ -6,3 +6,4 @@ class ScopeType:
     PROC = 5
     SELECT = 6
     CREATE = 7
+    INSERT = 8

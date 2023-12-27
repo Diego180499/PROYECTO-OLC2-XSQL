@@ -107,6 +107,10 @@ class CallFunctionStatement(Instruction):
         graficador.agregarRelacion(nodo_padre,concurrent_node)
         function_node = graficador.agregarNode(self.function_name)
         graficador.agregarRelacion(concurrent_node,function_node)
+        if self.args is not None:
+            args_node = graficador.agregarNode('args')
+            for arg in self.args:
+                arg.dot(args_node, graficador)
 
     def c3d(self, scope):
         pass

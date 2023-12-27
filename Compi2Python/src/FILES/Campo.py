@@ -9,3 +9,4 @@ class Campo:
         if tablaRef != None and campoRef != None:
             self.tablaRef = tablaRef
             self.campoRef = campoRef
+

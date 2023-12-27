@@ -13,7 +13,7 @@ class TableRepository:
             return ["Mensaje error",f'la tabla "{nombre_tabla}" ya existe en la base de datos "{nombre_bd}" ']
 
         tabla : Tabla = Tabla(nombre_tabla,[])
-        crear_tabla(nombre_bd,tabla)
+        crear_tabla_a_xml(nombre_bd, tabla)
         return ["Mensaje",f'Se ha creado la tabla "{nombre_tabla}", en la base de datos "{nombre_bd}"']
 
     def eliminar_tabla(self, nombre_bd, nombre_tabla):
@@ -27,7 +27,7 @@ class TableRepository:
     def agregar_campos_tabla(self,nombre_bd, nombre_tabla, campo : Campo):
 
         if self.existe_tabla_en_bd(nombre_bd,nombre_tabla):
-            nombres_campos_tabla = obtener_campos_tabla(nombre_bd,nombre_tabla)
+            nombres_campos_tabla = obtener_nombres_campos_tabla(nombre_bd, nombre_tabla)
             if self.existe_campo_en_tabla(campo.nombre, nombres_campos_tabla) :
                 return [["Mensaje de Error"],[f'El campo "{campo.nombre}" ya existe en la tabla "{nombre_tabla}" de la bd "{nombre_bd}"']]
 
@@ -49,7 +49,7 @@ class TableRepository:
 
     def existe_tabla_en_bd(self, nombre_bd, nombre_tabla):
 
-        nombres_tablas : [] = obtener_tablas_de_bd(nombre_bd)
+        nombres_tablas : [] = obtener_nombres_de_tablas_de_bd(nombre_bd)
 
         for nombre in nombres_tablas :
             if nombre == nombre_tabla :

@@ -25,7 +25,10 @@ class CreateDBStatement(Instruction):
 
 
     def dot(self, nodo_padre, graficador):
-        pass
+        current_node = graficador.agregarNode("create_db")
+        graficador.agregarRelacion(nodo_padre, current_node)
+        name_node = graficador.agregarNode(f"name = {self.db_name}")
+        graficador.agregarRelacion(current_node, name_node)
 
     def c3d(self, scope):
         pass

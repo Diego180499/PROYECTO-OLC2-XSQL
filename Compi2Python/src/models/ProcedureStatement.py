@@ -55,7 +55,19 @@ class ProcedureStatement(Instruction):
         return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self,nodo_padre, graficador):
-        pass
+        current_node = graficador.agregarNode("procedure")
+        graficador.agregarRelacion(nodo_padre, current_node)
+        id_node = graficador.agregarNode(self.id)
+        graficador.agregarRelacion(current_node, id_node)
+        if self.parameters is not None:
+            params_node = graficador.agregarNode("params")
+            graficador.agregarRelacion(current_node, params_node)
+            for param in self.parameters:
+                param.dot(params_node, graficador)
+        if self.block is not None:
+            block_node = graficador.agregarNode("block")
+            graficador.agregarRelacion(current_node, block_node)
+            self.block.dot(block_node, graficador)
 
     def c3d(self,scope):
         pass

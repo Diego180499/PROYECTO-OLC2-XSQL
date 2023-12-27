@@ -86,7 +86,7 @@ tokens = [
              'MINUS',
              'TIMES',
              'DIVIDE',
-             'POINT'  ### maked by diego xd
+             'DOT'  ### maked by diego xd
          ] + list(reservadas.values())
 
 # Tokens
@@ -108,7 +108,7 @@ t_TIMES = r'\*'
 t_ASSIGN = r'='
 t_SEMICOLON = r';'
 t_COMMA = r','
-t_POINT = r'\.'    ### maked by diego xd
+t_DOT = r'\.'    ### maked by diego xd
 
 # Expresiones Regulares de las cadenas con "" o ''
 def t_STRING(t):
@@ -218,6 +218,9 @@ from src.models.AlterTableStatement import AlterTableStatement
 from src.models.DropTableStatement import DropTableStatement
 from src.models.TruncateTableStatement import TruncateTableStatement
 from src.models.InsertStatement import InsertStatement
+from src.models.SelectStatement import SelectStatement
+from src.models.TableColumn import TableColumn
+from src.models.EOF import EOF
 
 sys.setrecursionlimit(10000000)
 
@@ -240,7 +243,8 @@ def p_statements(t):
 def p_statements_2(t):
     'statements : statement'
     # t[0] = []
-    t[0] = OrdenEjecucion(0, 0, t[1], None)
+    eof = EOF(0, 0)
+    t[0] = OrdenEjecucion(0, 0, t[1], eof)
 
 
 def p_statement(t):
@@ -355,30 +359,33 @@ def p_null_prod_2(t):
 
 def p_null_prod_3(t):
     'null_prod  : '
-    t[0] = False
+    t[0] = True
 
 
 #### SELECT ####
 
 def p_select_statement(t):
     'select_statement   : SELECT columns FROM NAME'
+    t[0] = SelectStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[4], None)
 
 
 def p_select_statement_2(t):
     'select_statement   : SELECT columns FROM NAME WHERE a'
+    t[0] = SelectStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[4], t[6])
 
-def p_select_statement_3(t):
-    'select_statement : SELECT columns FROM table_names_select WHERE a'
 
-def p_select_statement_4(t):
-    'select_statement : SELECT columns FROM table_names_select'
-
-def p_lista_names_select(t):
-    'table_names_select : NAME table_names_select_p'
-
-def p_lista_names_select_2(t):
-    ''' table_names_select_p : COMMA NAME table_names_select_p
-                            |'''
+# def p_select_statement_3(t):
+#     'select_statement : SELECT columns FROM table_names_select WHERE a'
+#
+# def p_select_statement_4(t):
+#     'select_statement : SELECT columns FROM table_names_select'
+#
+# def p_lista_names_select(t):
+#     'table_names_select : NAME table_names_select_p'
+#
+# def p_lista_names_select_2(t):
+#     ''' table_names_select_p : COMMA NAME table_names_select_p
+#                             |'''
 
 
 #### INSERT ####
@@ -401,25 +408,36 @@ def p_column_names_2(t):
 
 def p_columns(t):
     'columns    : columns COMMA column'
+    t[0] = t[1]
+    t[0].append(t[3])
 
 
 def p_columns_2(t):
-    'columns    : columns COMMA column POINT column'
-
-def p_columns_3(t):
-    'columns    : column POINT column'
-
-def p_columns_4(t):
     'columns    : column'
+    t[0] = []
+    t[0].append(t[1])
 
 def p_column(t):
-    """column   : TIMES
-                | NAME
-                | case_statement
-                | call_function_statement
-                | if_statement NAME"""  #### | a NAME pueden haber columnas a las que se le asignan un valor, que sería 'a' maked by diego xd"""
-    t[0] = t[1]
+    """column   : TIMES"""  #### | a NAME pueden haber columnas a las que se le asignan un valor, que sería 'a' maked by diego xd"""
+    t[0] = TableColumn(t.lineno(1), t.slice[1], None, t[1], None)
 
+
+def p_column_2(t):
+    "column : NAME"
+    value = Value(t.lineno(1), t.slice[1], t[1], ValueType().COLUMN)
+    t[0] = TableColumn(t.lineno(1), t.slice[1], None, t[1], value)
+
+def p_column_3(t):
+    "column : NAME DOT NAME"
+    value = Value(t.lineno(1), t.slice[3], t[3], ValueType().COLUMN)
+    t[0] = TableColumn(t.lineno(1), t.slice[1], t[1], t[3], value)
+
+
+def p_column_4(t):
+    """column   : case_statement NAME
+                | call_function_statement NAME
+                | if_statement NAME"""
+    t[0] = TableColumn(t.lineno(1), t.slice[2], None, t[2], t[1])
 
 def p_vals(t):
     'vals   : vals COMMA a'
@@ -707,9 +725,6 @@ def p_h_7(t):
             | call_function_statement"""
     t[0] = t[1]
 
-def p_h_8(t):
-    ''' h : NAME POINT NAME'''
-
 def p_call_function_statement(t):
     """call_function_statement   : function_name_prod L_PAREN vals R_PAREN"""
     t[0] = CallFunctionStatement(t.lineno(1), find_column(input, t.slice[2]), t[1], t[3])
@@ -761,13 +776,10 @@ def parse(inp):
     return result
 
 
-###TODO AGREGAR  ESTO AL BACK ORIGINAL
+#####
 def limpiar_lista_errores():
     for error_sintactico in errores_sintacticos :
         errores_sintacticos.remove(error_sintactico)
-
-def obtener_db_en_uso():
-    return db_en_uso
 
 def obtener_matriz_resultante():
     return matriz_resultante

@@ -40,7 +40,10 @@ class UseStatement(Instruction):
         return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self, nodo_padre, graficador):
-        pass
+        curren_node = graficador.agregarNode('use')
+        graficador.agregarRelacion(nodo_padre, curren_node)
+        table = graficador.agregarNode(self.db_name)
+        graficador.agregarRelacion(curren_node, table)
 
     def c3d(self, scope):
         pass

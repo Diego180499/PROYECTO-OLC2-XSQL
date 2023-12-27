@@ -1,11 +1,11 @@
 from src.FILES.manager_db.records_to_xml import *
 from src.utils.archivo import Archivo
+import os
 
 #url_records_xml = f'U:/Universidad/Ciclo 2023/EDV-DICIEMBRE/LAB - OLC2/REPO-PROYECTO-OLC2-XSQL/PROYECTO-OLC2/resources/REGISTROS_XML'
-url_records_xml = f'/home/isaac/Escritorio/2023/compi2/back/PROYECTO-OLC2-XSQL/PROYECTO-OLC2/resources/REGISTROS_XML'
-
-
-def obtener_registros_tabla(nombre_db, nombre_tabla):
+#url_records_xml = f'/home/isaac/Escritorio/2023/compi2/back/PROYECTO-OLC2-XSQL/PROYECTO-OLC2/resources/REGISTROS_XML'
+url_records_xml = f'U:/Universidad/Ciclo 2023/EDV-DICIEMBRE/LAB - OLC2/REPO-PROYECTO-OLC2-XSQL/Compi2Python/resources/REGISTROS_XML'
+def obtener_matriz_registros_de_tabla(nombre_db, nombre_tabla):
     registros : Registros = xml_to_records(f'{url_records_xml}/{nombre_db}/{nombre_tabla}.xml')
     matriz_registros = registros.matriz()
     return matriz_registros
@@ -30,7 +30,7 @@ def obtener_registros_de_varias_tablas(nombre_bd, nombres_tablas : []):
     matriz_resultante = []
     ## llenamos el arreglo de matrices segun la cantidad de tablas solicitadas
     for nombre_tabla in nombres_tablas :
-        matriz = obtener_registros_tabla(nombre_bd,nombre_tabla)
+        matriz = obtener_matriz_registros_de_tabla(nombre_bd, nombre_tabla)
         matrices_registros.append(matriz)
 
     encabezados_resultantes = []
@@ -78,13 +78,6 @@ def obtener_valor_mayor_tablas(tablas : []):
             mayor = numero
     return mayor
 
-
-
-
-
-
-
-
 def insertar_registro(nombre_db, nombre_tabla, registro : Registro):
 
     try:
@@ -94,7 +87,10 @@ def insertar_registro(nombre_db, nombre_tabla, registro : Registro):
         archivo: Archivo = Archivo(f'{url_records_xml}/{nombre_db}/{nombre_tabla}.xml')
         archivo.guardar(registros_xml)
         print(registros_xml)
-    except UnboundLocalError as ule :
+    except UnboundLocalError as ule:
+        if not os.path.exists(f'{url_records_xml}/{nombre_db}'):
+            os.mkdir(f'{url_records_xml}/{nombre_db}')
+
         registros: Registros = Registros(nombre_db,nombre_tabla,[])
         registros.registros.append(registro)
         registros_xml = records_to_xml(registros)
@@ -123,4 +119,13 @@ def eliminar_registro_individual(registros_actuales : Registro = [], registro_a_
 
 
 
+def existe_archivo_registros(nombre_bd, nombre_tabla):
+    if os.path.exists(f'{url_records_xml}/{nombre_bd}/{nombre_tabla}.xml'):
+        return True
+
+    return False
+
+
 ### pruebas
+# registro : Registro = Registro(['campo'],['valor de campo'])
+# insertar_registro('prueba','tabla_prueba',registro)

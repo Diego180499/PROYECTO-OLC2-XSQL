@@ -14,7 +14,7 @@ class RecordRepository:
         registro : Registro = Registro(campos,valores)
 
         if self.campos_existen_en_tabla(nombre_bd, nombre_tabla, campos):
-            insertar_registro(nombre_bd,nombre_tabla,registro) ## este metodo es de db_file_manager
+            insertar_registro(nombre_bd,nombre_tabla,registro) ## este metodo es de record_file_manager
             return ["Mensaje",f'Se ha creado un nuevo registro para la tabla "{nombre_tabla}"']
 
         return ["Mensaje de error", f'Los campos no coinciden con los campos de la tabla "{nombre_tabla}"']
@@ -43,7 +43,7 @@ class RecordRepository:
 
 
     def campos_existen_en_tabla(self, nombre_bd, nombre_tabla, campos : []):
-        campos_tabla = obtener_campos_tabla(nombre_bd, nombre_tabla)
+        campos_tabla = obtener_nombres_campos_tabla(nombre_bd, nombre_tabla)
         for campo in campos:
             if not (campo in campos_tabla):
                 return False
@@ -85,3 +85,12 @@ class RecordRepository:
                 indice_campo_a_actualizar += 1
             indice += 1
         return True
+
+
+    # realiza la validación si ya existen registros de esta tabla
+    # ó si es el primer registro de esta tabla.
+    def es_primer_registro(self,nombre_bd,nombre_tabla):
+        if existe_archivo_registros(nombre_bd,nombre_tabla) :
+           return False
+        return True
+
