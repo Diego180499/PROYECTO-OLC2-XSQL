@@ -4,6 +4,7 @@ from .VariableType import VariableType
 from .symbolTable.SymbolTable import SymbolTable
 from .symbolTable.ScopeType import ScopeType
 from .SymbolType import SymbolType
+from .Value import Value
 from ..FILES.manager_db.db_file_manager import obtener_nombres_campos_tabla, get_table_field_by_name
 from ..FILES.manager_db.record_file_manager import existe_archivo_registros
 from ..FILES.Campo import Campo
@@ -64,6 +65,10 @@ class SelectStatement(Instruction):
                 symbol_table = symbol_table.parent
                 return None
 
+            if not isinstance(table_column.value, Value):
+                table_result[0].append(table_column.column_name)
+                continue
+
             field: Campo = get_table_field_by_name(db.value, self.table_name, table_column.column_name)
 
             if field is None:
@@ -84,6 +89,17 @@ class SelectStatement(Instruction):
             field_result.variable_type = VariableType(field.tipoDato, 32)
             symbol_table.add_variable(field_result)
             table_result[0].append(table_column.column_name)
+
+        for table_field in table_fields:
+            column_in_table: Variable = symbol_table.find_column_by_id(table_field)
+
+            if column_in_table is None:
+                field: Campo = get_table_field_by_name(db.value, self.table_name, table_field)
+                field_result = Variable()
+                field_result.id = table_field
+                field_result.symbol_type = SymbolType().COLUMN
+                field_result.variable_type = VariableType(field.tipoDato, 32)
+                symbol_table.add_variable(field_result)
 
         exist = existe_archivo_registros(db.value, self.table_name)
 
@@ -126,7 +142,9 @@ class SelectStatement(Instruction):
                     return None
 
                 if result.id == 'all':
-                    print("Adding all fields.")
+                    for i in range(len(table_record.campos)):
+                        column_names.append(table_record.campos[i])
+                        column_values.append(table_record.valores[i])
                     continue
 
                 column_names.append(result.id)
