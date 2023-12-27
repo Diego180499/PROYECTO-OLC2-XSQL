@@ -4,7 +4,7 @@ from src.error.xsql_error import xsql_error
 
 global_arr = []
 errores_sintacticos = []
-
+matriz_resultante = []
 
 def get_errores():
     return errores_sintacticos
@@ -775,3 +775,10 @@ def parse(inp):
 
     return result
 
+#####
+def limpiar_lista_errores():
+    for error_sintactico in errores_sintacticos :
+        errores_sintacticos.remove(error_sintactico)
+
+def obtener_matriz_resultante():
+    return matriz_resultante

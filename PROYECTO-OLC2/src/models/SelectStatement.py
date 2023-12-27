@@ -10,7 +10,7 @@ from ..FILES.Campo import Campo
 from ..FILES.Registro import Registro
 from ..repository.records.record_repository import RecordRepository
 from ..repository.table.table_repository import TableRepository
-
+from ..utilities.utilities import tabla_select_a_matriz
 
 class SelectStatement(Instruction):
 
@@ -137,9 +137,12 @@ class SelectStatement(Instruction):
 
         print("Fields added to symbol table :D")
         symbol_table = symbol_table.parent
+        matriz_select = tabla_select_a_matriz(table_result)
         print(table_result[0])
         for t_r in table_result[1]:
             print(t_r)
+        return matriz_select
+
 
     def dot(self, nodo_padre, graficador):
         pass
