@@ -179,7 +179,8 @@ def find_column(inp, token):
 
 
 def t_error(t):
-    # errores.append(Excepcion("Lexico","Error léxico." + t.value[0] , t.lexer.lineno, find_column(input, t)))
+    error = xsql_error("Lexico","Error léxico." + t.value[0] , t.lexer.lineno, find_column(input, t))
+    errores_sintacticos.append(error)
     t.lexer.skip(1)
 
 
@@ -753,8 +754,9 @@ def p_return_statement(t):
 
 
 def p_error(t):
-    error = xsql_error("Error sintactico", t.value, t.type, t.lineno - 1)
-    errores_sintacticos.append(error)
+    if t is not None :
+        error = xsql_error("Error sintactico", t.value, t.type, t.lineno - 1)
+        errores_sintacticos.append(error)
     # print("Error sintáctico en '%s'" % t.value+" "+ t.type)
     # print(f'en linea {t.lineno-1}')
     # if t is not None:

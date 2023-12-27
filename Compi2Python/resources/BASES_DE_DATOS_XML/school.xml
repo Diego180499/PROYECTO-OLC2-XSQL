@@ -1,10 +1,7 @@
-
-        <base>
-            <nombre>school</nombre>
-            
-        <tabla>
-            <nombre>student</nombre>
-            
+<base>
+    <nombre>school</nombre>
+    <tabla>
+        <nombre>student</nombre>
         <campo>
             <nombre>id</nombre>
             <tipo_dato>int</tipo_dato>
@@ -13,7 +10,6 @@
             <tabla_referencia>-</tabla_referencia>
             <campo_referencia>-</campo_referencia>
         </campo>
-        
         <campo>
             <nombre>first_name</nombre>
             <tipo_dato>nvarchar</tipo_dato>
@@ -22,7 +18,6 @@
             <tabla_referencia>-</tabla_referencia>
             <campo_referencia>-</campo_referencia>
         </campo>
-        
         <campo>
             <nombre>last_name</nombre>
             <tipo_dato>nvarchar</tipo_dato>
@@ -31,7 +26,6 @@
             <tabla_referencia>-</tabla_referencia>
             <campo_referencia>-</campo_referencia>
         </campo>
-        
         <campo>
             <nombre>age</nombre>
             <tipo_dato>int</tipo_dato>
@@ -40,7 +34,6 @@
             <tabla_referencia>-</tabla_referencia>
             <campo_referencia>-</campo_referencia>
         </campo>
-        
         <campo>
             <nombre>birthday</nombre>
             <tipo_dato>date</tipo_dato>
@@ -49,12 +42,11 @@
             <tabla_referencia>-</tabla_referencia>
             <campo_referencia>-</campo_referencia>
         </campo>
-        
-        </tabla>
-        
-        <tabla>
-            <nombre>professor</nombre>
-            
+    </tabla>
+
+    <tabla>
+        <nombre>professor</nombre>
+
         <campo>
             <nombre>id</nombre>
             <tipo_dato>int</tipo_dato>
@@ -63,7 +55,7 @@
             <tabla_referencia>-</tabla_referencia>
             <campo_referencia>-</campo_referencia>
         </campo>
-        
+
         <campo>
             <nombre>first_name</nombre>
             <tipo_dato>nchar</tipo_dato>
@@ -72,7 +64,7 @@
             <tabla_referencia>-</tabla_referencia>
             <campo_referencia>-</campo_referencia>
         </campo>
-        
+
         <campo>
             <nombre>age</nombre>
             <tipo_dato>int</tipo_dato>
@@ -81,12 +73,12 @@
             <tabla_referencia>-</tabla_referencia>
             <campo_referencia>-</campo_referencia>
         </campo>
-        
-        </tabla>
-        
-        <tabla>
-            <nombre>course</nombre>
-            
+
+    </tabla>
+
+    <tabla>
+        <nombre>course</nombre>
+
         <campo>
             <nombre>id</nombre>
             <tipo_dato>int</tipo_dato>
@@ -95,7 +87,7 @@
             <tabla_referencia>-</tabla_referencia>
             <campo_referencia>-</campo_referencia>
         </campo>
-        
+
         <campo>
             <nombre>course_name</nombre>
             <tipo_dato>nvarchar</tipo_dato>
@@ -104,7 +96,7 @@
             <tabla_referencia>-</tabla_referencia>
             <campo_referencia>-</campo_referencia>
         </campo>
-        
+
         <campo>
             <nombre>id_professor</nombre>
             <tipo_dato>int</tipo_dato>
@@ -113,9 +105,8 @@
             <tabla_referencia>professor</tabla_referencia>
             <campo_referencia>id</campo_referencia>
         </campo>
-        
-        </tabla>
-        
-            
-        </base>        
-    
+
+    </tabla>
+
+
+</base>

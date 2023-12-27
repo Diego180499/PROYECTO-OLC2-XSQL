@@ -80,6 +80,6 @@ def valor_xml_to_string(valores: []):
     string_valores = []
 
     for valor in valores:
-        string_valores.append(valor.text)
+        string_valores.append(valor.text_c3d)
 
     return string_valores

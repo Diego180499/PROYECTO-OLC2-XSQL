@@ -1,78 +1,55 @@
-from tkinter import RIGHT, BOTTOM
-from tkinter.constants import Y, X, BOTH
-from tkinter.ttk import Notebook, Treeview, Frame, Scrollbar
+from tkinter import RIGHT, Y, X, BOTTOM, Text, BOTH, END
+from tkinter.ttk import Notebook, Frame, Label, Scrollbar
+
+from gui.tabla_resultados import TablaResultados
 
 
 class FrameSalida:
 
-    def __init__(self, ventana_padre, width, height, row, column, rowspan=1, columnspan=1,titulo="Salida"):
+    def __init__(self, ventana_padre, width, height, row, column, rowspan=1, columnspan=1):
+        # contenedor de pestañas
         self.notebook = Notebook(ventana_padre, width=width, height=height)
         self.notebook.grid(row=row, column=column, rowspan=rowspan, columnspan=columnspan)
-        self.pestana = Frame(self.notebook)
-        self.pestana.pack()
-        self.__inicializar_tabla(self.pestana)
-        self.notebook.add(self.pestana, text=titulo)
-        self.notebook.select(self.pestana)
-        self.contadorColumnas=1
 
-    def __inicializar_tabla(self, pestana):
-        scrollbar_y = Scrollbar(pestana)
+        # pestaña 1
+        self.pestana_salida = Frame(self.notebook)
+        self.pestana_salida.pack()
+        self.tabla_salida = TablaResultados(self.pestana_salida)
+        self.notebook.add(self.pestana_salida, text="Salida")
+        self.notebook.select(self.pestana_salida)
+
+        # pestaña 2
+        self.pestana_simbolos = Frame(self.notebook)
+        self.pestana_simbolos.pack()
+        self.tabla_simbolos = TablaResultados(self.pestana_simbolos)
+        self.notebook.add(self.pestana_simbolos, text="Tabla de Simbolos")
+        self.notebook.select(self.pestana_simbolos)
+
+        # pestaña 3
+        self.pestana_errores = Frame(self.notebook)
+        self.pestana_errores.pack()
+        self.tabla_errores = TablaResultados(self.pestana_errores)
+        self.notebook.add(self.pestana_errores, text="Errores")
+        self.notebook.select(self.pestana_errores)
+
+        # pestaña 4
+        self.pestana_c3d = Frame(self.notebook)
+        self.pestana_c3d.pack()
+        self.notebook.add(self.pestana_c3d, text="Codigo de 3 direcciones")
+        self.notebook.select(self.pestana_c3d)
+
+        scrollbar_y = Scrollbar(self.pestana_c3d)
         scrollbar_y.pack(side=RIGHT, fill=Y)
-        scrollbar_x = Scrollbar(pestana)
+        scrollbar_x = Scrollbar(self.pestana_c3d)
         scrollbar_x.pack(side=BOTTOM, fill=X)
-        self.tabla = Treeview(pestana, xscrollcommand=scrollbar_x.set, yscrollcommand=scrollbar_y.set)
-        self.tabla.pack(expand=True, fill=BOTH)
-        scrollbar_x.config(command=self.tabla.xview)
-        scrollbar_y.config(command=self.tabla.yview)
+        self.text_c3d = Text(self.pestana_c3d, xscrollcommand=scrollbar_x.set, yscrollcommand=scrollbar_y.set, wrap="none")
+        self.text_c3d.pack(fill=BOTH)
+        scrollbar_x.config(command=self.text_c3d.xview)
+        scrollbar_y.config(command=self.text_c3d.yview)
 
+    def agregar_text_c3d(self,contenido):
+        self.text_c3d.insert(END, contenido)
 
-    def crear_encabezado(self, nombreEncabezado):
-        idColumna = f'#{self.contadorColumnas}'
-        self.tabla.heading(idColumna, text=nombreEncabezado)
-        self.contadorColumnas+=1
-        self.tabla.pack()
+    def limpiar_text_c3d(self):
+        self.text_c3d.insert(END, "")
 
-    #El parámetro 'columnas' será un arreglo con los nombres de las columnas
-    # que tendrá nuestra tabla
-    def definir_tabla(self, encabezados):
-        self.tabla.config(columns=encabezados)
-        self.tabla.column("#0",width=0)
-
-
-        self.tabla.pack()
-
-    # Para ingresar una fila o 'registro' a nuestra tabla, necesitaremos recibir como parametro
-    # un arreglo de valores para ir agregandolos a la tabla
-    def insertar_fila(self, valores):
-        self.tabla.insert("","end",values=valores)
-        self.tabla.pack()
-
-
-    def construir_tabla(self,matriz):
-        encabezados = matriz[0]
-        self.definir_tabla(encabezados)
-        valores : []
-        for encabezado in encabezados:
-            self.crear_encabezado(encabezado)
-
-        indice = 0
-        filas = []
-        for fila in matriz :
-            if indice > 0 :
-                filas.append(fila)
-            indice += 1
-
-        self.llenar_filas(filas)
-        self.contadorColumnas = 1
-        #self.__inicializar_tabla(self.pestana)
-
-
-    def llenar_filas(self,filas):
-
-        for fila in filas :
-            self.insertar_fila(fila)
-
-    def limpiar_tabla(self):
-        # Elimina todas las filas existentes en el TreeView
-        for item in self.tabla.get_children():
-            self.tabla.delete(item)

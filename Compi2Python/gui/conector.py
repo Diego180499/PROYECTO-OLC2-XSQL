@@ -14,7 +14,7 @@ class Conector:
     ### AQUI RECIBO EL CONTENIDO DEL EDITOR DE TEXTO DEL FRONT...
     def compilar(self, contenido):        
         matriz_resultante = parsear(contenido)
-
+        limpiar_lista_errores()
         return matriz_resultante
 
     def cargar_arbol(self,url):
@@ -30,5 +30,4 @@ class Conector:
         return matriz
 
     def construir_diccionario(self,url):
-        diccionario = xml_to_diccionario(url)
-        return  diccionario
+        return xml_to_diccionario(url)

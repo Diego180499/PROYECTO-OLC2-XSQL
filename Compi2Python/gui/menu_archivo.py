@@ -10,12 +10,16 @@ class MenuArchivo(Menu):
     def __init__(self, ventana_principal):
         super().__init__(ventana_principal.menu)
         iconos=ventana_principal.iconos
+        self.add_command(label='Nuevo',image=iconos['nueva-query'],compound="left", command=self.evento_menu_nuevo)
         self.add_command(label='Abrir',image=iconos['abrir'],compound="left", command=self.evento_menu_abrir)
         self.add_command(label='Guardar',image=iconos['guardar'],compound="left", command=self.evento_menu_guardar)
         self.add_command(label='Guardar Como',image=iconos['guardar-como'],compound="left", command=self.evento_menu_guardar_como)
         self.add_command(label='Cerrar',image=iconos['cerrar'],compound="left", command=self.evento_menu_cerrar)
-        self.add_command(label='Salir', command=self.evento_menu_salir)
+        self.add_command(label='Salir', image=iconos['salir'],compound="left", command=self.evento_menu_salir)
         self.frame_pestanas = ventana_principal.frame_pestanas
+
+    def evento_menu_nuevo(self):
+        self.frame_pestanas.agregar_pestana(Archivo())
 
     # eventos barra de menú
     def evento_menu_abrir(self):

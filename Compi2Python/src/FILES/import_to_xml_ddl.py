@@ -40,30 +40,31 @@ def fillProcedimientos(procedimientos):  ### agregar al back
 def xml_to_diccionario(url):
     manejadorDB = ManejadorDB()
     try:
-        # Creamos el Manejador de Bases de Datos
-
-        # en open, ponemos el path del archivo.
         xml_file = open(url)
-        # Evaluamos si se lee el archivo
-        if xml_file.readable():
-            xml_data = ET.fromstring(xml_file.read())
-            # Crea objeto Base de Datos
-            nombreDB = xml_data.find('nombre').text
-            tablas = xml_data.findall('tabla')
-            ## se buscan sus procedimientos
-            procedimientos = xml_data.findall('procedimiento')
-            baseDatos = BaseDatos(nombreDB, fillTablas(tablas))
-            baseDatos.set_procedimientos(fillProcedimientos(procedimientos))
-            # Ingresa nueva base de datos al Manejador DB
-            manejadorDB.addBaseDatos(baseDatos)
-            diccionario = manejadorDB.getDiccionario()
-            print(diccionario)
-        else:
-            print(False)
+        try:
+            # Evaluamos si se lee el archivo
+            if xml_file.readable():
+                xml_data = ET.fromstring(xml_file.read())
+                # Crea objeto Base de Datos
+                nombreDB = xml_data.find('nombre').text
+                tablas = xml_data.findall('tabla')
+                ## se buscan sus procedimientos
+                procedimientos = xml_data.findall('procedimiento')
+                baseDatos = BaseDatos(nombreDB, fillTablas(tablas))
+                baseDatos.set_procedimientos(fillProcedimientos(procedimientos))
+                # Ingresa nueva base de datos al Manejador DB
+                manejadorDB.addBaseDatos(baseDatos)
+                diccionario = manejadorDB.getDiccionario()
+                print(diccionario)
+            else:
+                print(False)
+
+        except Exception as err:
+            print("Error: ", err)
+        finally:
+            xml_file.close()
     except Exception as err:
-        print("Error: ", err)
-    finally:
-        xml_file.close()
+            print("Error: ", err)
     return manejadorDB.getDiccionario()
 
 
@@ -71,22 +72,26 @@ def xml_to_diccionario(url):
     # ya que solo una en específico vamos a obtener.
 def xml_to_base_de_datos(url):
     #manejadorDB = ManejadorDB()
+    baseDatos=None
     try:
-        # en open, ponemos el path del archivo.
         xml_file = open(url)
-        # Evaluamos si se lee el archivo
-        if xml_file.readable():
-            xml_data = ET.fromstring(xml_file.read())
-            # Crea objeto Base de Datos
-            nombreDB = xml_data.find('nombre').text
-            tablas = xml_data.findall('tabla')
-            baseDatos = BaseDatos(nombreDB, fillTablas(tablas))
-            procedimientos = xml_data.findall('procedimiento')
-            baseDatos.set_procedimientos(fillProcedimientos(procedimientos))
-        else:
-            print(False)
+        try:
+            # en open, ponemos el path del archivo.
+            # Evaluamos si se lee el archivo
+            if xml_file.readable():
+                xml_data = ET.fromstring(xml_file.read())
+                # Crea objeto Base de Datos
+                nombreDB = xml_data.find('nombre').text
+                tablas = xml_data.findall('tabla')
+                baseDatos = BaseDatos(nombreDB, fillTablas(tablas))
+                procedimientos = xml_data.findall('procedimiento')
+                baseDatos.set_procedimientos(fillProcedimientos(procedimientos))
+            else:
+                print(False)
+        except Exception as err:
+            print("Error: ", err)
+        finally:
+            xml_file.close()
     except Exception as err:
         print("Error: ", err)
-    finally:
-        xml_file.close()
     return baseDatos
