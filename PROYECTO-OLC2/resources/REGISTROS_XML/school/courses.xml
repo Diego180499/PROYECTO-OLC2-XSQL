@@ -1,0 +1,58 @@
+
+    <registros>
+        <base_datos>school</base_datos>        
+        <tabla>courses</tabla>
+        
+        <registro>
+            
+        <campo>id</campo>
+        
+        <campo>name</campo>
+        
+        <campo>professor_id</campo>
+        
+            
+        <valor>1</valor>
+        
+        <valor>Physics</valor>
+        
+        <valor>1</valor>
+        
+        </registro>                    
+    
+        <registro>
+            
+        <campo>id</campo>
+        
+        <campo>name</campo>
+        
+        <campo>professor_id</campo>
+        
+            
+        <valor>2</valor>
+        
+        <valor>Programming</valor>
+        
+        <valor>2</valor>
+        
+        </registro>                    
+    
+        <registro>
+            
+        <campo>id</campo>
+        
+        <campo>name</campo>
+        
+        <campo>professor_id</campo>
+        
+            
+        <valor>3</valor>
+        
+        <valor>Math</valor>
+        
+        <valor>3</valor>
+        
+        </registro>                    
+    
+    </registros>
+    

@@ -1,0 +1,46 @@
+
+    <registros>
+        <base_datos>school</base_datos>        
+        <tabla>professors</tabla>
+        
+        <registro>
+            
+        <campo>id</campo>
+        
+        <campo>name</campo>
+        
+            
+        <valor>1</valor>
+        
+        <valor>Ernesto</valor>
+        
+        </registro>                    
+    
+        <registro>
+            
+        <campo>id</campo>
+        
+        <campo>name</campo>
+        
+            
+        <valor>2</valor>
+        
+        <valor>Moises</valor>
+        
+        </registro>                    
+    
+        <registro>
+            
+        <campo>id</campo>
+        
+        <campo>name</campo>
+        
+            
+        <valor>3</valor>
+        
+        <valor>Julio</valor>
+        
+        </registro>                    
+    
+    </registros>
+    

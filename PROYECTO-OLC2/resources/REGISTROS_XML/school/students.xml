@@ -1,0 +1,58 @@
+
+    <registros>
+        <base_datos>school</base_datos>        
+        <tabla>students</tabla>
+        
+        <registro>
+            
+        <campo>id</campo>
+        
+        <campo>first_name</campo>
+        
+        <campo>last_name</campo>
+        
+            
+        <valor>1</valor>
+        
+        <valor>José</valor>
+        
+        <valor>Castro</valor>
+        
+        </registro>                    
+    
+        <registro>
+            
+        <campo>id</campo>
+        
+        <campo>first_name</campo>
+        
+        <campo>last_name</campo>
+        
+            
+        <valor>2</valor>
+        
+        <valor>Raquel</valor>
+        
+        <valor>Rodriguez</valor>
+        
+        </registro>                    
+    
+        <registro>
+            
+        <campo>id</campo>
+        
+        <campo>first_name</campo>
+        
+        <campo>last_name</campo>
+        
+            
+        <valor>3</valor>
+        
+        <valor>Martin</valor>
+        
+        <valor>Monterroso</valor>
+        
+        </registro>                    
+    
+    </registros>
+    

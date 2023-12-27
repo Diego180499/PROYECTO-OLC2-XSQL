@@ -435,7 +435,7 @@ def p_column_3(t):
 
 def p_column_4(t):
     """column   : case_statement NAME
-                | call_function_statement NAME
+                | a NAME
                 | if_statement NAME"""
     t[0] = TableColumn(t.lineno(1), t.slice[2], None, t[2], t[1])
 
@@ -520,7 +520,7 @@ def p_if_statement_2(t):
 
 def p_if_statement_3(t):
     'if_statement   : IF L_PAREN a COMMA a COMMA a R_PAREN'
-    t[0] = IfStatement(t.lineno(1), find_column(input, t.slice[1]), t[3], [t[5]], [t[7]])
+    t[0] = IfStatement(t.lineno(1), find_column(input, t.slice[1]), t[3], t[5], t[7])
 
 #### EXEC ####
 def p_exec_statement(t):
