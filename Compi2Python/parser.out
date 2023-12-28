@@ -52,7 +52,7 @@ Rule 46    column -> TIMES
 Rule 47    column -> NAME
 Rule 48    column -> NAME DOT NAME
 Rule 49    column -> case_statement NAME
-Rule 50    column -> call_function_statement NAME
+Rule 50    column -> a NAME
 Rule 51    column -> if_statement NAME
 Rule 52    vals -> vals COMMA a
 Rule 53    vals -> a
@@ -209,13 +209,13 @@ error                :
 
 Nonterminals, with rules where they appear
 
-a                    : 28 29 40 52 53 64 65 66 66 66 70 71 73 74 75 76 78 80 80 81 86 87 88 114 119 125
+a                    : 28 29 40 50 52 53 64 65 66 66 66 70 71 73 74 75 76 78 80 80 81 86 87 88 114 119 125
 alter_table_statement : 14
 args                 : 68 70
 assignments          : 27 28
 b                    : 88 89 90
 c                    : 90 91
-call_function_statement : 13 50 116
+call_function_statement : 13 116
 case_statement       : 49
 column               : 44 45
 column_assignments   : 73 74
@@ -687,26 +687,66 @@ state 27
     (47) column -> . NAME
     (48) column -> . NAME DOT NAME
     (49) column -> . case_statement NAME
-    (50) column -> . call_function_statement NAME
+    (50) column -> . a NAME
     (51) column -> . if_statement NAME
     (79) case_statement -> . CASE when_statements END NAME
-    (117) call_function_statement -> . function_name_prod L_PAREN vals R_PAREN
-    (118) call_function_statement -> . function_name_prod L_PAREN R_PAREN
-    (119) call_function_statement -> . CAS L_PAREN a AS type R_PAREN
+    (88) a -> . a OR b
+    (89) a -> . b
     (64) if_statement -> . IF a THEN statements END IF
     (65) if_statement -> . IF a THEN statements ELSE statements END IF
     (66) if_statement -> . IF L_PAREN a COMMA a COMMA a R_PAREN
+    (90) b -> . b AND c
+    (91) b -> . c
+    (92) c -> . NOT_SIGN d
+    (93) c -> . d
+    (94) d -> . d EQUALS e
+    (95) d -> . d NOT_EQ e
+    (96) d -> . d LESS_THAN e
+    (97) d -> . d GREATER_THAN e
+    (98) d -> . d LESS_EQ e
+    (99) d -> . d GREATER_EQ e
+    (100) d -> . e
+    (101) e -> . e PLUS f
+    (102) e -> . e MINUS f
+    (103) e -> . f
+    (104) f -> . f TIMES g
+    (105) f -> . f DIVIDE g
+    (106) f -> . g
+    (107) g -> . MINUS h
+    (108) g -> . h
+    (109) h -> . INTEGER_VALUE
+    (110) h -> . DECIMAL_VALUE
+    (111) h -> . STRING
+    (112) h -> . ID
+    (113) h -> . NAME
+    (114) h -> . L_PAREN a R_PAREN
+    (115) h -> . exec_statement
+    (116) h -> . call_function_statement
+    (67) exec_statement -> . EXEC NAME vals
+    (68) exec_statement -> . EXEC NAME args
+    (69) exec_statement -> . EXEC NAME
+    (117) call_function_statement -> . function_name_prod L_PAREN vals R_PAREN
+    (118) call_function_statement -> . function_name_prod L_PAREN R_PAREN
+    (119) call_function_statement -> . CAS L_PAREN a AS type R_PAREN
     (120) function_name_prod -> . HOY
     (121) function_name_prod -> . CONCATENA
     (122) function_name_prod -> . SUBSTRAER
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    TIMES           shift and go to state 76
+    TIMES           shift and go to state 77
     NAME            shift and go to state 74
     CASE            shift and go to state 80
-    CAS             shift and go to state 31
     IF              shift and go to state 34
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    L_PAREN         shift and go to state 82
+    EXEC            shift and go to state 35
+    CAS             shift and go to state 31
     HOY             shift and go to state 40
     CONCATENA       shift and go to state 41
     SUBSTRAER       shift and go to state 42
@@ -714,17 +754,26 @@ state 27
     SUMA            shift and go to state 44
 
     columns                        shift and go to state 73
-    column                         shift and go to state 75
-    case_statement                 shift and go to state 77
-    call_function_statement        shift and go to state 78
+    a                              shift and go to state 75
+    column                         shift and go to state 76
+    case_statement                 shift and go to state 78
     if_statement                   shift and go to state 79
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 28
 
     (41) insert_statement -> INSERT . INTO NAME L_PAREN column_names R_PAREN VALUES L_PAREN vals R_PAREN
 
-    INTO            shift and go to state 81
+    INTO            shift and go to state 97
 
 
 state 29
@@ -771,14 +820,14 @@ state 29
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -787,16 +836,16 @@ state 29
     CONTAR          shift and go to state 43
     SUMA            shift and go to state 44
 
-    a                              shift and go to state 82
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    a                              shift and go to state 98
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 30
@@ -876,13 +925,13 @@ state 34
     (124) function_name_prod -> . SUMA
 
     L_PAREN         shift and go to state 105
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -892,15 +941,15 @@ state 34
     SUMA            shift and go to state 44
 
     a                              shift and go to state 104
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 35
@@ -963,14 +1012,14 @@ state 37
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -980,15 +1029,15 @@ state 37
     SUMA            shift and go to state 44
 
     a                              shift and go to state 108
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 38
@@ -1728,13 +1777,36 @@ state 74
 
     (47) column -> NAME .
     (48) column -> NAME . DOT NAME
+    (113) h -> NAME .
 
     FROM            reduce using rule 47 (column -> NAME .)
     COMMA           reduce using rule 47 (column -> NAME .)
     DOT             shift and go to state 127
+    TIMES           reduce using rule 113 (h -> NAME .)
+    DIVIDE          reduce using rule 113 (h -> NAME .)
+    PLUS            reduce using rule 113 (h -> NAME .)
+    MINUS           reduce using rule 113 (h -> NAME .)
+    EQUALS          reduce using rule 113 (h -> NAME .)
+    NOT_EQ          reduce using rule 113 (h -> NAME .)
+    LESS_THAN       reduce using rule 113 (h -> NAME .)
+    GREATER_THAN    reduce using rule 113 (h -> NAME .)
+    LESS_EQ         reduce using rule 113 (h -> NAME .)
+    GREATER_EQ      reduce using rule 113 (h -> NAME .)
+    AND             reduce using rule 113 (h -> NAME .)
+    NAME            reduce using rule 113 (h -> NAME .)
+    OR              reduce using rule 113 (h -> NAME .)
 
 
 state 75
+
+    (50) column -> a . NAME
+    (88) a -> a . OR b
+
+    NAME            shift and go to state 128
+    OR              shift and go to state 129
+
+
+state 76
 
     (45) columns -> column .
 
@@ -1742,7 +1814,7 @@ state 75
     COMMA           reduce using rule 45 (columns -> column .)
 
 
-state 76
+state 77
 
     (46) column -> TIMES .
 
@@ -1750,25 +1822,18 @@ state 76
     COMMA           reduce using rule 46 (column -> TIMES .)
 
 
-state 77
+state 78
 
     (49) column -> case_statement . NAME
 
-    NAME            shift and go to state 128
-
-
-state 78
-
-    (50) column -> call_function_statement . NAME
-
-    NAME            shift and go to state 129
+    NAME            shift and go to state 130
 
 
 state 79
 
     (51) column -> if_statement . NAME
 
-    NAME            shift and go to state 130
+    NAME            shift and go to state 131
 
 
 state 80
@@ -1777,33 +1842,18 @@ state 80
     (80) when_statements -> . WHEN a THEN a when_statements
     (81) when_statements -> . ELSE THEN a
 
-    WHEN            shift and go to state 132
-    ELSE            shift and go to state 133
+    WHEN            shift and go to state 133
+    ELSE            shift and go to state 134
 
-    when_statements                shift and go to state 131
+    when_statements                shift and go to state 132
 
 state 81
-
-    (41) insert_statement -> INSERT INTO . NAME L_PAREN column_names R_PAREN VALUES L_PAREN vals R_PAREN
-
-    NAME            shift and go to state 134
-
-
-state 82
-
-    (125) return_statement -> RETURN a .
-    (88) a -> a . OR b
-
-    SEMICOLON       reduce using rule 125 (return_statement -> RETURN a .)
-    OR              shift and go to state 135
-
-
-state 83
 
     (89) a -> b .
     (90) b -> b . AND c
 
   ! shift/reduce conflict for AND resolved as shift
+    NAME            reduce using rule 89 (a -> b .)
     OR              reduce using rule 89 (a -> b .)
     SEMICOLON       reduce using rule 89 (a -> b .)
     THEN            reduce using rule 89 (a -> b .)
@@ -1825,457 +1875,12 @@ state 83
     WHEN            reduce using rule 89 (a -> b .)
     ELSE            reduce using rule 89 (a -> b .)
     WHERE           reduce using rule 89 (a -> b .)
-    AND             shift and go to state 136
+    AND             shift and go to state 135
 
   ! AND             [ reduce using rule 89 (a -> b .) ]
 
 
-state 84
-
-    (91) b -> c .
-
-    AND             reduce using rule 91 (b -> c .)
-    OR              reduce using rule 91 (b -> c .)
-    SEMICOLON       reduce using rule 91 (b -> c .)
-    THEN            reduce using rule 91 (b -> c .)
-    BEGIN           reduce using rule 91 (b -> c .)
-    R_PAREN         reduce using rule 91 (b -> c .)
-    COMMA           reduce using rule 91 (b -> c .)
-    AS              reduce using rule 91 (b -> c .)
-    EQUALS          reduce using rule 91 (b -> c .)
-    NOT_EQ          reduce using rule 91 (b -> c .)
-    LESS_THAN       reduce using rule 91 (b -> c .)
-    GREATER_THAN    reduce using rule 91 (b -> c .)
-    LESS_EQ         reduce using rule 91 (b -> c .)
-    GREATER_EQ      reduce using rule 91 (b -> c .)
-    TIMES           reduce using rule 91 (b -> c .)
-    DIVIDE          reduce using rule 91 (b -> c .)
-    PLUS            reduce using rule 91 (b -> c .)
-    MINUS           reduce using rule 91 (b -> c .)
-    END             reduce using rule 91 (b -> c .)
-    WHEN            reduce using rule 91 (b -> c .)
-    ELSE            reduce using rule 91 (b -> c .)
-    WHERE           reduce using rule 91 (b -> c .)
-
-
-state 85
-
-    (92) c -> NOT_SIGN . d
-    (94) d -> . d EQUALS e
-    (95) d -> . d NOT_EQ e
-    (96) d -> . d LESS_THAN e
-    (97) d -> . d GREATER_THAN e
-    (98) d -> . d LESS_EQ e
-    (99) d -> . d GREATER_EQ e
-    (100) d -> . e
-    (101) e -> . e PLUS f
-    (102) e -> . e MINUS f
-    (103) e -> . f
-    (104) f -> . f TIMES g
-    (105) f -> . f DIVIDE g
-    (106) f -> . g
-    (107) g -> . MINUS h
-    (108) g -> . h
-    (109) h -> . INTEGER_VALUE
-    (110) h -> . DECIMAL_VALUE
-    (111) h -> . STRING
-    (112) h -> . ID
-    (113) h -> . NAME
-    (114) h -> . L_PAREN a R_PAREN
-    (115) h -> . exec_statement
-    (116) h -> . call_function_statement
-    (67) exec_statement -> . EXEC NAME vals
-    (68) exec_statement -> . EXEC NAME args
-    (69) exec_statement -> . EXEC NAME
-    (117) call_function_statement -> . function_name_prod L_PAREN vals R_PAREN
-    (118) call_function_statement -> . function_name_prod L_PAREN R_PAREN
-    (119) call_function_statement -> . CAS L_PAREN a AS type R_PAREN
-    (120) function_name_prod -> . HOY
-    (121) function_name_prod -> . CONCATENA
-    (122) function_name_prod -> . SUBSTRAER
-    (123) function_name_prod -> . CONTAR
-    (124) function_name_prod -> . SUMA
-
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
-    EXEC            shift and go to state 35
-    CAS             shift and go to state 31
-    HOY             shift and go to state 40
-    CONCATENA       shift and go to state 41
-    SUBSTRAER       shift and go to state 42
-    CONTAR          shift and go to state 43
-    SUMA            shift and go to state 44
-
-    d                              shift and go to state 137
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
-    function_name_prod             shift and go to state 30
-
-state 86
-
-    (93) c -> d .
-    (94) d -> d . EQUALS e
-    (95) d -> d . NOT_EQ e
-    (96) d -> d . LESS_THAN e
-    (97) d -> d . GREATER_THAN e
-    (98) d -> d . LESS_EQ e
-    (99) d -> d . GREATER_EQ e
-
-  ! shift/reduce conflict for EQUALS resolved as shift
-  ! shift/reduce conflict for NOT_EQ resolved as shift
-  ! shift/reduce conflict for LESS_THAN resolved as shift
-  ! shift/reduce conflict for GREATER_THAN resolved as shift
-  ! shift/reduce conflict for LESS_EQ resolved as shift
-  ! shift/reduce conflict for GREATER_EQ resolved as shift
-    AND             reduce using rule 93 (c -> d .)
-    OR              reduce using rule 93 (c -> d .)
-    SEMICOLON       reduce using rule 93 (c -> d .)
-    THEN            reduce using rule 93 (c -> d .)
-    BEGIN           reduce using rule 93 (c -> d .)
-    R_PAREN         reduce using rule 93 (c -> d .)
-    COMMA           reduce using rule 93 (c -> d .)
-    AS              reduce using rule 93 (c -> d .)
-    TIMES           reduce using rule 93 (c -> d .)
-    DIVIDE          reduce using rule 93 (c -> d .)
-    PLUS            reduce using rule 93 (c -> d .)
-    MINUS           reduce using rule 93 (c -> d .)
-    END             reduce using rule 93 (c -> d .)
-    WHEN            reduce using rule 93 (c -> d .)
-    ELSE            reduce using rule 93 (c -> d .)
-    WHERE           reduce using rule 93 (c -> d .)
-    EQUALS          shift and go to state 138
-    NOT_EQ          shift and go to state 139
-    LESS_THAN       shift and go to state 140
-    GREATER_THAN    shift and go to state 141
-    LESS_EQ         shift and go to state 142
-    GREATER_EQ      shift and go to state 143
-
-  ! EQUALS          [ reduce using rule 93 (c -> d .) ]
-  ! NOT_EQ          [ reduce using rule 93 (c -> d .) ]
-  ! LESS_THAN       [ reduce using rule 93 (c -> d .) ]
-  ! GREATER_THAN    [ reduce using rule 93 (c -> d .) ]
-  ! LESS_EQ         [ reduce using rule 93 (c -> d .) ]
-  ! GREATER_EQ      [ reduce using rule 93 (c -> d .) ]
-
-
-state 87
-
-    (100) d -> e .
-    (101) e -> e . PLUS f
-    (102) e -> e . MINUS f
-
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-    EQUALS          reduce using rule 100 (d -> e .)
-    NOT_EQ          reduce using rule 100 (d -> e .)
-    LESS_THAN       reduce using rule 100 (d -> e .)
-    GREATER_THAN    reduce using rule 100 (d -> e .)
-    LESS_EQ         reduce using rule 100 (d -> e .)
-    GREATER_EQ      reduce using rule 100 (d -> e .)
-    AND             reduce using rule 100 (d -> e .)
-    OR              reduce using rule 100 (d -> e .)
-    SEMICOLON       reduce using rule 100 (d -> e .)
-    THEN            reduce using rule 100 (d -> e .)
-    BEGIN           reduce using rule 100 (d -> e .)
-    R_PAREN         reduce using rule 100 (d -> e .)
-    COMMA           reduce using rule 100 (d -> e .)
-    AS              reduce using rule 100 (d -> e .)
-    TIMES           reduce using rule 100 (d -> e .)
-    DIVIDE          reduce using rule 100 (d -> e .)
-    END             reduce using rule 100 (d -> e .)
-    WHEN            reduce using rule 100 (d -> e .)
-    ELSE            reduce using rule 100 (d -> e .)
-    WHERE           reduce using rule 100 (d -> e .)
-    PLUS            shift and go to state 144
-    MINUS           shift and go to state 145
-
-  ! PLUS            [ reduce using rule 100 (d -> e .) ]
-  ! MINUS           [ reduce using rule 100 (d -> e .) ]
-
-
-state 88
-
-    (103) e -> f .
-    (104) f -> f . TIMES g
-    (105) f -> f . DIVIDE g
-
-  ! shift/reduce conflict for TIMES resolved as shift
-  ! shift/reduce conflict for DIVIDE resolved as shift
-    PLUS            reduce using rule 103 (e -> f .)
-    MINUS           reduce using rule 103 (e -> f .)
-    EQUALS          reduce using rule 103 (e -> f .)
-    NOT_EQ          reduce using rule 103 (e -> f .)
-    LESS_THAN       reduce using rule 103 (e -> f .)
-    GREATER_THAN    reduce using rule 103 (e -> f .)
-    LESS_EQ         reduce using rule 103 (e -> f .)
-    GREATER_EQ      reduce using rule 103 (e -> f .)
-    AND             reduce using rule 103 (e -> f .)
-    OR              reduce using rule 103 (e -> f .)
-    SEMICOLON       reduce using rule 103 (e -> f .)
-    THEN            reduce using rule 103 (e -> f .)
-    BEGIN           reduce using rule 103 (e -> f .)
-    R_PAREN         reduce using rule 103 (e -> f .)
-    COMMA           reduce using rule 103 (e -> f .)
-    AS              reduce using rule 103 (e -> f .)
-    END             reduce using rule 103 (e -> f .)
-    WHEN            reduce using rule 103 (e -> f .)
-    ELSE            reduce using rule 103 (e -> f .)
-    WHERE           reduce using rule 103 (e -> f .)
-    TIMES           shift and go to state 146
-    DIVIDE          shift and go to state 147
-
-  ! TIMES           [ reduce using rule 103 (e -> f .) ]
-  ! DIVIDE          [ reduce using rule 103 (e -> f .) ]
-
-
-state 89
-
-    (107) g -> MINUS . h
-    (109) h -> . INTEGER_VALUE
-    (110) h -> . DECIMAL_VALUE
-    (111) h -> . STRING
-    (112) h -> . ID
-    (113) h -> . NAME
-    (114) h -> . L_PAREN a R_PAREN
-    (115) h -> . exec_statement
-    (116) h -> . call_function_statement
-    (67) exec_statement -> . EXEC NAME vals
-    (68) exec_statement -> . EXEC NAME args
-    (69) exec_statement -> . EXEC NAME
-    (117) call_function_statement -> . function_name_prod L_PAREN vals R_PAREN
-    (118) call_function_statement -> . function_name_prod L_PAREN R_PAREN
-    (119) call_function_statement -> . CAS L_PAREN a AS type R_PAREN
-    (120) function_name_prod -> . HOY
-    (121) function_name_prod -> . CONCATENA
-    (122) function_name_prod -> . SUBSTRAER
-    (123) function_name_prod -> . CONTAR
-    (124) function_name_prod -> . SUMA
-
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
-    EXEC            shift and go to state 35
-    CAS             shift and go to state 31
-    HOY             shift and go to state 40
-    CONCATENA       shift and go to state 41
-    SUBSTRAER       shift and go to state 42
-    CONTAR          shift and go to state 43
-    SUMA            shift and go to state 44
-
-    h                              shift and go to state 148
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
-    function_name_prod             shift and go to state 30
-
-state 90
-
-    (106) f -> g .
-
-    TIMES           reduce using rule 106 (f -> g .)
-    DIVIDE          reduce using rule 106 (f -> g .)
-    PLUS            reduce using rule 106 (f -> g .)
-    MINUS           reduce using rule 106 (f -> g .)
-    EQUALS          reduce using rule 106 (f -> g .)
-    NOT_EQ          reduce using rule 106 (f -> g .)
-    LESS_THAN       reduce using rule 106 (f -> g .)
-    GREATER_THAN    reduce using rule 106 (f -> g .)
-    LESS_EQ         reduce using rule 106 (f -> g .)
-    GREATER_EQ      reduce using rule 106 (f -> g .)
-    AND             reduce using rule 106 (f -> g .)
-    OR              reduce using rule 106 (f -> g .)
-    SEMICOLON       reduce using rule 106 (f -> g .)
-    THEN            reduce using rule 106 (f -> g .)
-    BEGIN           reduce using rule 106 (f -> g .)
-    R_PAREN         reduce using rule 106 (f -> g .)
-    COMMA           reduce using rule 106 (f -> g .)
-    AS              reduce using rule 106 (f -> g .)
-    END             reduce using rule 106 (f -> g .)
-    WHEN            reduce using rule 106 (f -> g .)
-    ELSE            reduce using rule 106 (f -> g .)
-    WHERE           reduce using rule 106 (f -> g .)
-
-
-state 91
-
-    (108) g -> h .
-
-    TIMES           reduce using rule 108 (g -> h .)
-    DIVIDE          reduce using rule 108 (g -> h .)
-    PLUS            reduce using rule 108 (g -> h .)
-    MINUS           reduce using rule 108 (g -> h .)
-    EQUALS          reduce using rule 108 (g -> h .)
-    NOT_EQ          reduce using rule 108 (g -> h .)
-    LESS_THAN       reduce using rule 108 (g -> h .)
-    GREATER_THAN    reduce using rule 108 (g -> h .)
-    LESS_EQ         reduce using rule 108 (g -> h .)
-    GREATER_EQ      reduce using rule 108 (g -> h .)
-    AND             reduce using rule 108 (g -> h .)
-    OR              reduce using rule 108 (g -> h .)
-    SEMICOLON       reduce using rule 108 (g -> h .)
-    THEN            reduce using rule 108 (g -> h .)
-    BEGIN           reduce using rule 108 (g -> h .)
-    R_PAREN         reduce using rule 108 (g -> h .)
-    COMMA           reduce using rule 108 (g -> h .)
-    AS              reduce using rule 108 (g -> h .)
-    END             reduce using rule 108 (g -> h .)
-    WHEN            reduce using rule 108 (g -> h .)
-    ELSE            reduce using rule 108 (g -> h .)
-    WHERE           reduce using rule 108 (g -> h .)
-
-
-state 92
-
-    (109) h -> INTEGER_VALUE .
-
-    TIMES           reduce using rule 109 (h -> INTEGER_VALUE .)
-    DIVIDE          reduce using rule 109 (h -> INTEGER_VALUE .)
-    PLUS            reduce using rule 109 (h -> INTEGER_VALUE .)
-    MINUS           reduce using rule 109 (h -> INTEGER_VALUE .)
-    EQUALS          reduce using rule 109 (h -> INTEGER_VALUE .)
-    NOT_EQ          reduce using rule 109 (h -> INTEGER_VALUE .)
-    LESS_THAN       reduce using rule 109 (h -> INTEGER_VALUE .)
-    GREATER_THAN    reduce using rule 109 (h -> INTEGER_VALUE .)
-    LESS_EQ         reduce using rule 109 (h -> INTEGER_VALUE .)
-    GREATER_EQ      reduce using rule 109 (h -> INTEGER_VALUE .)
-    AND             reduce using rule 109 (h -> INTEGER_VALUE .)
-    OR              reduce using rule 109 (h -> INTEGER_VALUE .)
-    SEMICOLON       reduce using rule 109 (h -> INTEGER_VALUE .)
-    THEN            reduce using rule 109 (h -> INTEGER_VALUE .)
-    BEGIN           reduce using rule 109 (h -> INTEGER_VALUE .)
-    R_PAREN         reduce using rule 109 (h -> INTEGER_VALUE .)
-    COMMA           reduce using rule 109 (h -> INTEGER_VALUE .)
-    AS              reduce using rule 109 (h -> INTEGER_VALUE .)
-    END             reduce using rule 109 (h -> INTEGER_VALUE .)
-    WHEN            reduce using rule 109 (h -> INTEGER_VALUE .)
-    ELSE            reduce using rule 109 (h -> INTEGER_VALUE .)
-    WHERE           reduce using rule 109 (h -> INTEGER_VALUE .)
-
-
-state 93
-
-    (110) h -> DECIMAL_VALUE .
-
-    TIMES           reduce using rule 110 (h -> DECIMAL_VALUE .)
-    DIVIDE          reduce using rule 110 (h -> DECIMAL_VALUE .)
-    PLUS            reduce using rule 110 (h -> DECIMAL_VALUE .)
-    MINUS           reduce using rule 110 (h -> DECIMAL_VALUE .)
-    EQUALS          reduce using rule 110 (h -> DECIMAL_VALUE .)
-    NOT_EQ          reduce using rule 110 (h -> DECIMAL_VALUE .)
-    LESS_THAN       reduce using rule 110 (h -> DECIMAL_VALUE .)
-    GREATER_THAN    reduce using rule 110 (h -> DECIMAL_VALUE .)
-    LESS_EQ         reduce using rule 110 (h -> DECIMAL_VALUE .)
-    GREATER_EQ      reduce using rule 110 (h -> DECIMAL_VALUE .)
-    AND             reduce using rule 110 (h -> DECIMAL_VALUE .)
-    OR              reduce using rule 110 (h -> DECIMAL_VALUE .)
-    SEMICOLON       reduce using rule 110 (h -> DECIMAL_VALUE .)
-    THEN            reduce using rule 110 (h -> DECIMAL_VALUE .)
-    BEGIN           reduce using rule 110 (h -> DECIMAL_VALUE .)
-    R_PAREN         reduce using rule 110 (h -> DECIMAL_VALUE .)
-    COMMA           reduce using rule 110 (h -> DECIMAL_VALUE .)
-    AS              reduce using rule 110 (h -> DECIMAL_VALUE .)
-    END             reduce using rule 110 (h -> DECIMAL_VALUE .)
-    WHEN            reduce using rule 110 (h -> DECIMAL_VALUE .)
-    ELSE            reduce using rule 110 (h -> DECIMAL_VALUE .)
-    WHERE           reduce using rule 110 (h -> DECIMAL_VALUE .)
-
-
-state 94
-
-    (111) h -> STRING .
-
-    TIMES           reduce using rule 111 (h -> STRING .)
-    DIVIDE          reduce using rule 111 (h -> STRING .)
-    PLUS            reduce using rule 111 (h -> STRING .)
-    MINUS           reduce using rule 111 (h -> STRING .)
-    EQUALS          reduce using rule 111 (h -> STRING .)
-    NOT_EQ          reduce using rule 111 (h -> STRING .)
-    LESS_THAN       reduce using rule 111 (h -> STRING .)
-    GREATER_THAN    reduce using rule 111 (h -> STRING .)
-    LESS_EQ         reduce using rule 111 (h -> STRING .)
-    GREATER_EQ      reduce using rule 111 (h -> STRING .)
-    AND             reduce using rule 111 (h -> STRING .)
-    OR              reduce using rule 111 (h -> STRING .)
-    SEMICOLON       reduce using rule 111 (h -> STRING .)
-    THEN            reduce using rule 111 (h -> STRING .)
-    BEGIN           reduce using rule 111 (h -> STRING .)
-    R_PAREN         reduce using rule 111 (h -> STRING .)
-    COMMA           reduce using rule 111 (h -> STRING .)
-    AS              reduce using rule 111 (h -> STRING .)
-    END             reduce using rule 111 (h -> STRING .)
-    WHEN            reduce using rule 111 (h -> STRING .)
-    ELSE            reduce using rule 111 (h -> STRING .)
-    WHERE           reduce using rule 111 (h -> STRING .)
-
-
-state 95
-
-    (112) h -> ID .
-
-    TIMES           reduce using rule 112 (h -> ID .)
-    DIVIDE          reduce using rule 112 (h -> ID .)
-    PLUS            reduce using rule 112 (h -> ID .)
-    MINUS           reduce using rule 112 (h -> ID .)
-    EQUALS          reduce using rule 112 (h -> ID .)
-    NOT_EQ          reduce using rule 112 (h -> ID .)
-    LESS_THAN       reduce using rule 112 (h -> ID .)
-    GREATER_THAN    reduce using rule 112 (h -> ID .)
-    LESS_EQ         reduce using rule 112 (h -> ID .)
-    GREATER_EQ      reduce using rule 112 (h -> ID .)
-    AND             reduce using rule 112 (h -> ID .)
-    OR              reduce using rule 112 (h -> ID .)
-    SEMICOLON       reduce using rule 112 (h -> ID .)
-    THEN            reduce using rule 112 (h -> ID .)
-    BEGIN           reduce using rule 112 (h -> ID .)
-    R_PAREN         reduce using rule 112 (h -> ID .)
-    COMMA           reduce using rule 112 (h -> ID .)
-    AS              reduce using rule 112 (h -> ID .)
-    END             reduce using rule 112 (h -> ID .)
-    WHEN            reduce using rule 112 (h -> ID .)
-    ELSE            reduce using rule 112 (h -> ID .)
-    WHERE           reduce using rule 112 (h -> ID .)
-
-
-state 96
-
-    (113) h -> NAME .
-
-    TIMES           reduce using rule 113 (h -> NAME .)
-    DIVIDE          reduce using rule 113 (h -> NAME .)
-    PLUS            reduce using rule 113 (h -> NAME .)
-    MINUS           reduce using rule 113 (h -> NAME .)
-    EQUALS          reduce using rule 113 (h -> NAME .)
-    NOT_EQ          reduce using rule 113 (h -> NAME .)
-    LESS_THAN       reduce using rule 113 (h -> NAME .)
-    GREATER_THAN    reduce using rule 113 (h -> NAME .)
-    LESS_EQ         reduce using rule 113 (h -> NAME .)
-    GREATER_EQ      reduce using rule 113 (h -> NAME .)
-    AND             reduce using rule 113 (h -> NAME .)
-    OR              reduce using rule 113 (h -> NAME .)
-    SEMICOLON       reduce using rule 113 (h -> NAME .)
-    THEN            reduce using rule 113 (h -> NAME .)
-    BEGIN           reduce using rule 113 (h -> NAME .)
-    R_PAREN         reduce using rule 113 (h -> NAME .)
-    COMMA           reduce using rule 113 (h -> NAME .)
-    AS              reduce using rule 113 (h -> NAME .)
-    END             reduce using rule 113 (h -> NAME .)
-    WHEN            reduce using rule 113 (h -> NAME .)
-    ELSE            reduce using rule 113 (h -> NAME .)
-    WHERE           reduce using rule 113 (h -> NAME .)
-
-
-state 97
+state 82
 
     (114) h -> L_PAREN . a R_PAREN
     (88) a -> . a OR b
@@ -2319,14 +1924,14 @@ state 97
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -2335,19 +1940,446 @@ state 97
     CONTAR          shift and go to state 43
     SUMA            shift and go to state 44
 
-    a                              shift and go to state 149
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    a                              shift and go to state 136
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
-state 98
+state 83
+
+    (91) b -> c .
+
+    AND             reduce using rule 91 (b -> c .)
+    NAME            reduce using rule 91 (b -> c .)
+    OR              reduce using rule 91 (b -> c .)
+    SEMICOLON       reduce using rule 91 (b -> c .)
+    THEN            reduce using rule 91 (b -> c .)
+    BEGIN           reduce using rule 91 (b -> c .)
+    R_PAREN         reduce using rule 91 (b -> c .)
+    COMMA           reduce using rule 91 (b -> c .)
+    AS              reduce using rule 91 (b -> c .)
+    EQUALS          reduce using rule 91 (b -> c .)
+    NOT_EQ          reduce using rule 91 (b -> c .)
+    LESS_THAN       reduce using rule 91 (b -> c .)
+    GREATER_THAN    reduce using rule 91 (b -> c .)
+    LESS_EQ         reduce using rule 91 (b -> c .)
+    GREATER_EQ      reduce using rule 91 (b -> c .)
+    TIMES           reduce using rule 91 (b -> c .)
+    DIVIDE          reduce using rule 91 (b -> c .)
+    PLUS            reduce using rule 91 (b -> c .)
+    MINUS           reduce using rule 91 (b -> c .)
+    END             reduce using rule 91 (b -> c .)
+    WHEN            reduce using rule 91 (b -> c .)
+    ELSE            reduce using rule 91 (b -> c .)
+    WHERE           reduce using rule 91 (b -> c .)
+
+
+state 84
+
+    (92) c -> NOT_SIGN . d
+    (94) d -> . d EQUALS e
+    (95) d -> . d NOT_EQ e
+    (96) d -> . d LESS_THAN e
+    (97) d -> . d GREATER_THAN e
+    (98) d -> . d LESS_EQ e
+    (99) d -> . d GREATER_EQ e
+    (100) d -> . e
+    (101) e -> . e PLUS f
+    (102) e -> . e MINUS f
+    (103) e -> . f
+    (104) f -> . f TIMES g
+    (105) f -> . f DIVIDE g
+    (106) f -> . g
+    (107) g -> . MINUS h
+    (108) g -> . h
+    (109) h -> . INTEGER_VALUE
+    (110) h -> . DECIMAL_VALUE
+    (111) h -> . STRING
+    (112) h -> . ID
+    (113) h -> . NAME
+    (114) h -> . L_PAREN a R_PAREN
+    (115) h -> . exec_statement
+    (116) h -> . call_function_statement
+    (67) exec_statement -> . EXEC NAME vals
+    (68) exec_statement -> . EXEC NAME args
+    (69) exec_statement -> . EXEC NAME
+    (117) call_function_statement -> . function_name_prod L_PAREN vals R_PAREN
+    (118) call_function_statement -> . function_name_prod L_PAREN R_PAREN
+    (119) call_function_statement -> . CAS L_PAREN a AS type R_PAREN
+    (120) function_name_prod -> . HOY
+    (121) function_name_prod -> . CONCATENA
+    (122) function_name_prod -> . SUBSTRAER
+    (123) function_name_prod -> . CONTAR
+    (124) function_name_prod -> . SUMA
+
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
+    EXEC            shift and go to state 35
+    CAS             shift and go to state 31
+    HOY             shift and go to state 40
+    CONCATENA       shift and go to state 41
+    SUBSTRAER       shift and go to state 42
+    CONTAR          shift and go to state 43
+    SUMA            shift and go to state 44
+
+    d                              shift and go to state 137
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
+    function_name_prod             shift and go to state 30
+
+state 85
+
+    (93) c -> d .
+    (94) d -> d . EQUALS e
+    (95) d -> d . NOT_EQ e
+    (96) d -> d . LESS_THAN e
+    (97) d -> d . GREATER_THAN e
+    (98) d -> d . LESS_EQ e
+    (99) d -> d . GREATER_EQ e
+
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for NOT_EQ resolved as shift
+  ! shift/reduce conflict for LESS_THAN resolved as shift
+  ! shift/reduce conflict for GREATER_THAN resolved as shift
+  ! shift/reduce conflict for LESS_EQ resolved as shift
+  ! shift/reduce conflict for GREATER_EQ resolved as shift
+    AND             reduce using rule 93 (c -> d .)
+    NAME            reduce using rule 93 (c -> d .)
+    OR              reduce using rule 93 (c -> d .)
+    SEMICOLON       reduce using rule 93 (c -> d .)
+    THEN            reduce using rule 93 (c -> d .)
+    BEGIN           reduce using rule 93 (c -> d .)
+    R_PAREN         reduce using rule 93 (c -> d .)
+    COMMA           reduce using rule 93 (c -> d .)
+    AS              reduce using rule 93 (c -> d .)
+    TIMES           reduce using rule 93 (c -> d .)
+    DIVIDE          reduce using rule 93 (c -> d .)
+    PLUS            reduce using rule 93 (c -> d .)
+    MINUS           reduce using rule 93 (c -> d .)
+    END             reduce using rule 93 (c -> d .)
+    WHEN            reduce using rule 93 (c -> d .)
+    ELSE            reduce using rule 93 (c -> d .)
+    WHERE           reduce using rule 93 (c -> d .)
+    EQUALS          shift and go to state 138
+    NOT_EQ          shift and go to state 139
+    LESS_THAN       shift and go to state 140
+    GREATER_THAN    shift and go to state 141
+    LESS_EQ         shift and go to state 142
+    GREATER_EQ      shift and go to state 143
+
+  ! EQUALS          [ reduce using rule 93 (c -> d .) ]
+  ! NOT_EQ          [ reduce using rule 93 (c -> d .) ]
+  ! LESS_THAN       [ reduce using rule 93 (c -> d .) ]
+  ! GREATER_THAN    [ reduce using rule 93 (c -> d .) ]
+  ! LESS_EQ         [ reduce using rule 93 (c -> d .) ]
+  ! GREATER_EQ      [ reduce using rule 93 (c -> d .) ]
+
+
+state 86
+
+    (100) d -> e .
+    (101) e -> e . PLUS f
+    (102) e -> e . MINUS f
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+    EQUALS          reduce using rule 100 (d -> e .)
+    NOT_EQ          reduce using rule 100 (d -> e .)
+    LESS_THAN       reduce using rule 100 (d -> e .)
+    GREATER_THAN    reduce using rule 100 (d -> e .)
+    LESS_EQ         reduce using rule 100 (d -> e .)
+    GREATER_EQ      reduce using rule 100 (d -> e .)
+    AND             reduce using rule 100 (d -> e .)
+    NAME            reduce using rule 100 (d -> e .)
+    OR              reduce using rule 100 (d -> e .)
+    SEMICOLON       reduce using rule 100 (d -> e .)
+    THEN            reduce using rule 100 (d -> e .)
+    BEGIN           reduce using rule 100 (d -> e .)
+    R_PAREN         reduce using rule 100 (d -> e .)
+    COMMA           reduce using rule 100 (d -> e .)
+    AS              reduce using rule 100 (d -> e .)
+    TIMES           reduce using rule 100 (d -> e .)
+    DIVIDE          reduce using rule 100 (d -> e .)
+    END             reduce using rule 100 (d -> e .)
+    WHEN            reduce using rule 100 (d -> e .)
+    ELSE            reduce using rule 100 (d -> e .)
+    WHERE           reduce using rule 100 (d -> e .)
+    PLUS            shift and go to state 144
+    MINUS           shift and go to state 145
+
+  ! PLUS            [ reduce using rule 100 (d -> e .) ]
+  ! MINUS           [ reduce using rule 100 (d -> e .) ]
+
+
+state 87
+
+    (103) e -> f .
+    (104) f -> f . TIMES g
+    (105) f -> f . DIVIDE g
+
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    PLUS            reduce using rule 103 (e -> f .)
+    MINUS           reduce using rule 103 (e -> f .)
+    EQUALS          reduce using rule 103 (e -> f .)
+    NOT_EQ          reduce using rule 103 (e -> f .)
+    LESS_THAN       reduce using rule 103 (e -> f .)
+    GREATER_THAN    reduce using rule 103 (e -> f .)
+    LESS_EQ         reduce using rule 103 (e -> f .)
+    GREATER_EQ      reduce using rule 103 (e -> f .)
+    AND             reduce using rule 103 (e -> f .)
+    NAME            reduce using rule 103 (e -> f .)
+    OR              reduce using rule 103 (e -> f .)
+    SEMICOLON       reduce using rule 103 (e -> f .)
+    THEN            reduce using rule 103 (e -> f .)
+    BEGIN           reduce using rule 103 (e -> f .)
+    R_PAREN         reduce using rule 103 (e -> f .)
+    COMMA           reduce using rule 103 (e -> f .)
+    AS              reduce using rule 103 (e -> f .)
+    END             reduce using rule 103 (e -> f .)
+    WHEN            reduce using rule 103 (e -> f .)
+    ELSE            reduce using rule 103 (e -> f .)
+    WHERE           reduce using rule 103 (e -> f .)
+    TIMES           shift and go to state 146
+    DIVIDE          shift and go to state 147
+
+  ! TIMES           [ reduce using rule 103 (e -> f .) ]
+  ! DIVIDE          [ reduce using rule 103 (e -> f .) ]
+
+
+state 88
+
+    (107) g -> MINUS . h
+    (109) h -> . INTEGER_VALUE
+    (110) h -> . DECIMAL_VALUE
+    (111) h -> . STRING
+    (112) h -> . ID
+    (113) h -> . NAME
+    (114) h -> . L_PAREN a R_PAREN
+    (115) h -> . exec_statement
+    (116) h -> . call_function_statement
+    (67) exec_statement -> . EXEC NAME vals
+    (68) exec_statement -> . EXEC NAME args
+    (69) exec_statement -> . EXEC NAME
+    (117) call_function_statement -> . function_name_prod L_PAREN vals R_PAREN
+    (118) call_function_statement -> . function_name_prod L_PAREN R_PAREN
+    (119) call_function_statement -> . CAS L_PAREN a AS type R_PAREN
+    (120) function_name_prod -> . HOY
+    (121) function_name_prod -> . CONCATENA
+    (122) function_name_prod -> . SUBSTRAER
+    (123) function_name_prod -> . CONTAR
+    (124) function_name_prod -> . SUMA
+
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
+    EXEC            shift and go to state 35
+    CAS             shift and go to state 31
+    HOY             shift and go to state 40
+    CONCATENA       shift and go to state 41
+    SUBSTRAER       shift and go to state 42
+    CONTAR          shift and go to state 43
+    SUMA            shift and go to state 44
+
+    h                              shift and go to state 148
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
+    function_name_prod             shift and go to state 30
+
+state 89
+
+    (106) f -> g .
+
+    TIMES           reduce using rule 106 (f -> g .)
+    DIVIDE          reduce using rule 106 (f -> g .)
+    PLUS            reduce using rule 106 (f -> g .)
+    MINUS           reduce using rule 106 (f -> g .)
+    EQUALS          reduce using rule 106 (f -> g .)
+    NOT_EQ          reduce using rule 106 (f -> g .)
+    LESS_THAN       reduce using rule 106 (f -> g .)
+    GREATER_THAN    reduce using rule 106 (f -> g .)
+    LESS_EQ         reduce using rule 106 (f -> g .)
+    GREATER_EQ      reduce using rule 106 (f -> g .)
+    AND             reduce using rule 106 (f -> g .)
+    NAME            reduce using rule 106 (f -> g .)
+    OR              reduce using rule 106 (f -> g .)
+    SEMICOLON       reduce using rule 106 (f -> g .)
+    THEN            reduce using rule 106 (f -> g .)
+    BEGIN           reduce using rule 106 (f -> g .)
+    R_PAREN         reduce using rule 106 (f -> g .)
+    COMMA           reduce using rule 106 (f -> g .)
+    AS              reduce using rule 106 (f -> g .)
+    END             reduce using rule 106 (f -> g .)
+    WHEN            reduce using rule 106 (f -> g .)
+    ELSE            reduce using rule 106 (f -> g .)
+    WHERE           reduce using rule 106 (f -> g .)
+
+
+state 90
+
+    (108) g -> h .
+
+    TIMES           reduce using rule 108 (g -> h .)
+    DIVIDE          reduce using rule 108 (g -> h .)
+    PLUS            reduce using rule 108 (g -> h .)
+    MINUS           reduce using rule 108 (g -> h .)
+    EQUALS          reduce using rule 108 (g -> h .)
+    NOT_EQ          reduce using rule 108 (g -> h .)
+    LESS_THAN       reduce using rule 108 (g -> h .)
+    GREATER_THAN    reduce using rule 108 (g -> h .)
+    LESS_EQ         reduce using rule 108 (g -> h .)
+    GREATER_EQ      reduce using rule 108 (g -> h .)
+    AND             reduce using rule 108 (g -> h .)
+    NAME            reduce using rule 108 (g -> h .)
+    OR              reduce using rule 108 (g -> h .)
+    SEMICOLON       reduce using rule 108 (g -> h .)
+    THEN            reduce using rule 108 (g -> h .)
+    BEGIN           reduce using rule 108 (g -> h .)
+    R_PAREN         reduce using rule 108 (g -> h .)
+    COMMA           reduce using rule 108 (g -> h .)
+    AS              reduce using rule 108 (g -> h .)
+    END             reduce using rule 108 (g -> h .)
+    WHEN            reduce using rule 108 (g -> h .)
+    ELSE            reduce using rule 108 (g -> h .)
+    WHERE           reduce using rule 108 (g -> h .)
+
+
+state 91
+
+    (109) h -> INTEGER_VALUE .
+
+    TIMES           reduce using rule 109 (h -> INTEGER_VALUE .)
+    DIVIDE          reduce using rule 109 (h -> INTEGER_VALUE .)
+    PLUS            reduce using rule 109 (h -> INTEGER_VALUE .)
+    MINUS           reduce using rule 109 (h -> INTEGER_VALUE .)
+    EQUALS          reduce using rule 109 (h -> INTEGER_VALUE .)
+    NOT_EQ          reduce using rule 109 (h -> INTEGER_VALUE .)
+    LESS_THAN       reduce using rule 109 (h -> INTEGER_VALUE .)
+    GREATER_THAN    reduce using rule 109 (h -> INTEGER_VALUE .)
+    LESS_EQ         reduce using rule 109 (h -> INTEGER_VALUE .)
+    GREATER_EQ      reduce using rule 109 (h -> INTEGER_VALUE .)
+    AND             reduce using rule 109 (h -> INTEGER_VALUE .)
+    NAME            reduce using rule 109 (h -> INTEGER_VALUE .)
+    OR              reduce using rule 109 (h -> INTEGER_VALUE .)
+    SEMICOLON       reduce using rule 109 (h -> INTEGER_VALUE .)
+    THEN            reduce using rule 109 (h -> INTEGER_VALUE .)
+    BEGIN           reduce using rule 109 (h -> INTEGER_VALUE .)
+    R_PAREN         reduce using rule 109 (h -> INTEGER_VALUE .)
+    COMMA           reduce using rule 109 (h -> INTEGER_VALUE .)
+    AS              reduce using rule 109 (h -> INTEGER_VALUE .)
+    END             reduce using rule 109 (h -> INTEGER_VALUE .)
+    WHEN            reduce using rule 109 (h -> INTEGER_VALUE .)
+    ELSE            reduce using rule 109 (h -> INTEGER_VALUE .)
+    WHERE           reduce using rule 109 (h -> INTEGER_VALUE .)
+
+
+state 92
+
+    (110) h -> DECIMAL_VALUE .
+
+    TIMES           reduce using rule 110 (h -> DECIMAL_VALUE .)
+    DIVIDE          reduce using rule 110 (h -> DECIMAL_VALUE .)
+    PLUS            reduce using rule 110 (h -> DECIMAL_VALUE .)
+    MINUS           reduce using rule 110 (h -> DECIMAL_VALUE .)
+    EQUALS          reduce using rule 110 (h -> DECIMAL_VALUE .)
+    NOT_EQ          reduce using rule 110 (h -> DECIMAL_VALUE .)
+    LESS_THAN       reduce using rule 110 (h -> DECIMAL_VALUE .)
+    GREATER_THAN    reduce using rule 110 (h -> DECIMAL_VALUE .)
+    LESS_EQ         reduce using rule 110 (h -> DECIMAL_VALUE .)
+    GREATER_EQ      reduce using rule 110 (h -> DECIMAL_VALUE .)
+    AND             reduce using rule 110 (h -> DECIMAL_VALUE .)
+    NAME            reduce using rule 110 (h -> DECIMAL_VALUE .)
+    OR              reduce using rule 110 (h -> DECIMAL_VALUE .)
+    SEMICOLON       reduce using rule 110 (h -> DECIMAL_VALUE .)
+    THEN            reduce using rule 110 (h -> DECIMAL_VALUE .)
+    BEGIN           reduce using rule 110 (h -> DECIMAL_VALUE .)
+    R_PAREN         reduce using rule 110 (h -> DECIMAL_VALUE .)
+    COMMA           reduce using rule 110 (h -> DECIMAL_VALUE .)
+    AS              reduce using rule 110 (h -> DECIMAL_VALUE .)
+    END             reduce using rule 110 (h -> DECIMAL_VALUE .)
+    WHEN            reduce using rule 110 (h -> DECIMAL_VALUE .)
+    ELSE            reduce using rule 110 (h -> DECIMAL_VALUE .)
+    WHERE           reduce using rule 110 (h -> DECIMAL_VALUE .)
+
+
+state 93
+
+    (111) h -> STRING .
+
+    TIMES           reduce using rule 111 (h -> STRING .)
+    DIVIDE          reduce using rule 111 (h -> STRING .)
+    PLUS            reduce using rule 111 (h -> STRING .)
+    MINUS           reduce using rule 111 (h -> STRING .)
+    EQUALS          reduce using rule 111 (h -> STRING .)
+    NOT_EQ          reduce using rule 111 (h -> STRING .)
+    LESS_THAN       reduce using rule 111 (h -> STRING .)
+    GREATER_THAN    reduce using rule 111 (h -> STRING .)
+    LESS_EQ         reduce using rule 111 (h -> STRING .)
+    GREATER_EQ      reduce using rule 111 (h -> STRING .)
+    AND             reduce using rule 111 (h -> STRING .)
+    NAME            reduce using rule 111 (h -> STRING .)
+    OR              reduce using rule 111 (h -> STRING .)
+    SEMICOLON       reduce using rule 111 (h -> STRING .)
+    THEN            reduce using rule 111 (h -> STRING .)
+    BEGIN           reduce using rule 111 (h -> STRING .)
+    R_PAREN         reduce using rule 111 (h -> STRING .)
+    COMMA           reduce using rule 111 (h -> STRING .)
+    AS              reduce using rule 111 (h -> STRING .)
+    END             reduce using rule 111 (h -> STRING .)
+    WHEN            reduce using rule 111 (h -> STRING .)
+    ELSE            reduce using rule 111 (h -> STRING .)
+    WHERE           reduce using rule 111 (h -> STRING .)
+
+
+state 94
+
+    (112) h -> ID .
+
+    TIMES           reduce using rule 112 (h -> ID .)
+    DIVIDE          reduce using rule 112 (h -> ID .)
+    PLUS            reduce using rule 112 (h -> ID .)
+    MINUS           reduce using rule 112 (h -> ID .)
+    EQUALS          reduce using rule 112 (h -> ID .)
+    NOT_EQ          reduce using rule 112 (h -> ID .)
+    LESS_THAN       reduce using rule 112 (h -> ID .)
+    GREATER_THAN    reduce using rule 112 (h -> ID .)
+    LESS_EQ         reduce using rule 112 (h -> ID .)
+    GREATER_EQ      reduce using rule 112 (h -> ID .)
+    AND             reduce using rule 112 (h -> ID .)
+    NAME            reduce using rule 112 (h -> ID .)
+    OR              reduce using rule 112 (h -> ID .)
+    SEMICOLON       reduce using rule 112 (h -> ID .)
+    THEN            reduce using rule 112 (h -> ID .)
+    BEGIN           reduce using rule 112 (h -> ID .)
+    R_PAREN         reduce using rule 112 (h -> ID .)
+    COMMA           reduce using rule 112 (h -> ID .)
+    AS              reduce using rule 112 (h -> ID .)
+    END             reduce using rule 112 (h -> ID .)
+    WHEN            reduce using rule 112 (h -> ID .)
+    ELSE            reduce using rule 112 (h -> ID .)
+    WHERE           reduce using rule 112 (h -> ID .)
+
+
+state 95
 
     (115) h -> exec_statement .
 
@@ -2362,6 +2394,7 @@ state 98
     LESS_EQ         reduce using rule 115 (h -> exec_statement .)
     GREATER_EQ      reduce using rule 115 (h -> exec_statement .)
     AND             reduce using rule 115 (h -> exec_statement .)
+    NAME            reduce using rule 115 (h -> exec_statement .)
     OR              reduce using rule 115 (h -> exec_statement .)
     SEMICOLON       reduce using rule 115 (h -> exec_statement .)
     THEN            reduce using rule 115 (h -> exec_statement .)
@@ -2375,7 +2408,7 @@ state 98
     WHERE           reduce using rule 115 (h -> exec_statement .)
 
 
-state 99
+state 96
 
     (116) h -> call_function_statement .
 
@@ -2390,6 +2423,7 @@ state 99
     LESS_EQ         reduce using rule 116 (h -> call_function_statement .)
     GREATER_EQ      reduce using rule 116 (h -> call_function_statement .)
     AND             reduce using rule 116 (h -> call_function_statement .)
+    NAME            reduce using rule 116 (h -> call_function_statement .)
     OR              reduce using rule 116 (h -> call_function_statement .)
     SEMICOLON       reduce using rule 116 (h -> call_function_statement .)
     THEN            reduce using rule 116 (h -> call_function_statement .)
@@ -2401,6 +2435,51 @@ state 99
     WHEN            reduce using rule 116 (h -> call_function_statement .)
     ELSE            reduce using rule 116 (h -> call_function_statement .)
     WHERE           reduce using rule 116 (h -> call_function_statement .)
+
+
+state 97
+
+    (41) insert_statement -> INSERT INTO . NAME L_PAREN column_names R_PAREN VALUES L_PAREN vals R_PAREN
+
+    NAME            shift and go to state 149
+
+
+state 98
+
+    (125) return_statement -> RETURN a .
+    (88) a -> a . OR b
+
+    SEMICOLON       reduce using rule 125 (return_statement -> RETURN a .)
+    OR              shift and go to state 129
+
+
+state 99
+
+    (113) h -> NAME .
+
+    TIMES           reduce using rule 113 (h -> NAME .)
+    DIVIDE          reduce using rule 113 (h -> NAME .)
+    PLUS            reduce using rule 113 (h -> NAME .)
+    MINUS           reduce using rule 113 (h -> NAME .)
+    EQUALS          reduce using rule 113 (h -> NAME .)
+    NOT_EQ          reduce using rule 113 (h -> NAME .)
+    LESS_THAN       reduce using rule 113 (h -> NAME .)
+    GREATER_THAN    reduce using rule 113 (h -> NAME .)
+    LESS_EQ         reduce using rule 113 (h -> NAME .)
+    GREATER_EQ      reduce using rule 113 (h -> NAME .)
+    AND             reduce using rule 113 (h -> NAME .)
+    OR              reduce using rule 113 (h -> NAME .)
+    SEMICOLON       reduce using rule 113 (h -> NAME .)
+    THEN            reduce using rule 113 (h -> NAME .)
+    BEGIN           reduce using rule 113 (h -> NAME .)
+    R_PAREN         reduce using rule 113 (h -> NAME .)
+    NAME            reduce using rule 113 (h -> NAME .)
+    COMMA           reduce using rule 113 (h -> NAME .)
+    AS              reduce using rule 113 (h -> NAME .)
+    END             reduce using rule 113 (h -> NAME .)
+    WHEN            reduce using rule 113 (h -> NAME .)
+    ELSE            reduce using rule 113 (h -> NAME .)
+    WHERE           reduce using rule 113 (h -> NAME .)
 
 
 state 100
@@ -2451,14 +2530,14 @@ state 100
     (124) function_name_prod -> . SUMA
 
     R_PAREN         shift and go to state 151
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -2470,15 +2549,15 @@ state 100
     function_name_prod             shift and go to state 30
     vals                           shift and go to state 150
     a                              shift and go to state 152
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
 
 state 101
 
@@ -2524,14 +2603,14 @@ state 101
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -2541,15 +2620,15 @@ state 101
     SUMA            shift and go to state 44
 
     a                              shift and go to state 153
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 102
@@ -2574,7 +2653,7 @@ state 104
     (88) a -> a . OR b
 
     THEN            shift and go to state 156
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
 
 state 105
@@ -2622,14 +2701,14 @@ state 105
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -2639,15 +2718,15 @@ state 105
     SUMA            shift and go to state 44
 
     a                              shift and go to state 157
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 106
@@ -2701,6 +2780,7 @@ state 106
     (124) function_name_prod -> . SUMA
 
   ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for NAME resolved as shift
     SEMICOLON       reduce using rule 69 (exec_statement -> EXEC NAME .)
     TIMES           reduce using rule 69 (exec_statement -> EXEC NAME .)
     DIVIDE          reduce using rule 69 (exec_statement -> EXEC NAME .)
@@ -2723,13 +2803,13 @@ state 106
     ELSE            reduce using rule 69 (exec_statement -> EXEC NAME .)
     WHERE           reduce using rule 69 (exec_statement -> EXEC NAME .)
     ID              shift and go to state 160
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -2739,19 +2819,20 @@ state 106
     SUMA            shift and go to state 44
 
   ! MINUS           [ reduce using rule 69 (exec_statement -> EXEC NAME .) ]
+  ! NAME            [ reduce using rule 69 (exec_statement -> EXEC NAME .) ]
 
     vals                           shift and go to state 158
     args                           shift and go to state 159
     a                              shift and go to state 152
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 107
@@ -2767,7 +2848,7 @@ state 108
     (88) a -> a . OR b
 
     BEGIN           shift and go to state 162
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
 
 state 109
@@ -2961,14 +3042,14 @@ state 124
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -2978,15 +3059,15 @@ state 124
     SUMA            shift and go to state 44
 
     a                              shift and go to state 173
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 125
@@ -3004,26 +3085,66 @@ state 126
     (47) column -> . NAME
     (48) column -> . NAME DOT NAME
     (49) column -> . case_statement NAME
-    (50) column -> . call_function_statement NAME
+    (50) column -> . a NAME
     (51) column -> . if_statement NAME
     (79) case_statement -> . CASE when_statements END NAME
-    (117) call_function_statement -> . function_name_prod L_PAREN vals R_PAREN
-    (118) call_function_statement -> . function_name_prod L_PAREN R_PAREN
-    (119) call_function_statement -> . CAS L_PAREN a AS type R_PAREN
+    (88) a -> . a OR b
+    (89) a -> . b
     (64) if_statement -> . IF a THEN statements END IF
     (65) if_statement -> . IF a THEN statements ELSE statements END IF
     (66) if_statement -> . IF L_PAREN a COMMA a COMMA a R_PAREN
+    (90) b -> . b AND c
+    (91) b -> . c
+    (92) c -> . NOT_SIGN d
+    (93) c -> . d
+    (94) d -> . d EQUALS e
+    (95) d -> . d NOT_EQ e
+    (96) d -> . d LESS_THAN e
+    (97) d -> . d GREATER_THAN e
+    (98) d -> . d LESS_EQ e
+    (99) d -> . d GREATER_EQ e
+    (100) d -> . e
+    (101) e -> . e PLUS f
+    (102) e -> . e MINUS f
+    (103) e -> . f
+    (104) f -> . f TIMES g
+    (105) f -> . f DIVIDE g
+    (106) f -> . g
+    (107) g -> . MINUS h
+    (108) g -> . h
+    (109) h -> . INTEGER_VALUE
+    (110) h -> . DECIMAL_VALUE
+    (111) h -> . STRING
+    (112) h -> . ID
+    (113) h -> . NAME
+    (114) h -> . L_PAREN a R_PAREN
+    (115) h -> . exec_statement
+    (116) h -> . call_function_statement
+    (67) exec_statement -> . EXEC NAME vals
+    (68) exec_statement -> . EXEC NAME args
+    (69) exec_statement -> . EXEC NAME
+    (117) call_function_statement -> . function_name_prod L_PAREN vals R_PAREN
+    (118) call_function_statement -> . function_name_prod L_PAREN R_PAREN
+    (119) call_function_statement -> . CAS L_PAREN a AS type R_PAREN
     (120) function_name_prod -> . HOY
     (121) function_name_prod -> . CONCATENA
     (122) function_name_prod -> . SUBSTRAER
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    TIMES           shift and go to state 76
+    TIMES           shift and go to state 77
     NAME            shift and go to state 74
     CASE            shift and go to state 80
-    CAS             shift and go to state 31
     IF              shift and go to state 34
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    L_PAREN         shift and go to state 82
+    EXEC            shift and go to state 35
+    CAS             shift and go to state 31
     HOY             shift and go to state 40
     CONCATENA       shift and go to state 41
     SUBSTRAER       shift and go to state 42
@@ -3031,9 +3152,18 @@ state 126
     SUMA            shift and go to state 44
 
     column                         shift and go to state 175
-    case_statement                 shift and go to state 77
-    call_function_statement        shift and go to state 78
+    case_statement                 shift and go to state 78
+    a                              shift and go to state 75
     if_statement                   shift and go to state 79
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 127
@@ -3045,21 +3175,90 @@ state 127
 
 state 128
 
+    (50) column -> a NAME .
+
+    FROM            reduce using rule 50 (column -> a NAME .)
+    COMMA           reduce using rule 50 (column -> a NAME .)
+
+
+state 129
+
+    (88) a -> a OR . b
+    (90) b -> . b AND c
+    (91) b -> . c
+    (92) c -> . NOT_SIGN d
+    (93) c -> . d
+    (94) d -> . d EQUALS e
+    (95) d -> . d NOT_EQ e
+    (96) d -> . d LESS_THAN e
+    (97) d -> . d GREATER_THAN e
+    (98) d -> . d LESS_EQ e
+    (99) d -> . d GREATER_EQ e
+    (100) d -> . e
+    (101) e -> . e PLUS f
+    (102) e -> . e MINUS f
+    (103) e -> . f
+    (104) f -> . f TIMES g
+    (105) f -> . f DIVIDE g
+    (106) f -> . g
+    (107) g -> . MINUS h
+    (108) g -> . h
+    (109) h -> . INTEGER_VALUE
+    (110) h -> . DECIMAL_VALUE
+    (111) h -> . STRING
+    (112) h -> . ID
+    (113) h -> . NAME
+    (114) h -> . L_PAREN a R_PAREN
+    (115) h -> . exec_statement
+    (116) h -> . call_function_statement
+    (67) exec_statement -> . EXEC NAME vals
+    (68) exec_statement -> . EXEC NAME args
+    (69) exec_statement -> . EXEC NAME
+    (117) call_function_statement -> . function_name_prod L_PAREN vals R_PAREN
+    (118) call_function_statement -> . function_name_prod L_PAREN R_PAREN
+    (119) call_function_statement -> . CAS L_PAREN a AS type R_PAREN
+    (120) function_name_prod -> . HOY
+    (121) function_name_prod -> . CONCATENA
+    (122) function_name_prod -> . SUBSTRAER
+    (123) function_name_prod -> . CONTAR
+    (124) function_name_prod -> . SUMA
+
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
+    EXEC            shift and go to state 35
+    CAS             shift and go to state 31
+    HOY             shift and go to state 40
+    CONCATENA       shift and go to state 41
+    SUBSTRAER       shift and go to state 42
+    CONTAR          shift and go to state 43
+    SUMA            shift and go to state 44
+
+    b                              shift and go to state 177
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
+    function_name_prod             shift and go to state 30
+
+state 130
+
     (49) column -> case_statement NAME .
 
     FROM            reduce using rule 49 (column -> case_statement NAME .)
     COMMA           reduce using rule 49 (column -> case_statement NAME .)
 
 
-state 129
-
-    (50) column -> call_function_statement NAME .
-
-    FROM            reduce using rule 50 (column -> call_function_statement NAME .)
-    COMMA           reduce using rule 50 (column -> call_function_statement NAME .)
-
-
-state 130
+state 131
 
     (51) column -> if_statement NAME .
 
@@ -3067,14 +3266,14 @@ state 130
     COMMA           reduce using rule 51 (column -> if_statement NAME .)
 
 
-state 131
+state 132
 
     (79) case_statement -> CASE when_statements . END NAME
 
-    END             shift and go to state 177
+    END             shift and go to state 178
 
 
-state 132
+state 133
 
     (80) when_statements -> WHEN . a THEN a when_statements
     (88) a -> . a OR b
@@ -3118,14 +3317,14 @@ state 132
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -3134,102 +3333,26 @@ state 132
     CONTAR          shift and go to state 43
     SUMA            shift and go to state 44
 
-    a                              shift and go to state 178
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    a                              shift and go to state 179
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
-
-state 133
-
-    (81) when_statements -> ELSE . THEN a
-
-    THEN            shift and go to state 179
-
 
 state 134
 
-    (41) insert_statement -> INSERT INTO NAME . L_PAREN column_names R_PAREN VALUES L_PAREN vals R_PAREN
+    (81) when_statements -> ELSE . THEN a
 
-    L_PAREN         shift and go to state 180
+    THEN            shift and go to state 180
 
 
 state 135
-
-    (88) a -> a OR . b
-    (90) b -> . b AND c
-    (91) b -> . c
-    (92) c -> . NOT_SIGN d
-    (93) c -> . d
-    (94) d -> . d EQUALS e
-    (95) d -> . d NOT_EQ e
-    (96) d -> . d LESS_THAN e
-    (97) d -> . d GREATER_THAN e
-    (98) d -> . d LESS_EQ e
-    (99) d -> . d GREATER_EQ e
-    (100) d -> . e
-    (101) e -> . e PLUS f
-    (102) e -> . e MINUS f
-    (103) e -> . f
-    (104) f -> . f TIMES g
-    (105) f -> . f DIVIDE g
-    (106) f -> . g
-    (107) g -> . MINUS h
-    (108) g -> . h
-    (109) h -> . INTEGER_VALUE
-    (110) h -> . DECIMAL_VALUE
-    (111) h -> . STRING
-    (112) h -> . ID
-    (113) h -> . NAME
-    (114) h -> . L_PAREN a R_PAREN
-    (115) h -> . exec_statement
-    (116) h -> . call_function_statement
-    (67) exec_statement -> . EXEC NAME vals
-    (68) exec_statement -> . EXEC NAME args
-    (69) exec_statement -> . EXEC NAME
-    (117) call_function_statement -> . function_name_prod L_PAREN vals R_PAREN
-    (118) call_function_statement -> . function_name_prod L_PAREN R_PAREN
-    (119) call_function_statement -> . CAS L_PAREN a AS type R_PAREN
-    (120) function_name_prod -> . HOY
-    (121) function_name_prod -> . CONCATENA
-    (122) function_name_prod -> . SUBSTRAER
-    (123) function_name_prod -> . CONTAR
-    (124) function_name_prod -> . SUMA
-
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
-    EXEC            shift and go to state 35
-    CAS             shift and go to state 31
-    HOY             shift and go to state 40
-    CONCATENA       shift and go to state 41
-    SUBSTRAER       shift and go to state 42
-    CONTAR          shift and go to state 43
-    SUMA            shift and go to state 44
-
-    b                              shift and go to state 181
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
-    function_name_prod             shift and go to state 30
-
-state 136
 
     (90) b -> b AND . c
     (92) c -> . NOT_SIGN d
@@ -3269,14 +3392,14 @@ state 136
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -3285,15 +3408,24 @@ state 136
     CONTAR          shift and go to state 43
     SUMA            shift and go to state 44
 
-    c                              shift and go to state 182
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    c                              shift and go to state 181
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
+
+state 136
+
+    (114) h -> L_PAREN a . R_PAREN
+    (88) a -> a . OR b
+
+    R_PAREN         shift and go to state 182
+    OR              shift and go to state 129
+
 
 state 137
 
@@ -3312,6 +3444,7 @@ state 137
   ! shift/reduce conflict for LESS_EQ resolved as shift
   ! shift/reduce conflict for GREATER_EQ resolved as shift
     AND             reduce using rule 92 (c -> NOT_SIGN d .)
+    NAME            reduce using rule 92 (c -> NOT_SIGN d .)
     OR              reduce using rule 92 (c -> NOT_SIGN d .)
     SEMICOLON       reduce using rule 92 (c -> NOT_SIGN d .)
     THEN            reduce using rule 92 (c -> NOT_SIGN d .)
@@ -3373,13 +3506,13 @@ state 138
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -3389,11 +3522,11 @@ state 138
     SUMA            shift and go to state 44
 
     e                              shift and go to state 183
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 139
@@ -3427,13 +3560,13 @@ state 139
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -3443,11 +3576,11 @@ state 139
     SUMA            shift and go to state 44
 
     e                              shift and go to state 184
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 140
@@ -3481,13 +3614,13 @@ state 140
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -3497,11 +3630,11 @@ state 140
     SUMA            shift and go to state 44
 
     e                              shift and go to state 185
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 141
@@ -3535,13 +3668,13 @@ state 141
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -3551,11 +3684,11 @@ state 141
     SUMA            shift and go to state 44
 
     e                              shift and go to state 186
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 142
@@ -3589,13 +3722,13 @@ state 142
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -3605,11 +3738,11 @@ state 142
     SUMA            shift and go to state 44
 
     e                              shift and go to state 187
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 143
@@ -3643,13 +3776,13 @@ state 143
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -3659,11 +3792,11 @@ state 143
     SUMA            shift and go to state 44
 
     e                              shift and go to state 188
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 144
@@ -3694,13 +3827,13 @@ state 144
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -3710,10 +3843,10 @@ state 144
     SUMA            shift and go to state 44
 
     f                              shift and go to state 189
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 145
@@ -3744,13 +3877,13 @@ state 145
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -3760,10 +3893,10 @@ state 145
     SUMA            shift and go to state 44
 
     f                              shift and go to state 190
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 146
@@ -3791,13 +3924,13 @@ state 146
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -3807,9 +3940,9 @@ state 146
     SUMA            shift and go to state 44
 
     g                              shift and go to state 191
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 147
@@ -3837,13 +3970,13 @@ state 147
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -3853,9 +3986,9 @@ state 147
     SUMA            shift and go to state 44
 
     g                              shift and go to state 192
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 148
@@ -3873,6 +4006,7 @@ state 148
     LESS_EQ         reduce using rule 107 (g -> MINUS h .)
     GREATER_EQ      reduce using rule 107 (g -> MINUS h .)
     AND             reduce using rule 107 (g -> MINUS h .)
+    NAME            reduce using rule 107 (g -> MINUS h .)
     OR              reduce using rule 107 (g -> MINUS h .)
     SEMICOLON       reduce using rule 107 (g -> MINUS h .)
     THEN            reduce using rule 107 (g -> MINUS h .)
@@ -3888,11 +4022,9 @@ state 148
 
 state 149
 
-    (114) h -> L_PAREN a . R_PAREN
-    (88) a -> a . OR b
+    (41) insert_statement -> INSERT INTO NAME . L_PAREN column_names R_PAREN VALUES L_PAREN vals R_PAREN
 
-    R_PAREN         shift and go to state 193
-    OR              shift and go to state 135
+    L_PAREN         shift and go to state 193
 
 
 state 150
@@ -3909,7 +4041,6 @@ state 151
     (118) call_function_statement -> function_name_prod L_PAREN R_PAREN .
 
     SEMICOLON       reduce using rule 118 (call_function_statement -> function_name_prod L_PAREN R_PAREN .)
-    NAME            reduce using rule 118 (call_function_statement -> function_name_prod L_PAREN R_PAREN .)
     TIMES           reduce using rule 118 (call_function_statement -> function_name_prod L_PAREN R_PAREN .)
     DIVIDE          reduce using rule 118 (call_function_statement -> function_name_prod L_PAREN R_PAREN .)
     PLUS            reduce using rule 118 (call_function_statement -> function_name_prod L_PAREN R_PAREN .)
@@ -3921,6 +4052,7 @@ state 151
     LESS_EQ         reduce using rule 118 (call_function_statement -> function_name_prod L_PAREN R_PAREN .)
     GREATER_EQ      reduce using rule 118 (call_function_statement -> function_name_prod L_PAREN R_PAREN .)
     AND             reduce using rule 118 (call_function_statement -> function_name_prod L_PAREN R_PAREN .)
+    NAME            reduce using rule 118 (call_function_statement -> function_name_prod L_PAREN R_PAREN .)
     OR              reduce using rule 118 (call_function_statement -> function_name_prod L_PAREN R_PAREN .)
     THEN            reduce using rule 118 (call_function_statement -> function_name_prod L_PAREN R_PAREN .)
     BEGIN           reduce using rule 118 (call_function_statement -> function_name_prod L_PAREN R_PAREN .)
@@ -3948,6 +4080,7 @@ state 152
     LESS_EQ         reduce using rule 53 (vals -> a .)
     GREATER_EQ      reduce using rule 53 (vals -> a .)
     AND             reduce using rule 53 (vals -> a .)
+    NAME            reduce using rule 53 (vals -> a .)
     SEMICOLON       reduce using rule 53 (vals -> a .)
     THEN            reduce using rule 53 (vals -> a .)
     BEGIN           reduce using rule 53 (vals -> a .)
@@ -3960,7 +4093,7 @@ state 152
     WHEN            reduce using rule 53 (vals -> a .)
     ELSE            reduce using rule 53 (vals -> a .)
     WHERE           reduce using rule 53 (vals -> a .)
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
   ! OR              [ reduce using rule 53 (vals -> a .) ]
 
@@ -3971,7 +4104,7 @@ state 153
     (88) a -> a . OR b
 
     AS              shift and go to state 196
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
 
 state 154
@@ -4103,8 +4236,8 @@ state 157
     (88) a -> a . OR b
 
     COMMA           shift and go to state 200
-    R_PAREN         shift and go to state 193
-    OR              shift and go to state 135
+    R_PAREN         shift and go to state 182
+    OR              shift and go to state 129
 
 
 state 158
@@ -4125,6 +4258,7 @@ state 158
     LESS_EQ         reduce using rule 67 (exec_statement -> EXEC NAME vals .)
     GREATER_EQ      reduce using rule 67 (exec_statement -> EXEC NAME vals .)
     AND             reduce using rule 67 (exec_statement -> EXEC NAME vals .)
+    NAME            reduce using rule 67 (exec_statement -> EXEC NAME vals .)
     OR              reduce using rule 67 (exec_statement -> EXEC NAME vals .)
     THEN            reduce using rule 67 (exec_statement -> EXEC NAME vals .)
     BEGIN           reduce using rule 67 (exec_statement -> EXEC NAME vals .)
@@ -4157,6 +4291,7 @@ state 159
     LESS_EQ         reduce using rule 68 (exec_statement -> EXEC NAME args .)
     GREATER_EQ      reduce using rule 68 (exec_statement -> EXEC NAME args .)
     AND             reduce using rule 68 (exec_statement -> EXEC NAME args .)
+    NAME            reduce using rule 68 (exec_statement -> EXEC NAME args .)
     OR              reduce using rule 68 (exec_statement -> EXEC NAME args .)
     THEN            reduce using rule 68 (exec_statement -> EXEC NAME args .)
     BEGIN           reduce using rule 68 (exec_statement -> EXEC NAME args .)
@@ -4184,6 +4319,7 @@ state 160
     LESS_EQ         reduce using rule 112 (h -> ID .)
     GREATER_EQ      reduce using rule 112 (h -> ID .)
     AND             reduce using rule 112 (h -> ID .)
+    NAME            reduce using rule 112 (h -> ID .)
     OR              reduce using rule 112 (h -> ID .)
     SEMICOLON       reduce using rule 112 (h -> ID .)
     THEN            reduce using rule 112 (h -> ID .)
@@ -4430,14 +4566,14 @@ state 170
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -4447,15 +4583,15 @@ state 170
     SUMA            shift and go to state 44
 
     a                              shift and go to state 215
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 171
@@ -4502,14 +4638,14 @@ state 171
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -4519,15 +4655,15 @@ state 171
     SUMA            shift and go to state 44
 
     a                              shift and go to state 216
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 172
@@ -4544,7 +4680,7 @@ state 173
 
     COMMA           reduce using rule 29 (assignments -> ID ASSIGN a .)
     SEMICOLON       reduce using rule 29 (assignments -> ID ASSIGN a .)
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
 
 state 174
@@ -4574,21 +4710,54 @@ state 176
 
 state 177
 
+    (88) a -> a OR b .
+    (90) b -> b . AND c
+
+  ! shift/reduce conflict for AND resolved as shift
+    NAME            reduce using rule 88 (a -> a OR b .)
+    OR              reduce using rule 88 (a -> a OR b .)
+    SEMICOLON       reduce using rule 88 (a -> a OR b .)
+    THEN            reduce using rule 88 (a -> a OR b .)
+    BEGIN           reduce using rule 88 (a -> a OR b .)
+    R_PAREN         reduce using rule 88 (a -> a OR b .)
+    COMMA           reduce using rule 88 (a -> a OR b .)
+    AS              reduce using rule 88 (a -> a OR b .)
+    EQUALS          reduce using rule 88 (a -> a OR b .)
+    NOT_EQ          reduce using rule 88 (a -> a OR b .)
+    LESS_THAN       reduce using rule 88 (a -> a OR b .)
+    GREATER_THAN    reduce using rule 88 (a -> a OR b .)
+    LESS_EQ         reduce using rule 88 (a -> a OR b .)
+    GREATER_EQ      reduce using rule 88 (a -> a OR b .)
+    TIMES           reduce using rule 88 (a -> a OR b .)
+    DIVIDE          reduce using rule 88 (a -> a OR b .)
+    PLUS            reduce using rule 88 (a -> a OR b .)
+    MINUS           reduce using rule 88 (a -> a OR b .)
+    END             reduce using rule 88 (a -> a OR b .)
+    WHEN            reduce using rule 88 (a -> a OR b .)
+    ELSE            reduce using rule 88 (a -> a OR b .)
+    WHERE           reduce using rule 88 (a -> a OR b .)
+    AND             shift and go to state 135
+
+  ! AND             [ reduce using rule 88 (a -> a OR b .) ]
+
+
+state 178
+
     (79) case_statement -> CASE when_statements END . NAME
 
     NAME            shift and go to state 219
 
 
-state 178
+state 179
 
     (80) when_statements -> WHEN a . THEN a when_statements
     (88) a -> a . OR b
 
     THEN            shift and go to state 220
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
 
-state 179
+state 180
 
     (81) when_statements -> ELSE THEN . a
     (88) a -> . a OR b
@@ -4632,14 +4801,14 @@ state 179
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -4649,64 +4818,23 @@ state 179
     SUMA            shift and go to state 44
 
     a                              shift and go to state 221
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
-state 180
-
-    (41) insert_statement -> INSERT INTO NAME L_PAREN . column_names R_PAREN VALUES L_PAREN vals R_PAREN
-    (42) column_names -> . column_names COMMA NAME
-    (43) column_names -> . NAME
-
-    NAME            shift and go to state 222
-
-    column_names                   shift and go to state 223
-
 state 181
-
-    (88) a -> a OR b .
-    (90) b -> b . AND c
-
-  ! shift/reduce conflict for AND resolved as shift
-    OR              reduce using rule 88 (a -> a OR b .)
-    SEMICOLON       reduce using rule 88 (a -> a OR b .)
-    THEN            reduce using rule 88 (a -> a OR b .)
-    BEGIN           reduce using rule 88 (a -> a OR b .)
-    R_PAREN         reduce using rule 88 (a -> a OR b .)
-    COMMA           reduce using rule 88 (a -> a OR b .)
-    AS              reduce using rule 88 (a -> a OR b .)
-    EQUALS          reduce using rule 88 (a -> a OR b .)
-    NOT_EQ          reduce using rule 88 (a -> a OR b .)
-    LESS_THAN       reduce using rule 88 (a -> a OR b .)
-    GREATER_THAN    reduce using rule 88 (a -> a OR b .)
-    LESS_EQ         reduce using rule 88 (a -> a OR b .)
-    GREATER_EQ      reduce using rule 88 (a -> a OR b .)
-    TIMES           reduce using rule 88 (a -> a OR b .)
-    DIVIDE          reduce using rule 88 (a -> a OR b .)
-    PLUS            reduce using rule 88 (a -> a OR b .)
-    MINUS           reduce using rule 88 (a -> a OR b .)
-    END             reduce using rule 88 (a -> a OR b .)
-    WHEN            reduce using rule 88 (a -> a OR b .)
-    ELSE            reduce using rule 88 (a -> a OR b .)
-    WHERE           reduce using rule 88 (a -> a OR b .)
-    AND             shift and go to state 136
-
-  ! AND             [ reduce using rule 88 (a -> a OR b .) ]
-
-
-state 182
 
     (90) b -> b AND c .
 
     AND             reduce using rule 90 (b -> b AND c .)
+    NAME            reduce using rule 90 (b -> b AND c .)
     OR              reduce using rule 90 (b -> b AND c .)
     SEMICOLON       reduce using rule 90 (b -> b AND c .)
     THEN            reduce using rule 90 (b -> b AND c .)
@@ -4730,6 +4858,35 @@ state 182
     WHERE           reduce using rule 90 (b -> b AND c .)
 
 
+state 182
+
+    (114) h -> L_PAREN a R_PAREN .
+
+    TIMES           reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    DIVIDE          reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    PLUS            reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    MINUS           reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    EQUALS          reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    NOT_EQ          reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    LESS_THAN       reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    GREATER_THAN    reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    LESS_EQ         reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    GREATER_EQ      reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    AND             reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    NAME            reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    OR              reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    SEMICOLON       reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    THEN            reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    BEGIN           reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    R_PAREN         reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    COMMA           reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    AS              reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    END             reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    WHEN            reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    ELSE            reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    WHERE           reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+
+
 state 183
 
     (94) d -> d EQUALS e .
@@ -4745,6 +4902,7 @@ state 183
     LESS_EQ         reduce using rule 94 (d -> d EQUALS e .)
     GREATER_EQ      reduce using rule 94 (d -> d EQUALS e .)
     AND             reduce using rule 94 (d -> d EQUALS e .)
+    NAME            reduce using rule 94 (d -> d EQUALS e .)
     OR              reduce using rule 94 (d -> d EQUALS e .)
     SEMICOLON       reduce using rule 94 (d -> d EQUALS e .)
     THEN            reduce using rule 94 (d -> d EQUALS e .)
@@ -4780,6 +4938,7 @@ state 184
     LESS_EQ         reduce using rule 95 (d -> d NOT_EQ e .)
     GREATER_EQ      reduce using rule 95 (d -> d NOT_EQ e .)
     AND             reduce using rule 95 (d -> d NOT_EQ e .)
+    NAME            reduce using rule 95 (d -> d NOT_EQ e .)
     OR              reduce using rule 95 (d -> d NOT_EQ e .)
     SEMICOLON       reduce using rule 95 (d -> d NOT_EQ e .)
     THEN            reduce using rule 95 (d -> d NOT_EQ e .)
@@ -4815,6 +4974,7 @@ state 185
     LESS_EQ         reduce using rule 96 (d -> d LESS_THAN e .)
     GREATER_EQ      reduce using rule 96 (d -> d LESS_THAN e .)
     AND             reduce using rule 96 (d -> d LESS_THAN e .)
+    NAME            reduce using rule 96 (d -> d LESS_THAN e .)
     OR              reduce using rule 96 (d -> d LESS_THAN e .)
     SEMICOLON       reduce using rule 96 (d -> d LESS_THAN e .)
     THEN            reduce using rule 96 (d -> d LESS_THAN e .)
@@ -4850,6 +5010,7 @@ state 186
     LESS_EQ         reduce using rule 97 (d -> d GREATER_THAN e .)
     GREATER_EQ      reduce using rule 97 (d -> d GREATER_THAN e .)
     AND             reduce using rule 97 (d -> d GREATER_THAN e .)
+    NAME            reduce using rule 97 (d -> d GREATER_THAN e .)
     OR              reduce using rule 97 (d -> d GREATER_THAN e .)
     SEMICOLON       reduce using rule 97 (d -> d GREATER_THAN e .)
     THEN            reduce using rule 97 (d -> d GREATER_THAN e .)
@@ -4885,6 +5046,7 @@ state 187
     LESS_EQ         reduce using rule 98 (d -> d LESS_EQ e .)
     GREATER_EQ      reduce using rule 98 (d -> d LESS_EQ e .)
     AND             reduce using rule 98 (d -> d LESS_EQ e .)
+    NAME            reduce using rule 98 (d -> d LESS_EQ e .)
     OR              reduce using rule 98 (d -> d LESS_EQ e .)
     SEMICOLON       reduce using rule 98 (d -> d LESS_EQ e .)
     THEN            reduce using rule 98 (d -> d LESS_EQ e .)
@@ -4920,6 +5082,7 @@ state 188
     LESS_EQ         reduce using rule 99 (d -> d GREATER_EQ e .)
     GREATER_EQ      reduce using rule 99 (d -> d GREATER_EQ e .)
     AND             reduce using rule 99 (d -> d GREATER_EQ e .)
+    NAME            reduce using rule 99 (d -> d GREATER_EQ e .)
     OR              reduce using rule 99 (d -> d GREATER_EQ e .)
     SEMICOLON       reduce using rule 99 (d -> d GREATER_EQ e .)
     THEN            reduce using rule 99 (d -> d GREATER_EQ e .)
@@ -4957,6 +5120,7 @@ state 189
     LESS_EQ         reduce using rule 101 (e -> e PLUS f .)
     GREATER_EQ      reduce using rule 101 (e -> e PLUS f .)
     AND             reduce using rule 101 (e -> e PLUS f .)
+    NAME            reduce using rule 101 (e -> e PLUS f .)
     OR              reduce using rule 101 (e -> e PLUS f .)
     SEMICOLON       reduce using rule 101 (e -> e PLUS f .)
     THEN            reduce using rule 101 (e -> e PLUS f .)
@@ -4992,6 +5156,7 @@ state 190
     LESS_EQ         reduce using rule 102 (e -> e MINUS f .)
     GREATER_EQ      reduce using rule 102 (e -> e MINUS f .)
     AND             reduce using rule 102 (e -> e MINUS f .)
+    NAME            reduce using rule 102 (e -> e MINUS f .)
     OR              reduce using rule 102 (e -> e MINUS f .)
     SEMICOLON       reduce using rule 102 (e -> e MINUS f .)
     THEN            reduce using rule 102 (e -> e MINUS f .)
@@ -5025,6 +5190,7 @@ state 191
     LESS_EQ         reduce using rule 104 (f -> f TIMES g .)
     GREATER_EQ      reduce using rule 104 (f -> f TIMES g .)
     AND             reduce using rule 104 (f -> f TIMES g .)
+    NAME            reduce using rule 104 (f -> f TIMES g .)
     OR              reduce using rule 104 (f -> f TIMES g .)
     SEMICOLON       reduce using rule 104 (f -> f TIMES g .)
     THEN            reduce using rule 104 (f -> f TIMES g .)
@@ -5053,6 +5219,7 @@ state 192
     LESS_EQ         reduce using rule 105 (f -> f DIVIDE g .)
     GREATER_EQ      reduce using rule 105 (f -> f DIVIDE g .)
     AND             reduce using rule 105 (f -> f DIVIDE g .)
+    NAME            reduce using rule 105 (f -> f DIVIDE g .)
     OR              reduce using rule 105 (f -> f DIVIDE g .)
     SEMICOLON       reduce using rule 105 (f -> f DIVIDE g .)
     THEN            reduce using rule 105 (f -> f DIVIDE g .)
@@ -5068,38 +5235,19 @@ state 192
 
 state 193
 
-    (114) h -> L_PAREN a R_PAREN .
+    (41) insert_statement -> INSERT INTO NAME L_PAREN . column_names R_PAREN VALUES L_PAREN vals R_PAREN
+    (42) column_names -> . column_names COMMA NAME
+    (43) column_names -> . NAME
 
-    TIMES           reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    DIVIDE          reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    PLUS            reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    MINUS           reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    EQUALS          reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    NOT_EQ          reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    LESS_THAN       reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    GREATER_THAN    reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    LESS_EQ         reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    GREATER_EQ      reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    AND             reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    OR              reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    SEMICOLON       reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    THEN            reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    BEGIN           reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    R_PAREN         reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    COMMA           reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    AS              reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    END             reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    WHEN            reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    ELSE            reduce using rule 114 (h -> L_PAREN a R_PAREN .)
-    WHERE           reduce using rule 114 (h -> L_PAREN a R_PAREN .)
+    NAME            shift and go to state 222
 
+    column_names                   shift and go to state 223
 
 state 194
 
     (117) call_function_statement -> function_name_prod L_PAREN vals R_PAREN .
 
     SEMICOLON       reduce using rule 117 (call_function_statement -> function_name_prod L_PAREN vals R_PAREN .)
-    NAME            reduce using rule 117 (call_function_statement -> function_name_prod L_PAREN vals R_PAREN .)
     TIMES           reduce using rule 117 (call_function_statement -> function_name_prod L_PAREN vals R_PAREN .)
     DIVIDE          reduce using rule 117 (call_function_statement -> function_name_prod L_PAREN vals R_PAREN .)
     PLUS            reduce using rule 117 (call_function_statement -> function_name_prod L_PAREN vals R_PAREN .)
@@ -5111,6 +5259,7 @@ state 194
     LESS_EQ         reduce using rule 117 (call_function_statement -> function_name_prod L_PAREN vals R_PAREN .)
     GREATER_EQ      reduce using rule 117 (call_function_statement -> function_name_prod L_PAREN vals R_PAREN .)
     AND             reduce using rule 117 (call_function_statement -> function_name_prod L_PAREN vals R_PAREN .)
+    NAME            reduce using rule 117 (call_function_statement -> function_name_prod L_PAREN vals R_PAREN .)
     OR              reduce using rule 117 (call_function_statement -> function_name_prod L_PAREN vals R_PAREN .)
     THEN            reduce using rule 117 (call_function_statement -> function_name_prod L_PAREN vals R_PAREN .)
     BEGIN           reduce using rule 117 (call_function_statement -> function_name_prod L_PAREN vals R_PAREN .)
@@ -5167,14 +5316,14 @@ state 195
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -5184,15 +5333,15 @@ state 195
     SUMA            shift and go to state 44
 
     a                              shift and go to state 224
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 196
@@ -5378,14 +5527,14 @@ state 200
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -5395,15 +5544,15 @@ state 200
     SUMA            shift and go to state 44
 
     a                              shift and go to state 230
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 201
@@ -5457,14 +5606,14 @@ state 202
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -5474,15 +5623,15 @@ state 202
     SUMA            shift and go to state 44
 
     a                              shift and go to state 232
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 203
@@ -5649,14 +5798,14 @@ state 206
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -5666,15 +5815,15 @@ state 206
     SUMA            shift and go to state 44
 
     a                              shift and go to state 237
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 207
@@ -5776,7 +5925,7 @@ state 215
     (88) a -> a . OR b
 
     R_PAREN         shift and go to state 248
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
 
 state 216
@@ -5785,7 +5934,7 @@ state 216
     (88) a -> a . OR b
 
     R_PAREN         shift and go to state 249
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
 
 state 217
@@ -5832,14 +5981,14 @@ state 217
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -5849,15 +5998,15 @@ state 217
     SUMA            shift and go to state 44
 
     a                              shift and go to state 250
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 218
@@ -5904,14 +6053,14 @@ state 218
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -5921,15 +6070,15 @@ state 218
     SUMA            shift and go to state 44
 
     a                              shift and go to state 251
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 219
@@ -5983,14 +6132,14 @@ state 220
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -6000,15 +6149,15 @@ state 220
     SUMA            shift and go to state 44
 
     a                              shift and go to state 252
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 221
@@ -6017,7 +6166,7 @@ state 221
     (88) a -> a . OR b
 
     END             reduce using rule 81 (when_statements -> ELSE THEN a .)
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
 
 state 222
@@ -6052,6 +6201,7 @@ state 224
     LESS_EQ         reduce using rule 52 (vals -> vals COMMA a .)
     GREATER_EQ      reduce using rule 52 (vals -> vals COMMA a .)
     AND             reduce using rule 52 (vals -> vals COMMA a .)
+    NAME            reduce using rule 52 (vals -> vals COMMA a .)
     SEMICOLON       reduce using rule 52 (vals -> vals COMMA a .)
     THEN            reduce using rule 52 (vals -> vals COMMA a .)
     BEGIN           reduce using rule 52 (vals -> vals COMMA a .)
@@ -6064,7 +6214,7 @@ state 224
     WHEN            reduce using rule 52 (vals -> vals COMMA a .)
     ELSE            reduce using rule 52 (vals -> vals COMMA a .)
     WHERE           reduce using rule 52 (vals -> vals COMMA a .)
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
   ! OR              [ reduce using rule 52 (vals -> vals COMMA a .) ]
 
@@ -6208,7 +6358,7 @@ state 230
     (88) a -> a . OR b
 
     COMMA           shift and go to state 260
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
 
 state 231
@@ -6231,6 +6381,7 @@ state 232
     LESS_EQ         reduce using rule 71 (args -> ID ASSIGN a .)
     GREATER_EQ      reduce using rule 71 (args -> ID ASSIGN a .)
     AND             reduce using rule 71 (args -> ID ASSIGN a .)
+    NAME            reduce using rule 71 (args -> ID ASSIGN a .)
     SEMICOLON       reduce using rule 71 (args -> ID ASSIGN a .)
     THEN            reduce using rule 71 (args -> ID ASSIGN a .)
     BEGIN           reduce using rule 71 (args -> ID ASSIGN a .)
@@ -6245,7 +6396,7 @@ state 232
     WHEN            reduce using rule 71 (args -> ID ASSIGN a .)
     ELSE            reduce using rule 71 (args -> ID ASSIGN a .)
     WHERE           reduce using rule 71 (args -> ID ASSIGN a .)
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
   ! OR              [ reduce using rule 71 (args -> ID ASSIGN a .) ]
 
@@ -6294,14 +6445,14 @@ state 233
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -6311,15 +6462,15 @@ state 233
     SUMA            shift and go to state 44
 
     a                              shift and go to state 262
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 234
@@ -6366,14 +6517,14 @@ state 234
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -6383,15 +6534,15 @@ state 234
     SUMA            shift and go to state 44
 
     a                              shift and go to state 263
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 235
@@ -6414,7 +6565,7 @@ state 237
     (88) a -> a . OR b
 
     SEMICOLON       reduce using rule 78 (delete_statement -> DELETE FROM NAME WHERE a .)
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
 
 state 238
@@ -6563,7 +6714,7 @@ state 250
 
     COMMA           reduce using rule 28 (assignments -> assignments COMMA ID ASSIGN a .)
     SEMICOLON       reduce using rule 28 (assignments -> assignments COMMA ID ASSIGN a .)
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
 
 state 251
@@ -6572,7 +6723,7 @@ state 251
     (88) a -> a . OR b
 
     SEMICOLON       reduce using rule 40 (select_statement -> SELECT columns FROM NAME WHERE a .)
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
 
 state 252
@@ -6582,9 +6733,9 @@ state 252
     (80) when_statements -> . WHEN a THEN a when_statements
     (81) when_statements -> . ELSE THEN a
 
-    OR              shift and go to state 135
-    WHEN            shift and go to state 132
-    ELSE            shift and go to state 133
+    OR              shift and go to state 129
+    WHEN            shift and go to state 133
+    ELSE            shift and go to state 134
 
     when_statements                shift and go to state 275
 
@@ -6607,7 +6758,6 @@ state 255
     (119) call_function_statement -> CAS L_PAREN a AS type R_PAREN .
 
     SEMICOLON       reduce using rule 119 (call_function_statement -> CAS L_PAREN a AS type R_PAREN .)
-    NAME            reduce using rule 119 (call_function_statement -> CAS L_PAREN a AS type R_PAREN .)
     TIMES           reduce using rule 119 (call_function_statement -> CAS L_PAREN a AS type R_PAREN .)
     DIVIDE          reduce using rule 119 (call_function_statement -> CAS L_PAREN a AS type R_PAREN .)
     PLUS            reduce using rule 119 (call_function_statement -> CAS L_PAREN a AS type R_PAREN .)
@@ -6619,6 +6769,7 @@ state 255
     LESS_EQ         reduce using rule 119 (call_function_statement -> CAS L_PAREN a AS type R_PAREN .)
     GREATER_EQ      reduce using rule 119 (call_function_statement -> CAS L_PAREN a AS type R_PAREN .)
     AND             reduce using rule 119 (call_function_statement -> CAS L_PAREN a AS type R_PAREN .)
+    NAME            reduce using rule 119 (call_function_statement -> CAS L_PAREN a AS type R_PAREN .)
     OR              reduce using rule 119 (call_function_statement -> CAS L_PAREN a AS type R_PAREN .)
     THEN            reduce using rule 119 (call_function_statement -> CAS L_PAREN a AS type R_PAREN .)
     BEGIN           reduce using rule 119 (call_function_statement -> CAS L_PAREN a AS type R_PAREN .)
@@ -6813,14 +6964,14 @@ state 260
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -6830,15 +6981,15 @@ state 260
     SUMA            shift and go to state 44
 
     a                              shift and go to state 280
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 261
@@ -6885,14 +7036,14 @@ state 261
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -6902,15 +7053,15 @@ state 261
     SUMA            shift and go to state 44
 
     a                              shift and go to state 281
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 262
@@ -6920,7 +7071,7 @@ state 262
 
     WHERE           reduce using rule 75 (column_assignments -> NAME ASSIGN a .)
     COMMA           reduce using rule 75 (column_assignments -> NAME ASSIGN a .)
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
 
 state 263
@@ -6929,7 +7080,7 @@ state 263
     (88) a -> a . OR b
 
     SEMICOLON       reduce using rule 73 (update_statement -> UPDATE NAME SET column_assignments WHERE a .)
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
 
 state 264
@@ -7185,7 +7336,7 @@ state 280
     (88) a -> a . OR b
 
     R_PAREN         shift and go to state 294
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
 
 state 281
@@ -7201,6 +7352,7 @@ state 281
     LESS_EQ         reduce using rule 70 (args -> args COMMA ID ASSIGN a .)
     GREATER_EQ      reduce using rule 70 (args -> args COMMA ID ASSIGN a .)
     AND             reduce using rule 70 (args -> args COMMA ID ASSIGN a .)
+    NAME            reduce using rule 70 (args -> args COMMA ID ASSIGN a .)
     SEMICOLON       reduce using rule 70 (args -> args COMMA ID ASSIGN a .)
     THEN            reduce using rule 70 (args -> args COMMA ID ASSIGN a .)
     BEGIN           reduce using rule 70 (args -> args COMMA ID ASSIGN a .)
@@ -7215,7 +7367,7 @@ state 281
     WHEN            reduce using rule 70 (args -> args COMMA ID ASSIGN a .)
     ELSE            reduce using rule 70 (args -> args COMMA ID ASSIGN a .)
     WHERE           reduce using rule 70 (args -> args COMMA ID ASSIGN a .)
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
   ! OR              [ reduce using rule 70 (args -> args COMMA ID ASSIGN a .) ]
 
@@ -7264,14 +7416,14 @@ state 282
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -7281,15 +7433,15 @@ state 282
     SUMA            shift and go to state 44
 
     a                              shift and go to state 295
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 283
@@ -7612,14 +7764,14 @@ state 292
     (123) function_name_prod -> . CONTAR
     (124) function_name_prod -> . SUMA
 
-    NOT_SIGN        shift and go to state 85
-    MINUS           shift and go to state 89
-    INTEGER_VALUE   shift and go to state 92
-    DECIMAL_VALUE   shift and go to state 93
-    STRING          shift and go to state 94
-    ID              shift and go to state 95
-    NAME            shift and go to state 96
-    L_PAREN         shift and go to state 97
+    NOT_SIGN        shift and go to state 84
+    MINUS           shift and go to state 88
+    INTEGER_VALUE   shift and go to state 91
+    DECIMAL_VALUE   shift and go to state 92
+    STRING          shift and go to state 93
+    ID              shift and go to state 94
+    NAME            shift and go to state 99
+    L_PAREN         shift and go to state 82
     EXEC            shift and go to state 35
     CAS             shift and go to state 31
     HOY             shift and go to state 40
@@ -7630,15 +7782,15 @@ state 292
 
     vals                           shift and go to state 303
     a                              shift and go to state 152
-    b                              shift and go to state 83
-    c                              shift and go to state 84
-    d                              shift and go to state 86
-    e                              shift and go to state 87
-    f                              shift and go to state 88
-    g                              shift and go to state 90
-    h                              shift and go to state 91
-    exec_statement                 shift and go to state 98
-    call_function_statement        shift and go to state 99
+    b                              shift and go to state 81
+    c                              shift and go to state 83
+    d                              shift and go to state 85
+    e                              shift and go to state 86
+    f                              shift and go to state 87
+    g                              shift and go to state 89
+    h                              shift and go to state 90
+    exec_statement                 shift and go to state 95
+    call_function_statement        shift and go to state 96
     function_name_prod             shift and go to state 30
 
 state 293
@@ -7664,7 +7816,7 @@ state 295
 
     WHERE           reduce using rule 74 (column_assignments -> column_assignments COMMA NAME ASSIGN a .)
     COMMA           reduce using rule 74 (column_assignments -> column_assignments COMMA NAME ASSIGN a .)
-    OR              shift and go to state 135
+    OR              shift and go to state 129
 
 
 state 296
@@ -8287,18 +8439,19 @@ state 313
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for AND in state 83 resolved as shift
-WARNING: shift/reduce conflict for EQUALS in state 86 resolved as shift
-WARNING: shift/reduce conflict for NOT_EQ in state 86 resolved as shift
-WARNING: shift/reduce conflict for LESS_THAN in state 86 resolved as shift
-WARNING: shift/reduce conflict for GREATER_THAN in state 86 resolved as shift
-WARNING: shift/reduce conflict for LESS_EQ in state 86 resolved as shift
-WARNING: shift/reduce conflict for GREATER_EQ in state 86 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 87 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 87 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 88 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 88 resolved as shift
+WARNING: shift/reduce conflict for AND in state 81 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 85 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQ in state 85 resolved as shift
+WARNING: shift/reduce conflict for LESS_THAN in state 85 resolved as shift
+WARNING: shift/reduce conflict for GREATER_THAN in state 85 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQ in state 85 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQ in state 85 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 86 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 86 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 87 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 87 resolved as shift
 WARNING: shift/reduce conflict for MINUS in state 106 resolved as shift
+WARNING: shift/reduce conflict for NAME in state 106 resolved as shift
 WARNING: shift/reduce conflict for EQUALS in state 137 resolved as shift
 WARNING: shift/reduce conflict for NOT_EQ in state 137 resolved as shift
 WARNING: shift/reduce conflict for LESS_THAN in state 137 resolved as shift
@@ -8308,7 +8461,7 @@ WARNING: shift/reduce conflict for GREATER_EQ in state 137 resolved as shift
 WARNING: shift/reduce conflict for OR in state 152 resolved as shift
 WARNING: shift/reduce conflict for COMMA in state 158 resolved as shift
 WARNING: shift/reduce conflict for COMMA in state 159 resolved as shift
-WARNING: shift/reduce conflict for AND in state 181 resolved as shift
+WARNING: shift/reduce conflict for AND in state 177 resolved as shift
 WARNING: shift/reduce conflict for PLUS in state 183 resolved as shift
 WARNING: shift/reduce conflict for MINUS in state 183 resolved as shift
 WARNING: shift/reduce conflict for PLUS in state 184 resolved as shift

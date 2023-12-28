@@ -179,8 +179,7 @@ def find_column(inp, token):
 
 
 def t_error(t):
-    error = xsql_error("Lexico","Error léxico." + t.value[0] , t.lexer.lineno, find_column(input, t))
-    errores_sintacticos.append(error)
+    # errores.append(Excepcion("Lexico","Error léxico." + t.value[0] , t.lexer.lineno, find_column(input, t)))
     t.lexer.skip(1)
 
 
@@ -436,7 +435,7 @@ def p_column_3(t):
 
 def p_column_4(t):
     """column   : case_statement NAME
-                | call_function_statement NAME
+                | a NAME
                 | if_statement NAME"""
     t[0] = TableColumn(t.lineno(1), t.slice[2], None, t[2], t[1])
 
@@ -521,7 +520,7 @@ def p_if_statement_2(t):
 
 def p_if_statement_3(t):
     'if_statement   : IF L_PAREN a COMMA a COMMA a R_PAREN'
-    t[0] = IfStatement(t.lineno(1), find_column(input, t.slice[1]), t[3], [t[5]], [t[7]])
+    t[0] = IfStatement(t.lineno(1), find_column(input, t.slice[1]), t[3], t[5], t[7])
 
 #### EXEC ####
 def p_exec_statement(t):
@@ -754,9 +753,8 @@ def p_return_statement(t):
 
 
 def p_error(t):
-    if t is not None :
-        error = xsql_error("Error sintactico", t.value, t.type, t.lineno - 1)
-        errores_sintacticos.append(error)
+    error = xsql_error("Error sintactico", t.value, t.type, t.lineno - 1)
+    errores_sintacticos.append(error)
     # print("Error sintáctico en '%s'" % t.value+" "+ t.type)
     # print(f'en linea {t.lineno-1}')
     # if t is not None:
@@ -777,7 +775,6 @@ def parse(inp):
 
     return result
 
-
 #####
 def limpiar_lista_errores():
     for error_sintactico in errores_sintacticos :
@@ -785,3 +782,6 @@ def limpiar_lista_errores():
 
 def obtener_matriz_resultante():
     return matriz_resultante
+
+def obtener_errores_sintacticos():
+    return errores_sintacticos

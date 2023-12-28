@@ -89,6 +89,9 @@ class ExecStatement(Instruction):
                         symbol_table = symbol_table.parent
 
                         return None
+                    find.value = arg.value
+                    symbol_table.add_variable(find)
+                    continue
 
                 if find.variable_type.type == 'date':
                     if not re.search("\d{2}-\d{2}-\d{4}", arg.value):
@@ -136,7 +139,9 @@ class ExecStatement(Instruction):
                         symbol_table = symbol_table.parent
 
                         return None
-
+                    parameter.value = args_result[i].value
+                    symbol_table.add_variable(parameter)
+                    continue
                 if parameter.variable_type.type == 'date':
                     if not re.search("\d{2}-\d{2}-\d{4}", args_result[i].value):
                         print('Date value was expected')
@@ -223,6 +228,9 @@ class ExecStatement(Instruction):
                         symbol_table = symbol_table.parent
 
                         return None
+                    find.value = arg.value
+                    symbol_table.add_variable(find)
+                    continue
 
                 if find.variable_type.type == 'date':
                     if not re.search("\d{2}-\d{2}-\d{4}", arg.value):
@@ -267,6 +275,9 @@ class ExecStatement(Instruction):
                         errors.append(self.semantic_error("The length value is too long"))
                         symbol_table = symbol_table.parent
                         return None
+                    parameter.value = args_result[i].value
+                    symbol_table.add_variable(parameter)
+                    continue
 
                 if parameter.variable_type.type == 'date':
                     if not re.search("\d{2}-\d{2}-\d{4}", args_result[i].value):

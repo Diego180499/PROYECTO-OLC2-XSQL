@@ -1,7 +1,7 @@
 
     <registros>
         <base_datos>school</base_datos>        
-        <tabla>student</tabla>
+        <tabla>students</tabla>
         
         <registro>
             
@@ -10,21 +10,13 @@
         <campo>first_name</campo>
         
         <campo>last_name</campo>
-        
-        <campo>age</campo>
-        
-        <campo>birthday</campo>
         
             
         <valor>1</valor>
         
-        <valor>Julian</valor>
+        <valor>José</valor>
         
-        <valor>Vega</valor>
-        
-        <valor>0</valor>
-        
-        <valor>01-01-1995</valor>
+        <valor>Castro</valor>
         
         </registro>                    
     
@@ -35,21 +27,13 @@
         <campo>first_name</campo>
         
         <campo>last_name</campo>
-        
-        <campo>age</campo>
-        
-        <campo>birthday</campo>
         
             
         <valor>2</valor>
         
-        <valor>Julia</valor>
+        <valor>Raquel</valor>
         
-        <valor>Monterroso</valor>
-        
-        <valor>0</valor>
-        
-        <valor>01-05-1999</valor>
+        <valor>Rodriguez</valor>
         
         </registro>                    
     
@@ -61,20 +45,12 @@
         
         <campo>last_name</campo>
         
-        <campo>age</campo>
-        
-        <campo>birthday</campo>
-        
             
         <valor>3</valor>
         
-        <valor>LucÃ­a</valor>
+        <valor>Martin</valor>
         
-        <valor>Gonzales</valor>
-        
-        <valor>0</valor>
-        
-        <valor>12-10-2000</valor>
+        <valor>Monterroso</valor>
         
         </registro>                    
     

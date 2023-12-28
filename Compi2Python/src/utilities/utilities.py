@@ -11,10 +11,6 @@ def errors_to_matrix(errors: []):
         matriz.append(new_error)
     return matriz
 
-
-
-
-
 def tabla_simbolos_a_matriz(tabla_simbolos : SymbolTable):
     matriz = []
     variables = tabla_simbolos.symbols

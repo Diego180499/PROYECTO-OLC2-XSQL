@@ -1,22 +1,18 @@
 
     <registros>
         <base_datos>school</base_datos>        
-        <tabla>professor</tabla>
+        <tabla>professors</tabla>
         
         <registro>
             
         <campo>id</campo>
         
-        <campo>first_name</campo>
-        
-        <campo>age</campo>
+        <campo>name</campo>
         
             
         <valor>1</valor>
         
-        <valor>Martin</valor>
-        
-        <valor>25</valor>
+        <valor>Ernesto</valor>
         
         </registro>                    
     
@@ -24,16 +20,25 @@
             
         <campo>id</campo>
         
-        <campo>first_name</campo>
-        
-        <campo>age</campo>
+        <campo>name</campo>
         
             
         <valor>2</valor>
         
-        <valor>María</valor>
+        <valor>Moises</valor>
         
-        <valor>20</valor>
+        </registro>                    
+    
+        <registro>
+            
+        <campo>id</campo>
+        
+        <campo>name</campo>
+        
+            
+        <valor>3</valor>
+        
+        <valor>Julio</valor>
         
         </registro>                    
     

@@ -36,6 +36,7 @@ class CreateTableStatement(Instruction):
 
             if property_result is None:
                 print("The property couldn't be declared")
+                errors.append("The property couldn't be declared")
                 symbol_table = symbol_table.parent
                 return None
 

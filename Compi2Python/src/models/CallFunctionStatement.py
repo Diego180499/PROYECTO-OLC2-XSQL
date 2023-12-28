@@ -21,6 +21,23 @@ class CallFunctionStatement(Instruction):
                 errors.append(self.semantic_error('an arg was expected'))
                 return None
 
+            value_result: Variable = self.args[0].execute(symbol_table, errors)
+
+            if value_result is None:
+                print("The argument doesn't return anything.")
+                errors.append("The argument doesn't return anything.")
+                return None
+
+            if value_result.variable_type.type != 'int' and value_result.variable_type.type != 'decimal':
+                print("suma function only allows int and decimal values")
+                errors.append(self.semantic_error("suma function only allows int and decimal values"))
+                return None
+
+            result = Variable()
+            result.variable_type = VariableType('int', 32)
+            result.value = int(value_result.value)
+            return result
+
         elif self.function_name == 'concatena':
             if len(self.args) != 2:
                 print('two args were expected')
@@ -86,8 +103,10 @@ class CallFunctionStatement(Instruction):
             return result
 
         elif self.function_name == 'contar':
-            # pendiente
-            pass
+            result = Variable()
+            result.variable_type = VariableType('int', 32)
+            result.value = 1
+            return result
         elif self.function_name == 'hoy':
             if len(self.args) > 0:
                 print('no args were expected')
@@ -101,6 +120,8 @@ class CallFunctionStatement(Instruction):
 
     def semantic_error(self, description):
         return xsql_error(description,'','Error Semantico',f'Linea {self.line} Columna {self.column}')
+
+
 
     def dot(self,nodo_padre, graficador):
         concurrent_node = graficador.agregarNode('call_function')

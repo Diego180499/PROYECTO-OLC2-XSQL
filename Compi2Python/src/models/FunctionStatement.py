@@ -21,6 +21,7 @@ class FunctionStatement(Instruction):
 
         if fun_in_table is not None:
             print("Function already exists")
+            errors.append(self.semantic_error("Function already exists"))
             return None
 
         params = []
@@ -30,12 +31,14 @@ class FunctionStatement(Instruction):
 
             if param_result is None:
                 print("The parameter couldn't be declared")
+                errors.append(self.semantic_error("The parameter couldn't be declared"))
                 return None
 
             find = any((p.id == param_result.id) for p in params)
 
             if find:
                 print('Parameter already exists')
+                errors.append(self.semantic_error('Parameter already exists'))
                 return None
 
             params.append(param_result)
@@ -46,10 +49,12 @@ class FunctionStatement(Instruction):
 
             if result is None:
                 print('value cannot be set to the data type')
+                errors.append(self.semantic_error('value cannot be set to the data type'))
                 return None
 
             if result.variable_type.type != 'int':
                 print('int type was expected')
+                errors.append(self.semantic_error('int type was expected'))
                 return None
 
             length = int(result.value)

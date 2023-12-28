@@ -1,20 +1,20 @@
 
     <registros>
         <base_datos>school</base_datos>        
-        <tabla>course</tabla>
+        <tabla>courses</tabla>
         
         <registro>
             
         <campo>id</campo>
         
-        <campo>course_name</campo>
+        <campo>name</campo>
         
-        <campo>id_professor</campo>
+        <campo>professor_id</campo>
         
             
         <valor>1</valor>
         
-        <valor>Chemistry</valor>
+        <valor>Physics</valor>
         
         <valor>1</valor>
         
@@ -24,16 +24,33 @@
             
         <campo>id</campo>
         
-        <campo>course_name</campo>
+        <campo>name</campo>
         
-        <campo>id_professor</campo>
+        <campo>professor_id</campo>
+        
+            
+        <valor>2</valor>
+        
+        <valor>Programming</valor>
+        
+        <valor>2</valor>
+        
+        </registro>                    
+    
+        <registro>
+            
+        <campo>id</campo>
+        
+        <campo>name</campo>
+        
+        <campo>professor_id</campo>
         
             
         <valor>3</valor>
         
         <valor>Math</valor>
         
-        <valor>2</valor>
+        <valor>3</valor>
         
         </registro>                    
     
