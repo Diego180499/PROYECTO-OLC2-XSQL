@@ -14,26 +14,9 @@
             
         <valor>1</valor>
         
-        <valor>José</valor>
+        <valor>JosÃ©</valor>
         
         <valor>Castro</valor>
-        
-        </registro>                    
-    
-        <registro>
-            
-        <campo>id</campo>
-        
-        <campo>first_name</campo>
-        
-        <campo>last_name</campo>
-        
-            
-        <valor>2</valor>
-        
-        <valor>Raquel</valor>
-        
-        <valor>Rodriguez</valor>
         
         </registro>                    
     
@@ -51,6 +34,23 @@
         <valor>Martin</valor>
         
         <valor>Monterroso</valor>
+        
+        </registro>                    
+    
+        <registro>
+            
+        <campo>id</campo>
+        
+        <campo>first_name</campo>
+        
+        <campo>last_name</campo>
+        
+            
+        <valor>2</valor>
+        
+        <valor>Raquel</valor>
+        
+        <valor>Cifuentes</valor>
         
         </registro>                    
     

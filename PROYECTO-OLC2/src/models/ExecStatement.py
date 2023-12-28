@@ -5,7 +5,7 @@ from .symbolTable.SymbolTable import SymbolTable
 from .symbolTable.ScopeType import ScopeType
 from .ProcedureModel import ProcedureModel
 from .FunctionModel import FunctionModel
-import re
+from re import search
 
 from ..error.xsql_error import xsql_error
 
@@ -94,7 +94,7 @@ class ExecStatement(Instruction):
                     continue
 
                 if find.variable_type.type == 'date':
-                    if not re.search("\d{2}-\d{2}-\d{4}", arg.value):
+                    if not search("\d{2}-\d{2}-\d{4}", arg.value):
                         print('Date value was expected')
                         errors.append(self.semantic_error('Date value was expected'))
                         symbol_table = symbol_table.parent
@@ -106,7 +106,7 @@ class ExecStatement(Instruction):
                     continue
 
                 if find.variable_type.type == 'datetime':
-                    if not re.search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", arg.value):
+                    if not search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", arg.value):
                         print('Datetime value was expected')
                         errors.append(self.semantic_error('Datetime value was expected'))
                         symbol_table = symbol_table.parent
@@ -143,7 +143,7 @@ class ExecStatement(Instruction):
                     symbol_table.add_variable(parameter)
                     continue
                 if parameter.variable_type.type == 'date':
-                    if not re.search("\d{2}-\d{2}-\d{4}", args_result[i].value):
+                    if not search("\d{2}-\d{2}-\d{4}", args_result[i].value):
                         print('Date value was expected')
                         errors.append(self.semantic_error('Date value was expected'))
                         symbol_table = symbol_table.parent
@@ -155,7 +155,7 @@ class ExecStatement(Instruction):
                     continue
 
                 if parameter.variable_type.type == 'datetime':
-                    if not re.search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", args_result[i].value):
+                    if not search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", args_result[i].value):
                         print('Datetime value was expected')
                         errors.append(self.semantic_error('Datetime value was expected'))
                         symbol_table = symbol_table.parent
@@ -233,7 +233,7 @@ class ExecStatement(Instruction):
                     continue
 
                 if find.variable_type.type == 'date':
-                    if not re.search("\d{2}-\d{2}-\d{4}", arg.value):
+                    if not search("\d{2}-\d{2}-\d{4}", arg.value):
                         print('Date value was expected')
                         errors.append(self.semantic_error('Date value was expected'))
                         symbol_table = symbol_table.parent
@@ -245,7 +245,7 @@ class ExecStatement(Instruction):
                     continue
 
                 if find.variable_type.type == 'datetime':
-                    if not re.search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", arg.value):
+                    if not search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", arg.value):
                         print('Datetime value was expected')
                         errors.append(self.semantic_error('Datetime value was expected'))
                         symbol_table = symbol_table.parent
@@ -280,7 +280,7 @@ class ExecStatement(Instruction):
                     continue
 
                 if parameter.variable_type.type == 'date':
-                    if not re.search("\d{2}-\d{2}-\d{4}", args_result[i].value):
+                    if not search("\d{2}-\d{2}-\d{4}", args_result[i].value):
                         print('Date value was expected')
                         errors.append(self.semantic_error('Date value was expected'))
                         symbol_table = symbol_table.parent
@@ -292,7 +292,7 @@ class ExecStatement(Instruction):
                     continue
 
                 if parameter.variable_type.type == 'datetime':
-                    if not re.search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", args_result[i].value):
+                    if not search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", args_result[i].value):
                         print('Datetime value was expected')
                         errors.append(self.semantic_error('Datetime value was expected'))
                         symbol_table = symbol_table.parent

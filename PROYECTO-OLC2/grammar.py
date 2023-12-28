@@ -220,6 +220,8 @@ from src.models.TruncateTableStatement import TruncateTableStatement
 from src.models.InsertStatement import InsertStatement
 from src.models.SelectStatement import SelectStatement
 from src.models.TableColumn import TableColumn
+from src.models.DeleteStatement import DeleteStatement
+from src.models.UpdateStatement import UpdateStatement
 from src.models.EOF import EOF
 
 sys.setrecursionlimit(10000000)
@@ -559,15 +561,22 @@ def p_drop_table_statement(t):
 #### UPDATE STATEMENT ####
 def p_update_statement(t):
     'update_statement   : UPDATE NAME SET column_assignments WHERE a'
+    t[0] = UpdateStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[4], t[6])
 
 
 #### COLUMN aSSIGNMENTS ####
 def p_column_assignments(t):
     'column_assignments  : column_assignments COMMA NAME ASSIGN a'
+    t[0] = t[1]
+    assignment = Assignment(t.lineno(1), find_column(input, t.slice[2]), t[3], t[5])
+    t[0].append(assignment)
 
 
 def p_column_assignments_2(t):
     'column_assignments : NAME ASSIGN a'
+    assignment = Assignment(t.lineno(1), find_column(input, t.slice[1]), t[1], t[3])
+    t[0] = []
+    t[0].append(assignment)
 
 
 #### WHILE STATEMENT ####
@@ -585,6 +594,7 @@ def p_truncate_statement(t):
 ### DELETE STATEMENT ###
 def p_delete_statement(t):
     'delete_statement : DELETE FROM NAME WHERE a'
+    t[0] = DeleteStatement(t.lineno(1), find_column(input, t.slice[1]), t[3], t[5])
 
 
 ### CASE STATEMENT ###

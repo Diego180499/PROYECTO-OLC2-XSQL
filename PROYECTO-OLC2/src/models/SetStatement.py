@@ -1,11 +1,8 @@
 from .Instruction import Instruction
 from .symbolTable.SymbolTable import SymbolTable
 from .Variable import Variable
-from .VariableType import VariableType
-import re
-
 from ..error.xsql_error import xsql_error
-
+from re import search
 
 class SetStatement(Instruction):
 
@@ -38,7 +35,7 @@ class SetStatement(Instruction):
                 continue
 
             if var_in_table.variable_type.type == 'date':
-                if not re.search("\d{2}-\d{2}-\d{4}", result.value):
+                if not search("\d{2}-\d{2}-\d{4}", result.value):
                     print('Date value was expected')
                     errors.append(self.semantic_error('Date value was expected'))
                     continue
@@ -47,7 +44,7 @@ class SetStatement(Instruction):
                 continue
 
             if var_in_table.variable_type.type == 'datetime':
-                if not re.search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", result.value):
+                if not search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", result.value):
                     print('Datetime value was expected')
                     errors.append(self.semantic_error('Datetime value was expected'))
                     continue

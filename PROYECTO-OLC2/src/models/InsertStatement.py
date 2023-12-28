@@ -9,7 +9,7 @@ from ..FILES.Campo import Campo
 from ..FILES.Registro import Registro
 from .symbolTable.ScopeType import ScopeType
 from .SymbolType import SymbolType
-import re
+from re import search
 
 
 class InsertStatement(Instruction):
@@ -137,7 +137,7 @@ class InsertStatement(Instruction):
                 continue
 
             if field.tipoDato == 'date':
-                if not re.search("\d{2}-\d{2}-\d{4}", column_in_table.value):
+                if not search("\d{2}-\d{2}-\d{4}", column_in_table.value):
                     print('Date value was expected')
                     errors.append(self.semantic_error('Date value was expected'))
                     symbol_table = symbol_table.parent
@@ -149,7 +149,7 @@ class InsertStatement(Instruction):
                 continue
 
             if field.tipoDato == 'datetime':
-                if not re.search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", column_in_table.value):
+                if not search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", column_in_table.value):
                     print('Datetime value was expected')
                     errors.append(self.semantic_error('Datetime value was expected'))
                     symbol_table = symbol_table.parent

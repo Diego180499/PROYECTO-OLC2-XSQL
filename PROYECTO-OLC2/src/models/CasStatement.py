@@ -2,7 +2,7 @@ from .Instruction import Instruction
 from .Variable import Variable
 from .VariableType import VariableType
 from .symbolTable.SymbolTable import SymbolTable
-import re
+from re import search
 
 from ..error.xsql_error import xsql_error
 
@@ -71,7 +71,7 @@ class CasStatement(Instruction):
             return result
 
         elif variable_type.type == 'date':
-            if not re.search("\d{2}-\d{2}-\d{4}", value_result.value):
+            if not search("\d{2}-\d{2}-\d{4}", value_result.value):
                 print('Date value was expected')
                 errors.append(self.semantic_error('Date value was expected'))
                 return None
@@ -81,7 +81,7 @@ class CasStatement(Instruction):
             result.value = value_result.value
             return result
         elif variable_type.type == 'datetime':
-            if not re.search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", value_result.value):
+            if not search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", value_result.value):
                 print('Datetime value was expected')
                 errors.append(self.semantic_error('Datetime value was expected'))
                 return None

@@ -3,10 +3,10 @@ from src.utils.archivo import Archivo
 import os
 
 #url_records_xml = f'U:/Universidad/Ciclo 2023/EDV-DICIEMBRE/LAB - OLC2/REPO-PROYECTO-OLC2-XSQL/PROYECTO-OLC2/resources/REGISTROS_XML'
-#url_records_xml = f'/home/isaac/Escritorio/2023/compi2/back/PROYECTO-OLC2-XSQL/PROYECTO-OLC2/resources/REGISTROS_XML'
+url_records_xml = f'/home/isaac/Escritorio/2023/compi2/back/PROYECTO-OLC2-XSQL/PROYECTO-OLC2/resources/REGISTROS_XML'
 
-project_path=os.path.abspath(os.path.dirname(__file__)).split("Compi2Python")[0]
-url_records_xml =   resources_path=os.path.join(project_path,"Compi2Python","resources","REGISTROS_XML")
+# project_path=os.path.abspath(os.path.dirname(__file__)).split("Compi2Python")[0]
+# url_records_xml =   resources_path=os.path.join(project_path,"Compi2Python","resources","REGISTROS_XML")
 
 def obtener_matriz_registros_de_tabla(nombre_db, nombre_tabla):
     registros : Registros = xml_to_records(f'{url_records_xml}/{nombre_db}/{nombre_tabla}.xml')
@@ -104,7 +104,7 @@ def insertar_registro(nombre_db, nombre_tabla, registro : Registro):
 
 ## eliminar registros: se recibe como parametro una lista de objetos REGISTRO, ya que en la lista puede venir uno o varios
 ## objetos REGISTRO que deseamos eliminar de una lista.
-def eliminar_registro(nombre_db, nombre_tabla, lista_registros_a_eliminar : Registro = []):
+def eliminar_registro(nombre_db, nombre_tabla, lista_registros_a_eliminar : [Registro] = []):
     registros: Registros = xml_to_records(f'{url_records_xml}/{nombre_db}/{nombre_tabla}.xml')
     registros_actuales = registros.registros
 
@@ -115,12 +115,10 @@ def eliminar_registro(nombre_db, nombre_tabla, lista_registros_a_eliminar : Regi
     archivo: Archivo = Archivo(f'{url_records_xml}/{nombre_db}/{nombre_tabla}.xml')
     archivo.guardar(registros_xml)
 
-def eliminar_registro_individual(registros_actuales : Registro = [], registro_a_eliminar : Registro = None):
+def eliminar_registro_individual(registros_actuales : [Registro] = [], registro_a_eliminar : Registro = None):
     for registro_actual in registros_actuales :
         if registro_actual.valores == registro_a_eliminar.valores :
             registros_actuales.remove(registro_actual)
-
-
 
 def existe_archivo_registros(nombre_bd, nombre_tabla):
     if os.path.exists(f'{url_records_xml}/{nombre_bd}/{nombre_tabla}.xml'):
