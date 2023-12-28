@@ -27,7 +27,7 @@ node24 [label="first_name" shape="oval", color="black"];
 node25 [label="last_name" shape="oval", color="black"];
 node26 [label="values" shape="oval", color="black"];
 node27 [label="1" shape="oval", color="black"];
-node28 [label="JosÃ©" shape="oval", color="black"];
+node28 [label="José" shape="oval", color="black"];
 node29 [label="Castro" shape="oval", color="black"];
 node30 [label="insert" shape="oval", color="black"];
 node31 [label="students" shape="oval", color="black"];

@@ -3,6 +3,7 @@ from .symbolTable.SymbolTable import SymbolTable
 from .Variable import Variable
 from .OperationType import OperationType
 from .SymbolType import SymbolType
+from ..error.xsql_error import xsql_error
 
 
 class UnaryOperation(Instruction):
@@ -17,12 +18,14 @@ class UnaryOperation(Instruction):
 
         if left is None:
             print("A value was expected")
+            errors.append(self.semantic_error("A value was expected"))
             return None
 
         if self.operator == OperationType().MINUS:
 
             if left.variable_type.type != 'int' and left.variable_type.type != 'decimal':
                 print("Minus operator is only allowed for int and decimal data type.")
+                errors.append(self.semantic_error("Minus operator is only allowed for int and decimal data type."))
                 return None
 
             result = Variable()
@@ -35,6 +38,7 @@ class UnaryOperation(Instruction):
         elif self.operator == OperationType().NOT:
             if left.variable_type.type != 'int':
                 print("Not operator is only allowed for int data type.")
+                errors.append(self.semantic_error("Not operator is only allowed for int data type."))
                 return None
 
             result = Variable()
@@ -42,7 +46,10 @@ class UnaryOperation(Instruction):
             result.symbol_type = SymbolType().VARIABLE
             result.value = int(not left.value)
             return result
-    
+
+    def semantic_error(self, description):
+        return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
+
     def dot(self,nodo_padre, graficador):
         current_node = graficador.agregarNode(self.operator)
         graficador.agregarRelacion(nodo_padre, current_node)

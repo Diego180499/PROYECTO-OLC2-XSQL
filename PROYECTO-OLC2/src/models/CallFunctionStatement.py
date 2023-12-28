@@ -25,10 +25,12 @@ class CallFunctionStatement(Instruction):
 
             if value_result is None:
                 print("The argument doesn't return anything.")
+                errors.append("The argument doesn't return anything.")
                 return None
 
             if value_result.variable_type.type != 'int' and value_result.variable_type.type != 'decimal':
                 print("suma function only allows int and decimal values")
+                errors.append(self.semantic_error("suma function only allows int and decimal values"))
                 return None
 
             result = Variable()
@@ -118,6 +120,8 @@ class CallFunctionStatement(Instruction):
 
     def semantic_error(self, description):
         return xsql_error(description,'','Error Semantico',f'Linea {self.line} Columna {self.column}')
+
+
 
     def dot(self,nodo_padre, graficador):
         concurrent_node = graficador.agregarNode('call_function')

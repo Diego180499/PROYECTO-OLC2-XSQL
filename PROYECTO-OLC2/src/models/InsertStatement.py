@@ -1,6 +1,7 @@
 from .Instruction import Instruction
 from .symbolTable.SymbolTable import SymbolTable
 from .Variable import Variable
+from ..error.xsql_error import xsql_error
 from ..repository.records.record_repository import RecordRepository
 from ..FILES.manager_db.db_file_manager import get_table_field_by_name, obtener_nombres_campos_tabla
 from ..FILES.manager_db.record_file_manager import existe_archivo_registros
@@ -24,10 +25,12 @@ class InsertStatement(Instruction):
 
         if db is None:
             print("There's no database selected.")
+            errors.append(self.semantic_error("There's no database selected."))
             return None
 
         if len(self.column_names) != len(self.values):
             print(f"You declare {len(self.column_names)} columns and assign {len(self.values)} values.")
+            errors.append(self.semantic_error(f"You declare {len(self.column_names)} columns and assign {len(self.values)} values."))
             return None
 
         symbol_table = SymbolTable(ScopeType().INSERT, symbol_table)
@@ -38,6 +41,7 @@ class InsertStatement(Instruction):
 
             if not column_declared:
                 print(f"The column: {self.column_names[i]} doesn't exist in the table: {self.table_name}")
+                errors.append(self.semantic_error(f"The column: {self.column_names[i]} doesn't exist in the table: {self.table_name}"))
                 symbol_table = symbol_table.parent
                 return None
 
@@ -45,12 +49,14 @@ class InsertStatement(Instruction):
 
             if value_result is None:
                 print(f"The value for column: {self.column_names[i]} doesn't return anything.")
+                errors.append(self.semantic_error(f"The value for column: {self.column_names[i]} doesn't return anything."))
                 symbol_table = symbol_table.parent
                 return None
 
             column_in_table = symbol_table.find_column_by_id(self.column_names[i])
             if column_in_table is not None:
                 print(f"Column: {self.column_names[i]} already declared.")
+                errors.append(self.semantic_error(f"Column: {self.column_names[i]} already declared."))
                 symbol_table = symbol_table.parent
                 return None
 
@@ -71,16 +77,19 @@ class InsertStatement(Instruction):
 
             if int(field.nulo) == 0 and column_in_table is None:
                 print(f"The field: {table_field} can't be null.")
+                errors.append(self.semantic_error(f"The field: {table_field} can't be null."))
                 symbol_table = symbol_table.parent
                 return None
 
             if int(field.llavePrim) == 1 and column_in_table is None:
                 print(f"The primary key: {table_field} can't be null.")
+                errors.append(self.semantic_error(f"The primary key: {table_field} can't be null."))
                 symbol_table = symbol_table.parent
                 return None
 
             if str(field.tablaRef) != "-" and column_in_table is None:
                 print(f"The primary key: {table_field} can't be null.")
+                errors.append(self.semantic_error(f"The primary key: {table_field} can't be null."))
                 symbol_table = symbol_table.parent
                 return None
 
@@ -99,6 +108,7 @@ class InsertStatement(Instruction):
 
                 if already_exist:
                     print(f"The primary key: {table_field} is unique.")
+                    errors.append(self.semantic_error(f"The primary key: {table_field} is unique."))
                     symbol_table = symbol_table.parent
                     return None
 
@@ -111,12 +121,14 @@ class InsertStatement(Instruction):
 
                 if not find:
                     print(f"The foreign key: {table_field} doesn't exist.")
+                    errors.append(self.semantic_error(f"The foreign key: {table_field} doesn't exist."))
                     symbol_table = symbol_table.parent
                     return None
 
             if field.tipoDato == 'nvarchar' or field.tipoDato == 'nchar':
                 if column_in_table.variable_type.type != 'nvarchar' and column_in_table.variable_type.type != 'nchar':
                     print("nchar or nvarchar value was expected.")
+                    errors.append(self.semantic_error("nchar or nvarchar value was expected."))
                     symbol_table = symbol_table.parent
                     return None
 
@@ -127,6 +139,7 @@ class InsertStatement(Instruction):
             if field.tipoDato == 'date':
                 if not re.search("\d{2}-\d{2}-\d{4}", column_in_table.value):
                     print('Date value was expected')
+                    errors.append(self.semantic_error('Date value was expected'))
                     symbol_table = symbol_table.parent
                     return None
 
@@ -138,6 +151,7 @@ class InsertStatement(Instruction):
             if field.tipoDato == 'datetime':
                 if not re.search("\d{2}-\d{2}-\d{4} (\d{2}:\d{2}:\d{2}|\d{2}:\d{2})", column_in_table.value):
                     print('Datetime value was expected')
+                    errors.append(self.semantic_error('Datetime value was expected'))
                     symbol_table = symbol_table.parent
                     return None
 
@@ -148,6 +162,8 @@ class InsertStatement(Instruction):
             if field.tipoDato != column_in_table.variable_type.type:
                 print(f"The field: {table_field} has: {field.tipoDato} as data type and you declared: "
                       f"{column_in_table.variable_type.type} instead.")
+                errors.append(self.semantic_error(f"The field: {table_field} has: {field.tipoDato} as data type and you declared: "
+                      f"{column_in_table.variable_type.type} instead."))
                 symbol_table = symbol_table.parent
                 return None
 
@@ -171,6 +187,10 @@ class InsertStatement(Instruction):
             if str(table_record.valores[index]) == str(value):
                 return True
         return False
+
+    def semantic_error(self, description):
+        return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
+
 
     def dot(self, nodo_padre, graficador):
         current_node = graficador.agregarNode("insert")

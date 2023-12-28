@@ -9,6 +9,7 @@ from ..FILES.manager_db.db_file_manager import obtener_nombres_campos_tabla, get
 from ..FILES.manager_db.record_file_manager import existe_archivo_registros
 from ..FILES.Campo import Campo
 from ..FILES.Registro import Registro
+from ..error.xsql_error import xsql_error
 from ..repository.records.record_repository import RecordRepository
 from ..repository.table.table_repository import TableRepository
 from ..utilities.utilities import tabla_select_a_matriz
@@ -27,12 +28,14 @@ class SelectStatement(Instruction):
 
         if db is None:
             print("There's no database selected")
+            errors.append(self.semantic_error("There's no database selected"))
             return None
 
         exist = TableRepository().existe_tabla_en_bd(db.value, self.table_name)
 
         if not exist:
             print(f"The table: {self.table_name} doesn't exist in db: {db.value}.")
+            errors.append(self.semantic_error(f"The table: {self.table_name} doesn't exist in db: {db.value}."))
             return None
 
         symbol_table = SymbolTable(ScopeType().SELECT, symbol_table)
@@ -47,6 +50,7 @@ class SelectStatement(Instruction):
 
                     if column_in_table is not None:
                         print(f"The column: {table_field} has already been declared.")
+                        errors.append(self.semantic_error(f"The column: {table_field} has already been declared."))
                         symbol_table = symbol_table.parent
                         return None
 
@@ -62,6 +66,8 @@ class SelectStatement(Instruction):
             if table_column.table_name is not None and table_column.table_name != self.table_name:
                 print(f"Table name: '{table_column.table_name}'.{table_column.column_name} doesn't match with: "
                       f"{self.table_name}.")
+                errors.append(self.semantic_error(f"Table name: '{table_column.table_name}'.{table_column.column_name} doesn't match with: "
+                      f"{self.table_name}."))
                 symbol_table = symbol_table.parent
                 return None
 
@@ -73,6 +79,7 @@ class SelectStatement(Instruction):
 
             if field is None:
                 print(f"The field: {table_column.column_name} doesn't exist in table: {self.table_name}")
+                errors.append(self.semantic_error(f"The field: {table_column.column_name} doesn't exist in table: {self.table_name}"))
                 symbol_table = symbol_table.parent
                 return None
 
@@ -80,6 +87,7 @@ class SelectStatement(Instruction):
 
             if column_in_table is not None:
                 print(f"The column: {table_column.column_name} has already been declared.")
+                errors.append(self.semantic_error(f"The column: {table_column.column_name} has already been declared."))
                 symbol_table = symbol_table.parent
                 return None
 
@@ -119,11 +127,13 @@ class SelectStatement(Instruction):
                 where_result: Variable = self.where_instruction.execute(symbol_table, errors)
                 if where_result is None:
                     print("Where statement should return a value.")
+                    errors.append(self.semantic_error("Where statement should return a value."))
                     symbol_table = symbol_table.parent
                     return None
 
                 if where_result.variable_type.type != 'int':
                     print("An int value was expected.")
+                    errors.append(self.semantic_error("An int value was expected."))
                     symbol_table = symbol_table.parent
                     return None
 
@@ -138,6 +148,7 @@ class SelectStatement(Instruction):
 
                 if result is None:
                     print("The column doesn't return anything.")
+                    errors.append(self.semantic_error("The column doesn't return anything."))
                     symbol_table = symbol_table.parent
                     return None
 
@@ -161,6 +172,9 @@ class SelectStatement(Instruction):
             print(t_r)
         return matriz_select
 
+
+    def semantic_error(self, description):
+        return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self, nodo_padre, graficador):
         pass

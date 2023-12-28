@@ -6,6 +6,7 @@ from .Variable import Variable
 from .VariableType import VariableType
 from .symbolTable.SymbolTable import SymbolTable
 from .graphviz.Graficador import Graficador
+from ..error.xsql_error import xsql_error
 
 
 class Value(Instruction):
@@ -37,6 +38,7 @@ class Value(Instruction):
             var_in_table = symbol_table.find_column_by_id(self.value)
             if var_in_table is None:
                 print("Column doesn't found")
+                errors.append(self.semantic_error("Column doesn't found"))
                 return None
 
             variable = copy.deepcopy(var_in_table)
@@ -46,12 +48,16 @@ class Value(Instruction):
             var_in_table: Variable = symbol_table.find_var_by_id(self.value)
             if var_in_table is None:
                 print("Variable doesn't found")
+                errors.append(self.semantic_error("Variable doesn't found"))
                 return None
 
             variable.value = var_in_table.value
             variable.symbol_type = var_in_table.symbol_type
             variable.variable_type = var_in_table.variable_type
             return variable
+
+    def semantic_error(self, description):
+        return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self,nodo_padre, graficador):
         current_node = graficador.agregarNode(self.value)

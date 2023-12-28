@@ -1,3 +1,4 @@
+import os
 from os import *
 
 from src.FILES.import_to_xml_ddl import *
@@ -5,7 +6,10 @@ from src.FILES.manager_db.db_to_xml import data_base_to_xml
 from src.utils.archivo import Archivo
 
 #url_base_de_datos_xml = f'U:/Universidad/Ciclo 2023/EDV-DICIEMBRE/LAB - OLC2/REPO-PROYECTO-OLC2-XSQL/PROYECTO-OLC2/resources/BASES_DE_DATOS_XML'
-url_base_de_datos_xml = f'/home/isaac/Escritorio/2023/compi2/back/PROYECTO-OLC2-XSQL/PROYECTO-OLC2/resources/BASES_DE_DATOS_XML'
+#url_base_de_datos_xml = f'/home/isaac/Escritorio/2023/compi2/back/PROYECTO-OLC2-XSQL/PROYECTO-OLC2/resources/BASES_DE_DATOS_XML'
+project_path=os.path.abspath(os.path.dirname(__file__)).split("Compi2Python")[0]
+url_base_de_datos_xml =   resources_path=os.path.join(project_path,"Compi2Python","resources","BASES_DE_DATOS_XML")
+
 
 def eliminar_base_de_datos(nombre_base_de_datos):
     remove(f'{url_base_de_datos_xml}/{nombre_base_de_datos}.xml')

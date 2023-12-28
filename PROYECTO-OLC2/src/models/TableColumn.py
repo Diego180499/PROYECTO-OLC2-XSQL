@@ -4,6 +4,7 @@ from .VariableType import VariableType
 from .CallFunctionStatement import CallFunctionStatement
 from .symbolTable.SymbolTable import SymbolTable
 from .SymbolType import SymbolType
+from ..error.xsql_error import xsql_error
 
 
 class TableColumn(Instruction):
@@ -25,6 +26,7 @@ class TableColumn(Instruction):
 
         if value_result is None:
             print("The value doesn't return anything")
+            errors.append(self.semantic_error("The value doesn't return anything"))
             return None
 
         if isinstance(self.value, CallFunctionStatement) and value_result.variable_type.type == 'int':
@@ -47,6 +49,10 @@ class TableColumn(Instruction):
         result.variable_type = value_result.variable_type
         result.value = value_result.value
         return result
+
+
+    def semantic_error(self, description):
+        return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
     def dot(self, nodo_padre, graficador):
         pass

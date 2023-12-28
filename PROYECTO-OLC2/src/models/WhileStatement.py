@@ -22,6 +22,7 @@ class WhileStatement(Instruction):
 
         if result.variable_type.type != 'int':
             print('int type was expected')
+            errors.append(self.semantic_error('int type was expected'))
             return None
 
         while result.value > 0:
