@@ -1,0 +1,81 @@
+
+    <registros>
+        <base_datos>tbbanco</base_datos>        
+        <tabla>tbcliente</tabla>
+        
+        <registro>
+            
+        <campo>codigocliente</campo>
+        
+        <campo>primer_nombre</campo>
+        
+        <campo>segundo_nombre</campo>
+        
+        <campo>primer_apellido</campo>
+        
+        <campo>segundo_apellido</campo>
+        
+        <campo>fecha_nacimiento</campo>
+        
+        <campo>genero</campo>
+        
+        <campo>idestado</campo>
+        
+            
+        <valor>GT-0001</valor>
+        
+        <valor>PETER</valor>
+        
+        <valor>JUAN</valor>
+        
+        <valor>PARKER</valor>
+        
+        <valor>SEGUNDO</valor>
+        
+        <valor>01-01-1990</valor>
+        
+        <valor>1</valor>
+        
+        <valor>1</valor>
+        
+        </registro>                    
+    
+        <registro>
+            
+        <campo>codigocliente</campo>
+        
+        <campo>primer_nombre</campo>
+        
+        <campo>segundo_nombre</campo>
+        
+        <campo>primer_apellido</campo>
+        
+        <campo>segundo_apellido</campo>
+        
+        <campo>fecha_nacimiento</campo>
+        
+        <campo>genero</campo>
+        
+        <campo>idestado</campo>
+        
+            
+        <valor>GT-0002</valor>
+        
+        <valor>JULIO</valor>
+        
+        <valor>0</valor>
+        
+        <valor>PEREZ</valor>
+        
+        <valor>LOPEZ</valor>
+        
+        <valor>12-01-1995</valor>
+        
+        <valor>1</valor>
+        
+        <valor>1</valor>
+        
+        </registro>                    
+    
+    </registros>
+    

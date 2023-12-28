@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter.ttk import Notebook
 
+from gui.editor_texto import EditorTexto
 from src.utils.archivo import Archivo
 
 
@@ -24,7 +25,7 @@ class FramePestanas:
         scrollbar_y.pack(side=RIGHT, fill=Y)
         scrollbar_x = Scrollbar(pestana)
         scrollbar_x.pack(side=BOTTOM, fill=X)
-        text = Text(pestana, xscrollcommand=scrollbar_x.set, yscrollcommand=scrollbar_y.set, wrap="none")
+        text = EditorTexto(pestana, xscrollcommand=scrollbar_x.set, yscrollcommand=scrollbar_y.set, wrap="none")
         if archivo.ubicacion is not None:
             text.insert(END, archivo.abrir_archivo())
         text.pack(fill=BOTH)

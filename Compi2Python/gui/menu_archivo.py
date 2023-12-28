@@ -31,7 +31,8 @@ class MenuArchivo(Menu):
     def evento_menu_guardar(self):
         if not self.frame_pestanas.hay_pestanas():
             return
-        self.frame_pestanas.guardar_pestana_activa()
+        if self.frame_pestanas.guardar_pestana_activa() is None:
+            self.evento_menu_guardar_como()
 
     def evento_menu_guardar_como(self):
         if not self.frame_pestanas.hay_pestanas():

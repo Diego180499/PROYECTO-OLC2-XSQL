@@ -1,0 +1,46 @@
+
+    <registros>
+        <base_datos>tbbanco</base_datos>        
+        <tabla>tbestado</tabla>
+        
+        <registro>
+            
+        <campo>idestado</campo>
+        
+        <campo>estado</campo>
+        
+            
+        <valor>1</valor>
+        
+        <valor>Activo</valor>
+        
+        </registro>                    
+    
+        <registro>
+            
+        <campo>idestado</campo>
+        
+        <campo>estado</campo>
+        
+            
+        <valor>2</valor>
+        
+        <valor>Inactivo</valor>
+        
+        </registro>                    
+    
+        <registro>
+            
+        <campo>idestado</campo>
+        
+        <campo>estado</campo>
+        
+            
+        <valor>3</valor>
+        
+        <valor>Eliminado</valor>
+        
+        </registro>                    
+    
+    </registros>
+    
