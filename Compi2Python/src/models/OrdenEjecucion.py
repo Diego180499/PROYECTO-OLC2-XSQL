@@ -8,7 +8,7 @@ class OrdenEjecucion(Instruction):
         super().__init__(line, column)
         self.left = left
         self.right = right
-    
+
     def execute(self, symbol_table: SymbolTable, errors):
         if self.left is not None:
             left_result = self.left.execute(symbol_table, errors)
@@ -20,11 +20,11 @@ class OrdenEjecucion(Instruction):
 
             if right_result is not None:
                 return right_result
-        
+
     def __str__(self):
         return f'[{self.left} {self.right}]'
-    
-    def dot(self,nodo_padre, graficador):
+
+    def dot(self, nodo_padre, graficador):
         current_node = graficador.agregarNode('inst')
         if nodo_padre is not None:
             graficador.agregarRelacion(nodo_padre, current_node)
@@ -33,9 +33,9 @@ class OrdenEjecucion(Instruction):
         if self.right is not None:
             nodo_right = self.right.dot(current_node, graficador)
         return current_node
-    
-    def c3d(self,scope,generador):
+
+    def c3d(self, scope, generador):
         if self.left is not None:
-            self.left.c3d(scope)
+            self.left.c3d(scope, generador)
         if self.right is not None:
-            self.right.c3d(scope)
+            self.right.c3d(scope, generador)
