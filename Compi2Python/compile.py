@@ -36,6 +36,7 @@ def parsear(contenido):
     # Creamos el generador de C3D
     generador_c3d = GenC3D()
     inst.c3d(symbol_table_c3d, generador_c3d)
+    generador_c3d.write_c3d()
     # Ejecucion del codigo
     # TODO siempre devolver una lista
     result = inst.execute(symbol_table, errores_sintacticos)  # resultado de la ejecucion

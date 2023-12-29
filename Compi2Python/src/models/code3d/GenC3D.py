@@ -32,7 +32,7 @@ class GenC3D:
                 code += temp + ','
             code = code[:-1]
             code += " float64;\n\n"
-        code += "var P, H float64;\nvar stack[30101999] float64;\nvar heap[30101999] float64;\n\n"
+        code += "var P, H ;\nvar stack[30101999];\nvar heap[30101999];\n\n"
         return code
 
     def get_code(self):
