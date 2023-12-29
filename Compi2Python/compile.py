@@ -1,4 +1,4 @@
-from Compi2Python.src.models.code3d.GenC3D import GenC3D
+from src.models.code3d.GenC3D import GenC3D
 from src.utilities.utilities import errors_to_matrix, tabla_simbolos_a_matriz
 from src.models.symbolTable.SymbolTable import SymbolTable
 from src.models.symbolTable.ScopeType import ScopeType
@@ -33,10 +33,11 @@ def parsear(contenido):
     # Generacion del C3D
     # Generamos una tabla de simbolos para el C3D
     symbol_table_c3d = SymbolTable(ScopeType().GLOBAL)
-    # Creamos el generador de C3D
-    generador_c3d = GenC3D()
-    inst.c3d(symbol_table_c3d, generador_c3d)
-    generador_c3d.write_c3d()
+    # _______Creamos el generador de C3D_______
+    #generador_c3d = GenC3D()
+    #inst.c3d(symbol_table_c3d, generador_c3d)
+    #generador_c3d.write_c3d()
+    # _______FIN DE CREACION DEL generador de C3D_______
     # Ejecucion del codigo
     # TODO siempre devolver una lista
     result = inst.execute(symbol_table, errores_sintacticos)  # resultado de la ejecucion

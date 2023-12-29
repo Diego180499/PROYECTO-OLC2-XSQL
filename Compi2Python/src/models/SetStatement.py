@@ -1,7 +1,6 @@
 from .Instruction import Instruction
 from .symbolTable.SymbolTable import SymbolTable
 from .Variable import Variable
-from .VariableType import VariableType
 import re
 
 from ..error.xsql_error import xsql_error

@@ -7,3 +7,5 @@ class ScopeType:
     SELECT = 6
     CREATE = 7
     INSERT = 8
+    DELETE = 9
+    UPDATE = 10

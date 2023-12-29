@@ -51,7 +51,7 @@ class RecordRepository:
         return True
 
 #### ACTUALIZAR REGISTRO
-    def actualizar_registro(self, nombre_bd, nombre_tabla, campos_a_actualzar : [] , valores_a_actualizar : [], registros_a_actualizar : Registro = []):
+    def actualizar_registro(self, nombre_bd, nombre_tabla, campos_a_actualzar : [] , valores_a_actualizar : [], registros_a_actualizar : [Registro] = []):
 
         for registro in registros_a_actualizar :
             if self.validar_campos_en_registro(campos_a_actualzar,registro) :
