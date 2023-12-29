@@ -133,5 +133,5 @@ class CallFunctionStatement(Instruction):
             for arg in self.args:
                 arg.dot(args_node, graficador)
 
-    def c3d(self, scope):
+    def c3d(self, scope,graficador):
         pass

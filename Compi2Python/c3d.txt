@@ -1,0 +1,9 @@
+/* ---- HEADER ----- */
+var P, H ;
+var stack[30101999];
+var heap[30101999];
+
+
+func main(){
+
+}

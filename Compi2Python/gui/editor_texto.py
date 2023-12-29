@@ -23,7 +23,7 @@ class EditorTexto(Text):
         for linea in lineas:
             numero_linea += 1
             for palabra_reservada in palabras_reservadas:
-                self.__aplicar_estilo_palabras_reservadas_por_linea__(palabra_reservada, linea, numero_linea)
+                self.__aplicar_estilo_palabras_reservadas_por_linea__(palabra_reservada, linea.upper(), numero_linea)
 
     def __aplicar_estilo_palabras_reservadas_por_linea__(self, palabra_reservada, linea, numero_linea):
         indice_palabra_encontrada = 0

@@ -67,10 +67,41 @@ class MenuHerramientas(Menu):
         self.mostrar_ventana_guardar_archivo(contenido_xml)
 
     def evento_crear_bbdd(self):
-        pass
+        conector = Conector()
+
+        nombre_bbdd = simpledialog.askstring("Crear Base de Datos",
+                                             "Escriba el nombre de la base de datos que desea crear",
+                                             parent=self.ventana_principal.ventana)
+        if nombre_bbdd is None:
+            return
+        sentencia_crear_bbdd = "create data base " + nombre_bbdd + ";"
+        print("creando bbdd desde ventana:[", sentencia_crear_bbdd, "]")
+
+        resultado = conector.compilar(sentencia_crear_bbdd)
+
+        if resultado[2] is not None and len(resultado[2]) != 0:
+            messagebox.showerror("Error", "No se puede crear la base de datos, verifique que no exista")
+            return
+        messagebox.showinfo("Base de Datos Creada", "La base de datos " + nombre_bbdd + " ha sido creada exitosamente")
 
     def evento_borrar_bbdd(self):
-        pass
+        conector = Conector()
+
+        nombre_bbdd = simpledialog.askstring("Borrar Base de Datos",
+                                             "Escriba el nombre de la base de datos que desea borrar",
+                                             parent=self.ventana_principal.ventana)
+        if nombre_bbdd is None:
+            return
+
+        print("borrando bbdd:[", nombre_bbdd, "]")
+
+        resultado = conector.eliminar_bbdd(nombre_bbdd)
+
+        if resultado:
+            messagebox.showinfo("Base de Datos Creada", "La base de datos " + nombre_bbdd + " ha sido borrada exitosamente")
+            return
+        messagebox.showerror("Error", "No se puede borrar la base de datos, verifique que exista")
+
 
     def evento_actualizar_arbol_bbdd(self):
         conector = Conector()

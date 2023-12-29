@@ -1,4 +1,5 @@
 from src.FILES.import_to_xml_ddl import *
+from src.FILES.manager_db import db_file_manager
 from src.FILES.manager_db.record_file_manager import *
 from compile import *
 
@@ -31,3 +32,11 @@ class Conector:
 
     def construir_diccionario(self,url):
         return xml_to_diccionario(url)
+
+
+    def eliminar_bbdd(self,nombre_bbdd):
+        try:
+            db_file_manager.eliminar_base_de_datos(nombre_bbdd)
+            return True
+        except:
+            return False

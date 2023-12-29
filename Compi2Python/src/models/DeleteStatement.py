@@ -83,5 +83,5 @@ class DeleteStatement(Instruction):
     def dot(self, nodo_padre, graficador):
         pass
 
-    def c3d(self, scope):
+    def c3d(self, scope,generador):
         pass

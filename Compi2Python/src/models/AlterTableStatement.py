@@ -87,5 +87,5 @@ class AlterTableStatement(Instruction):
         alter_node = graficador.agregarNode(self.alter_type)
         graficador.agregarRelacion(current_node, alter_node)
 
-    def c3d(self, scope):
+    def c3d(self, scope,graficador):
         pass

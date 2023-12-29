@@ -45,5 +45,5 @@ class UseStatement(Instruction):
         table = graficador.agregarNode(self.db_name)
         graficador.agregarRelacion(curren_node, table)
 
-    def c3d(self, scope):
+    def c3d(self, scope,generador):
         pass

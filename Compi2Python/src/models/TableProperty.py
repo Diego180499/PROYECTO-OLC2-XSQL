@@ -103,5 +103,5 @@ class TableProperty(Instruction):
             parent_field_node = graficador.agregarNode(self.parent_field)
             graficador.agregarRelacion(current_node, parent_field_node)
 
-    def c3d(self, scope):
+    def c3d(self, scope,generador):
         pass

@@ -210,5 +210,5 @@ class InsertStatement(Instruction):
                 value.dot(values_node, graficador)
 
 
-    def c3d(self, scope):
+    def c3d(self, scope, generador):
         pass

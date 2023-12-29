@@ -18,5 +18,5 @@ class EOF(Instruction):
         current_node = graficador.agregarNode("EOF")
         graficador.agregarRelacion(nodo_padre, current_node)
 
-    def c3d(self, scope):
+    def c3d(self, scope,generador):
         pass

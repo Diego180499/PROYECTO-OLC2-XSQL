@@ -101,5 +101,5 @@ class CasStatement(Instruction):
         node_type = graficador.agregarNode(self.type)
         graficador.agregarRelacion(current_node, node_type)
 
-    def c3d(self, scope):
+    def c3d(self, scope,generador):
         pass

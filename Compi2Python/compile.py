@@ -34,9 +34,9 @@ def parsear(contenido):
     # Generamos una tabla de simbolos para el C3D
     symbol_table_c3d = SymbolTable(ScopeType().GLOBAL)
     # _______Creamos el generador de C3D_______
-    #generador_c3d = GenC3D()
-    #inst.c3d(symbol_table_c3d, generador_c3d)
-    #generador_c3d.write_c3d()
+    generador_c3d = GenC3D()
+    inst.c3d(symbol_table_c3d, generador_c3d)
+    generador_c3d.write_c3d()
     # _______FIN DE CREACION DEL generador de C3D_______
     # Ejecucion del codigo
     # TODO siempre devolver una lista
