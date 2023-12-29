@@ -59,4 +59,17 @@ class WhenStatement(Instruction):
 
         
     def c3d(self,symbol_table,generador):
-        pass
+        generador.add_comment('Inicia When')
+        exit_label = generador.new_label()
+        condition = self.condition.c3d(symbol_table,generador)
+        for label in condition.true_labels:
+            generador.put_label(label)
+        if self.true_block is not None:
+            self.true_block.c3d(symbol_table,generador)
+        generador.add_goto(exit_label)
+        for label in condition.false_labels:
+            generador.put_label(label)
+        if self.false_block is not None:
+            self.false_block.c3d(symbol_table,generador)
+        generador.put_label(exit_label)
+        generador.add_commnet('Fin When')

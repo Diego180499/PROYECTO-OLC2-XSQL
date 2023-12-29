@@ -51,7 +51,7 @@ class IfStatement(Instruction):
     def semantic_error(self, description):
         return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
-    def dot(self,nodo_padre, graficador):
+    def dot(self, nodo_padre, graficador):
         current_node = graficador.agregarNode("if")
         graficador.agregarRelacion(nodo_padre, current_node)
         condition_node = graficador.agregarNode("condition")
@@ -63,24 +63,20 @@ class IfStatement(Instruction):
             self.true_block.dot(true_node, graficador)
         if self.false_block is not None:
             self.false_block.dot(current_node, graficador)
-        
-    def c3d(self,symbol_table,generador):
+
+    def c3d(self, symbol_table, generador):
         symbol_table = SymbolTable(ScopeType().IF, symbol_table)
         generador.add_comment('If Statement')
         exit_label = generador.new_label()
-        condicion = self.condition.c3d(symbol_table,generador)
+        condicion = self.condition.c3d(symbol_table, generador)
         for label in condicion.true_labels:
             generador.put_label(label)
         if self.true_block is not None:
-            result = self.true_block.c3d(symbol_table,generador)
-            if result is not None:
-                return result
+            self.true_block.c3d(symbol_table, generador)
         generador.add_goto(exit_label)
         for label in condicion.false_labels:
             generador.put_label(label)
         if self.false_block is not None:
-            result = self.false_block.c3d(symbol_table,generador)
-            if result is not None:
-                return result
-        generador.put_label(exit_label,generador)
+            self.false_block.c3d(symbol_table, generador)
+        generador.put_label(exit_label)
         generador.add_comment('End If Statement')
