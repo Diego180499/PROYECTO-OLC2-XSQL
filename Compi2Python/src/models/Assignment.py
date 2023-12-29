@@ -2,7 +2,6 @@ from .Instruction import Instruction
 from .symbolTable.SymbolTable import SymbolTable
 from .Variable import Variable
 from .SymbolType import SymbolType
-import re
 
 from ..error.xsql_error import xsql_error
 
@@ -25,7 +24,10 @@ class Assignment(Instruction):
             return None
 
         result.value = result_val.value
-        result.symbol_type = SymbolType().VARIABLE
+        if "@" in self.id:
+            result.symbol_type = SymbolType().VARIABLE
+        else:
+            result.symbol_type = SymbolType().COLUMN
         result.variable_type = result_val.variable_type
 
         return result

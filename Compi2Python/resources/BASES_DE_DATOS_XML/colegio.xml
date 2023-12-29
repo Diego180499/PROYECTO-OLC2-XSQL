@@ -1,0 +1,22 @@
+<base>
+	<nombre>colegio</nombre>
+	<tabla>
+		<nombre>alumno</nombre>
+		<campo>
+			<nombre>id_alumno</nombre>
+			<tipo_dato>int</tipo_dato>
+			<llave_primaria>1</llave_primaria>
+			<nulo>0</nulo>
+			<tabla_referencia>-</tabla_referencia>
+			<campo_referencia>-</campo_referencia>
+		</campo>
+		<campo>
+			<nombre>nombre</nombre>
+			<tipo_dato>nvarchar</tipo_dato>
+			<llave_primaria>0</llave_primaria>
+			<nulo>1</nulo>
+			<tabla_referencia>-</tabla_referencia>
+			<campo_referencia>-</campo_referencia>
+		</campo>
+	</tabla>
+</base>

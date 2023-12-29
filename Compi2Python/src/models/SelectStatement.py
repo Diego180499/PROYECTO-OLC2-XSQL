@@ -121,6 +121,9 @@ class SelectStatement(Instruction):
             for i in range(len(table_record.campos)):
                 column_in_table: Variable = symbol_table.find_column_by_id(table_record.campos[i])
                 if column_in_table is not None:
+                    if column_in_table.variable_type.type == 'int' or column_in_table.variable_type.type == 'decimal':
+                        column_in_table.value = int(table_record.valores[i])
+                        continue
                     column_in_table.value = table_record.valores[i]
 
             if self.where_instruction is not None:

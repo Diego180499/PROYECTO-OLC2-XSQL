@@ -1,0 +1,20 @@
+
+    <registros>
+        <base_datos>colegio</base_datos>        
+        <tabla>alumno</tabla>
+        
+        <registro>
+            
+        <campo>id_alumno</campo>
+        
+        <campo>nombre</campo>
+        
+            
+        <valor>1</valor>
+        
+        <valor>Diego</valor>
+        
+        </registro>                    
+    
+    </registros>
+    
