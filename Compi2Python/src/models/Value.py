@@ -65,5 +65,5 @@ class Value(Instruction):
         current_node = graficador.agregarNode(self.value)
         graficador.agregarRelacion(nodo_padre,current_node)
         
-    def c3d(self,scope,generador):
+    def c3d(self,symbol_table,generador):
         pass

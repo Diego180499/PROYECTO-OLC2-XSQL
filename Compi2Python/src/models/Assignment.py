@@ -45,5 +45,5 @@ class Assignment(Instruction):
         if self.value is not None:
             self.value.dot(current_node, graficador)
         
-    def c3d(self,scope,generador):
+    def c3d(self,symbol_table,generador):
         pass

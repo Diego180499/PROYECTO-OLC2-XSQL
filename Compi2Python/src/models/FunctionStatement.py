@@ -87,5 +87,5 @@ class FunctionStatement(Instruction):
             arg.dot(args, graficador)
         self.block.dot(code, graficador)
         
-    def c3d(self,scope,generador):
+    def c3d(self,symbol_table,generador):
         pass

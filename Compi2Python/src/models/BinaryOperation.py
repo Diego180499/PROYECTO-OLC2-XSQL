@@ -171,5 +171,5 @@ class BinaryOperation(Instruction):
         if self.right_operation is not None:
             self.right_operation.dot(current_node,graficador)
         
-    def c3d(self,scope,generador):
+    def c3d(self,symbol_table,generador):
         pass
