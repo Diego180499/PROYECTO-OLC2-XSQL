@@ -27,5 +27,5 @@ class ElseStatement(Instruction):
         if self.instruction is not None:
             self.instruction.dot(current_node, graficador)
         
-    def c3d(self,scope):
+    def c3d(self,scope,generador):
         pass

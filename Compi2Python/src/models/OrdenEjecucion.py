@@ -34,5 +34,8 @@ class OrdenEjecucion(Instruction):
             nodo_right = self.right.dot(current_node, graficador)
         return current_node
     
-    def c3d(self,scope):
-        pass
+    def c3d(self,scope,generador):
+        if self.left is not None:
+            self.left.c3d(scope)
+        if self.right is not None:
+            self.right.c3d(scope)

@@ -69,5 +69,5 @@ class ProcedureStatement(Instruction):
             graficador.agregarRelacion(current_node, block_node)
             self.block.dot(block_node, graficador)
 
-    def c3d(self,scope):
+    def c3d(self,scope,generador):
         pass

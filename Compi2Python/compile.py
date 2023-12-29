@@ -32,6 +32,10 @@ def parsear(contenido):
     graficador = Graficador()
     inst.dot(None, graficador)
     graficador.generarDOT()
+    # Generacion del C3D
+    # Generamos una tabla de simbolos para el C3D
+    symbol_table_c3d = SymbolTable(ScopeType().GLOBAL)
+    inst.c3d(symbol_table_c3d)
     # Ejecucion del codigo
     #TODO siempre devolver una lista
     result = inst.execute(symbol_table, errores_sintacticos) # resultado de la ejecucion

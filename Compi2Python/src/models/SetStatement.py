@@ -79,5 +79,5 @@ class SetStatement(Instruction):
                 graficador.agregarRelacion(current_node, node_equal)
                 graficador.agregarRelacion(node_equal,node_var)
                 result.value.dot(node_equal,graficador)
-    def c3d(self,scope):
+    def c3d(self,scope,generador):
         pass

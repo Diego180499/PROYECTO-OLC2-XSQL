@@ -66,5 +66,5 @@ class DeclareStatement(Instruction):
         current_node_id = graficador.agregarNode(self.id)
         graficador.agregarRelacion(current_node, current_node_id)
         
-    def c3d(self,scope):
+    def c3d(self,scope,generador):
         pass

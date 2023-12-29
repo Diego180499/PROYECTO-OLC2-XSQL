@@ -64,5 +64,5 @@ class IfStatement(Instruction):
         if self.false_block is not None:
             self.false_block.dot(current_node, graficador)
         
-    def c3d(self,scope):
+    def c3d(self,scope,generador):
         pass

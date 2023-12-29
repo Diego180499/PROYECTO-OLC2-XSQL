@@ -359,5 +359,5 @@ class ExecStatement(Instruction):
             arg.dot(args,graficador)
 
         
-    def c3d(self,scope):
+    def c3d(self,scope,generador):
         pass

@@ -17,7 +17,7 @@ class Instruction(ABC):
         pass
 
     @abstractmethod
-    def c3d(self,scope):
+    def c3d(self,scope,generador):
         pass
 
     def __str__(self):

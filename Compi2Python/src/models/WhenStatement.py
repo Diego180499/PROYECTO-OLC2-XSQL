@@ -58,5 +58,5 @@ class WhenStatement(Instruction):
             self.false_block.dot(current_node, graficador)
 
         
-    def c3d(self,scope):
+    def c3d(self,scope,generador):
         pass
