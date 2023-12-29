@@ -1,6 +1,7 @@
 import copy
 
 from .Instruction import Instruction
+from .Retorno import Retorno
 from .ValueType import ValueType
 from .Variable import Variable
 from .VariableType import VariableType
@@ -61,9 +62,19 @@ class Value(Instruction):
     def semantic_error(self, description):
         return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
 
-    def dot(self,nodo_padre, graficador):
+    def dot(self, nodo_padre, graficador):
         current_node = graficador.agregarNode(self.value)
-        graficador.agregarRelacion(nodo_padre,current_node)
-        
-    def c3d(self,symbol_table,generador):
-        pass
+        graficador.agregarRelacion(nodo_padre, current_node)
+
+    def c3d(self, symbol_table, generador):
+        if self.value_type == ValueType().STRING:
+            temporal = generador.add_temp()
+            generador.add_asig(temporal, 'H')
+            for char in str(self.value):
+                generador.set_heap('H', ord(char))
+                generador.next_heap()
+            generador.set_heap('H', -1)
+            generador.next_heap()
+            return Retorno(temporal, self.value_type, True, None)
+        else:
+            return Retorno(str(self.value), self.value_type, False, None)

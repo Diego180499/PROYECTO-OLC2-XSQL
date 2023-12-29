@@ -26,6 +26,19 @@ class SymbolTable:
 
         return None
 
+    def is_global_var(self, id: str):
+        current_table = self
+        while current_table is not None:
+
+            for symbol in current_table.symbols:
+                if symbol.id == id and symbol.symbol_type == SymbolType().VARIABLE:
+                    if current_table.scope_type == ScopeType().GLOBAL:
+                        return True
+                    else:
+                        return False
+            current_table = current_table.parent
+        return None
+
     def find_column_by_id(self, id: str):
         for symbol in self.symbols:
             if symbol.id == id and symbol.symbol_type == SymbolType().COLUMN:

@@ -164,11 +164,6 @@ class GenC3D:
         self.code_in('H = H + 1;\n')
 
     def write_c3d(self):
-        code = ""
-        code += f"STACK=[]\n"
-        code += f"HEAP=[]\n"
-        code += f"DECLARE "
-        for tmp in self.temp:
-            code += f"{tmp},"
+        code = self.get_code()
         with open('c3d.txt', 'w') as file:
             file.write(f"{code}")

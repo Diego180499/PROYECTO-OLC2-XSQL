@@ -1,4 +1,6 @@
 from .Instruction import Instruction
+from .Retorno import Retorno
+from .VariableType import VariableType
 from .symbolTable.SymbolTable import SymbolTable
 from .Variable import Variable
 from .OperationType import OperationType
@@ -57,4 +59,15 @@ class UnaryOperation(Instruction):
             self.left_operation.dot(current_node, graficador)
         
     def c3d(self,symbol_table,generador):
-        pass
+        left: Retorno = self.left_operation.c3d(symbol_table,generador)
+        if left is None:
+            print("A value was expected")
+            return None
+        if self.operator == OperationType().MINUS:
+            temp = generador.add_temp()
+            generador.add_expresion(temp, left.get_value(), "-1", OperationType().TIMES)
+            return Retorno(temp, VariableType('decimal', 32), True, None)
+        elif self.operator == OperationType().NOT:
+            temp = generador.add_temp()
+            generador.add_expresion(temp, "", left.get_value(), OperationType().NOT)
+            return Retorno(temp, VariableType('int', 32), True, None)
