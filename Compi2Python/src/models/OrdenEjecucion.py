@@ -1,5 +1,5 @@
-from Compi2Python.src.models.Instruction import Instruction
-from Compi2Python.src.models.symbolTable import SymbolTable
+from src.models.Instruction import Instruction
+from src.models.symbolTable import SymbolTable
 
 
 class OrdenEjecucion(Instruction):

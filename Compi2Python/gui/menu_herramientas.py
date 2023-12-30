@@ -49,7 +49,7 @@ class MenuHerramientas(Menu):
 
         self.frame_salida.limpiar_text_c3d()
         if len(resultados_finales[3]) > 0:
-            self.frame_salida.agregar_text_c3d("hola rey")
+            self.frame_salida.agregar_text_c3d(resultados_finales[3])
 
     def evento_crear_dump(self):
         nombre_bbdd = simpledialog.askstring("Crear Dump", "Escriba el nombre de la base de datos para crear dump file",
