@@ -64,7 +64,7 @@ class WhileStatement(Instruction):
     def c3d(self,symbol_table,generador):
         generador.add_comment("Inicia While")
         label_init = generador.new_label()
-        generador.add_label(label_init)
+        generador.put_label(label_init)
         result = self.condition.c3d(symbol_table,generador)
         if (isinstance(result, Exception)):
             return result

@@ -179,49 +179,49 @@ class BinaryOperation(Instruction):
 
         if self.operator == OperationType().PLUS:
             temp = generador.add_temp()
-            generador.add_expresion(temp, left.get_value(), right.get_value(), OperationType().PLUS)
+            generador.add_exp(temp, left.get_value(), right.get_value(), OperationType().PLUS)
             return Retorno(temp, VariableType('decimal', 32), True, None)
         elif self.operator == OperationType().MINUS:
             temp = generador.add_temp()
-            generador.add_expresion(temp, left.get_value(), right.get_value(), OperationType().MINUS)
+            generador.add_exp(temp, left.get_value(), right.get_value(), OperationType().MINUS)
             return Retorno(temp, VariableType('decimal', 32), True, None)
         elif self.operator == OperationType().TIMES:
             temp = generador.add_temp()
-            generador.add_expresion(temp, left.get_value(), right.get_value(), OperationType().TIMES)
+            generador.add_exp(temp, left.get_value(), right.get_value(), OperationType().TIMES)
             return Retorno(temp, VariableType('decimal', 32), True, None)
         elif self.operator == OperationType().DIVIDE:
             temp = generador.add_temp()
-            generador.add_expresion(temp, left.get_value(), right.get_value(), OperationType().DIVIDE)
+            generador.add_exp(temp, left.get_value(), right.get_value(), OperationType().DIVIDE)
             return Retorno(temp, VariableType('decimal', 32), True, None)
         elif self.operator == OperationType().EQUALS:
             temp = generador.add_temp()
-            generador.add_expresion(temp, left.get_value(), right.get_value(), OperationType().EQUALS)
+            generador.add_exp(temp, left.get_value(), right.get_value(), OperationType().EQUALS)
             return Retorno(temp, VariableType('int', 32), True, None)
         elif self.operator == OperationType().NOT_EQ:
             temp = generador.add_temp()
-            generador.add_expresion(temp, left.get_value(), right.get_value(), OperationType().NOT_EQ)
+            generador.add_exp(temp, left.get_value(), right.get_value(), OperationType().NOT_EQ)
             return Retorno(temp, VariableType('int', 32), True, None)
         elif self.operator == OperationType().LESS_THAN:
             temp = generador.add_temp()
-            generador.add_expresion(temp, left.get_value(), right.get_value(), OperationType().LESS_THAN)
+            generador.add_exp(temp, left.get_value(), right.get_value(), OperationType().LESS_THAN)
             return Retorno(temp, VariableType('int', 32), True, None)
         elif self.operator == OperationType().GREATER_THAN:
             temp = generador.add_temp()
-            generador.add_expresion(temp, left.get_value(), right.get_value(), OperationType().GREATER_THAN)
+            generador.add_exp(temp, left.get_value(), right.get_value(), OperationType().GREATER_THAN)
             return Retorno(temp, VariableType('int', 32), True, None)
         elif self.operator == OperationType().LESS_EQ:
             temp = generador.add_temp()
-            generador.add_expresion(temp, left.get_value(), right.get_value(), OperationType().LESS_EQ)
+            generador.add_exp(temp, left.get_value(), right.get_value(), OperationType().LESS_EQ)
             return Retorno(temp, VariableType('int', 32), True, None)
         elif self.operator == OperationType().GREATER_EQ:
             temp = generador.add_temp()
-            generador.add_expresion(temp, left.get_value(), right.get_value(), OperationType().GREATER_EQ)
+            generador.add_exp(temp, left.get_value(), right.get_value(), OperationType().GREATER_EQ)
             return Retorno(temp, VariableType('int', 32), True, None)
         elif self.operator == OperationType().AND:
             temp = generador.add_temp()
-            generador.add_expresion(temp, left.get_value(), right.get_value(), OperationType().AND)
+            generador.add_exp(temp, left.get_value(), right.get_value(), OperationType().AND)
             return Retorno(temp, VariableType('int', 32), True, None)
         elif self.operator == OperationType().OR:
             temp = generador.add_temp()
-            generador.add_expresion(temp, left.get_value(), right.get_value(), OperationType().OR)
+            generador.add_exp(temp, left.get_value(), right.get_value(), OperationType().OR)
             return Retorno(temp, VariableType('int', 32), True, None)

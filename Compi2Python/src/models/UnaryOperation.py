@@ -65,9 +65,9 @@ class UnaryOperation(Instruction):
             return None
         if self.operator == OperationType().MINUS:
             temp = generador.add_temp()
-            generador.add_expresion(temp, left.get_value(), "-1", OperationType().TIMES)
+            generador.add_exp(temp, left.get_value(), "-1", OperationType().TIMES)
             return Retorno(temp, VariableType('decimal', 32), True, None)
         elif self.operator == OperationType().NOT:
             temp = generador.add_temp()
-            generador.add_expresion(temp, "", left.get_value(), OperationType().NOT)
+            generador.add_exp(temp, "", left.get_value(), OperationType().NOT)
             return Retorno(temp, VariableType('int', 32), True, None)
