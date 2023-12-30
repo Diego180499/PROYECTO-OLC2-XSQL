@@ -245,8 +245,7 @@ def p_statements(t):
 def p_statements_2(t):
     'statements : statement'
     # t[0] = []
-    eof = EOF(0, 0)
-    t[0] = OrdenEjecucion(0, 0, t[1], eof)
+    t[0] = OrdenEjecucion(0, 0, t[1], None)
 
 
 def p_statement(t):

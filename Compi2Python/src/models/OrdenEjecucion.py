@@ -32,7 +32,6 @@ class OrdenEjecucion(Instruction):
             nodo_left = self.left.dot(current_node, graficador)
         if self.right is not None:
             nodo_right = self.right.dot(current_node, graficador)
-        return current_node
 
     def c3d(self, scope, generador):
         if self.left is not None:

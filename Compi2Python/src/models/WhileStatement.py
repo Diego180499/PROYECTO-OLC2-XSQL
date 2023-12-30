@@ -64,11 +64,14 @@ class WhileStatement(Instruction):
     def c3d(self,symbol_table,generador):
         generador.add_comment("Inicia While")
         label_init = generador.new_label()
-        generador.put_label(label_init)
+        label_exit = generador.new_label()
         result = self.condition.c3d(symbol_table,generador)
         if (isinstance(result, Exception)):
             return result
         symbol_table = SymbolTable(ScopeType().WHILE, symbol_table)
+        generador.add_if(result.get_value(), 1,'==', label_init)
+        generador.add_goto(label_exit)
+        generador.put_label(label_init)
         for label in result.get_true_lbls():
             generador.put_label(label)
         if self.block is not None:
@@ -76,6 +79,7 @@ class WhileStatement(Instruction):
             self.block.c3d(symbol_table,generador)
             generador.add_comment('Fin de sentencias dentro del while')
         generador.add_goto(label_init)
+        generador.put_label(label_exit)
         for label in result.get_false_lbls():
             generador.put_label(label)
         generador.add_comment('Fin While')

@@ -68,7 +68,10 @@ class IfStatement(Instruction):
         symbol_table = SymbolTable(ScopeType().IF, symbol_table)
         generador.add_comment('If Statement')
         exit_label = generador.new_label()
+        true_label = generador.new_label()
         condicion = self.condition.c3d(symbol_table, generador)
+        generador.add_if(condicion.get_value(), '1', '==', true_label)
+        generador.put_label(true_label)
         for label in condicion.list_true_lbls:
             generador.put_label(label)
         if self.true_block is not None:
