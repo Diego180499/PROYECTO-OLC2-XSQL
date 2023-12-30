@@ -1,6 +1,5 @@
-from .Instruction import Instruction
-from .symbolTable.SymbolTable import SymbolTable
-from .symbolTable.ScopeType import ScopeType
+from Compi2Python.src.models.Instruction import Instruction
+from Compi2Python.src.models.symbolTable import SymbolTable
 
 
 class OrdenEjecucion(Instruction):

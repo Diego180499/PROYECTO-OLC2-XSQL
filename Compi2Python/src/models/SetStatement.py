@@ -79,4 +79,6 @@ class SetStatement(Instruction):
                 graficador.agregarRelacion(node_equal,node_var)
                 result.value.dot(node_equal,graficador)
     def c3d(self,symbol_table,generador):
-        pass
+        if self.assignments is not None:
+            for asignacion in self.assignments:
+                asignacion.c3d(symbol_table,generador)

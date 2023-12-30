@@ -1,0 +1,37 @@
+/* ---- HEADER ----- */
+var t0,t1 float64;
+
+var P, H ;
+var stack[30101999];
+var heap[30101999];
+
+
+func main(){
+	/* Declaracion de variable @contador */
+	stack[int(0)] = 0;
+	/* Fin declaracion de variable @contador */
+	/* Declaracion de variable @i */
+	stack[int(0)] = 0;
+	/* Fin declaracion de variable @i */
+	/* Inicia Asignacion @contador */
+	stack[int(0)] = 0;
+	/* Finaliza Asignacion @contador */
+	/* Inicia Asignacion @i */
+	stack[int(0)] = 0;
+	/* Finaliza Asignacion @i */
+	/* Inicia While */
+	t0 =  t0 < t0;
+	if t0 == 1 {goto L0;}
+	goto L1;
+	L0:
+	/* Inicio de sentencias dentro del while */
+	/* Inicia Asignacion @i */
+	t1 =  t0 + 1;
+	stack[int(0)] = t1;
+	/* Finaliza Asignacion @i */
+	/* Fin de sentencias dentro del while */
+	goto L0;
+	L1:
+	/* Fin While */
+
+}

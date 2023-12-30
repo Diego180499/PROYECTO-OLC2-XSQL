@@ -177,6 +177,13 @@ class BinaryOperation(Instruction):
             print("The operation couldn't be executed")
             return None
 
+        if left.type == 'ID':
+            left = symbol_table.find_var_by_id(left.get_value())
+            left = Retorno(f't{left.pos}', 'ID', True, None)
+        if right.type == 'ID':
+            right = symbol_table.find_var_by_id(right.get_value())
+            right = Retorno(f't{right.pos}', 'ID', True, None)
+
         if self.operator == OperationType().PLUS:
             temp = generador.add_temp()
             generador.add_exp(temp, left.get_value(), right.get_value(), OperationType().PLUS)
