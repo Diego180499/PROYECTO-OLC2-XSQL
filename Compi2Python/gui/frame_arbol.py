@@ -45,6 +45,7 @@ class FrameArbol:
                 self.__generar_arbol_desde_lista(elemento_padre, value)
             else:
                 self.__insertar_hijo(str(value), elemento_padre)
+        self.__expandir_arbol__(self.arbol.focus())
 
     def __generar_arbol_desde_lista(self, elemento_padre, lista):
         for elemento in lista:
@@ -60,3 +61,8 @@ class FrameArbol:
         # Elimina todas las filas existentes en el TreeView
         for item in self.arbol.get_children():
             self.arbol.delete(item)
+
+    def __expandir_arbol__(self,nodo):
+        self.arbol.item(nodo, open=True)
+        for child in self.arbol.get_children(nodo):
+            self.__expandir_arbol__(child)

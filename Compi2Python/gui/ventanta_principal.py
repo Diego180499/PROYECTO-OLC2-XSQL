@@ -47,12 +47,12 @@ class VentanaPrincipal:
         self.ventana.protocol("WM_DELETE_WINDOW", self.menu_archivo.evento_menu_salir)
 
     def ejecutar(self):
-        conector = Conector()
         ### listar archivos de las bases de datos ###
-        self.__listar_nombres_bd__(conector)
+        self.__listar_nombres_bd__()
         self.ventana.mainloop()
 
-    def __listar_nombres_bd__(self, conector):
+    def __listar_nombres_bd__(self):
+        conector= Conector()
         url_proyecto = f'resources/BASES_DE_DATOS_XML'
         nombres_bd = os.listdir(url_proyecto)  # obtiene una lista con todos los archivos que contenga mi carpeta
         diccionario=dict()

@@ -36,6 +36,11 @@ class InsertStatement(Instruction):
         symbol_table = SymbolTable(ScopeType().INSERT, symbol_table)
         table_fields = obtener_nombres_campos_tabla(db.value, self.table_name)
 
+        if table_fields is None:
+            print(f"The specified table: {self.table_name} does not exist")
+            errors.append(self.semantic_error(f"The specified table: {self.table_name} does not exist"))
+            return None
+
         for i in range(len(self.column_names)):
             column_declared = any((field == self.column_names[i]) for field in table_fields)
 

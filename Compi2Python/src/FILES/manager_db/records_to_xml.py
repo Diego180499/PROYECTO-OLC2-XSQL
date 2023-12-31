@@ -1,47 +1,45 @@
 from src.FILES.import_to_xml_dml import *
 
 
-def records_to_xml(registros : Registros):
+def records_to_xml(registros: Registros):
     string_registros = ''
-    for registro in registros.registros :
-        string_registros += record_to_xml(registro.campos,registro.valores)
+    tabs_children = "\t"
+    for registro in registros.registros:
+        string_registros += record_to_xml(tabs_children, registro.campos, registro.valores)
 
-    contenido_registros = f'''
-    <registros>
-        <base_datos>{registros.baseDatos}</base_datos>        
-        <tabla>{registros.tabla}</tabla>
-        {string_registros}
-    </registros>
-    '''
+    contenido_registros = f'<registros>\n'
+    contenido_registros += f'{tabs_children}<base_datos>{registros.baseDatos}</base_datos>\n'
+    contenido_registros += f'{tabs_children}<tabla>{registros.tabla}</tabla>\n'
+    contenido_registros += f'{string_registros}'
+    contenido_registros += f'</registros>\n'
     return contenido_registros
 
 
-def record_to_xml(campos : [] , valores : []):
-    contenido_registro = f'''
-        <registro>
-            {campos_to_xml(campos)}
-            {valores_to_xml(valores)}
-        </registro>                    
-    '''
+def record_to_xml(tabs, campos: [], valores: []):
+    tabs_children = tabs + "\t"
+    contenido_registro = f'{tabs}<registro>\n'
+    contenido_registro += f'{campos_to_xml(tabs_children, campos)}'
+    contenido_registro += f'{valores_to_xml(tabs_children, valores)}'
+    contenido_registro += f'{tabs}</registro>\n'
     return contenido_registro
 
 
-def campos_to_xml(campos : []):
-    contenido_campos = f''
+def campos_to_xml(tabs, campos: []):
+    if campos is None:
+        campos = []
 
-    for campo in campos :
-        contenido_campos+=f'''
-        <campo>{campo}</campo>
-        '''
+    contenido_campos = ""
+    for campo in campos:
+        contenido_campos += f'{tabs}<campo>{campo}</campo>\n'
     return contenido_campos
 
 
-def valores_to_xml(valores : []):
+def valores_to_xml(tabs, valores: []):
+    if valores is None:
+        valores = []
 
-    contenido_valores = f''
+    contenido_valores = ""
 
-    for valor in valores :
-        contenido_valores += f'''
-        <valor>{valor}</valor>
-        '''
+    for valor in valores:
+        contenido_valores += f'{tabs}<valor>{valor}</valor>\n'
     return contenido_valores

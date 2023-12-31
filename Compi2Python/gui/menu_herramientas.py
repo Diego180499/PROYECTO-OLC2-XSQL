@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import simpledialog, messagebox
-from tkinter.filedialog import asksaveasfilename
+from tkinter.filedialog import asksaveasfilename, askopenfilename
+
 from gui.conector import Conector
 from src.FILES.manager_db import db_file_manager, db_to_xml
 from src.utils.archivo import Archivo
@@ -18,6 +19,10 @@ class MenuHerramientas(Menu):
         self.add_cascade(label='Base de Datos', image=self.iconos['base-de-datos'], compound="left",
                          menu=self.agregar_menu_bbdd())
         self.add_cascade(label='SQL', image=self.iconos['sql'], compound="left", menu=self.agregar_menu_sql())
+        self.add_command(label='Exportar', image=self.iconos['base-de-datos'], compound="left",
+                         command=self.evento_exportar)
+        self.add_command(label='Importar', image=self.iconos['sql'], compound="left",
+                         command=self.evento_importar)
 
     # ----------------------------------------------------------MENU----------------------------------------------------------
     # Eventos Menu
@@ -64,7 +69,7 @@ class MenuHerramientas(Menu):
             return
 
         contenido_xml = db_to_xml.data_base_to_xml(bbdd)
-        self.mostrar_ventana_guardar_archivo(contenido_xml)
+        self.mostrar_ventana_guardar_archivo_xml(contenido_xml)
 
     def evento_crear_bbdd(self):
         conector = Conector()
@@ -83,6 +88,7 @@ class MenuHerramientas(Menu):
             messagebox.showerror("Error", "No se puede crear la base de datos, verifique que no exista")
             return
         messagebox.showinfo("Base de Datos Creada", "La base de datos " + nombre_bbdd + " ha sido creada exitosamente")
+        self.evento_actualizar_arbol_bbdd()
 
     def evento_borrar_bbdd(self):
         conector = Conector()
@@ -98,15 +104,74 @@ class MenuHerramientas(Menu):
         resultado = conector.eliminar_bbdd(nombre_bbdd)
 
         if resultado:
-            messagebox.showinfo("Base de Datos Creada", "La base de datos " + nombre_bbdd + " ha sido borrada exitosamente")
+            messagebox.showinfo("Base de Datos Creada",
+                                "La base de datos " + nombre_bbdd + " ha sido borrada exitosamente")
+            self.evento_actualizar_arbol_bbdd()
             return
         messagebox.showerror("Error", "No se puede borrar la base de datos, verifique que exista")
 
-
     def evento_actualizar_arbol_bbdd(self):
-        conector = Conector()
         self.frame_arbol.limpiar_arbol()
-        self.ventana_principal.__listar_nombres_bd__(conector)
+        self.ventana_principal.__listar_nombres_bd__()
+
+    def evento_importar(self):
+        nombre_bbdd = simpledialog.askstring("Importar Tabla",
+                                             "Escriba el nombre de la base de datos a la que desea importar tablas",
+                                             parent=self.ventana_principal.ventana)
+        if nombre_bbdd is None:
+            return
+
+        if not self.__existe_bbdd__(nombre_bbdd):
+            messagebox.showerror("Importar Tabla", "La base de datos ingresada no existe")
+            return
+
+        ubicaciones=[]
+        ###llegados aquí es que si exsite bbdd
+        while True:
+            ubicacion, contenido_archivo=self.abrir_archivo_xml()
+            if contenido_archivo is None:
+                break
+
+            ubicaciones.append(ubicacion)
+            print(contenido_archivo)
+            ###Leeemos el contenido del archivo
+            ## del contenido sacar el nombrte de la TABLA y ese nombre, se le colocara al archivo importado
+
+            ##con el contenido , creas un nuevo archivo, que se llame como el valor TABLA, dentro de la carpeta
+            #llamada igual que el nombre de la bbdd recibida
+        message ="Los siguintes archivos han sido importados: "
+        for ubicacion in ubicaciones:
+            message+=ubicacion+"\n"
+        messagebox.showinfo("Importar tabla",message)
+
+
+    def evento_exportar(self):
+        nombre_bbdd_tablas = simpledialog.askstring("Exportar tabla", "Escriba el nombre de la base de datos y el listado de tablas a exportar.\n"
+                                                               "Ej. base_de_datos.tabla1,tabla2,...,tablaN",
+                                             parent=self.ventana_principal.ventana)
+        #TODO validar o limpiar espacios/saltos/tabs
+
+        if nombre_bbdd_tablas is None:
+            return
+        print("Base de datos/tablas seleccionadas: ", nombre_bbdd_tablas)
+
+        nombre_bbdd_recibido=nombre_bbdd_tablas.split(".")[0]
+        if not self.__existe_bbdd__(nombre_bbdd_recibido):
+            messagebox.showerror("Exportar Tabla", "La base de datos ingresada no existe")
+            return
+
+        tablas = nombre_bbdd_tablas.split(".")[1].split(",")
+        tablas_existentes=db_file_manager.obtener_nombres_de_tablas_de_bd(nombre_bbdd_recibido)
+        print(tablas_existentes)
+        for tabla in tablas:
+            if tabla not in tablas_existentes:
+                messagebox.showerror("Exportar Tabla", f'La tabla {tabla} no existe')
+                return
+
+        #Generar un guardar como de xml de la tabla
+        #contenido_xml = db_to_xml.data_base_to_xml(bbdd)
+        #self.mostrar_ventana_guardar_archivo(contenido_xml)
+
 
     def agregar_menu_sql(self):
         menu_sql = Menu(self)
@@ -128,9 +193,29 @@ class MenuHerramientas(Menu):
                               command=self.evento_actualizar_arbol_bbdd)
         return menu_bbdd
 
-    def mostrar_ventana_guardar_archivo(self, contenido):
-        ubicacion = asksaveasfilename(filetypes=[('Archivos Dump', '*.xml')])
+    def mostrar_ventana_guardar_archivo_xml(self, contenido):
+        ubicacion = asksaveasfilename(filetypes=[('Archivos XML', '*.xml')])
         if ubicacion == '':
             return None
         with open(ubicacion, 'w') as archivo:
             archivo.write(contenido)
+
+    def abrir_archivo_xml(self):
+        ubicacion = askopenfilename(filetypes=[('Archivos XML', '*.xml')])
+        if ubicacion == '':
+            return None,None
+        try:
+            with open(ubicacion, 'r') as archivo:
+                self.contenido = archivo.read()
+            print("abierto:", ubicacion)
+            return ubicacion, self.contenido
+        except Exception as e:
+            print(str(e))
+            return None, None
+
+    def __existe_bbdd__(self,nombre_bbdd_recibido):
+        nombres_bbdd=db_file_manager.obtener_nombres_de_bases_de_datos()
+        formated_nombres_bbdd=[]
+        for nombre_bbdd_de_lista in nombres_bbdd:
+            formated_nombres_bbdd.append(nombre_bbdd_de_lista.split(".")[0])
+        return nombre_bbdd_recibido in formated_nombres_bbdd

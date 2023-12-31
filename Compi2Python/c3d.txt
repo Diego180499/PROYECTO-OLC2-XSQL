@@ -1,41 +1,9 @@
 /* ---- HEADER ----- */
-var t0,t1,t2 float64;
-
 var P, H ;
 var stack[30101999];
 var heap[30101999];
 
 
 func main(){
-	/* Declaracion de variable @var */
-	stack[int(0)] = 0;
-	/* Fin declaracion de variable @var */
-	/* Inicia Asignacion @var */
-	stack[int(0)] = 12;
-	/* Finaliza Asignacion @var */
-	/* If Statement */
-	t0 =  t0 < 25;
-	if t0 == 1 {goto L1;}
-	L1:
-	/* Inicia Asignacion @var */
-	stack[int(0)] = 3;
-	/* Finaliza Asignacion @var */
-	goto L0;
-	L0:
-	/* End If Statement */
-	/* Inicia While */
-	t1 =  t0 > 1;
-	if t1 == 1 {goto L2;}
-	goto L3;
-	L2:
-	/* Inicio de sentencias dentro del while */
-	/* Inicia Asignacion @var */
-	t2 =  t0 - 1;
-	stack[int(0)] = t2;
-	/* Finaliza Asignacion @var */
-	/* Fin de sentencias dentro del while */
-	goto L2;
-	L3:
-	/* Fin While */
 
 }

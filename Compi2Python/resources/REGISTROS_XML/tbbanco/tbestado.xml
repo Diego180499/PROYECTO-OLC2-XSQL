@@ -1,46 +1,60 @@
+<registros>
+	<base_datos>tbbanco</base_datos>
+	<tabla>tbestado</tabla>
+	<registro>
+		<campo>idestado</campo>
+		<campo>estado</campo>
 
-    <registros>
-        <base_datos>tbbanco</base_datos>        
-        <tabla>tbestado</tabla>
-        
-        <registro>
-            
-        <campo>idestado</campo>
-        
-        <campo>estado</campo>
-        
-            
-        <valor>1</valor>
-        
-        <valor>Activo</valor>
-        
-        </registro>                    
-    
-        <registro>
-            
-        <campo>idestado</campo>
-        
-        <campo>estado</campo>
-        
-            
-        <valor>2</valor>
-        
-        <valor>Inactivo</valor>
-        
-        </registro>                    
-    
-        <registro>
-            
-        <campo>idestado</campo>
-        
-        <campo>estado</campo>
-        
-            
-        <valor>3</valor>
-        
-        <valor>Eliminado</valor>
-        
-        </registro>                    
-    
-    </registros>
-    
+		<valor>1</valor>
+		<valor>Activo</valor>
+
+	</registro>
+	<registro>
+		<campo>idestado</campo>
+		<campo>estado</campo>
+
+		<valor>2</valor>
+		<valor>Inactivo</valor>
+
+	</registro>
+	<registro>
+		<campo>idestado</campo>
+		<campo>estado</campo>
+
+		<valor>3</valor>
+		<valor>Eliminado</valor>
+
+	</registro>
+	<registro>
+		<campo>idestado</campo>
+		<campo>estado</campo>
+
+		<valor>5</valor>
+		<valor>activo</valor>
+
+	</registro>
+	<registro>
+		<campo>idestado</campo>
+		<campo>estado</campo>
+
+		<valor>6</valor>
+		<valor>inactivo</valor>
+
+	</registro>
+	<registro>
+		<campo>idestado</campo>
+		<campo>estado</campo>
+
+		<valor>7</valor>
+		<valor>inactivo</valor>
+
+	</registro>
+	<registro>
+		<campo>idestado</campo>
+		<campo>estado</campo>
+
+		<valor>8</valor>
+		<valor>ahora si</valor>
+
+	</registro>
+</registros>
