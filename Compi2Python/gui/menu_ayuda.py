@@ -43,7 +43,7 @@ class MenuAyuda(Menu):
         label_alumno_1 = Label(ventana_secundaria, text='Diego Jose Avila Estrada 20000000', font=("Courier New", 20))
         label_alumno_1.grid(row=7, column=1,columnspan=2)
 
-        label_alumno_2 = Label(ventana_secundaria, text='Tomas Agusto Mileño Duro 200000', font=("Courier New", 20))
+        label_alumno_2 = Label(ventana_secundaria, text='William Alexander Miranda Santos ------', font=("Courier New", 20))
         label_alumno_2.grid(row=8, column=1,columnspan=2)
 
         label_blanco_3 = Label(ventana_secundaria, text="")

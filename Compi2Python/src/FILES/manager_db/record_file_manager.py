@@ -1,5 +1,6 @@
 from src.FILES.manager_db.records_to_xml import *
 from src.utils.archivo import Archivo
+from shutil import rmtree
 import os
 
 #url_records_xml = f'U:/Universidad/Ciclo 2023/EDV-DICIEMBRE/LAB - OLC2/REPO-PROYECTO-OLC2-XSQL/PROYECTO-OLC2/resources/REGISTROS_XML'
@@ -24,6 +25,13 @@ def obtener_registros_tabla_2(nombre_db, nombre_tabla):
 
     return registro_lista
 
+def obtener_contenido_registros_tabla(nombre_bd, nombre_tabla):
+    archivo = open(f'{url_records_xml}/{nombre_bd}/{nombre_tabla}.xml','r')
+
+    if archivo.readable() :
+        return archivo.read()
+
+    return None
 
 
 ## unir dos o mas tablas para un select
@@ -129,6 +137,9 @@ def existe_archivo_registros(nombre_bd, nombre_tabla):
     return False
 
 
+
+def eliminar_carpeta_registros_db(nombre_db):
+    rmtree(f"{url_records_xml}/{nombre_db}")
 ### pruebas
 # registro : Registro = Registro(['campo'],['valor de campo'])
 # insertar_registro('prueba','tabla_prueba',registro)

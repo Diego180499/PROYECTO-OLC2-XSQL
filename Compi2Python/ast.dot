@@ -1,7 +1,9 @@
 digraph AST{
 node0 [label="inst" shape="oval", color="black"];
-node1 [label="use" shape="oval", color="black"];
-node2 [label="tbbanssdfo" shape="oval", color="black"];
+node1 [label="inst" shape="oval", color="black"];
+node2 [label="use" shape="oval", color="black"];
+node3 [label="tbbanco" shape="oval", color="black"];
 node0 -> node1;
 node1 -> node2;
+node2 -> node3;
 }

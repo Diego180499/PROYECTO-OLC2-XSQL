@@ -5,7 +5,9 @@ from tkinter.filedialog import asksaveasfilename, askopenfilename
 from gui.conector import Conector
 from src.FILES.manager_db import db_file_manager, db_to_xml
 from src.utils.archivo import Archivo
-
+from src.FILES.manager_db.record_file_manager import *
+from src.FILES.manager_db.record_file_manager import obtener_contenido_registros_tabla
+from src.FILES.import_to_xml_dml import xml_to_records
 
 class MenuHerramientas(Menu):
 
@@ -102,6 +104,7 @@ class MenuHerramientas(Menu):
         print("borrando bbdd:[", nombre_bbdd, "]")
 
         resultado = conector.eliminar_bbdd(nombre_bbdd)
+        eliminar_carpeta_registros_db(nombre_bbdd)
 
         if resultado:
             messagebox.showinfo("Base de Datos Creada",
@@ -115,14 +118,13 @@ class MenuHerramientas(Menu):
         self.ventana_principal.__listar_nombres_bd__()
 
     def evento_importar(self):
-        nombre_bbdd = simpledialog.askstring("Importar Tabla",
-                                             "Escriba el nombre de la base de datos a la que desea importar tablas",
-                                             parent=self.ventana_principal.ventana)
+        nombre_bbdd = simpledialog.askstring("Importar Tabla","Escriba el nombre de la base de datos a la que desea importar tablas",
+        parent=self.ventana_principal.ventana)
         if nombre_bbdd is None:
             return
 
         if not self.__existe_bbdd__(nombre_bbdd):
-            messagebox.showerror("Importar Tabla", "La base de datos ingresada no existe")
+            messagebox.showerror("Importar Tabla", f"La base de datos {nombre_bbdd} no existe")
             return
 
         ubicaciones=[]
@@ -140,9 +142,20 @@ class MenuHerramientas(Menu):
             ##con el contenido , creas un nuevo archivo, que se llame como el valor TABLA, dentro de la carpeta
             #llamada igual que el nombre de la bbdd recibida
         message ="Los siguintes archivos han sido importados: "
+
+        registros = []
         for ubicacion in ubicaciones:
-            message+=ubicacion+"\n"
-        messagebox.showinfo("Importar tabla",message)
+            registro = xml_to_records(ubicacion)
+            registros.append(registro)
+
+
+        for registro in registros :
+            nombre_tabla = registro.tabla
+            for registro_individual in registro.registros :
+                insertar_registro(nombre_bbdd,nombre_tabla,registro_individual)
+        messagebox.showinfo("¡Se ha importado correctamente!")
+
+
 
 
     def evento_exportar(self):
@@ -153,24 +166,28 @@ class MenuHerramientas(Menu):
 
         if nombre_bbdd_tablas is None:
             return
-        print("Base de datos/tablas seleccionadas: ", nombre_bbdd_tablas)
+        #print("Base de datos/tablas seleccionadas: ", nombre_bbdd_tablas)
 
         nombre_bbdd_recibido=nombre_bbdd_tablas.split(".")[0]
         if not self.__existe_bbdd__(nombre_bbdd_recibido):
-            messagebox.showerror("Exportar Tabla", "La base de datos ingresada no existe")
+            messagebox.showerror("Exportar Tabla", f"La base de datos {nombre_bbdd_recibido} no existe")
             return
 
         tablas = nombre_bbdd_tablas.split(".")[1].split(",")
         tablas_existentes=db_file_manager.obtener_nombres_de_tablas_de_bd(nombre_bbdd_recibido)
-        print(tablas_existentes)
+        #print(tablas_existentes)
         for tabla in tablas:
             if tabla not in tablas_existentes:
                 messagebox.showerror("Exportar Tabla", f'La tabla {tabla} no existe')
                 return
 
-        #Generar un guardar como de xml de la tabla
-        #contenido_xml = db_to_xml.data_base_to_xml(bbdd)
-        #self.mostrar_ventana_guardar_archivo(contenido_xml)
+        ####### A PARTIR DE AQUI, LAS VALIDACIONES SON CORRECTAS  #######
+
+        for tabla in tablas :
+            contenido = obtener_contenido_registros_tabla(nombre_bbdd_recibido, tabla)
+            if contenido != None:
+                self.mostrar_ventana_guardar_archivo_xml(contenido)
+                messagebox.showinfo("Exportar Tabla", f'Se ha exportado correctamente la tabla {tabla}')
 
 
     def agregar_menu_sql(self):

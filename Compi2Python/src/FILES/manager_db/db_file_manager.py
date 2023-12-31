@@ -10,7 +10,6 @@ from src.utils.archivo import Archivo
 project_path = os.path.abspath(os.path.dirname(__file__)).split("Compi2Python")[0]
 url_base_de_datos_xml = resources_path = os.path.join(project_path, "Compi2Python", "resources", "BASES_DE_DATOS_XML")
 
-
 def eliminar_base_de_datos(nombre_base_de_datos):
     remove(f'{url_base_de_datos_xml}/{nombre_base_de_datos}.xml')
 
