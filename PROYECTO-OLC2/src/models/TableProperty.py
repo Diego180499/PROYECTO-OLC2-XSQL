@@ -35,9 +35,15 @@ class TableProperty(Instruction):
             errors.append(self.semantic_error(f"The field: {self.property_name} has already been declared"))
             return None
 
-        if self.is_null and self.is_primary_key:
-            print("A primary key couldn't be null")
-            errors.append(self.semantic_error("A primary key couldn't be null"))
+        if self.is_primary_key:
+
+            if self.is_null is None:
+                self.is_null = False
+
+            if self.is_null:
+                print("A primary key couldn't be null")
+                errors.append(self.semantic_error("A primary key couldn't be null"))
+                return None
 
         if isinstance(self.variable_type.length, Instruction):
             length_result: Variable = self.variable_type.length.execute(symbol_table, errors)
@@ -53,6 +59,14 @@ class TableProperty(Instruction):
                 return None
 
         if self.parent != '-' and self.parent_field != '-':
+
+            if self.is_null is None:
+                self.is_null = False
+
+            if self.is_null:
+                print("The foreign key cannot be null.")
+                return None
+
             foreign_field: Campo = get_table_field_by_name(db.value, self.parent, self.parent_field)
 
             if foreign_field is None:

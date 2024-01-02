@@ -361,7 +361,7 @@ def p_null_prod_2(t):
 
 def p_null_prod_3(t):
     'null_prod  : '
-    t[0] = True
+    t[0] = None
 
 
 #### SELECT ####
