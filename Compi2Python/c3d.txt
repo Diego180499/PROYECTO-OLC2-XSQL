@@ -1,9 +1,35 @@
 /* ---- HEADER ----- */
+var t0,t1,t2 float64;
+
 var P, H ;
 var stack[30101999];
 var heap[30101999];
 
 
 func main(){
+	/* If Statement */
+	t0 = H;
+	heap[int(H)] = 99;
+	H = H + 1;
+	heap[int(H)] = 105;
+	H = H + 1;
+	heap[int(H)] = 110;
+	H = H + 1;
+	heap[int(H)] = 99;
+	H = H + 1;
+	heap[int(H)] = 111;
+	H = H + 1;
+	heap[int(H)] = -1;
+	H = H + 1;
+	t1 =  5 == t0;
+	if t1 == 1 {goto L1;}
+	L1:
+	/* Declaracion de variable @var */
+	t2 =  P + 2;
+	stack[int(t2)] = 0;
+	/* Fin declaracion de variable @var */
+	goto L0;
+	L0:
+	/* End If Statement */
 
 }

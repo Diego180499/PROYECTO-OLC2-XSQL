@@ -29,16 +29,18 @@ class BinaryOperation(Instruction):
             result = Variable()
 
             if left.variable_type.type == 'nchar' or left.variable_type.type == 'nvarchar' or right.variable_type.type == 'nchar' \
-                    or right.variable_type.type == 'nvarchar':
+                or right.variable_type.type == 'nvarchar':
                 result.value = str(left.value) + str(right.value)
                 result.variable_type = VariableType('nchar', len(result.value))
                 return result
+
 
             if left.variable_type.type != 'int' and left.variable_type.type != 'decimal' or right.variable_type.type != 'int' \
                     and right.variable_type.type != 'decimal':
                 print("Plus operation only can be executed by int and decimal values")
                 errors.append(self.semantic_error("Plus operation only can be executed by int and decimal values"))
                 return None
+
 
             if left.variable_type.type == 'decimal' or right.variable_type.type == 'decimal':
                 result.variable_type = VariableType('decimal', 32)
@@ -101,6 +103,17 @@ class BinaryOperation(Instruction):
 
         elif self.operator == OperationType().EQUALS:
 
+            if left.variable_type.type == 'nchar' or left.variable_type.type == 'nvarchar':
+                if right.variable_type.type != 'nchar' and right.variable_type.type != 'nvarchar':
+                    print(f"Left is {left.variable_type.type} and right is: {right.variable_type.type}")
+                    errors.append(self.semantic_error(f"Left is {left.variable_type.type} and right is: {right.variable_type.type}"))
+                    return None
+
+            if left.variable_type.type == 'int' or left.variable_type.type == 'decimal':
+                if right.variable_type.type != 'int' and right.variable_type.type != 'decimal':
+                    print(f"Left is {left.variable_type.type} and right is: {right.variable_type.type}")
+                    errors.append(self.semantic_error(f"Left is {left.variable_type.type} and right is: {right.variable_type.type}"))
+                    return None
             result = Variable()
             result.variable_type = VariableType('int', 32)
             result.value = int(left.value == right.value)
@@ -108,6 +121,17 @@ class BinaryOperation(Instruction):
 
         elif self.operator == OperationType().NOT_EQ:
 
+            if left.variable_type.type == 'nchar' or left.variable_type.type == 'nvarchar':
+                if right.variable_type.type != 'nchar' and right.variable_type.type != 'nvarchar':
+                    print(f"Left is {left.variable_type.type} and right is: {right.variable_type.type}")
+                    errors.append(self.semantic_error(f"Left is {left.variable_type.type} and right is: {right.variable_type.type}"))
+                    return None
+
+            if left.variable_type.type == 'int' or left.variable_type.type == 'decimal':
+                if right.variable_type.type != 'int' and right.variable_type.type != 'decimal':
+                    print(f"Left is {left.variable_type.type} and right is: {right.variable_type.type}")
+                    errors.append(self.semantic_error(f"Left is {left.variable_type.type} and right is: {right.variable_type.type}"))
+                    return None
             result = Variable()
             result.variable_type = VariableType('int', 32)
             result.value = int(left.value != right.value)
@@ -115,26 +139,44 @@ class BinaryOperation(Instruction):
 
         elif self.operator == OperationType().LESS_THAN:
 
+            if (left.variable_type.type != 'int' and left.variable_type.type != 'decimal' or
+                    right.variable_type.type != 'int' and right.variable_type.type != 'decimal'):
+                print("Less '<' is only allowed for int and decimal values")
+                errors.append(self.semantic_error("Less '<' is only allowed for int and decimal values"))
+                return None
             result = Variable()
             result.variable_type = VariableType('int', 32)
             result.value = int(left.value < right.value)
             return result
 
-        elif self.operator == OperationType().GREATER_THAN:
-
+        elif self.operator > OperationType().GREATER_THAN:
+            if (left.variable_type.type != 'int' and left.variable_type.type != 'decimal' or
+                    right.variable_type.type != 'int' and right.variable_type.type != 'decimal'):
+                print("Greater Equals '>=' is only allowed for int and decimal values")
+                errors.append(self.semantic_error("Greater Equals '>=' is only allowed for int and decimal values"))
+                return None
             result = Variable()
             result.variable_type = VariableType('int', 32)
             result.value = int(left.value > right.value)
             return result
 
         elif self.operator == OperationType().LESS_EQ:
-
+            if (left.variable_type.type != 'int' and left.variable_type.type != 'decimal' or
+                    right.variable_type.type != 'int' and right.variable_type.type != 'decimal'):
+                print("Less Equals '<=' is only allowed for int and decimal values")
+                errors.append(self.semantic_error("Less Equals '<=' is only allowed for int and decimal values"))
+                return None
             result = Variable()
             result.variable_type = VariableType('int', 32)
             result.value = int(left.value <= right.value)
             return result
-        elif self.operator == OperationType().GREATER_EQ:
+        elif self.operator >= OperationType().GREATER_EQ:
 
+            if (left.variable_type.type != 'int' and left.variable_type.type != 'decimal' or
+                    right.variable_type.type != 'int' and right.variable_type.type != 'decimal'):
+                print("Equals '==' is only allowed for int and decimal values")
+                errors.append(self.semantic_error("Equals '==' is only allowed for int and decimal values"))
+                return None
             result = Variable()
             result.variable_type = VariableType('int', 32)
             result.value = int(left.value >= right.value)
@@ -144,6 +186,7 @@ class BinaryOperation(Instruction):
             result = Variable()
             result.variable_type = VariableType('int', 32)
             result.value = 1 if int(left.value and right.value) > 0 else 0
+
             return result
 
         elif self.operator == OperationType().OR:
@@ -154,16 +197,17 @@ class BinaryOperation(Instruction):
             return result
 
     def semantic_error(self, description):
-        return xsql_error(description, '', 'Error Semantico', f'Linea {self.line} Columna {self.column}')
+        return xsql_error(description,'','Error Semantico',f'Linea {self.line} Columna {self.column}')
 
-    def dot(self, nodo_padre, graficador):
+
+    def dot(self,nodo_padre, graficador):
         current_node = graficador.agregarNode(self.operator)
-        graficador.agregarRelacion(nodo_padre, current_node)
+        graficador.agregarRelacion(nodo_padre,current_node)
         if self.left_operation is not None:
-            self.left_operation.dot(current_node, graficador)
+            self.left_operation.dot(current_node,graficador)
         if self.right_operation is not None:
-            self.right_operation.dot(current_node, graficador)
-
+            self.right_operation.dot(current_node,graficador)
+        
     def c3d(self, symbol_table, generador):
         left = self.left_operation.c3d(symbol_table, generador)
         right = self.right_operation.c3d(symbol_table, generador)
