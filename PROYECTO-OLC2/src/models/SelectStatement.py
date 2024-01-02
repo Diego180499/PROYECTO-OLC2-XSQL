@@ -4,6 +4,7 @@ from .VariableType import VariableType
 from .symbolTable.SymbolTable import SymbolTable
 from .symbolTable.ScopeType import ScopeType
 from .SymbolType import SymbolType
+from .ValueType import ValueType
 from .Value import Value
 from ..FILES.manager_db.db_file_manager import obtener_nombres_campos_tabla, get_table_field_by_name
 from ..FILES.manager_db.record_file_manager import existe_archivo_registros
@@ -71,7 +72,7 @@ class SelectStatement(Instruction):
                 symbol_table = symbol_table.parent
                 return None
 
-            if not isinstance(table_column.value, Value):
+            if not isinstance(table_column.value, Value) or isinstance(table_column.value, Value) and table_column.value.value_type != ValueType().COLUMN:
                 table_result[0].append(table_column.column_name)
                 continue
 

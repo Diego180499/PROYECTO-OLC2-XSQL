@@ -1,44 +1,44 @@
 
     <registros>
-        <base_datos>school</base_datos>        
-        <tabla>professors</tabla>
+        <base_datos>tbbanco</base_datos>        
+        <tabla>tbestado</tabla>
         
         <registro>
             
-        <campo>id</campo>
+        <campo>idestado</campo>
         
-        <campo>name</campo>
-        
-            
-        <valor>1</valor>
-        
-        <valor>Ernesto</valor>
-        
-        </registro>                    
-    
-        <registro>
-            
-        <campo>id</campo>
-        
-        <campo>name</campo>
+        <campo>estado</campo>
         
             
         <valor>2</valor>
         
-        <valor>Moises</valor>
+        <valor>Inactivo</valor>
         
         </registro>                    
     
         <registro>
             
-        <campo>id</campo>
+        <campo>idestado</campo>
         
-        <campo>name</campo>
+        <campo>estado</campo>
+        
+            
+        <valor>1</valor>
+        
+        <valor>activo</valor>
+        
+        </registro>                    
+    
+        <registro>
+            
+        <campo>idestado</campo>
+        
+        <campo>estado</campo>
         
             
         <valor>3</valor>
         
-        <valor>Julio</valor>
+        <valor>Inactivo</valor>
         
         </registro>                    
     

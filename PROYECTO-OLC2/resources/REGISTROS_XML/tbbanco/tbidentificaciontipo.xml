@@ -1,0 +1,46 @@
+
+    <registros>
+        <base_datos>tbbanco</base_datos>        
+        <tabla>tbidentificaciontipo</tabla>
+        
+        <registro>
+            
+        <campo>ididentificaciontipo</campo>
+        
+        <campo>identificaciontipo</campo>
+        
+            
+        <valor>1</valor>
+        
+        <valor>DPI</valor>
+        
+        </registro>                    
+    
+        <registro>
+            
+        <campo>ididentificaciontipo</campo>
+        
+        <campo>identificaciontipo</campo>
+        
+            
+        <valor>2</valor>
+        
+        <valor>NIT</valor>
+        
+        </registro>                    
+    
+        <registro>
+            
+        <campo>ididentificaciontipo</campo>
+        
+        <campo>identificaciontipo</campo>
+        
+            
+        <valor>3</valor>
+        
+        <valor>PASAPORTE</valor>
+        
+        </registro>                    
+    
+    </registros>
+    

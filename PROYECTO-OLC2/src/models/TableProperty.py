@@ -80,7 +80,8 @@ class TableProperty(Instruction):
                 errors.append(self.semantic_error(f"The field: {self.parent_field} has {foreign_field.tipoDato} as data type. You declared: "
                       f"{self.property_name} as {self.variable_type.type}"))
                 return None
-
+        if self.is_null is None:
+            self.is_null = True
         result = Variable()
         result.id = self.property_name
         result.symbol_type = SymbolType().COLUMN

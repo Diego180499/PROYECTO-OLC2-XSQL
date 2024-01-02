@@ -145,8 +145,6 @@ class BinaryOperation(Instruction):
             result = Variable()
             result.variable_type = VariableType('int', 32)
             result.value = 1 if int(left.value and right.value) > 0 else 0
-            print('and result:', result.value)
-            errors.append(self.semantic_error('and result:', result.value))
 
             return result
 
@@ -155,8 +153,6 @@ class BinaryOperation(Instruction):
             result = Variable()
             result.variable_type = VariableType('int', 32)
             result.value = 1 if int(left.value or right.value) > 0 else 0
-            print('or result:', result.value)
-            errors.append(self.semantic_error('or result:', result.value))
             return result
 
     def semantic_error(self, description):

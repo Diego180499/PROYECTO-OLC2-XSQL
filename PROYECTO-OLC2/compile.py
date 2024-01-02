@@ -47,41 +47,41 @@ def parsear():
     '''
 
     inst = parse("""
-        create data base school;
-        
-        use school;
-        
-        create table students(
-            id int primary key,
-            first_name nvarchar(100) not null,
-            last_name nvarchar(100) not null
-        );
-        
-        create table professors(
-            id int not null primary key,
-            name nvarchar(100) not null
-        );
-        
-        create table courses(
-            id int primary key,
-            name nvarchar(100) null,
-            professor_id int reference professors(id)
-        );
-        
-        insert into students(id, first_name, last_name) values(1, 'José', 'Castro');
-        insert into students(id, first_name, last_name) values(2, 'Raquel', 'Rodriguez');
-        insert into students(id, first_name, last_name) values(3, 'Martin', 'Monterroso');
-        
-        insert into professors(id, name) values (1, 'Ernesto');
-        insert into professors(id, name) values (2, 'Moises');
-        insert into professors(id, name) values (3, 'Julio');
-        
-        insert into courses(id, name, professor_id) values(1, 'Physics', 1);
-        insert into courses(id, name, professor_id) values(2, 'Programming', 2);
-        insert into courses(id, name, professor_id) values(3, 'Math', 3);
-        
-        select id, first_name, contar() conteo, suma(id) sumas, 
-        if(first_name == 'Raquel', 'Verdadero', 'Falso') condicion, 10 + 5 operacion_fija from students;
+        USE tbbanco;
+        CREATE PROCEDURE sp_actualizaalturamora (@credito int, @diasmora int)
+AS
+BEGIN
+	DECLARE @alturamora as int;	
+		IF (@diasmora > 0 && @diasmora < 30) 
+		THEN
+			SET @alturamora = 0;
+		END IF;
+	
+		IF (@diasmora >= 30 && @diasmora < 60) 
+		THEN 
+			SET @alturamora = 1;	
+		END IF;
+	
+		IF (@diasmora >= 30 && @diasmora < 60) 
+		THEN 
+			SET @alturamora = 2;				
+		END IF;
+
+		IF (@diasmora >= 60 && @diasmora < 90) 
+		THEN 
+			SET @alturamora = 3;		
+		END IF;
+	
+		IF (@diasmora >= 90 && @diasmora < 120) 
+		THEN 
+			SET @alturamora = 4;				
+		END IF; 	             
+	update tbestado set estado = "activo"
+	where idestado == 1;
+END ;
+        exec sp_actualizaalturamora 10, 20;
+        update tbestado set estado = 'Inactivo' where idestado == 3;
+        select * from tbestado;
     """)
     # inst = parse(contenido_1)
     print('Errores sintacticos:')

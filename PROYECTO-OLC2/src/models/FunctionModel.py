@@ -11,8 +11,5 @@ class FunctionModel:
         self.block = block
         self.return_type = return_type
 
-    def dot(self,nodo_padre, graficador):
-        pass
-        
-    def c3d(self,scope):
-        pass
+    def __str__(self):
+        return self.id
