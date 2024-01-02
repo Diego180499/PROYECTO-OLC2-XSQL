@@ -128,9 +128,12 @@ class UpdateStatement(Instruction):
                 column_in_table: Variable = symbol_table.find_column_by_id(record.campos[i])
 
                 if column_in_table is not None:
-                    if column_in_table.variable_type.type == 'int' or column_in_table.variable_type.type == 'decimal':
+                    if column_in_table.variable_type.type == 'int':
                         column_in_table.value = int(record.valores[i])
-                    continue
+                        continue
+                    if column_in_table.variable_type.type == 'decimal':
+                        column_in_table.value = float(record.valores[i])
+                        continue
                 column_in_table.value = record.valores[i]
 
             where_result: Variable = self.where_instruction.execute(symbol_table, errors)
@@ -157,5 +160,5 @@ class UpdateStatement(Instruction):
     def dot(self, nodo_padre, graficador):
         pass
 
-    def c3d(self, scope,generador):
+    def c3d(self, scope, generador):
         pass

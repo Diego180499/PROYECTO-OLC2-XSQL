@@ -135,9 +135,12 @@ def get_table_field_by_name(db_name, table_name, table_field):
 
 ### acciones con procedimientos
 def crear_procedimiento(nombre_bd, procedimiento: Procedimiento):
+    if existe_procedimiento(nombre_bd,procedimiento.nombre):
+        return False
     base_datos = obtener_base_de_datos(nombre_bd)
     base_datos.procedimientos.append(procedimiento)
     crear_base_de_datos_a_xml(nombre_bd, base_datos)
+    return True
 
 
 def obtener_nombres_procedimientos(nombre_bd):

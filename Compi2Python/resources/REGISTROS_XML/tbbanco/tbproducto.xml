@@ -1,0 +1,28 @@
+<registros>
+	<base_datos>tbbanco</base_datos>
+	<tabla>tbproducto</tabla>
+	<registro>
+		<campo>idproducto</campo>
+		<campo>producto</campo>
+		<campo>idestado</campo>
+		<valor>1</valor>
+		<valor>Credito Fiduiciario</valor>
+		<valor>1</valor>
+	</registro>
+	<registro>
+		<campo>idproducto</campo>
+		<campo>producto</campo>
+		<campo>idestado</campo>
+		<valor>2</valor>
+		<valor>Credito Hipotecario</valor>
+		<valor>1</valor>
+	</registro>
+	<registro>
+		<campo>idproducto</campo>
+		<campo>producto</campo>
+		<campo>idestado</campo>
+		<valor>3</valor>
+		<valor>Tarjeta de Credito Oro</valor>
+		<valor>1</valor>
+	</registro>
+</registros>

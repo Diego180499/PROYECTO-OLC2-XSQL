@@ -21,9 +21,9 @@ class MenuHerramientas(Menu):
         self.add_cascade(label='Base de Datos', image=self.iconos['base-de-datos'], compound="left",
                          menu=self.agregar_menu_bbdd())
         self.add_cascade(label='SQL', image=self.iconos['sql'], compound="left", menu=self.agregar_menu_sql())
-        self.add_command(label='Exportar', image=self.iconos['base-de-datos'], compound="left",
+        self.add_command(label='Exportar', image=self.iconos['exportar'], compound="left",
                          command=self.evento_exportar)
-        self.add_command(label='Importar', image=self.iconos['sql'], compound="left",
+        self.add_command(label='Importar', image=self.iconos['importar'], compound="left",
                          command=self.evento_importar)
 
     # ----------------------------------------------------------MENU----------------------------------------------------------

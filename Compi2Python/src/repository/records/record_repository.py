@@ -86,6 +86,9 @@ class RecordRepository:
             indice += 1
         return True
 
+    def eliminar_archivo_registro(self, nombre_bd, nombre_tabla):
+        pass
+
 
     # realiza la validación si ya existen registros de esta tabla
     # ó si es el primer registro de esta tabla.

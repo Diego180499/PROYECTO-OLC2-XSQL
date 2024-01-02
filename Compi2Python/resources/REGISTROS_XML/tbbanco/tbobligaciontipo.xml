@@ -1,0 +1,16 @@
+<registros>
+	<base_datos>tbbanco</base_datos>
+	<tabla>tbobligaciontipo</tabla>
+	<registro>
+		<campo>idobligaciontipo</campo>
+		<campo>obligaciontipo</campo>
+		<valor>1</valor>
+		<valor>DIRECTO</valor>
+	</registro>
+	<registro>
+		<campo>idobligaciontipo</campo>
+		<campo>obligaciontipo</campo>
+		<valor>2</valor>
+		<valor>INDIRECTO</valor>
+	</registro>
+</registros>

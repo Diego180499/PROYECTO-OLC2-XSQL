@@ -19,46 +19,4 @@
 		<valor>3</valor>
 		<valor>Eliminado</valor>
 	</registro>
-	<registro>
-		<campo>idestado</campo>
-		<campo>estado</campo>
-		<valor>5</valor>
-		<valor>activo</valor>
-	</registro>
-	<registro>
-		<campo>idestado</campo>
-		<campo>estado</campo>
-		<valor>6</valor>
-		<valor>inactivo</valor>
-	</registro>
-	<registro>
-		<campo>idestado</campo>
-		<campo>estado</campo>
-		<valor>7</valor>
-		<valor>inactivo</valor>
-	</registro>
-	<registro>
-		<campo>idestado</campo>
-		<campo>estado</campo>
-		<valor>8</valor>
-		<valor>ahora si</valor>
-	</registro>
-	<registro>
-		<campo>idestado</campo>
-		<campo>estado</campo>
-		<valor>9</valor>
-		<valor>Activo</valor>
-	</registro>
-	<registro>
-		<campo>idestado</campo>
-		<campo>estado</campo>
-		<valor>10</valor>
-		<valor>Inactivo</valor>
-	</registro>
-	<registro>
-		<campo>idestado</campo>
-		<campo>estado</campo>
-		<valor>11</valor>
-		<valor>Eliminado</valor>
-	</registro>
 </registros>

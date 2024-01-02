@@ -16,3 +16,6 @@ class FunctionModel:
         
     def c3d(self,symbol_table,generador):
         pass
+
+    def __str__(self):
+        return self.id

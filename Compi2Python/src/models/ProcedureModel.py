@@ -8,3 +8,6 @@ class ProcedureModel:
         self.id = id
         self.parameters = parameters
         self.block = block
+
+    def __str__(self):
+        return self.id

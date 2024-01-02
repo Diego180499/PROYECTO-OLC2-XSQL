@@ -23,16 +23,17 @@ class VentanaPrincipal:
         self.ventana.iconbitmap('')
         self.ventana.title("Proyecto Compiladores 2")
         self.ventana.iconphoto(True, PhotoImage(file=f'gui/resources/icono.png'))
-        # añadimos los 3 frames principales
-        self.frame_arbol = FrameArbol(self.ventana, width=350, height=600, row=0, column=0, rowspan=2)
-        self.frame_pestanas = FramePestanas(self.ventana, width=750, height=270, row=0, column=1)
-        self.frame_salida = FrameSalida(self.ventana, width=750, height=270, row=1, column=1)
+
         self.iconos = dict()
         imagenes = self.__listar_imagenes__()
         for imagen in imagenes:
             path_imagen = f'gui/resources/'
             self.iconos[imagen] = PhotoImage(file=path_imagen + imagen + '.png')
 
+        # añadimos los 3 frames principales
+        self.frame_arbol = FrameArbol(self, width=350, height=600, row=0, column=0, rowspan=2)
+        self.frame_pestanas = FramePestanas(self.ventana, width=750, height=270, row=0, column=1)
+        self.frame_salida = FrameSalida(self.ventana, width=750, height=270, row=1, column=1)
         # añadimos la barra de menú
         self.menu = Menu(self.ventana)
         self.menu_archivo = MenuArchivo(self)

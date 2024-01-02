@@ -1,12 +1,13 @@
 from tkinter import *
 from tkinter.ttk import Treeview, Notebook
-
+from gui.estilos import *
 
 class FrameArbol:
 
     def __init__(self, ventana_padre, width, height, row, column, rowspan=1, columnspan=1, titulo="Arbol"):
-        self.notebook = Notebook(ventana_padre, width=width, height=height)
+        self.notebook = Notebook(ventana_padre.ventana, width=width, height=height)
         self.notebook.grid(row=row, column=column, rowspan=rowspan, columnspan=columnspan)
+        self.iconos = ventana_padre.iconos
         pestana = Frame(self.notebook)
         pestana.pack()
         self.__inicializar_arbol(pestana)
@@ -20,15 +21,28 @@ class FrameArbol:
         scrollbar_x.pack(side=BOTTOM, fill=X)
         self.arbol = Treeview(pestana, xscrollcommand=scrollbar_x.set, yscrollcommand=scrollbar_y.set)
         self.arbol.pack(expand=True, fill=BOTH)
+        colores_palabras_reservadas = obtener_colores_disponibles()
+        for color in colores_palabras_reservadas:
+            self.arbol.tag_configure(colores_palabras_reservadas[color], foreground=color)
+
         scrollbar_x.config(command=self.arbol.xview)
         scrollbar_y.config(command=self.arbol.yview)
 
+
     def __insertar_padre(self, nombre_padre):
-        elemento = self.arbol.insert("", END, text=nombre_padre)
+        elemento = self.arbol.insert("", END, text=nombre_padre, image=self.iconos["base-de-datos-arbol"])
         return elemento
 
     def __insertar_hijo(self, nombre_hijo, elemento_padre):
-        elemento = self.arbol.insert(elemento_padre, END, text=nombre_hijo)
+        elemento = None
+        if nombre_hijo == 'tablas' :
+            elemento = self.arbol.insert(elemento_padre, END, text=nombre_hijo, tags='marca_verde', image=self.iconos["tabla"])
+        elif nombre_hijo == 'campos' :
+            elemento = self.arbol.insert(elemento_padre, END, text=nombre_hijo, tags='marca_roja', image=self.iconos["campo"])
+        elif nombre_hijo == 'procedimientos' :
+            elemento = self.arbol.insert(elemento_padre, END, text=nombre_hijo, tags='marca_azul', image=self.iconos["procedimiento"])
+        else:
+            elemento = self.arbol.insert(elemento_padre, END, text=nombre_hijo)
         return elemento
 
     def generar_arbol(self, raiz=None, diccionario=None):

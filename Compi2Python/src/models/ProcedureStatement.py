@@ -5,6 +5,7 @@ from .VariableType import VariableType
 from .SymbolType import SymbolType
 from .ProcedureModel import ProcedureModel
 from ..error.xsql_error import xsql_error
+from src.repository.data_base.data_base_repository import *
 
 
 class ProcedureStatement(Instruction):
@@ -14,6 +15,7 @@ class ProcedureStatement(Instruction):
         self.id = id
         self.parameters = parameters
         self.block = block
+        self.data_base_repository = DataBaseRepository()
 
     def execute(self, symbol_table: SymbolTable, errors):
         procedure_in_table = symbol_table.find_procedure_by_id(self.id)
@@ -47,7 +49,10 @@ class ProcedureStatement(Instruction):
         procedure_result.symbol_type = SymbolType().PROCEDURE
         procedure_result.id = self.id
         procedure_result.value = ProcedureModel(self.id, params, self.block)
-
+        res = self.data_base_repository.guardar_procedimiento(symbol_table.find_database().id,procedure_result.id)
+        if not res  :
+            errors.append(self.semantic_error(f'The procedure {procedure_result.id} already exist in data base {symbol_table.find_database().id}'))
+            return None
         symbol_table.add_variable(procedure_result)
 
 

@@ -60,7 +60,7 @@ class CasStatement(Instruction):
 
             return result
         elif variable_type.type == 'nchar' or variable_type.type == 'nvarchar':
-            if len(value_result.value) > variable_type.length:
+            if len(str(value_result.value)) > variable_type.length:
                 print('the value is too long')
                 errors.append(self.semantic_error('the value is too long'))
                 return None

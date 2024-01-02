@@ -1,0 +1,28 @@
+<registros>
+	<base_datos>tbbanco</base_datos>
+	<tabla>tbcredito</tabla>
+	<registro>
+		<campo>credito</campo>
+		<campo>nocuenta</campo>
+		<campo>idcliente</campo>
+		<campo>fechaultimocorte</campo>
+		<campo>idproducto</campo>
+		<valor>1</valor>
+		<valor>45-5454</valor>
+		<valor>1</valor>
+		<valor>30-11-2023</valor>
+		<valor>1</valor>
+	</registro>
+	<registro>
+		<campo>credito</campo>
+		<campo>nocuenta</campo>
+		<campo>idcliente</campo>
+		<campo>fechaultimocorte</campo>
+		<campo>idproducto</campo>
+		<valor>2</valor>
+		<valor>AF4545D</valor>
+		<valor>3</valor>
+		<valor>30-11-2023</valor>
+		<valor>1</valor>
+	</registro>
+</registros>

@@ -4,6 +4,7 @@ from src.models.symbolTable.SymbolTable import SymbolTable
 from src.models.symbolTable.ScopeType import ScopeType
 from grammar import *
 from src.models.graphviz.Graficador import Graficador
+from tkinter import messagebox
 
 
 def parsear(contenido):
@@ -26,7 +27,7 @@ def parsear(contenido):
 
     # tabla de simbolos
     symbol_table = SymbolTable(ScopeType().GLOBAL)
-    # graficador del AST, ver archivo  ast.dot
+    # Graficador del AST, ver archivo  ast.dot
     graficador = Graficador()
     inst.dot(None, graficador)
     graficador.generarDOT()
@@ -38,10 +39,8 @@ def parsear(contenido):
     generador_c3d = GenC3D()
     inst.c3d(symbol_table_c3d, generador_c3d)
     generador_c3d.write_c3d()
-    codigo_c3d_generado = generador_c3d.get_code()
     # _______FIN DE CREACION DEL generador de C3D_______
     # Ejecucion del codigo
-    # TODO siempre devolver una lista
     result = inst.execute(symbol_table, errores_sintacticos)  # resultado de la ejecucion
     # verificamos si hay errores semanticos
     if len(errores_sintacticos) > 0:
@@ -61,7 +60,8 @@ def parsear(contenido):
         resultados_finales.append([])
     resultados_finales.append(matriz_tabla_simbolos)  # 1 tabla de simbolos
     resultados_finales.append([])  # 2 errores
-    resultados_finales.append(codigo_c3d_generado)  # 3 c3e
+    resultados_finales.append(generador_c3d.get_code())  # 3 c3e
+    messagebox.showinfo("Ejecución Finalizada","Acciones realizadas con exito")
     return resultados_finales
 
 # parsear('')

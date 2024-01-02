@@ -1,70 +1,34 @@
-
-    <registros>
-        <base_datos>tbbanco</base_datos>        
-        <tabla>tbidentificacion</tabla>
-        
-        <registro>
-            
-        <campo>ididentificacion</campo>
-        
-        <campo>codigocliente</campo>
-        
-        <campo>identificacion</campo>
-        
-        <campo>ididentificaciontipo</campo>
-        
-            
-        <valor>1</valor>
-        
-        <valor>GT-0001</valor>
-        
-        <valor>45784560101</valor>
-        
-        <valor>1</valor>
-        
-        </registro>                    
-    
-        <registro>
-            
-        <campo>ididentificacion</campo>
-        
-        <campo>codigocliente</campo>
-        
-        <campo>identificacion</campo>
-        
-        <campo>ididentificaciontipo</campo>
-        
-            
-        <valor>2</valor>
-        
-        <valor>GT-0001</valor>
-        
-        <valor>94675057</valor>
-        
-        <valor>2</valor>
-        
-        </registro>                    
-    
-        <registro>
-            
-        <campo>ididentificacion</campo>
-        
-        <campo>codigocliente</campo>
-        
-        <campo>identificacion</campo>
-        
-        <campo>ididentificaciontipo</campo>
-        
-            
-        <valor>3</valor>
-        
-        <valor>GT-0002</valor>
-        
-        <valor>4854560101</valor>
-        
-        <valor>1</valor>
-        
-        </registro>                    
-    
-    </registros>
-    
+<registros>
+	<base_datos>tbbanco</base_datos>
+	<tabla>tbidentificacion</tabla>
+	<registro>
+		<campo>ididentificacion</campo>
+		<campo>codigocliente</campo>
+		<campo>identificacion</campo>
+		<campo>ididentificaciontipo</campo>
+		<valor>1</valor>
+		<valor>GT-0001</valor>
+		<valor>45784560101</valor>
+		<valor>1</valor>
+	</registro>
+	<registro>
+		<campo>ididentificacion</campo>
+		<campo>codigocliente</campo>
+		<campo>identificacion</campo>
+		<campo>ididentificaciontipo</campo>
+		<valor>2</valor>
+		<valor>GT-0002</valor>
+		<valor>94675057</valor>
+		<valor>2</valor>
+	</registro>
+	<registro>
+		<campo>ididentificacion</campo>
+		<campo>codigocliente</campo>
+		<campo>identificacion</campo>
+		<campo>ididentificaciontipo</campo>
+		<valor>3</valor>
+		<valor>GT-0003</valor>
+		<valor>4854560101</valor>
+		<valor>1</valor>
+	</registro>
+</registros>

@@ -25,8 +25,10 @@ class DataBaseRepository:
 
 
     def guardar_procedimiento(self,nombre_bd, nombre_procedimiento):
-        procedimiento : Procedimiento = procedimieto(nombre_procedimiento)
-        crear_procedimiento(nombre_bd,procedimiento)
+        procedimiento : Procedimiento = Procedimiento(nombre_procedimiento)
+        if not crear_procedimiento(nombre_bd,procedimiento):
+            return False
+        return True
 
 
     def existe_bd(self, nombre_bd):
@@ -36,3 +38,6 @@ class DataBaseRepository:
             if nombre == f'{nombre_bd}.xml' :
                 return True
         return False
+
+    def existe_procedimiento(self, nombre_db, nombre_procedimiento):
+        pass

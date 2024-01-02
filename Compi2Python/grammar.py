@@ -1,6 +1,8 @@
 import re
 
 from src.error.xsql_error import xsql_error
+from src.models.DeleteStatement import DeleteStatement
+from src.models.UpdateStatement import UpdateStatement
 
 global_arr = []
 errores_sintacticos = []
@@ -95,7 +97,7 @@ t_LESS_EQ = r'<='
 t_GREATER_EQ = r'>='
 t_LESS_THAN = r'<'
 t_GREATER_THAN = r'>'
-t_NOT_EQ = r'!=='
+t_NOT_EQ = r'!='
 t_NOT_SIGN = r'!'
 t_AND = r'&&'
 t_OR = r'\|\|'
@@ -261,6 +263,7 @@ def p_statement(t):
                     | call_function_statement SEMICOLON
                     | alter_table_statement SEMICOLON
                     | if_statement SEMICOLON
+                    | case_statement SEMICOLON
                     | exec_statement SEMICOLON
                     | drop_table_statement SEMICOLON
                     | update_statement SEMICOLON
@@ -360,7 +363,7 @@ def p_null_prod_2(t):
 
 def p_null_prod_3(t):
     'null_prod  : '
-    t[0] = True
+    t[0] = None
 
 
 #### SELECT ####
@@ -560,15 +563,22 @@ def p_drop_table_statement(t):
 #### UPDATE STATEMENT ####
 def p_update_statement(t):
     'update_statement   : UPDATE NAME SET column_assignments WHERE a'
+    t[0] = UpdateStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[4], t[6])
 
 
 #### COLUMN aSSIGNMENTS ####
 def p_column_assignments(t):
     'column_assignments  : column_assignments COMMA NAME ASSIGN a'
+    t[0] = t[1]
+    assignment = Assignment(t.lineno(1), find_column(input, t.slice[2]), t[3], t[5])
+    t[0].append(assignment)
 
 
 def p_column_assignments_2(t):
     'column_assignments : NAME ASSIGN a'
+    assignment = Assignment(t.lineno(1), find_column(input, t.slice[1]), t[1], t[3])
+    t[0] = []
+    t[0].append(assignment)
 
 
 #### WHILE STATEMENT ####
@@ -586,19 +596,20 @@ def p_truncate_statement(t):
 ### DELETE STATEMENT ###
 def p_delete_statement(t):
     'delete_statement : DELETE FROM NAME WHERE a'
+    t[0] = DeleteStatement(t.lineno(1), find_column(input, t.slice[1]), t[3], t[5])
 
 
 ### CASE STATEMENT ###
 def p_case_statement(t):
-    'case_statement : CASE when_statements END NAME'
+    'case_statement : CASE when_statements END'
     t[0] = t[2]
 
 def p_when_statement(t):
-    'when_statements : WHEN a THEN a when_statements'
+    'when_statements : WHEN a THEN statements when_statements'
     t[0] = WhenStatement(t.lineno(1), find_column(input, t.slice[1]), t[2], t[4], t[5])
 
 def p_when_statement_2(t):
-    'when_statements : ELSE THEN a'
+    'when_statements : ELSE THEN statements'
     t[0] = ElseStatement(t.lineno(1), find_column(input, t.slice[1]), t[3])
 
 def p_type(t):

@@ -1,0 +1,20 @@
+<registros>
+	<base_datos>tbbanco</base_datos>
+	<tabla>tbcreditoobligacion</tabla>
+	<registro>
+		<campo>codigocliente</campo>
+		<campo>credito</campo>
+		<campo>idobligaciontipo</campo>
+		<valor>GT-0001</valor>
+		<valor>1</valor>
+		<valor>1</valor>
+	</registro>
+	<registro>
+		<campo>codigocliente</campo>
+		<campo>credito</campo>
+		<campo>idobligaciontipo</campo>
+		<valor>GT-0002</valor>
+		<valor>2</valor>
+		<valor>1</valor>
+	</registro>
+</registros>

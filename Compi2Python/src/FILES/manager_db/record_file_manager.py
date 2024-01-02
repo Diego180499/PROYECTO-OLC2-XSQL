@@ -136,6 +136,8 @@ def existe_archivo_registros(nombre_bd, nombre_tabla):
 
     return False
 
+def eliminar_archivo_registro(nombre_db, nombre_tabla):
+    os.remove(f'{url_records_xml}/{nombre_db}/{nombre_tabla}.xml')
 
 
 def eliminar_carpeta_registros_db(nombre_db):

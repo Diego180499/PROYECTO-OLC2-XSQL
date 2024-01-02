@@ -27,7 +27,7 @@ class DropTableStatement(Instruction):
             errors.append(self.semantic_error(f"The table: {self.table_name} doesn't exist in the database: {db.value}."))
             return None
 
-        message = RecordRepository().vaciar_registros_de_tabla(db.value, self.table_name)
+        message = RecordRepository().eliminar_archivo_registro(db.value, self.table_name)
         print(message)
         message = TableRepository().eliminar_tabla(db.value, self.table_name)
         print(message)

@@ -1,4 +1,5 @@
 from .Instruction import Instruction
+from .ValueType import ValueType
 from .Variable import Variable
 from .VariableType import VariableType
 from .symbolTable.SymbolTable import SymbolTable
@@ -71,7 +72,7 @@ class SelectStatement(Instruction):
                 symbol_table = symbol_table.parent
                 return None
 
-            if not isinstance(table_column.value, Value):
+            if not isinstance(table_column.value, Value) or isinstance(table_column.value, Value) and table_column.value.value_type != ValueType().COLUMN:
                 table_result[0].append(table_column.column_name)
                 continue
 
@@ -121,8 +122,11 @@ class SelectStatement(Instruction):
             for i in range(len(table_record.campos)):
                 column_in_table: Variable = symbol_table.find_column_by_id(table_record.campos[i])
                 if column_in_table is not None:
-                    if column_in_table.variable_type.type == 'int' or column_in_table.variable_type.type == 'decimal':
+                    if column_in_table.variable_type.type == 'int':
                         column_in_table.value = int(table_record.valores[i])
+                        continue
+                    if column_in_table.variable_type.type == 'decimal':
+                        column_in_table.value = float(table_record.valores[i])
                         continue
                     column_in_table.value = table_record.valores[i]
 
